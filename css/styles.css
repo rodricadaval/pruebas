@@ -1,0 +1,42 @@
+body{font-family: arial;}
+
+.a{
+	color:#0033FF;
+	float:right;
+	font-size: 12px;
+}
+h1{
+	margin:0;
+	padding:0;
+	color:#2C2C2C;
+	text-decoration:none;
+	font-size: 16px;
+}
+.as_wrapper{
+	margin: 5px auto;
+	padding:3px;
+	border:1px dashed #17A3F7;
+	margin-top:3px;
+}
+.as_wrapper p{
+	float:left;
+	font-size: 8px;
+}
+
+.logout {
+		cursor: pointer;
+		float: right;
+		color:#0033FF;}
+
+.contenedor {
+		margin: 20px;
+		padding: 0;
+		color: #2C2C2C;
+}
+
+.contenedor span{margin-top: 10px;}
+
+.pointer {cursor: pointer;
+			margin-top: 10px;
+
+}
