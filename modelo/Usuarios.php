@@ -13,10 +13,20 @@ class Usuarios{
 				if($campo == "password"){
 					$valor = base64_decode(base64_decode(base64_decode($valor)));
 				}
+				if($campo == "area"){
+					$valor = Areas::getNombre($valor);
+				}
+				if($campo == "permisos"){
+					$valor = Permisos::getNombre($valor);
+				}
 				$data[$i][$campo] = $valor;
 			}
 			$i++;
 		}
+
+		echo (json_encode ($data));
+	}
+
 /*
 	while ($reg = pg_fetch_assoc($armar_tabla)) {
 
@@ -26,25 +36,6 @@ class Usuarios{
 				$i++;
 			}
 */
-	echo (json_encode ($data));
-	}
-
-	public function listarTodosGuest()
-	{
-		$armar_tabla = BDD::getInstance()->query("select * from system.usuarios")->_fetchAll();
-		$i=0;
-
-		foreach ($armar_tabla as $fila) {
-				
-			foreach ($fila as $campo => $valor) {
-				$data[$i][$campo] = $valor;
-			}
-			$i++;
-		}
-
-		echo (json_encode ($data));
-	}
-
 	public function getById($id){
 		$fila = BDD::getInstance()->query("select * from system.usuarios where id_usuario = '$id' ")->_fetchRow();
 		$fila['password'] = base64_decode(base64_decode(base64_decode($fila['password'])));
@@ -67,6 +58,7 @@ class Usuarios{
 	}
 
 	public function obtenerUsuarioLogin($usuario,$pass){
+		 $pass = base64_encode(base64_encode(base64_encode($pass)));
 		 return BDD::getInstance()->query("select * from system.usuarios where usuario = '$usuario' AND password = '$pass' ");
 	}
 
@@ -104,5 +96,19 @@ class Usuarios{
 		return 1;}
 		else{return 0;}
 	}
+
+	public function getNombre($id){
+		return $inst_table = BDD::getInstance()->query("select usuario from system.usuarios where id_usuario = '$id' ")->_fetchRow()['usuario'];
+	}
+
+	public function getCampos(){
+		
+		$fila = BDD::getInstance()->query("select * from system.usuarios")->_fetchRow();
+
+			foreach ($fila as $key => $value) {
+				$datos[$key] = "";
+			}
+		return $datos;
+	} 
 } 
 ?>

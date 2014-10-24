@@ -21,10 +21,9 @@
 									{ "sTitle" : "Cantidad" , "mData" : "cantidad"},
 									{ "sTitle" : "Usuario" , "mData" : "usuario"},
 									{ "sTitle" : "Observaciones" , "mData" : "observaciones"},
-									{ "aaData" : "data", "mRender": function(data, type, row) {
-									  			return '<a class="btn btn-info btn-sm" href=vista/cancelar_pedido.php?' +'producto=' + /*data['producto'] +*/ '>' + 'Cancelar' + '</a>';
-			  					  				 }					  
-			  						}
+									{ "sTitle" : "Estado" , "mData" : "estado"},
+									{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
+										'<a class="ventana_pedido " href="#">Cancelar</a>'}
 									]
 			    			})
 						}
@@ -38,6 +37,7 @@
 									{ "sTitle" : "Cantidad" , "mData" : "cantidad"},
 									{ "sTitle" : "Usuario" , "mData" : "usuario"},
 									{ "sTitle" : "Observaciones" , "mData" : "observaciones"},
+									{ "sTitle" : "Estado" , "mData" : "estado"}
 									]
 			    			})
 						}

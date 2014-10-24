@@ -22,7 +22,7 @@
           <td><input type="text" name="email" id="email" value="{email}"></td>
         </tr>     
         <tr>
-          <td>Areas</td>
+          <td>Area</td>
           <td>{select_Areas}</td>
         </tr>
         <tr>
@@ -31,7 +31,7 @@
         </tr>
         <tr>
           <td>ID</td>
-          <td><input type="text" name="id_usuario" id="id_usuario" value="{id_usuario}" readonly></td>
+          <td><input style="background-color:#D3D3D3" type="text" name="id_usuario" id="id_usuario" value="{id_usuario}" readonly></td>
         </tr>
         <tr id="vista_pass">
           <td></td>
@@ -92,6 +92,22 @@
           }
       }
 
+    var estado = "{nuevo}";  
+    if(estado == 1){
+
+      $.post( "vista/dialog_content.php", 
+      { 
+        id_usuario : "{id_usuario}",
+      }
+      );
+
+      $.get("vista/agregar_datos_password_nueva.php",function(data){
+        $("#vista_pass").replaceWith(data);
+      });
+    }
+
+  });
+
     $('#usuario').on('input',function(){
         
         if(usuario.val() == ''){
@@ -127,11 +143,7 @@
     $('#submit').on('click',function(event){
       
       event.preventDefault();
-      /*var nombre = $('#nombre_apellido');
-      var email = $('#email');
-      var area = $('#select_areas');
-      var permiso = $('#select_permisos');
-      var id_usuario = $('#id_usuario');*/
+
       var usuario = $('#usuario');
       var password = $('#password');
       var nueva_password = $('#nueva_password');
@@ -207,7 +219,6 @@
       $("#vista_pass").replaceWith(data);
     })
    });
-        
-  });
+
 </script>
 </body>

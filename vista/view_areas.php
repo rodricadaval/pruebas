@@ -18,10 +18,8 @@
 								"aoColumns" :[
 									{ "sTitle" : "ID" , "mData" : "id_area"},
 									{ "sTitle" : "Area" , "mData" : "nombre"},
-									{ "mData" : "id_area" , "mRender": function(data, type, row) {
-									  			return '<a class="btn btn-info btn-sm" href=vista/editar_area.php?' +'id_area=' + data + '>' + 'Modificar' + '</a>';
-			  					  				 }					  
-			  						}]
+									{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
+										'<a class="ventana_area " href="#">Modificar</a>'}]
 				   			})
 						}
 						else if(answer == 2){
@@ -29,8 +27,7 @@
 			   			 		"destroy" : true,
 								"aaData" : data,
 								"aoColumns" :[
-									{ "sTitle" : "ID" , "mData" : "id_area"},
-									{ "sTitle" : "Area" , "mData" : "nombre"},
+									{ "sTitle" : "Area" , "mData" : "nombre"}
 									]
 				   			})
 						}

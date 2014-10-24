@@ -3,7 +3,7 @@
 class Permisos{
 	
 	public function listarTodos(){
-		$inst_table = BDD::getInstance()->query('select * from system.permisos');
+		$inst_table = BDD::getInstance()->query("select *, '<a href=\"#\" class=\"modificar\"tipo_acceso=\"' || tipo_acceso || '\">MODIFICAR</a>' as m from system.permisos");
 		$i=0;
 		while($fila = $inst_table->_fetchRow()){
 			foreach($fila as $campo => $valor){
@@ -31,6 +31,9 @@ class Permisos{
 				}
 		}
 		return $html_view;
+	}
+	public function getNombre($id){
+		return $inst_table = BDD::getInstance()->query("select nombre from system.permisos where tipo_acceso = '$id' ")->_fetchRow()['nombre'];
 	}
 }
 ?>

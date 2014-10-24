@@ -1,10 +1,10 @@
 <?php 
 
-class Insumos{
+class Estado{
 
 	public function listarTodos(){
 		
-		$inst_table = BDD::getInstance()->query('select * from system.insumos');
+		$inst_table = BDD::getInstance()->query("select * from system.estado")->_fetchAll();
 		$i=0;
 		while($fila = $inst_table->_fetchRow()){
 			foreach($fila as $campo => $valor){
@@ -16,7 +16,7 @@ class Insumos{
 	}
 
 	public function getNombre($id){
-		return $inst_table = BDD::getInstance()->query("select nombre from system.insumos where id_insumo = '$id' ")->_fetchRow()['nombre'];
+		return $inst_table = BDD::getInstance()->query("select nombre from system.estado where id_estado = '$id' ")->_fetchRow()['nombre'];
 	}
 } 
 ?>

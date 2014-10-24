@@ -30,8 +30,7 @@
 			   			 		"destroy" : true,
 								"aaData" : data,
 								"aoColumns" :[
-									{ "sTitle" : "ID" , "mData" : "id_marca"},
-									{ "sTitle" : "Marca" , "mData" : "nombre"},
+									{ "sTitle" : "Marca" , "mData" : "nombre"}
 			  					]
 			    			})
 						}

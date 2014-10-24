@@ -3,7 +3,7 @@ class Areas{
 
 	public function listarTodos(){
 
-		$areas = BDD::getInstance()->query('select * from system.areas');
+		$areas = BDD::getInstance()->query("select * , '<a href=\"#\" class=\"modificar\"id_area=\"' || id_area || '\">MODIFICAR</a>' as m from system.areas");
 		$i=0;
 		while($fila_area = $areas->_fetchRow()){
 			foreach($fila_area as $campo => $valor){
@@ -38,6 +38,9 @@ class Areas{
 
 		$html_view = $html_view . "</select>";
 		return $html_view;
+	}
+	public function getNombre($id){
+		return $inst_table = BDD::getInstance()->query("select nombre from system.areas where id_area = '$id' ")->_fetchRow()['nombre'];
 	}
 }
 ?>

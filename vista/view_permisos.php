@@ -18,10 +18,12 @@
 								"aoColumns" :[
 									{ "sTitle" : "ID" , "mData" : "tipo_acceso"},
 									{ "sTitle" : "Usuario" , "mData" : "nombre"},
-									{ "mData" : "tipo_acceso" , "mRender": function(data, type, row) {
+									/*{ "mData" : "tipo_acceso" , "mRender": function(data, type, row) {
 									  			return '<a class="btn btn-info btn-sm" href=vista/editar_permiso.php?' +'tipo_acceso=' + data + '>' + 'Modificar' + '</a>';
 			  					  				 }					  
-			  						}
+			  						}*/
+			  						{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
+										'<a class="ventana_permiso " href="#">Modificar</a>'}
 			  					]
 			    			})
 						}
@@ -30,8 +32,7 @@
 			   			 		"destroy" : true,
 								"aaData" : data,
 								"aoColumns" :[
-									{ "sTitle" : "ID" , "mData" : "tipo_acceso"},
-									{ "sTitle" : "Usuario" , "mData" : "nombre"},
+									{ "sTitle" : "Usuario" , "mData" : "nombre"}
 			  					]
 			    			})
 						}

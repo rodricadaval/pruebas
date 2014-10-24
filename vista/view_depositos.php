@@ -30,8 +30,7 @@
 			   			 		"destroy" : true,
 								"aaData" : data,
 								"aoColumns" :[
-									{ "sTitle" : "ID" , "mData" : "id_deposito"},
-									{ "sTitle" : "Deposito" , "mData" : "nombre"},
+									{ "sTitle" : "Deposito" , "mData" : "nombre"}
 			  					]
 			    			})
 						}

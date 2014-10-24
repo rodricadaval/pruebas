@@ -30,12 +30,7 @@
 			   			 		"destroy" : true,
 								"aaData" : data,
 								"aoColumns" :[
-									{ "sTitle" : "ID" , "mData" : "id_insumo"},
-									{ "sTitle" : "Insumo" , "mData" : "nombre"},
-									{ "mData" : "id_insumo" , "mRender": function(data, type, row) {
-									  			return '<a class="btn btn-info btn-sm" href=vista/editar_insumo.php?' +'id_insumo=' + data + '>' + 'Modificar' + '</a>';
-			  					  				 }					  
-			  						}
+									{ "sTitle" : "Insumo" , "mData" : "nombre"}									
 			  					]
 			    			})
 						}
