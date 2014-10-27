@@ -32,11 +32,31 @@ h1{
 		margin: 20px;
 		padding: 0;
 		color: #2C2C2C;
+		float:left;
+		width:1050px;
+		min-height: 100px;
 }
 
 .contenedor span{margin-top: 10px;}
+
+#contenedorPpal {
+		float:top;
+		margin:20px;
+}
+
+.realBody {
+		min-width: 500px;
+		margin:15px;
+}
+
+#nuevo_usuario {
+	
+	position:relative;
+	bottom: 20px;
+}
 
 .pointer {cursor: pointer;
 			margin-top: 10px;
 
 }
+

@@ -7,10 +7,11 @@ include 'logueo/chequeo_login.php';
 <head>
 	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	
 	<script src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
 	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-	<link href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"> 
+	<!--<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>-->
+	<link href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
 	
@@ -21,6 +22,7 @@ include 'logueo/chequeo_login.php';
 	<div class="as_wrapper">
 	<h1>Bienvenido <b><?php echo ucfirst($_SESSION['username']); ?></b><span class="logout" id="logout">Desconectarse</span></h1>
 	</div>
+<div class="realBody">
 
 <div class="contenedor">
 
@@ -36,9 +38,12 @@ include 'logueo/chequeo_login.php';
 <tr><td><a href="controlador/AreasController.php" class="test" id="link_areas">ABM Areas</a></td></tr>
 </table>
 
+</div>
+
 </br>
 
 <div id="contenedorPpal">
+
 </div>
 </div>
 <script type="text/javascript">

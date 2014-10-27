@@ -56,15 +56,15 @@
 
     function updateTips( t ) {
       
-     login_result.html(t);
+       login_result.html(t);
 
-        setTimeout(function() {
+       setTimeout(function() {
           login_result.removeClass( "ui-state-highlight", 1500 );
-        }, 500 );
+       }, 500 );
     }
 
     function multiline(text){
-    return text.replace(/\n/g,'<br/>');
+        return text.replace(/\n/g,'<br/>');
     }
 
     function includeTips( t ) {
@@ -73,8 +73,8 @@
           login_result.text(t);
         }
         else{
-        var texto = multiline(login_result.text() + " \n " + t);
-        login_result.html(texto);
+          var texto = multiline(login_result.text() + " \n " + t);
+          login_result.html(texto);
         }
 
         setTimeout(function() {
@@ -92,13 +92,15 @@
           }
       }
 
-    var estado = "{nuevo}";  
+    var estado = "{nuevo}";
+    console.log(estado);
+
     if(estado == 1){
 
-      $.post( "vista/dialog_content.php", 
-      { 
-        id_usuario : "{id_usuario}",
-      }
+      $.post("vista/dialog_content.php", 
+        { 
+          id_usuario : "{id_usuario}"
+        }
       );
 
       $.get("vista/agregar_datos_password_nueva.php",function(data){
@@ -106,7 +108,7 @@
       });
     }
 
-  });
+ 
 
     $('#usuario').on('input',function(){
         
@@ -116,27 +118,27 @@
         else{
 
          var UrlToPass = 'action=chequeo&username='+usuario.val();
-              $.ajax({ // Send the credential values to another checker.php using Ajax in POST menthod
+            $.ajax({ // Send the credential values to another checker.php using Ajax in POST menthod
               type : 'POST',
               data : UrlToPass,
               url  : 'checkDisponibilidad.php',
-                success: function(responseText){ // Get the result and asign to each cases
-                    if(responseText == 0){
-                      updateTips("Usuario Disponible!");
-                    }
-                    else if(responseText == 1){
+              success: function(responseText){ // Get the result and asign to each cases
+                  if(responseText == 0){
+                    updateTips("Usuario Disponible!");
+                  }
+                  else if(responseText == 1){
                       if(usuario.val() == "{usuario}"){
                         updateTips("No hay cambios");
                       }
                       else{
                       updateTips("Usuario en uso!");
                       }
-                    }
-                    else{
-                      alert('Problem with Sql query');
-                    }
-                }
-              });
+                  }
+                  else{
+                    alert('Problem with Sql query');
+                  }
+              }
+            });
         }
     });
 
@@ -165,51 +167,79 @@
           usuario.val("{usuario}");
         }
 
-        console.log((password.val() == "{password}" && nueva_password.val() == conf_password.val() && checkLength(nueva_password,"Nueva Password",3,20)) || ( !password.val() && !nueva_password.val() && !conf_password.val()));
+        //console.log((password.val() == "{password}" && nueva_password.val() == conf_password.val() && checkLength(nueva_password,"Nueva Password",3,20)) || ( !password.val() && !nueva_password.val() && !conf_password.val()));
 
-        if((password.val() == "{password}" && nueva_password.val() == conf_password.val() && checkLength(nueva_password,"Nueva Password",3,20)) || ( !password.val() && !nueva_password.val() && !conf_password.val())){
+              if((password.val() == "{password}" && nueva_password.val() == conf_password.val() && checkLength(nueva_password,"Nueva Password",3,20)) || ( !password.val() && !nueva_password.val() && !conf_password.val())){
 
-            console.log("ACA EMPIEZO A MODIFICAR LA BASE DE DATOS");
-            
-            var UrlToPass;
+                    console.log("ACA EMPIEZO A MODIFICAR LA BASE DE DATOS");
+                    
+                    var UrlToPass;
 
-            console.log($("#form").serialize());
+                    UrlToPass = $("#form").serialize();
 
-            UrlToPass = $("#form").serialize();
+                    UrlToPass+="&action=modificar";
 
-            UrlToPass+="&action=modificar";
+                    console.log(UrlToPass);
 
-            console.log(UrlToPass);
-
-                $.ajax({
-                  type : 'POST',
-                  data : UrlToPass,
-                  url  : 'controlador/UsuariosController.php',
-                    success: function(responseText){ // Get the result and asign to each cases
-                        if(responseText == 0){
-                          updateTips("No se pudieron plasmar los datos. Error de en la Base de datos.");
-                        }
-                        else if(responseText == 1){
-                          alert("Los datos han sido actualizados correctamente!");
-                          $("#dialogcontent").dialog("close");
-                          $("#contenedorPpal").load("controlador/UsuariosController.php");
-                        }
-                        else{
-                          alert('Problema en la Sql query');
-                        }
-                    }
-                  });
-        }
-
-        else{ 
-              if(password.val() != "{password}" || nueva_password.val() != conf_password.val()){
-              includeTips("La password actual no es tal o las nuevas passwords son distintas");
+                        $.ajax({
+                          type : 'POST',
+                          data : UrlToPass,
+                          url  : 'controlador/UsuariosController.php',
+                            success: function(responseText){ // Get the result and asign to each cases
+                                if(responseText == 0){
+                                  updateTips("No se pudieron plasmar los datos. Error de en la Base de datos.");
+                                }
+                                else if(responseText == 1){
+                                  alert("Los datos han sido actualizados correctamente!");
+                                  $("#dialogcontent").dialog("close");
+                                  $("#contenedorPpal").load("controlador/UsuariosController.php");
+                                }
+                                else{
+                                  alert('Problema en la Sql query');
+                                }
+                            }
+                          });
               }
-             
-             password.val("");
-             nueva_password.val("");
-             conf_password.val("");
-        }
+              else if(estado == 1 && password.val() != "" && password.val() == conf_password.val()){
+
+                    UrlToPass = $("#form").serialize();
+
+                    UrlToPass+="&action=crear";
+
+                    console.log(UrlToPass);
+
+                    $.ajax({
+                          type : 'POST',
+                          data : UrlToPass,
+                          url  : 'controlador/UsuariosController.php',
+                          success: function(responseText){ // Get the result and asign to each cases
+                              if(responseText == 0){
+                                updateTips("No se pudieron plasmar los datos. Error de en la Base de datos.");
+                              }
+                              else if(responseText == 1){
+                                alert("Los datos han sido actualizados correctamente!");
+                                $("#dialogcontent").dialog("close");
+                                $("#contenedorPpal").load("controlador/UsuariosController.php");
+                              }
+                              else{
+                                alert('Problema en la Sql query');
+                              }
+                          }
+                    });
+              }
+              else{ 
+                    if((password.val() != "{password}" || nueva_password.val() != conf_password.val()) && estado != 1){
+                      includeTips("La password actual no es tal o las nuevas passwords son distintas");
+                    }
+                    
+                    else{
+                      includeTips("completa todos los campos obligatorios");
+                    }
+
+                   password.val("");
+                   nueva_password.val("");
+                   conf_password.val("");
+              }
 
        });
 
@@ -219,6 +249,8 @@
       $("#vista_pass").replaceWith(data);
     })
    });
+
+ });
 
 </script>
 </body>

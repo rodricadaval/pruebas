@@ -4,7 +4,7 @@ class Usuarios{
 
 	public function listarTodos()
 	{
-		$armar_tabla = BDD::getInstance()->query("select * , '<a href=\"#\" class=\"modificar\"id_usuario=\"' || id_usuario || '\">MODIFICAR</a>' as m from system.usuarios")->_fetchAll();
+		$armar_tabla = BDD::getInstance()->query("select * , '<a href=\"#\" class=\"modificar\"id_usuario=\"' || id_usuario || '\">MODIFICAR</a> <a href=\"#\" class=\"eliminar\"id_usuario=\"' || id_usuario || '\">ELIMINAR</a>' as m from system.usuarios")->_fetchAll();
 		$i=0;
 
 		foreach ($armar_tabla as $fila) {
@@ -97,6 +97,37 @@ class Usuarios{
 		else{return 0;}
 	}
 
+	public function crearUsuario($datos){
+
+		$cadena_columnas = "";
+		$cadena_valores= "";
+
+		$firstTime = true;
+		foreach ($datos as $key => $value) {
+			
+			if($value != ""){
+						
+				if($key == "password"){
+					$value = base64_encode(base64_encode(base64_encode($value)));
+				}
+				if($firstTime){
+					$cadena_valores .= "'$value'";
+					$cadena_columnas .= "$key";
+					$firstTime = false;
+				}
+				else{
+					$cadena_columnas .= ",$key";
+					$cadena_valores .= ",'$value'";
+				}
+			}
+			else{unset($datos[$key]);}	
+		}
+
+		if(BDD::getInstance()->query("INSERT INTO system.usuarios ($cadena_columnas) VALUES ($cadena_valores) ")->get_results()){
+		return 1;}
+		else{return 0;}
+	}
+
 	public function getNombre($id){
 		return $inst_table = BDD::getInstance()->query("select usuario from system.usuarios where id_usuario = '$id' ")->_fetchRow()['usuario'];
 	}
@@ -110,5 +141,18 @@ class Usuarios{
 			}
 		return $datos;
 	} 
+
+	public function eliminarUsuario($id){
+		if(BDD::getInstance()->query("DELETE FROM system.usuarios WHERE id_usuario = '$id' ")->get_results()){
+			if($_SESSION['userid'] == $id){
+				session_destroy();
+				return 2;
+			}
+			else{
+				return 1;
+			}
+		}
+		else{return 0;}
+	}
 } 
 ?>

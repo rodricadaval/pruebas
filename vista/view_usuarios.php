@@ -1,5 +1,5 @@
 <div id="nuevo_usuario">
-<input style="float:right;margin-bottom:10px;" type="button" id="crear_usuario" value="Crear Usuario">
+<input type="button" id="crear_usuario" value="Crear Usuario">
 </div>
 
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
@@ -22,7 +22,7 @@
 							success : function(data){
 								$.get('logueo/check_priority.php', function(permisos) {
 			     
-			    					if( permisos == 1 || permisos == 3) {
+			    					if( permisos == 1) {
 										$("#dataTable").dataTable({
 						   			 		"destroy" : true,
 						   			 		"bJQueryUI" : true,
@@ -32,11 +32,10 @@
 												{ "sTitle" : "Usuario" , "mData" : "usuario"},
 												{ "sTitle" : "Permisos" , "mData" : "permisos"},
 												{ "sTitle" : "Nombre" , "mData" : "nombre_apellido"},
-												{ "sTitle" : "Pass" , "mData" : "password"},
 												{ "sTitle" : "Area" , "mData" : "area"},
 												{ "sTitle" : "Email" , "mData" : "email"},
 												{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
-												'<a class="ventana_usuario " href="#">Modificar</a>'}
+												'<a class="ventana_usuario " href="#">Accion</a>'}
 							  					]
 						    			})
 									}
@@ -54,12 +53,30 @@
 											]
 						    			})
 									}
+									else if( permisos == 3) {
+										$("#dataTable").dataTable({
+						   			 		"destroy" : true,
+						   			 		"bJQueryUI" : true,
+											"aaData" : data,
+											"aoColumns" :[
+												{ "sTitle" : "ID" , "mData" : "id_usuario"},
+												{ "sTitle" : "Usuario" , "mData" : "usuario"},
+												{ "sTitle" : "Permisos" , "mData" : "permisos"},
+												{ "sTitle" : "Nombre" , "mData" : "nombre_apellido"},
+												{ "sTitle" : "Pass" , "mData" : "password"},
+												{ "sTitle" : "Area" , "mData" : "area"},
+												{ "sTitle" : "Email" , "mData" : "email"},
+												{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
+												'<a class="ventana_usuario " href="#">Accion</a>'}
+							  					]
+						    			})
+									}
+
 								});
 							}
 						});
 });
 
-//$('#dataTable tbody tr').find('td:eq(7)').live('click', function () {
 	$("#contenedorPpal").on('click' , '.modificar' , function(){
 
 		console.log($(this).attr("id_usuario"));
@@ -78,7 +95,42 @@
 				$("#dialogcontent").html(data);
 				$("#dialogcontent").dialog("open");
 			});
-});
+	});
+
+	$("#contenedorPpal").on('click' , '.eliminar' , function(){
+
+		console.log($(this).attr("id_usuario"));
+  		
+  		var id_usuario = $(this).attr('id_usuario');
+
+		var UrlToPass;
+
+                    UrlToPass="id_usuario="+id_usuario+"&action=eliminar";
+
+                    console.log(UrlToPass);
+
+                        $.ajax({
+                          type : 'POST',
+                          data : UrlToPass,
+                          url  : 'controlador/UsuariosController.php',
+                            success: function(responseText){ // Get the result and asign to each cases
+                               
+                                if(responseText == 0){
+                                  	alert("No se pudo eliminar el usuario");
+                                }
+                                else if(responseText == 2){
+                                                            			    
+					                      alert("Se ha eliminado a usted mismo, debe volver a iniciar sesion");
+					                  	  location.reload();
+					            }
+					            else if(responseText == 1) {
+					            		  alert("Se ha eliminado al usuario correctamente");
+									      $("#contenedorPpal").load("controlador/UsuariosController.php");   
+								}
+                                else{alert("Hubo algun error");}
+                            }
+                          });
+	});
 
 	$("#nuevo_usuario").on('click' , '#crear_usuario' , function(){
 
