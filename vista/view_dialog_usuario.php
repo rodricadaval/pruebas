@@ -20,7 +20,7 @@
         <tr>
           <td>Email</td>
           <td><input type="text" name="email" id="email" value="{email}"></td>
-        </tr>     
+        </tr>
         <tr>
           <td>Area</td>
           <td>{select_Areas}</td>
@@ -35,13 +35,13 @@
         </tr>
         <tr id="vista_pass">
           <td></td>
-          <td><input type="button" id="cambiar_pass" name="boton" value="Cambiar Contraseña"></td> 
+          <td><input type="button" id="cambiar_pass" name="boton" value="Cambiar Contraseña"></td>
         </tr>
         </br>
         <tr>
           <td><input type="submit" id="submit" tabindex="-1"></td>
           <td></td>
-        </tr>             
+        </tr>
    </table>
 </form>
 
@@ -55,7 +55,7 @@
     var usuario = $('#usuario');
 
     function updateTips( t ) {
-      
+
        login_result.html(t);
 
        setTimeout(function() {
@@ -97,8 +97,8 @@
 
     if(estado == 1){
 
-      $.post("vista/dialog_content.php", 
-        { 
+      $.post("vista/dialog_content.php",
+        {
           id_usuario : "{id_usuario}"
         }
       );
@@ -108,10 +108,10 @@
       });
     }
 
- 
+
 
     $('#usuario').on('input',function(){
-        
+
         if(usuario.val() == ''){
             updateTips("El usuario no puede ser vacío");
         }
@@ -143,17 +143,17 @@
     });
 
     $('#submit').on('click',function(event){
-      
+
       event.preventDefault();
 
       var usuario = $('#usuario');
       var password = $('#password');
       var nueva_password = $('#nueva_password');
       var conf_password = $('#conf_password');
-      
 
 
-      updateTips('');     
+
+      updateTips('');
 
         login_result.html(''); // Set the pre-loader can be an animation
 
@@ -162,7 +162,7 @@
           usuario.val("{usuario}");
           return false;
         }
-        
+
         else if(!checkLength(usuario,"usuario",3,20)){ // Check the username values is empty or not
           usuario.val("{usuario}");
         }
@@ -172,7 +172,7 @@
               if((password.val() == "{password}" && nueva_password.val() == conf_password.val() && checkLength(nueva_password,"Nueva Password",3,20)) || ( !password.val() && !nueva_password.val() && !conf_password.val())){
 
                     console.log("ACA EMPIEZO A MODIFICAR LA BASE DE DATOS");
-                    
+
                     var UrlToPass;
 
                     UrlToPass = $("#form").serialize();
@@ -227,11 +227,11 @@
                           }
                     });
               }
-              else{ 
+              else{
                     if((password.val() != "{password}" || nueva_password.val() != conf_password.val()) && estado != 1){
                       includeTips("La password actual no es tal o las nuevas passwords son distintas");
                     }
-                    
+
                     else{
                       includeTips("completa todos los campos obligatorios");
                     }

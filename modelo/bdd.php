@@ -1,41 +1,38 @@
-<?php 
-class BDD{
+<?php
+class BDD {
 
 	private static $_instance = null;
-	private $_pdo,
-			$_query,
-			$_error = false,
-			$_results,
-			$_count = 0;
-			
-	public function __construct () {
+	private $_pdo, $_query, $_error = false, $_results, $_count = 0;
+
+	public function __construct() {
 		try {
 			$this->_pdo = new PDO('pgsql:host=localhost;dbname=stock;user=postgres;password=123456789!');
-		} catch (PDOException $e) {
+		}
+		 catch (PDOException $e) {
 			die($e->getMessage());
 		}
 	}
-	
-	public static function getInstance () {
-		if (!isset(self::$_instance)){
+
+	public static function getInstance() {
+		if (!isset(self::$_instance)) {
 			self::$_instance = new BDD();
 		}
 		return self::$_instance;
 	}
 
-	public function query ($sql , $params = array()) {
+	public function query($sql, $params = array()) {
 		$this->_error = false;
-		
-		if ($this->_query = $this->_pdo->prepare($sql)){
+
+		if ($this->_query = $this->_pdo->prepare($sql)) {
 			$i = 1;
 			if (count($params)) {
 				foreach ($params as $param) {
-					$this->_query->bindValue($i , $param );
+					$this->_query->bindValue($i, $param);
 					$i++;
 				}
 			}
-			
-			if ($this->_query->execute()){
+
+			if ($this->_query->execute()) {
 				$this->_count = $this->_query->rowCount();
 				$this->_results = $this->_query->fetchAll(PDO::FETCH_ASSOC);
 			} else {
@@ -48,8 +45,8 @@ class BDD{
 		return $this;
 	}
 
-	public function resultados(){
+	public function resultados() {
 		return $this->_results;
 	}
 }
- ?>
+?>

@@ -11,20 +11,20 @@ include '../logueo/chequeo_login.php'
 	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
 
-	<link href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"> 
+	<link href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 	<title>Editar Area</title>
 </head>
 <body>
 
 	<div class="as_wrapper">
-	<h1>Bienvenido <b><?php echo ucfirst($_SESSION['username']); ?></b><span class="logout" id="logout">Desconectarse</span></h1>
+	<h1>Bienvenido <b><?php echo ucfirst($_SESSION['username']);?></b><span class="logout" id="logout">Desconectarse</span></h1>
 	</div>
 
 	<div class="contenedor">
 	</div>
 	</br>
-	<?php echo $_POST['id_area'] ?>
+<?php echo $_POST['id_area']?>
 	</div>
 	</body>
 	</head>

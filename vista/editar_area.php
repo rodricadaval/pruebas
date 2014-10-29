@@ -11,7 +11,7 @@ include '../logueo/chequeo_login.php'
 	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
 
-	<link href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"> 
+	<link href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 	<title>Editar Area</title>
 </head>
@@ -20,10 +20,10 @@ include '../logueo/chequeo_login.php'
 	<div class="contenedor">
 	</div>
 	</br>
-	<?php echo "El ID del area es: " . $_GET['id_area'];
-		$inst_area = new Areas();
-		$data_area = $inst_area->getById($_GET['id_area']);
-		echo "</br>" . $data_area['nombre']; ?>
+<?php echo "El ID del area es: " . $_GET['id_area'];
+$inst_area = new Areas();
+$data_area = $inst_area->getById($_GET['id_area']);
+echo "</br>" . $data_area['nombre'];?>
 	</div>
 	</body>
 	</head>
