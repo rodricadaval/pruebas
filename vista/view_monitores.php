@@ -14,15 +14,10 @@
    			 		"destroy" : true,
 					"aaData" : data,
 					"aoColumns" :[
-						{ "sTitle" : "Insumo" , "mData" : "insumo"},
+						{ "sTitle" : "Insumo" , "mData" : "id_monitor"},
 						{ "sTitle" : "Serie" , "mData" : "num_serie"},
-						{ "sTitle" : "Marca" , "mData" : "marca"},
-						{ "sTitle" : "Modelo" , "mData" : "modelo"},
-						{ "sTitle" : "Capacidad" , "mData" : "capacidad"},
-						{ "sTitle" : "Tipo" , "mData" : "tipo"},
-						{ "sTitle" : "Num Serie PC" , "mData" : "nro_serie_pc"},
-						{ "sTitle" : "Deposito" , "mData" : "deposito"},
-						{ "sTitle" : "Descripcion" , "mData" : "descripcion"},
+						{ "sTitle" : "Descripcion" , "mData" : "id_vinculo"},
+						{ "sTitle" : "Descripcion" , "mData" : "id_monitor_desc"}
 						]
     			})
 			}

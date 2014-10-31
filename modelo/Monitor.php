@@ -4,7 +4,7 @@ class Monitor {
 
 	public function listarTodos() {
 
-		$inst_table = BDD::getInstance()->query('select * from system.monitor');
+		$inst_table = BDD::getInstance()->query('select * from system.monitores');
 		$i = 0;
 		while ($fila = $inst_table->_fetchRow()) {
 			foreach ($fila as $campo => $valor) {
@@ -16,14 +16,14 @@ class Monitor {
 	}
 
 	public function getNombre($id) {
-		return $inst_table = BDD::getInstance()->query("select nombre from system.monitor where id_monitor = '$id' ")->_fetchRow()['id_monitor'];
+		return $inst_table = BDD::getInstance()->query("select nombre from system.monitores where id_monitor = '$id' ")->_fetchRow()['id_monitor'];
 	}
 
 	public function dameComboBoxCrear() {
 
 		$html_view = "<p>Rellene los campos deseados</p>";
 
-		$table = BDD::getInstance()->query("select * from system.monitor");
+		$table = BDD::getInstance()->query("select * from system.monitores");
 
 		$html_view .= "<select id='select_monitor' name='monitor'>";
 		$first = true;
@@ -47,6 +47,18 @@ class Monitor {
 
 		$html_view .= "</select>";
 		return $html_view;
+	}
+
+	public function dameDatos($id) {
+		$fila = BDD::getInstance()->query("select * from system.monitores where id_monitor = '$id' ")->_fetchRow();
+		foreach ($fila as $campo => $valor) {
+			if ($campo == "marca") {
+				$fila['marca'] = Marcas::getNombre($valor);
+			} else {
+				$fila[$campo] = $valor;
+			}
+		}
+		return $fila;
 	}
 }
 ?>

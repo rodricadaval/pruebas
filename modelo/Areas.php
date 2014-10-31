@@ -4,7 +4,7 @@ class Areas {
 	public function listarTodos() {
 
 		$areas = BDD::getInstance()->query("select * , '<a href=\"#\" class=\"modificar\"id_area=\"' || id_area || '\">MODIFICAR</a>' as m from system.areas");
-		$i     = 0;
+		$i = 0;
 		while ($fila_area = $areas->_fetchRow()) {
 			foreach ($fila_area as $campo => $valor) {
 				$data[$i][$campo] = $valor;
@@ -15,13 +15,13 @@ class Areas {
 	}
 
 	public function getByID($id) {
-		$area   = BDD::getInstance()->query("select * from system.areas where id_area = $id");
+		$area = BDD::getInstance()->query("select * from system.areas where id_area = $id");
 		$elArea = $area->_fetchRow();
 		return $elArea;
 	}
 
 	public function dameSelect($id) {
-		$table     = BDD::getInstance()->query("select nombre, id_area from system.areas");
+		$table = BDD::getInstance()->query("select nombre, id_area from system.areas");
 		$html_view = "<select id='select_areas' name='area'>";
 
 		while ($fila_area = $table->_fetchRow()) {
@@ -39,6 +39,10 @@ class Areas {
 	}
 	public function getNombre($id) {
 		return $inst_table = BDD::getInstance()->query("select nombre from system.areas where id_area = '$id' ")->_fetchRow()['nombre'];
+	}
+
+	public function get_rel_campos() {
+		return $inst_table = BDD::getInstance()->query("select * from system.areas")->_fetchAll();
 	}
 }
 ?>
