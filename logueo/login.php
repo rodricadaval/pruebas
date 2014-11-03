@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Login</title>
 <script type="text/javascript" src="jquery-1.9.1.js"></script>
-<link href="css/login.css" rel="stylesheet" type="text/css">
+<link href="../css/login.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 $(document).ready(function(){
 	$('#username').focus(); // Focus to the username field on body loads
