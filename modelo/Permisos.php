@@ -2,9 +2,13 @@
 
 class Permisos {
 
+	public static function claseMinus() {
+		return strtolower(get_class());
+	}
+
 	public function listarTodos() {
-		$inst_table = BDD::getInstance()->query("select *, '<a href=\"#\" class=\"modificar\"tipo_acceso=\"' || tipo_acceso || '\">MODIFICAR</a>' as m from system.permisos");
-		$i          = 0;
+		$inst_table = BDD::getInstance()->query("select *, '<a href=\"#\" class=\"modificar\"tipo_acceso=\"' || tipo_acceso || '\">MODIFICAR</a>' as m from system." . self::claseMinus());
+		$i = 0;
 		while ($fila = $inst_table->_fetchRow()) {
 			foreach ($fila as $campo => $valor) {
 				$data[$i][$campo] = $valor;
@@ -16,7 +20,7 @@ class Permisos {
 	}
 
 	public function dameSelect($id) {
-		$table     = BDD::getInstance()->query("select nombre, tipo_acceso from system.permisos");
+		$table = BDD::getInstance()->query("select nombre, tipo_acceso from system." . self::claseMinus());
 		$html_view = "<select id='select_permisos' name='permisos'>";
 
 		while ($fila_permiso = $table->_fetchRow()) {
@@ -31,7 +35,19 @@ class Permisos {
 		return $html_view;
 	}
 	public function getNombre($id) {
-		return $inst_table = BDD::getInstance()->query("select nombre from system.permisos where tipo_acceso = '$id' ")->_fetchRow()['nombre'];
+		return $inst_table = BDD::getInstance()->query("select nombre from system." . self::claseMinus() . " where tipo_acceso = '$id' ")->_fetchRow()['nombre'];
+	}
+
+	public function get_rel_campos() {
+		$tabla = BDD::getInstance()->query("select * from system." . self::claseMinus());
+		$array = array();
+
+		while ($fila = $tabla->_fetchRow()) {
+
+			$array[$fila['tipo_acceso']] = $fila['nombre'];
+
+		}
+		return $array;
 	}
 }
 ?>

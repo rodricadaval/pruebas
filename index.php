@@ -26,7 +26,7 @@ include 'logueo/chequeo_login.php';
                 </div>
                 <div class="realBody">
 <?php require_once (TEMPLATES . '/panel_izq.html');?>
-                   <br>
+                <br>
                 <div id="contenedorPpal"></div>
             	</div>
                 <script type="text/javascript">

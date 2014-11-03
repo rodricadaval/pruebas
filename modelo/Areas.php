@@ -1,9 +1,13 @@
 <?php
 class Areas {
 
+	public static function claseMinus() {
+		return strtolower(get_class());
+	}
+
 	public function listarTodos() {
 
-		$areas = BDD::getInstance()->query("select * , '<a href=\"#\" class=\"modificar\"id_area=\"' || id_area || '\">MODIFICAR</a>' as m from system.areas");
+		$areas = BDD::getInstance()->query("select * , '<a href=\"#\" class=\"modificar\"id_area=\"' || id_area || '\">MODIFICAR</a>' as m from system." . self::claseMinus());
 		$i = 0;
 		while ($fila_area = $areas->_fetchRow()) {
 			foreach ($fila_area as $campo => $valor) {
@@ -15,13 +19,13 @@ class Areas {
 	}
 
 	public function getByID($id) {
-		$area = BDD::getInstance()->query("select * from system.areas where id_area = $id");
+		$area = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_area = '$id' ");
 		$elArea = $area->_fetchRow();
 		return $elArea;
 	}
 
 	public function dameSelect($id) {
-		$table = BDD::getInstance()->query("select nombre, id_area from system.areas");
+		$table = BDD::getInstance()->query("select nombre, id_area from system." . self::claseMinus());
 		$html_view = "<select id='select_areas' name='area'>";
 
 		while ($fila_area = $table->_fetchRow()) {
@@ -38,11 +42,19 @@ class Areas {
 		return $html_view;
 	}
 	public function getNombre($id) {
-		return $inst_table = BDD::getInstance()->query("select nombre from system.areas where id_area = '$id' ")->_fetchRow()['nombre'];
+		return $inst_table = BDD::getInstance()->query("select nombre from system." . self::claseMinus() . " where id_area = '$id' ")->_fetchRow()['nombre'];
 	}
 
 	public function get_rel_campos() {
-		return $inst_table = BDD::getInstance()->query("select * from system.areas")->_fetchAll();
+		$tabla = BDD::getInstance()->query("select * from system." . self::claseMinus());
+		$array = array();
+
+		while ($fila = $tabla->_fetchRow()) {
+
+			$array[$fila['id_area']] = $fila['nombre'];
+
+		}
+		return $array;
 	}
 }
 ?>

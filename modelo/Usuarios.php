@@ -2,8 +2,12 @@
 
 class Usuarios {
 
+	public static function claseMinus() {
+		return strtolower(get_class());
+	}
+
 	public function listarTodos() {
-		$armar_tabla = BDD::getInstance()->query("select * , '<a href=\"#\" class=\"modificar\"id_usuario=\"' || id_usuario || '\">MODIFICAR</a> <a href=\"#\" class=\"eliminar\"id_usuario=\"' || id_usuario || '\">ELIMINAR</a>' as m from system.usuarios")->_fetchAll();
+		$armar_tabla = BDD::getInstance()->query("select * , '<a href=\"#\" class=\"modificar\"id_usuario=\"' || id_usuario || '\">MODIFICAR</a> <a href=\"#\" class=\"eliminar\"id_usuario=\"' || id_usuario || '\">ELIMINAR</a>' as m from system." . self::claseMinus())->_fetchAll();
 		$i = 0;
 
 		foreach ($armar_tabla as $fila) {
@@ -36,14 +40,14 @@ $i++;
 }
  */
 	public function getById($id) {
-		$fila = BDD::getInstance()->query("select * from system.usuarios where id_usuario = '$id' ")->_fetchRow();
+		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_usuario = '$id' ")->_fetchRow();
 		$fila['password'] = base64_decode(base64_decode(base64_decode($fila['password'])));
 		return $fila;
 	}
 
 	public function listarPorNombre($nombre) {
 
-		$armar_tabla = BDD::getInstance()->query("select * from system.usuarios where usuario = '$nombre'")->_fetchAll();
+		$armar_tabla = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where usuario = '$nombre' ")->_fetchAll();
 		$i = 0;
 
 		foreach ($armar_tabla as $fila) {
@@ -58,11 +62,11 @@ $i++;
 
 	public function obtenerUsuarioLogin($usuario, $pass) {
 		$pass = base64_encode(base64_encode(base64_encode($pass)));
-		return BDD::getInstance()->query("select * from system.usuarios where usuario = '$usuario' AND password = '$pass' ");
+		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where usuario = '$usuario' AND password = '$pass' ");
 	}
 
 	public function chequeoExistenciaUsuario($usuario) {
-		return BDD::getInstance()->query("select * from system.usuarios where usuario = '$usuario' ");
+		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where usuario = '$usuario' ");
 	}
 
 	public function obtener($clave, $id) {
@@ -90,7 +94,7 @@ $i++;
 				$cadena .= ", $key = '$value'";
 			}
 		}
-		if (BDD::getInstance()->query("UPDATE system.usuarios SET $cadena WHERE id_usuario = '$id' ")->get_results()) {
+		if (BDD::getInstance()->query("UPDATE system." . self::claseMinus() . "SET $cadena WHERE id_usuario = '$id' ")->get_results()) {
 			return 1;} else {return 0;}
 	}
 
@@ -118,17 +122,17 @@ $i++;
 			} else {unset($datos[$key]);}
 		}
 
-		if (BDD::getInstance()->query("INSERT INTO system.usuarios ($cadena_columnas) VALUES ($cadena_valores) ")->get_results()) {
+		if (BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . "($cadena_columnas) VALUES ($cadena_valores) ")->get_results()) {
 			return 1;} else {return 0;}
 	}
 
 	public function getNombre($id) {
-		return $inst_table = BDD::getInstance()->query("select usuario from system.usuarios where id_usuario = '$id' ")->_fetchRow()['usuario'];
+		return $inst_table = BDD::getInstance()->query("select usuario from system." . self::claseMinus() . " where id_usuario = '$id' ")->_fetchRow()['usuario'];
 	}
 
 	public function getCampos() {
 
-		$fila = BDD::getInstance()->query("select * from system.usuarios")->_fetchRow();
+		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus())->_fetchRow();
 
 		foreach ($fila as $key => $value) {
 			$datos[$key] = "";
@@ -137,7 +141,7 @@ $i++;
 	}
 
 	public function eliminarUsuario($id) {
-		if (BDD::getInstance()->query("DELETE FROM system.usuarios WHERE id_usuario = '$id' ")->get_results()) {
+		if (BDD::getInstance()->query("DELETE FROM system." . self::claseMinus() . " WHERE id_usuario = '$id' ")->get_results()) {
 			if ($_SESSION['userid'] == $id) {
 				session_destroy();
 				return 2;

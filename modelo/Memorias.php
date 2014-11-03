@@ -2,9 +2,13 @@
 
 class Memoria {
 
+	public static function claseMinus() {
+		return strtolower(get_class());
+	}
+
 	public function listarTodos() {
 
-		$inst_table = BDD::getInstance()->query('select * from system.memorias');
+		$inst_table = BDD::getInstance()->query("select * from system." . self::claseMinus());
 		$i = 0;
 		while ($fila = $inst_table->_fetchRow()) {
 			foreach ($fila as $campo => $valor) {
@@ -16,7 +20,7 @@ class Memoria {
 	}
 
 	public function dameDatos($id) {
-		$tabla = BDD::getInstance()->query("select * from system.memorias where id_memoria = '$id' ")->_fetchRow();
+		$tabla = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_memoria = '$id' ")->_fetchRow();
 		foreach ($tabla as $campo => $valor) {
 			if ($campo == "marca") {
 				$tabla['marca'] = Marcas::getNombre($valor);

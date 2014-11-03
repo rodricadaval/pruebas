@@ -2,6 +2,10 @@
 
 class Stock {
 
+	public static function claseMinus() {
+		return strtolower(get_class());
+	}
+
 	public function listarTodos() {
 
 		$parametros[] = array("insumo" => "-", "nro_serie" => "-", "nro_serie_pc" => "-", "marca" => "-", "modelo" => "-", "capacidad" => "-", "tipo" => "-", "area" => "-", "accion" => "-");
