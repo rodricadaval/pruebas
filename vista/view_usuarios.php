@@ -76,7 +76,7 @@
 			{
 				TablaPpal : "Usuarios",
 				ID : id_usuario,
-					select_Areas : "Areas",	//Clase de la cual quiero obtener el select
+				select_Areas : "Areas",	//Clase de la cual quiero obtener el select
 				select_Permisos : "Permisos", //Clase de la cual quiero sacar el select
 				queSos : "usuario" //a quien le voy a generar la vista
 			}, function(data){
@@ -114,7 +114,7 @@
 		$.post( "vista/dialog_content.php",
 			{
 				TablaPpal : "Usuarios",
-					select_Areas : "Areas",	//Clase de la cual quiero obtener el select
+				select_Areas : "Areas",	//Clase de la cual quiero obtener el select
 				select_Permisos : "Permisos", //Clase de la cual quiero sacar el select
 				queSos : "nuevo" //a quien le voy a generar la vista
 			}, function(data){

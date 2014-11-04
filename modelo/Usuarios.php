@@ -62,7 +62,7 @@ $i++;
 
 	public function obtenerUsuarioLogin($usuario, $pass) {
 		$pass = base64_encode(base64_encode(base64_encode($pass)));
-		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where usuario = '$usuario' AND password = '$pass' ");
+		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where usuario = '$usuario' and password = '$pass'");
 	}
 
 	public function chequeoExistenciaUsuario($usuario) {

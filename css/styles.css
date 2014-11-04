@@ -69,3 +69,10 @@ h1{
 
 }
 
+.boton_agregar_monitor {
+	float:right;
+	margin-top: 10px;
+	font-size: 15px;
+	background-color: blue;
+	color:white;
+}

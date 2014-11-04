@@ -1,31 +1,48 @@
 <head>
-<script>
-  $(function() {
-    $( "#tabs" ).tabs({
-      beforeLoad: function( event, ui ) {
-        ui.jqXHR.error(function() {
-          ui.panel.html(
-            "Tab de prueba." );
-        });
-      }
-    });
-  });
+<script src="http://code.jquery.com/jquery.js" type="text/javascript"></script>
+<script src="lib/jquery.hashchange.js" type="text/javascript"></script>
+<script src="lib/jquery.easytabs.js" type="text/javascript"></script>
+<link href="css/jquery-easytabs.css" rel="stylesheet" type="text/css">
 
-</script>
+<script type="text/javascript">
+    $(document).ready( function() {
+      $('#tab-container').easytabs();
+    });
+  </script>
 </head>
 <body>
 
-<div id="tabs">
-  <ul>
-    <li><a href="#tabs-1">Preloaded</a></li>
-    <li><a href="vista/view_agregar_monitor.php?tipo=Monitor">Monitor</a></li>
-    <li><a href="ajax/content2.html">Memoria</a></li>
-    <li><a href="ajax/content3-slow.php">Tab 3 (slow)</a></li>
-    <li><a href="ajax/content4-broken.php">Tab 4 (broken)</a></li>
+
+<div id="tab-container" class="tab-container">
+  <ul class='etabs'>
+    <li class='tab'><a href="#tabs1">Monitor</a></li>
+    <li class='tab'><a href="#tabs2">Memoria</a></li>
+    <li class='tab'><a href="#tabs3">Disco</a></li>
   </ul>
-  <div id="tabs-1">
-    <p>Pantalla de prueba.</p>
+
+  <div id="tabs1">
+    <h2>Menu para agregar un monitor</h2>
+    <script type="text/javascript">
+
+    	$.post('controlador/ProductosController.php',
+				{
+					action:"view_agregar_monitor",
+					tipo:"sel_marcas"
+				}
+				,function(data){
+					$("#tabs1").html(data);
+				}
+			);
+
+    </script>
   </div>
-  <div id="tabs-2"></div>
+  <div id="tabs2">
+    <h2>Menu para agregar una memoria</h2>
+    <!-- content -->
+  </div>
+  <div id="tabs3">
+    <h2>Menu para agregar un disco</h2>
+    <!-- content -->
+  </div>
 </div>
 </body>

@@ -8,7 +8,7 @@ class Monitores {
 
 	public function listarTodos() {
 
-		$inst_table = BDD::getInstance()->query("select * from system.".self::claseMinus());
+		$inst_table = BDD::getInstance()->query("select * from system." . self::claseMinus());
 		$i = 0;
 		while ($fila = $inst_table->_fetchRow()) {
 			foreach ($fila as $campo => $valor) {
@@ -20,14 +20,14 @@ class Monitores {
 	}
 
 	public function getNombre($id) {
-		return $inst_table = BDD::getInstance()->query("select nombre from system.".self::claseMinus()." where id_monitor = '$id' ")->_fetchRow()['id_monitor'];
+		return $inst_table = BDD::getInstance()->query("select nombre from system." . self::claseMinus() . " where id_monitor = '$id' ")->_fetchRow()['id_monitor'];
 	}
 
 	public function dameComboBoxCrear() {
 
 		$html_view = "<p>Rellene los campos deseados</p>";
 
-		$table = BDD::getInstance()->query("select * from system.".self::claseMinus());
+		$table = BDD::getInstance()->query("select * from system." . self::claseMinus());
 
 		$html_view .= "<select id='select_monitor' name='monitor'>";
 		$first = true;
@@ -54,7 +54,7 @@ class Monitores {
 	}
 
 	public function dameDatos($id) {
-		$fila = BDD::getInstance()->query("select * from system.".self::claseMinus()." where id_monitor = '$id' ")->_fetchRow();
+		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_monitor = '$id' ")->_fetchRow();
 		foreach ($fila as $campo => $valor) {
 			if ($campo == "marca") {
 				$fila['marca'] = Marcas::getNombre($valor);
@@ -65,11 +65,9 @@ class Monitores {
 		return $fila;
 	}
 
-	public function dameSelects(){
+	public function dameSelects() {
 		$marcas = new Marcas();
 		$marcas->dameSelect();
-
-		$modelos = 
 	}
 }
 ?>

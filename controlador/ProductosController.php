@@ -6,15 +6,23 @@ if (!isset($_POST['action'])) {
 	$parametros = array("TABLA" => "Agregar Producto", "TITULO" => "Agregar");
 	echo Disenio::HTML($url, $parametros);
 } else {
-
-	switch ($_POST['tipo']) {
-		case 'Monitor':
-			if ($_POST['action'] == "sel_marcas") {
+	switch ($_POST['action']) {
+		case 'view_agregar_monitor':
+			if ($_POST['tipo'] == "sel_marcas") {
+				$url = array("vista/view_agregar_monitor.php");
 				$inst = new Marcas;
-				echo $inst->dameSelect();
-			} else if ($_POST['action'] == "sel_modelos") {
+				$select = $inst->dameSelect();
+				$titulo = "Menu para agregar y asignar (si es necesario) un Monitor";
+				$parametros = array("Producto" => "Monitor", "select_marcas" => $select, "titulo" => $titulo);
+
+				echo Disenio::HTML($url, $parametros);
+			} else if ($_POST['tipo'] == "sel_modelos") {
+
 				$inst = new Monitor_desc();
-				var_dump("Entra aca");
+				echo $inst->dameSelect($_POST['value']);
+			} else if ($_POST['tipo'] == "sel_depositos") {
+
+				$inst = new Areas();
 				echo $inst->dameSelect();
 			}
 			break;

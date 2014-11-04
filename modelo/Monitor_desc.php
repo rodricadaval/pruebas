@@ -40,8 +40,13 @@ class Monitor_desc {
 		return $select_marcas . "<br><br>" . $select_modelos;
 	}
 
-	public function dameSelect() {
-		$table = BDD::getInstance()->query("select modelo from system." . self::claseMinus());
+	public function dameSelect($valor = "") {
+		if (!isset($valor)) {
+			$table = BDD::getInstance()->query("select modelo from system." . self::claseMinus());
+		} else {
+			$table = BDD::getInstance()->query("select modelo from system." . self::claseMinus() . " where id_marca = '$valor'");
+		}
+
 		$html_view = "<select id='select_modelos' name='modelos'>";
 
 		while ($fila = $table->_fetchRow()) {
