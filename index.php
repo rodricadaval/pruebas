@@ -10,7 +10,9 @@ include 'logueo/chequeo_login.php';
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
         <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-        <!--<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>-->
+        <script src="lib/jquery.hashchange.js" type="text/javascript"></script>
+        <script src="lib/jquery.easytabs.js" type="text/javascript"></script>
+        <link href="css/jquery-easytabs.css" rel="stylesheet" type="text/css">
         <link href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css" rel=
         "stylesheet" type="text/css">
         <link href="css/styles.css" rel="stylesheet" type="text/css">

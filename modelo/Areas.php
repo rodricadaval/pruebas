@@ -27,14 +27,14 @@ class Areas {
 	public function dameSelect($id = "") {
 		$table = BDD::getInstance()->query("select nombre, id_area from system." . self::claseMinus());
 		$html_view = "<select id='select_areas' name='area'>";
+		$html_view .= "<option value=0>Seleccione Area</option>";
 
 		while ($fila_area = $table->_fetchRow()) {
 
 			if ($fila_area['id_area'] == $id) {
-				$html_view = $html_view . "<option selected='selected' value=" . $fila_area['id_area'] . ">" . $fila_area['nombre'] . "</option>";
-				$fila_area = $table->_fetchRow();
-			} else if ($fila_area['id_area'] != 1) {
-				$html_view = $html_view . "<option value=" . $fila_area['id_area'] . ">" . $fila_area['nombre'] . "</option>";
+				$html_view .= "<option selected='selected' value=" . $fila_area['id_area'] . ">" . $fila_area['nombre'] . "</option>";
+			} else if ($fila_area['id_area'] != 0) {
+				$html_view .= "<option value=" . $fila_area['id_area'] . ">" . $fila_area['nombre'] . "</option>";
 			}
 		}
 

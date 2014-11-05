@@ -94,8 +94,12 @@ $i++;
 				$cadena .= ", $key = '$value'";
 			}
 		}
-		if (BDD::getInstance()->query("UPDATE system." . self::claseMinus() . "SET $cadena WHERE id_usuario = '$id' ")->get_results()) {
-			return 1;} else {return 0;}
+
+		if (!BDD::getInstance()->query("UPDATE system." . self::claseMinus() . " SET $cadena WHERE id_usuario = '$id' ")->get_error()) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 	public function crearUsuario($datos) {
@@ -122,7 +126,7 @@ $i++;
 			} else {unset($datos[$key]);}
 		}
 
-		if (BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . "($cadena_columnas) VALUES ($cadena_valores) ")->get_results()) {
+		if (!BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . "($cadena_columnas) VALUES ($cadena_valores) ")->get_error()) {
 			return 1;} else {return 0;}
 	}
 
@@ -141,7 +145,7 @@ $i++;
 	}
 
 	public function eliminarUsuario($id) {
-		if (BDD::getInstance()->query("DELETE FROM system." . self::claseMinus() . " WHERE id_usuario = '$id' ")->get_results()) {
+		if (!BDD::getInstance()->query("DELETE FROM system." . self::claseMinus() . " WHERE id_usuario = '$id' ")->get_error()) {
 			if ($_SESSION['userid'] == $id) {
 				session_destroy();
 				return 2;

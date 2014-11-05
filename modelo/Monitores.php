@@ -65,9 +65,16 @@ class Monitores {
 		return $fila;
 	}
 
-	public function dameSelects() {
-		$marcas = new Marcas();
-		$marcas->dameSelect();
+	public function agregar_monitor($datos){
+
+		$id_monitor_desc = Monitor_desc::buscar_id_por_marca_modelo($datos['id_marca'],$datos['modelo']);
+
+		if(!BDD::getInstance()->query("INSERT INTO system.monitores (num_serie,id_vinculo,id_monitor_desc) VALUES ('NUMERODESERIE','$datos['id_vinculo']','$id_monitor_desc')")->get_error()){
+			$valor_seq_actual_monitores = BDD::getInstance()->query("select nextval('system.monitores_id_monitor_seq'::regclass)")->_fetchRow()['nextval'];
+			$valor_seq_actual_monitores--;
+			BDD::getInstance()->query("select setval('system.monitores_id_monitor_seq'::regclass,'$valor_seq_actual_monitores')");
+			return $valor_seq_actual_monitores;
+		}
 	}
 }
 ?>

@@ -1,17 +1,8 @@
-<head>
-<script src="http://code.jquery.com/jquery.js" type="text/javascript"></script>
-<script src="lib/jquery.hashchange.js" type="text/javascript"></script>
-<script src="lib/jquery.easytabs.js" type="text/javascript"></script>
-<link href="css/jquery-easytabs.css" rel="stylesheet" type="text/css">
-
 <script type="text/javascript">
     $(document).ready( function() {
       $('#tab-container').easytabs();
     });
   </script>
-</head>
-<body>
-
 
 <div id="tab-container" class="tab-container">
   <ul class='etabs'>
@@ -45,4 +36,3 @@
     <!-- content -->
   </div>
 </div>
-</body>

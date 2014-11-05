@@ -6,7 +6,7 @@ $parametros = array();
 if (isset($_POST['action'])) {
 
 	$inst_usuarios = new Usuarios();
-	$action        = $_POST['action'];
+	$action = $_POST['action'];
 	unset($_POST['action']);
 
 	switch ($action) {
@@ -51,7 +51,7 @@ if (isset($_POST['action'])) {
 
 	}
 } else {
-	$archivos   = array("vista/view_usuarios.php");
+	$archivos = array("vista/view_usuarios.php");
 	$parametros = array("TABLA" => "Usuarios", "");
 	echo Disenio::HTML($archivos, $parametros);
 }

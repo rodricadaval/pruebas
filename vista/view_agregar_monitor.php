@@ -16,7 +16,7 @@
     				<option value='0'>Seleccionar</option></select></td>
     	</td>
     	<td>Deposito:</td>
-    	<td><select id='select_depositos' name='depositos'>
+    	<td><select id='select_areas' name='depositos'>
     				<option value='0'>Seleccionar</option></select>
     	</td>
     </tr>
@@ -43,11 +43,12 @@
 		});
 			$.post('controlador/ProductosController.php',
 			{
+				value : $('#select_marcas option:selected').val(),
 				tipo : "sel_depositos",
 				action : "view_agregar_monitor"
 
 			}, function(data) {
-			$("#select_depositos").replaceWith(data);
+			$("#select_areas").replaceWith(data);
 			});
 	});
 
@@ -55,15 +56,19 @@
 		console.log('Evento de click en crear');
 
 		var id_marca = $('#select_marcas option:selected').val();
-		var id_deposito = $('#select_depositos option:selected').val();
+		var id_deposito = $('#select_areas option:selected').val();
 		var modelo = $('#select_modelos option:selected').val();
 
-		var datos_a_enviar = "id_marca="+id_marca+"&id_deposito="+id_deposito+"&modelo="+modelo;
+		if(id_deposito == 0){
+			alert('Debes ingresar algún deposito!');
+
+			$("#tabs1").load("controlador/ProductosController.php",{action:"view_agregar_monitor",tipo:"sel_marcas"});
+		}
 
 		$.ajax({
 			url: 'controlador/CreacionController.php',
 			type: 'POST',
-			dataType: 'default',
+			//dataType: 'default',
 			data: {id_marca: id_marca,
 				   id_deposito: id_deposito,
 				   modelo: modelo,

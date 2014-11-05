@@ -40,10 +40,10 @@ class BDD {
 				//$this->_results = $this->_query->fetchAll(PDO::FETCH_ASSOC);
 			} else {
 				$this->_results = null;
-				$this->_error   = $this->_pdo->errorInfo();
+				$this->_error = true;
 			}
 		} else {
-			$this->_error = $this->_pdo->errorInfo();
+			$this->_error = true;
 		}
 		return $this;
 	}

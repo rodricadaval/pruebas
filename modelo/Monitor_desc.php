@@ -57,5 +57,9 @@ class Monitor_desc {
 		$html_view = $html_view . "</select>";
 		return $html_view;
 	}
+
+	public function buscar_id_por_marca_modelo($id_marca, $modelo) {
+		return BDD::getInstance()->query("SELECT id_monitor_desc FROM system.monitor_desc where id_marca ='$id_marca' AND modelo='$modelo' ")['id_monitor_desc'];
+	}
 }
 ?>
