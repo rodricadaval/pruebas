@@ -65,16 +65,19 @@ class Monitores {
 		return $fila;
 	}
 
-	public function agregar_monitor($datos){
+	public function agregar_monitor($datos) {
 
-		$id_monitor_desc = Monitor_desc::buscar_id_por_marca_modelo($datos['id_marca'],$datos['modelo']);
+		$id_monitor_desc = Monitor_desc::buscar_id_por_marca_modelo($datos['id_marca'], $datos['modelo']);
+		$nro_serie = $datos['num_serie'];
+		$values = $datos['id_vinculo'] . "," . $id_monitor_desc;
 
-		if(!BDD::getInstance()->query("INSERT INTO system.monitores (num_serie,id_vinculo,id_monitor_desc) VALUES ('NUMERODESERIE','$datos['id_vinculo']','$id_monitor_desc')")->get_error()){
+		if (!BDD::getInstance()->query("INSERT INTO system.monitores (num_serie,id_vinculo,id_monitor_desc) VALUES ('$nro_serie',$values)")->get_error()) {
 			$valor_seq_actual_monitores = BDD::getInstance()->query("select nextval('system.monitores_id_monitor_seq'::regclass)")->_fetchRow()['nextval'];
 			$valor_seq_actual_monitores--;
-			BDD::getInstance()->query("select setval('system.monitores_id_monitor_seq'::regclass,'$valor_seq_actual_monitores')");
-			return $valor_seq_actual_monitores;
-		}
+			if (!BDD::getInstance()->query("select setval('system.monitores_id_monitor_seq'::regclass,'$valor_seq_actual_monitores')")->get_error()) {
+				return $valor_seq_actual_monitores;
+			} else {var_dump(BDD::getInstance());}
+		} else {var_dump(BDD::getInstance());}
 	}
 }
 ?>

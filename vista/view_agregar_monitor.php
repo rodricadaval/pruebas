@@ -17,8 +17,10 @@
     	</td>
     	<td>Deposito:</td>
     	<td><select id='select_areas' name='depositos'>
-    				<option value='0'>Seleccionar</option></select>
+    				<option value=''>Seleccionar</option></select>
     	</td>
+    	<td>Nro de Serie:</td>
+    	<td><input class="input_nro_serie" type="text" name="nro_de_serie"</td>
     </tr>
     </div>
     <div id="agregar"><input class="boton_agregar_monitor" type="button" name="crearMonitor" value="Crear"</div>
@@ -58,24 +60,29 @@
 		var id_marca = $('#select_marcas option:selected').val();
 		var id_deposito = $('#select_areas option:selected').val();
 		var modelo = $('#select_modelos option:selected').val();
+		var nro_de_serie = $('.input_nro_serie').val();
 
-		if(id_deposito == 0){
+		if(id_deposito == ""){
 			alert('Debes ingresar algún deposito!');
 
 			$("#tabs1").load("controlador/ProductosController.php",{action:"view_agregar_monitor",tipo:"sel_marcas"});
 		}
+		else if(nro_de_serie != ""){
 
 		$.ajax({
 			url: 'controlador/CreacionController.php',
 			type: 'POST',
-			//dataType: 'default',
 			data: {id_marca: id_marca,
 				   id_deposito: id_deposito,
 				   modelo: modelo,
+				   num_serie: nro_de_serie,
 				   tipo: "Monitor"},
 		})
-		.done(function() {
+		.done(function(resultado) {
+			console.log(resultado);
 			console.log("success");
+			alert("Se ha agregado el producto a la base de datos.");
+
 		})
 		.fail(function() {
 			console.log("error");
@@ -83,7 +90,11 @@
 		.always(function() {
 			console.log("complete");
 		});
+		}
+		else{alert('Debes ingresar el Numero de serie!');
 
-	})
+			$("#tabs1").load("controlador/ProductosController.php",{action:"view_agregar_monitor",tipo:"sel_marcas"});}
+
+	});
 });
 </script>

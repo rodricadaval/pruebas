@@ -127,12 +127,12 @@ $( "#dialogcontent" ).dialog({
 	show: {
 	effect: "blind",
 	duration: 1000,
-	width: 1000,
 	modal:true
 	},
 	hide: {
 	effect: "explode",
 	duration: 200
-	}
+	},
+	width : 350
 });
 </script>

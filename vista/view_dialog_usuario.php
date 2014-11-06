@@ -1,14 +1,6 @@
-<head>
-<style>
-.login_result { border: 1px solid transparent; padding: 0.3em; color: red; }
-</style>
-</head>
-<body>
 <form id="form">
+    <div id="errores"></div>
     <table class="mytable">
-        <tr>
-          <td colspan="2"><div class="login_result" id="login_result"><div style="color:green;"> Chequeo de estado</div></div></td>
-        </tr>
         <tr>
           <td>Nombre</td>
           <td><input type="text" name="nombre_apellido" id="nombre_apellido" value="{nombre_apellido}"></td>
@@ -48,7 +40,43 @@
 <script>
 
 
-  $(document).ready(function(){
+$(document).ready(function(){
+
+  $("#form").validate({
+    errorLabelContainer : "#errores" ,
+    wrapper : "li" ,
+    rules : {
+      nombre_apellido : {
+        required : true ,
+        minlength : 8,
+        maxlength : 30
+      } ,
+      usuario : {
+        required : true,
+        minlength : 5,
+        maxlength : 15
+      },
+      area : {
+        required : true
+      }
+    } ,
+    messages : {
+      nombre_apellido : {
+        required : 'El"Nombre" es OBLIGATORIO',
+        minlength : 'El "Nombre" debe tener más de 8 caracteres'
+      }
+    } ,
+    submitHandler : function (form) {
+      console.log ("formulario ok");
+    } ,
+    invalidHandler : function (event , validator) {
+      console.log(validator);
+    }
+
+  });
+
+});
+/*
 
     $('#nombre').focus();
     var login_result = $('.login_result'); // Get the login result div
@@ -167,9 +195,7 @@
           usuario.val("{usuario}");
         }
 
-        //console.log((password.val() == "{password}" && nueva_password.val() == conf_password.val() && checkLength(nueva_password,"Nueva Password",3,20)) || ( !password.val() && !nueva_password.val() && !conf_password.val()));
-
-              if((password.val() == "{password}" && nueva_password.val() == conf_password.val() && checkLength(nueva_password,"Nueva Password",3,20)) || ( !password.val() && !nueva_password.val() && !conf_password.val())){
+             if((password.val() == "{password}" && nueva_password.val() == conf_password.val() && checkLength(nueva_password,"Nueva Password",3,20)) || ( !password.val() && !nueva_password.val() && !conf_password.val())){
 
                     console.log("ACA EMPIEZO A MODIFICAR LA BASE DE DATOS");
 
@@ -251,6 +277,6 @@
    });
 
  });
-
+*/
 </script>
-</body>
+

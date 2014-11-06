@@ -64,6 +64,13 @@ h1{
 	margin-bottom: 20px;
 }
 
+#errores {
+	color:red;
+	font-size: 14px;
+	font-family: "fantasy";
+	font-style: italic;
+}
+
 .pointer {cursor: pointer;
 			margin-top: 10px;
 
