@@ -24,14 +24,27 @@ class Vinculos {
 
 			$id_monitor = Monitores::agregar_monitor($datos);
 
-			if (BDD::getInstance()->query("UPDATE system.vinculos SET id_pk_producto=$id_monitor WHERE id_vinculo='$valor_seq_actual' ")->get_error()) {
-				Consola::mostrar(BDD::getInstance());
-				return false;
-			} else {Consola::mostrar("Se ejecuto correctamente el update del vinculo con el id de monitor correspondiente.");
-				return true;}
-		} else {Consola::mostrar("Hubo un error de entrada.");
-			Consola::mostrar(BDD::getInstance());
-			return false;}
+			if ($id_monitor == 0) {
+				print_r("Hay otro monitor con el mismo numero de Serie");
+				BDD::getInstance()->query("DELETE FROM system.vinculos WHERE id_vinculo='$valor_seq_actual' ")->get_error();
+				$valor_seq_actual--;
+				BDD::getInstance()->query("select setval('system.vinculos_id_vinculo_seq'::regclass,'$valor_seq_actual')");
+			} else {
+
+				if (BDD::getInstance()->query("UPDATE system.vinculos SET id_pk_producto=$id_monitor WHERE id_vinculo='$valor_seq_actual' ")->get_error()) {
+					var_dump(BDD::getInstance());
+					return false;
+				} else {
+					Consola::mostrar("Se ejecuto correctamente el update del vinculo con el id de monitor correspondiente.");
+					var_dump(BDD::getInstance());
+					return true;
+				}
+			}
+		} else {
+			Consola::mostrar("Hubo un error de entrada.");
+			var_dump(BDD::getInstance());
+			return false;
+		}
 	}
 }
 ?>

@@ -20,7 +20,7 @@ class Monitores {
 	}
 
 	public function getNombre($id) {
-		return $inst_table = BDD::getInstance()->query("select nombre from system." . self::claseMinus() . " where id_monitor = '$id' ")->_fetchRow()['id_monitor'];
+		return BDD::getInstance()->query("select nombre from system." . self::claseMinus() . " where id_monitor = '$id' ")->_fetchRow()['id_monitor'];
 	}
 
 	public function dameComboBoxCrear() {
@@ -70,14 +70,26 @@ class Monitores {
 		$id_monitor_desc = Monitor_desc::buscar_id_por_marca_modelo($datos['id_marca'], $datos['modelo']);
 		$nro_serie = $datos['num_serie'];
 		$values = $datos['id_vinculo'] . "," . $id_monitor_desc;
+		$valor_seq_actual_monitores = BDD::getInstance()->query("select nextval('system.monitores_id_monitor_seq'::regclass)")->_fetchRow()['nextval'];
+		$valor_seq_actual_monitores--;
+		BDD::getInstance()->query("select setval('system.monitores_id_monitor_seq'::regclass,'$valor_seq_actual_monitores')");
 
 		if (!BDD::getInstance()->query("INSERT INTO system.monitores (num_serie,id_vinculo,id_monitor_desc) VALUES ('$nro_serie',$values)")->get_error()) {
-			$valor_seq_actual_monitores = BDD::getInstance()->query("select nextval('system.monitores_id_monitor_seq'::regclass)")->_fetchRow()['nextval'];
-			$valor_seq_actual_monitores--;
-			if (!BDD::getInstance()->query("select setval('system.monitores_id_monitor_seq'::regclass,'$valor_seq_actual_monitores')")->get_error()) {
-				return $valor_seq_actual_monitores;
-			} else {var_dump(BDD::getInstance());}
-		} else {var_dump(BDD::getInstance());}
+			return $valor_seq_actual_monitores++;
+
+		} else {var_dump(BDD::getInstance());
+			$valor_seq_actual_monitores;
+			BDD::getInstance()->query("select setval('system.monitores_id_monitor_seq'::regclass,'$valor_seq_actual_monitores')");
+			return 0;}
+	}
+
+	public function no_existe($nro) {
+
+		if (BDD::getInstance()->query("select num_serie from system." . self::claseMinus() . " where num_serie = '$nro' ")->get_count()) {
+			return 0;
+		} else {
+			return 1;
+		}
 	}
 }
 ?>

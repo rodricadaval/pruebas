@@ -1,5 +1,6 @@
 
 <h3>{titulo}</h3><p>Seleccione la marca y modelo del monitor</p>
+<div id="dialogo_asignar" title="Asignar"></div>
 
 <div class="combo_boxes">
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="tabla_agregar"></table>
@@ -62,39 +63,78 @@
 		var modelo = $('#select_modelos option:selected').val();
 		var nro_de_serie = $('.input_nro_serie').val();
 
-		if(id_deposito == ""){
-			alert('Debes ingresar algún deposito!');
+		if(id_deposito == "" || id_marca == ""){
 
+			alert('Debes ingresar algún deposito o marca!');
 			$("#tabs1").load("controlador/ProductosController.php",{action:"view_agregar_monitor",tipo:"sel_marcas"});
 		}
 		else if(nro_de_serie != ""){
 
-		$.ajax({
-			url: 'controlador/CreacionController.php',
-			type: 'POST',
-			data: {id_marca: id_marca,
-				   id_deposito: id_deposito,
-				   modelo: modelo,
-				   num_serie: nro_de_serie,
-				   tipo: "Monitor"},
-		})
-		.done(function(resultado) {
-			console.log(resultado);
-			console.log("success");
-			alert("Se ha agregado el producto a la base de datos.");
+			$.post('controlador/chequeo_existencia_nro_serie.php',
+				{
+					nro_serie : nro_de_serie
+				}
+				,function(no_existe){
+					console.log(no_existe);
+					if(no_existe == 1){
+							$.ajax({
+								url: 'controlador/CreacionController.php',
+								type: 'POST',
+								data: {id_marca: id_marca,
+									   id_deposito: id_deposito,
+									   modelo: modelo,
+									   num_serie: nro_de_serie,
+									   tipo: "Monitor"},
+							})
+							.done(function(resultado) {
+								console.log(resultado);
+								console.log("success");
 
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			console.log("complete");
-		});
+								$.post('controlador/Dialog_asignar.php',
+								{
+									tipo : "Monitores"
+								}, function(data) {
+									$("#dialogo_asignar").html(data);
+									$("#dialogo_asignar").dialog("open");
+								});
+
+							})
+							.fail(function() {
+								console.log("error");
+								alert('Hubo un error');
+								$("#tabs1").load("controlador/ProductosController.php",{action:"view_agregar_monitor",tipo:"sel_marcas"});
+
+							})
+							.always(function() {
+								console.log("complete");
+							});
+						}
+						else{
+							console.log("El numero de serie ya existe");
+							alert('El numero de serie ya existe');
+						}
+				}
+			);
 		}
-		else{alert('Debes ingresar el Numero de serie!');
+		else{
+			alert('Debes ingresar el Numero de serie!');
+			$("#tabs1").load("controlador/ProductosController.php",{action:"view_agregar_monitor",tipo:"sel_marcas"});
+		}
 
-			$("#tabs1").load("controlador/ProductosController.php",{action:"view_agregar_monitor",tipo:"sel_marcas"});}
+	});
 
+	$( "#dialogo_asignar" ).dialog({
+		autoOpen: false,
+		show: {
+		effect: "blind",
+		duration: 1000,
+		modal:true
+		},
+		hide: {
+		effect: "explode",
+		duration: 200
+		},
+		width : 400
 	});
 });
 </script>

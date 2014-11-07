@@ -133,6 +133,6 @@ $( "#dialogcontent" ).dialog({
 	effect: "explode",
 	duration: 200
 	},
-	width : 350
+	width : 400
 });
 </script>

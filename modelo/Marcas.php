@@ -47,7 +47,7 @@ class Marcas {
 	public function dameSelect() {
 		$table = BDD::getInstance()->query("select nombre, id_marca from system." . self::claseMinus());
 		$html_view = "<select id='select_marcas' name='marcas'>
-					  <option value='0'>Seleccione Marca</option>";
+					  <option value=''>Seleccione Marca</option>";
 
 		while ($fila = $table->_fetchRow()) {
 			$html_view = $html_view . "<option value=" . $fila['id_marca'] . ">" . $fila['nombre'] . "</option>";

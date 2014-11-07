@@ -83,3 +83,23 @@ h1{
 	background-color: blue;
 	color:white;
 }
+
+p.error_usuario{
+	font-size: 14px;
+	color:red;
+	font-family: "fantasy";
+	font-style: italic;
+	margin-left: 5px;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+p.acierto_usuario{
+	font-size: 14px;
+	color:green;
+	font-family: "fantasy";
+	font-style: italic;
+	margin-left: 5px;
+	margin-top: 0;
+	margin-bottom: 0;
+}

@@ -5,6 +5,9 @@
           <td>Nombre</td>
           <td><input type="text" name="nombre_apellido" id="nombre_apellido" value="{nombre_apellido}"></td>
         </tr>
+        <tr style="display:none" id="mostrar_error_usuario">
+        <td></td class="td_error"><td class="td_error"><label id="error_usuario"></label></td>
+        </tr>
         <tr>
           <td>Usuario</td>
           <td><input type="text" name="usuario" id="usuario" value="{usuario}"></td>
@@ -46,36 +49,78 @@ $(document).ready(function(){
     errorLabelContainer : "#errores" ,
     wrapper : "li" ,
     rules : {
-      nombre_apellido : {
-        required : true ,
-        minlength : 8,
-        maxlength : 30
-      } ,
-      usuario : {
-        required : true,
-        minlength : 5,
-        maxlength : 15
-      },
-      area : {
-        required : true
-      }
+        nombre_apellido : {
+          required : true ,
+          minlength : 5,
+          maxlength : 50
+        } ,
+        usuario : {
+          required : true,
+          minlength : 3,
+          maxlength : 30,
+          remote: {
+            url: "checkDisponibilidad.php",
+            type: "post",
+            data: {
+              username: function() {
+                return $( "#usuario" ).val();
+              },
+              action: function(){
+                return "chequeo";
+              }
+            },
+          }
+        },
+        area : {
+          required : true
+        },
+        permisos : {
+          required : true
+        },
+        password :{
+          required : true
+        },
+        email :{
+          required : false,
+          email : true
+        }
     } ,
     messages : {
-      nombre_apellido : {
-        required : 'El"Nombre" es OBLIGATORIO',
-        minlength : 'El "Nombre" debe tener más de 8 caracteres'
-      }
+        nombre_apellido : {
+          required : 'El nombre es OBLIGATORIO',
+          minlength : 'El nombre debe tener más de 4 caracteres',
+          maxlength : 'El nombre debe tener menos de 50 caracteres'
+        },
+        usuario : {
+          required : 'El usuario es OBLIGATORIO',
+          minlength : 'El usuario debe tener más de 2 caracteres',
+          maxlength : 'El usuario debe tener menos de 50 caracteres',
+          remote : 'El nombre de usuario ya existe'
+        },
+        area : {
+          required : 'El area es OBLIGATORIA'
+        },
+        permisos : {
+          required : 'Los permisos son OBLIGATORIOS'
+        },
+        password : {
+          required : 'La password no puede ser null'
+        },
+        email : {
+          email : 'Por favor, ingresa un email con formato correcto'
+        }
     } ,
     submitHandler : function (form) {
-      console.log ("formulario ok");
+      console.log ("Formulario OK");
+      //$(form).submit();
     } ,
     invalidHandler : function (event , validator) {
       console.log(validator);
     }
 
   });
-
 });
+
 /*
 
     $('#nombre').focus();
