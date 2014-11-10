@@ -2,19 +2,19 @@
     <div id="errores"></div>
     <table class="mytable">
         <tr>
-          <td>Nombre</td>
+          <td class="required">Nombre</td>
           <td><input type="text" name="nombre_apellido" id="nombre_apellido" value="{nombre_apellido}"></td>
         </tr>
-        <tr style="display:none" id="mostrar_error_usuario">
-        <td></td class="td_error"><td class="td_error"><label id="error_usuario"></label></td>
-        </tr>
         <tr>
-          <td>Usuario</td>
+          <td class="required">Usuario</td>
           <td><input type="text" name="usuario" id="usuario" value="{usuario}"></td>
         </tr>
         <tr>
           <td>Email</td>
           <td><input type="text" name="email" id="email" value="{email}"></td>
+        </tr>
+        <tr type="hidden">
+           <td><input type="hidden" name="password_orig" id="password_orig" value="{password}"></td>
         </tr>
         <tr>
           <td>Area</td>
@@ -45,82 +45,171 @@
 
 $(document).ready(function(){
 
-  $("#form").validate({
-    errorLabelContainer : "#errores" ,
-    wrapper : "li" ,
-    rules : {
-        nombre_apellido : {
-          required : true ,
-          minlength : 5,
-          maxlength : 50
-        } ,
-        usuario : {
-          required : true,
-          minlength : 3,
-          maxlength : 30,
-          remote: {
-            url: "checkDisponibilidad.php",
-            type: "post",
-            data: {
-              username: function() {
-                return $( "#usuario" ).val();
-              },
-              action: function(){
-                return "chequeo";
-              }
-            },
-          }
-        },
-        area : {
-          required : true
-        },
-        permisos : {
-          required : true
-        },
-        password :{
-          required : true
-        },
-        email :{
-          required : false,
-          email : true
-        }
-    } ,
-    messages : {
-        nombre_apellido : {
-          required : 'El nombre es OBLIGATORIO',
-          minlength : 'El nombre debe tener más de 4 caracteres',
-          maxlength : 'El nombre debe tener menos de 50 caracteres'
-        },
-        usuario : {
-          required : 'El usuario es OBLIGATORIO',
-          minlength : 'El usuario debe tener más de 2 caracteres',
-          maxlength : 'El usuario debe tener menos de 50 caracteres',
-          remote : 'El nombre de usuario ya existe'
-        },
-        area : {
-          required : 'El area es OBLIGATORIA'
-        },
-        permisos : {
-          required : 'Los permisos son OBLIGATORIOS'
-        },
-        password : {
-          required : 'La password no puede ser null'
-        },
-        email : {
-          email : 'Por favor, ingresa un email con formato correcto'
-        }
-    } ,
-    submitHandler : function (form) {
-      console.log ("Formulario OK");
-      //$(form).submit();
-    } ,
-    invalidHandler : function (event , validator) {
-      console.log(validator);
+    var usuario = $('#usuario');
+    var usuario_orig = '{usuario}';
+    var password = $('#password');
+    var nueva_password = $('#nueva_password');
+    var conf_password = $('#conf_password');
+    var estado = {nuevo};
+
+    if(estado == 1)
+    {
+        $.get("vista/agregar_datos_password_nueva.php",function(data){
+            $("#vista_pass").replaceWith(data);
+        });
     }
 
-  });
+    $("#form").validate({
+        errorLabelContainer : "#errores" ,
+        wrapper : "li" ,
+        rules : {
+            nombre_apellido : {
+              required : true ,
+              minlength : 5,
+              maxlength : 50
+            } ,
+            usuario : {
+              required : true,
+              minlength : 3,
+              maxlength : 30,
+              remote: {
+                url: "checkDisponibilidad.php",
+                type: "post",
+                data: {
+                  username: function() {
+                    if($( "#usuario" ).val() != usuario_orig){
+                      return $( "#usuario" ).val();
+                    }
+                  },
+                  action: function(){
+                    return "chequeo";
+                  }
+                }
+              }
+            },
+            area : {
+              required : true
+            },
+            permisos : {
+              required : true
+            },
+            password :{
+              required : true,
+              equalTo: "#password_orig"
+            },
+            conf_password : {
+              required : true,
+              equalTo: "#nueva_password"
+            },
+            nueva_password : {
+              required : true,
+            },
+            email :{
+              required : false,
+              email : true
+            }
+        } ,
+        messages : {
+            nombre_apellido : {
+              required : 'El nombre es OBLIGATORIO',
+              minlength : 'El nombre debe tener más de 4 caracteres',
+              maxlength : 'El nombre debe tener menos de 50 caracteres'
+            },
+            usuario : {
+              required : 'El usuario es OBLIGATORIO',
+              minlength : 'El usuario debe tener más de 2 caracteres',
+              maxlength : 'El usuario debe tener menos de 50 caracteres',
+              remote : 'El nombre de usuario ya existe'
+            },
+            area : {
+              required : 'El area es OBLIGATORIA'
+            },
+            permisos : {
+              required : 'Los permisos son OBLIGATORIOS'
+            },
+            password : {
+              required : 'La password no puede ser null'
+            },
+            conf_password : {
+              required : 'La confirmarcion de password no puede ser null',
+              equalTo: 'Las passwords ingresadas no son iguales'
+            },
+            nueva_password : {
+              required : 'La nueva password es OBLIGATORIA',
+              equalTo: "Las passwords ingresadas no son iguales"
+            },
+            email : {
+              email : 'Por favor, ingresa un email con formato correcto'
+            }
+        } ,
+        submitHandler : function (form) {
+          console.log ("Formulario OK");
+        } ,
+        invalidHandler : function (event , validator) {
+          console.log(validator);
+        }
+    });
+
 });
 
+    $("#form").on('submit',function(){
+        var estado = {nuevo};
+        console.log("Aca empieza el envio de datos de usuario");
+
+        var UrlToPass;
+        UrlToPass = $("#form").serialize();
+
+        if(estado == 1){
+          UrlToPass+="&action=crear";
+        }
+        else if(estado == 0){
+          UrlToPass+="&action=modificar";
+        }
+        console.log(UrlToPass);
+
+          $.ajax({
+                type : 'POST',
+                data : UrlToPass,
+                url  : 'controlador/UsuariosController.php',
+                success: function(responseText){ // Obtengo el resultado de exito
+                    if(responseText == 0){
+                      alert("No se pudieron plasmar los datos. Error de en la Base de datos.");
+                    }
+                    else if(responseText == 1){
+                      console.log("Los datos han sido actualizados correctamente!");
+                    }
+                    else{
+                      alert('Problema en la Sql query');
+                    }
+
+                    $("#dialogcontent").dialog("close");
+                    $("#contenedorPpal").load("controlador/UsuariosController.php");
+                }
+          });
+    });
+
+    $("#cambiar_pass").on('click',function(){
+        $.post("vista/agregar_datos_password.php",function(data){
+
+            $("#vista_pass").replaceWith(data);
+             //$( "#dialog_cambiar_pass" ).html(data);
+             //$( "#dialog_cambiar_pass" ).dialog("open");
+        });
+    });
+
+    $( "#dialog_cambiar_pass" ).dialog({
+      autoOpen: false,
+      show: {
+      effect: "blind",
+      duration: 1000,
+      modal:true
+      },
+      hide: {
+      effect: "explode",
+      duration: 200
+      },
+      width : 400
+    });
 /*
 
     $('#nombre').focus();

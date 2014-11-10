@@ -9,11 +9,8 @@ if (isset($_POST['tipo'])) {
 	$tipo_productos = Tipo_productos::get_rel_campos();
 
 	if (in_array($_POST['tipo'], $tipo_productos)) {
-		foreach ($tipo_productos as $indice => $valor) {
-			if ($valor == $_POST['tipo']) {
-				$datos['id_tipo_producto'] = $indice;
-			}
-		}
+
+		$datos['id_tipo_producto'] = array_search($_POST['tipo'], $tipo_productos);
 
 		$metodo = "crearVinculo" . $_POST['tipo'];
 		Consola::mostrar("Muestro los datos con los que voy a crear el Monitor y Vinculo");

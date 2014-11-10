@@ -9,6 +9,10 @@ if (isset($_POST['action'])) {
 	$action = $_POST['action'];
 	unset($_POST['action']);
 
+	if (isset($_POST['password_orig'])) {
+		unset($_POST['password_orig']);
+	}
+
 	switch ($action) {
 		case 'modificar':
 
@@ -44,6 +48,14 @@ if (isset($_POST['action'])) {
 
 			if ($_POST['id_usuario'] != "") {
 				echo $inst_usuarios->eliminarUsuario($_POST['id_usuario']);
+			}
+			break;
+
+		case 'buscar_area':
+
+			if (isset($_POST['id_usuario'])) {
+				$inst_usuarios = new Usuarios();
+				echo $inst_usuarios->dame_id_area($_POST['id_usuario']);
 			}
 			break;
 		default:

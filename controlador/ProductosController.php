@@ -23,6 +23,13 @@ if (!isset($_POST['action'])) {
 			} else if ($_POST['tipo'] == "sel_depositos") {
 
 				$inst = new Areas();
+				if (isset($_POST['value'])) {
+					echo $inst->dameSelect($_POST['value']);
+				} else {
+					echo $inst->dameSelect();
+				}
+			} else if ($_POST['tipo'] == "sel_usuarios") {
+				$inst = new Usuarios();
 				echo $inst->dameSelect();
 			}
 			break;

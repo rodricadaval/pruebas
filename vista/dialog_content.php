@@ -17,6 +17,7 @@ if ($_POST['queSos'] == "nuevo") {
 } else if (isset($_POST['queSos'])) {
 
 	$datos_tabla = $inst_tabla->getById($_POST['ID']);
+	$datos_tabla['nuevo'] = 0;
 }
 
 unset($_POST['TablaPpal']);
@@ -25,7 +26,7 @@ foreach ($_POST as $key => $value) {
 
 	if (substr($key, 0, 6) == "select") {
 		$inst_clase = new $value();
-		$tipo       = strtolower(substr($value, 0, -1));
+		$tipo = strtolower(substr($value, 0, -1));
 		if ($tipo == "permiso") {
 			$tipo = $tipo . "s";
 		}

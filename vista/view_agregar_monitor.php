@@ -1,8 +1,8 @@
 
 <h3>{titulo}</h3><p>Seleccione la marca y modelo del monitor</p>
-<div id="dialogo_asignar" title="Asignar"></div>
+<div id="dialogo_asignar" title="Asignar Usuario"></div>
 
-<div class="combo_boxes">
+
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="tabla_agregar"></table>
 	<div id="selects">
 	<tr>
@@ -23,13 +23,20 @@
     	<td>Nro de Serie:</td>
     	<td><input class="input_nro_serie" type="text" name="nro_de_serie"</td>
     </tr>
+    </br></br>
+    <tr>
+    	<td>Usuario:</td>
+    	<td><select id='select_usuarios' name='usuarios'>
+    				<option value=''>Sin usuario</option></select>
+    	</td>
+    </tr>
     </div>
-    <div id="agregar"><input class="boton_agregar_monitor" type="button" name="crearMonitor" value="Crear"</div>
+    <div id="agregar"><input class="boton_agregar_monitor" type="submit" name="crearMonitor" value="Crear"</div>
 </table>
 </div>
 
+
 <script type="text/javascript">
-	$(document).ready(function(event){
 
 	$("#select_marcas").on('change',function(){
 
@@ -43,10 +50,10 @@
 
 			}, function(data) {
 			$("#select_modelos").replaceWith(data);
-		});
+			});
+
 			$.post('controlador/ProductosController.php',
 			{
-				value : $('#select_marcas option:selected').val(),
 				tipo : "sel_depositos",
 				action : "view_agregar_monitor"
 
@@ -55,20 +62,84 @@
 			});
 	});
 
+	$.post('controlador/ProductosController.php',
+			{
+				value : $('#select_usuarios option:selected').val(),
+				tipo : "sel_usuarios",
+				action : "view_agregar_monitor"
+
+			}, function(data) {
+				$("#select_usuarios").replaceWith(data);
+			}
+	);
+
+	$('#contenedorPpal').on('change', '#select_areas', function(){
+    	console.log('Entro al cambio de area');
+
+		if($('#select_areas').val() == 1){
+			console.log('El area es Stock');
+			$('#select_usuarios').replaceWith("<select disabled id='select_usuarios' name='usuarios'><option selected='selected' value='1'>Ninguno</option>");
+		}
+		else{
+			if($('#select_usuarios option:selected').val() == 1){
+				$.post('controlador/ProductosController.php',
+				{
+					value : $('#select_usuarios option:selected').val(),
+					tipo : "sel_usuarios",
+					action : "view_agregar_monitor"
+
+				}, function(data) {
+					$("#select_usuarios").replaceWith(data);
+				}
+			);
+			}
+		}
+	});
+
+	$('#contenedorPpal').on('change', '#select_usuarios', function(){
+		if($('#select_usuarios option:selected').val() > 1){
+
+			$.post('controlador/UsuariosController.php',
+			{
+				id_usuario : $('#select_usuarios option:selected').val(),
+				action : "buscar_area"
+
+			}, function(id_area) {
+
+					$.post('controlador/ProductosController.php',
+						{
+							value : id_area,
+							tipo : "sel_depositos",
+							action : "view_agregar_monitor"
+
+						}, function(data) {
+							$("#select_areas").replaceWith(data);
+							}
+					);
+			   }
+			);
+		}
+		else if($('#select_usuarios option:selected').val() == 1){
+			$('#select_areas').removeAttr('disabled');
+		}
+	});
+
 	$("#agregar").on('click',function(){
+
 		console.log('Evento de click en crear');
 
 		var id_marca = $('#select_marcas option:selected').val();
 		var id_deposito = $('#select_areas option:selected').val();
 		var modelo = $('#select_modelos option:selected').val();
 		var nro_de_serie = $('.input_nro_serie').val();
+		var id_usuario = $('#select_usuarios option:selected').val();
 
 		if(id_deposito == "" || id_marca == ""){
 
-			alert('Debes ingresar algún deposito o marca!');
+			alert('Deposito, Marca y Usuario deben estar completados');
 			$("#tabs1").load("controlador/ProductosController.php",{action:"view_agregar_monitor",tipo:"sel_marcas"});
 		}
-		else if(nro_de_serie != ""){
+		else if(nro_de_serie != "" && id_usuario != ""){
 
 			$.post('controlador/chequeo_existencia_nro_serie.php',
 				{
@@ -77,6 +148,7 @@
 				,function(no_existe){
 					console.log(no_existe);
 					if(no_existe == 1){
+
 							$.ajax({
 								url: 'controlador/CreacionController.php',
 								type: 'POST',
@@ -84,20 +156,14 @@
 									   id_deposito: id_deposito,
 									   modelo: modelo,
 									   num_serie: nro_de_serie,
+									   id_usuario : id_usuario,
 									   tipo: "Monitor"},
 							})
 							.done(function(resultado) {
 								console.log(resultado);
 								console.log("success");
-
-								$.post('controlador/Dialog_asignar.php',
-								{
-									tipo : "Monitores"
-								}, function(data) {
-									$("#dialogo_asignar").html(data);
-									$("#dialogo_asignar").dialog("open");
-								});
-
+								alert('Se ha agregado el producto correctamente');
+								$("#tabs1").load("controlador/ProductosController.php",{action:"view_agregar_monitor",tipo:"sel_marcas"});
 							})
 							.fail(function() {
 								console.log("error");
@@ -112,29 +178,18 @@
 						else{
 							console.log("El numero de serie ya existe");
 							alert('El numero de serie ya existe');
+							$('.input_nro_serie').val("");
 						}
 				}
 			);
 		}
-		else{
+		else if(nro_de_serie == ""){
 			alert('Debes ingresar el Numero de serie!');
-			$("#tabs1").load("controlador/ProductosController.php",{action:"view_agregar_monitor",tipo:"sel_marcas"});
+			$('.input_nro_serie').val("");
+		}
+		else if(id_usuario == ""){
+			alert('Debes elegir un usuario o seleccionar Ninguno');
 		}
 
 	});
-
-	$( "#dialogo_asignar" ).dialog({
-		autoOpen: false,
-		show: {
-		effect: "blind",
-		duration: 1000,
-		modal:true
-		},
-		hide: {
-		effect: "explode",
-		duration: 200
-		},
-		width : 400
-	});
-});
 </script>

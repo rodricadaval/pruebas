@@ -30,15 +30,6 @@ class Usuarios {
 		echo (json_encode($data));
 	}
 
-/*
-while ($reg = pg_fetch_assoc($armar_tabla)) {
-
-for ($j = 0 ; $j < pg_num_fields ($armar_tabla) ; $j ++) {
-$data[$i][pg_field_name($armar_tabla , $j)] = $reg[pg_field_name($armar_tabla , $j)];
-}
-$i++;
-}
- */
 	public function getById($id) {
 		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_usuario = '$id' ")->_fetchRow();
 		$fila['password'] = base64_decode(base64_decode(base64_decode($fila['password'])));
@@ -153,6 +144,29 @@ $i++;
 				return 1;
 			}
 		} else {return 0;}
+	}
+
+	public function dame_id_area($id) {
+		return BDD::getInstance()->query("select area FROM system." . self::claseMinus() . " WHERE id_usuario = '$id' ")->_fetchRow()['area'];
+	}
+
+	public function dameSelect($id = "") {
+		$table = BDD::getInstance()->query("select usuario, id_usuario, nombre_apellido from system." . self::claseMinus() . " where id_usuario <> 1 order by nombre_apellido,usuario asc");
+		$html_view = "<select id='select_usuarios' name='usuario'>";
+		$html_view .= "<option selected='selected' value=''>Seleccionar</option>";
+		$html_view .= "<option value=1>Ninguno</option>";
+
+		while ($fila_usuario = $table->_fetchRow()) {
+
+			if ($fila_usuario['id_usuario'] == $id) {
+				$html_view .= "<option selected='selected' value=" . $fila_usuario['id_usuario'] . ">" . $fila_usuario['nombre_apellido'] . "  |  " . $fila_usuario['usuario'] . "</option>";
+			} else if ($fila_usuario['id_usuario'] != "") {
+				$html_view .= "<option value=" . $fila_usuario['id_usuario'] . ">" . $fila_usuario['nombre_apellido'] . "  |  " . $fila_usuario['usuario'] . "</option>";
+			}
+		}
+
+		$html_view = $html_view . "</select>";
+		return $html_view;
 	}
 }
 ?>

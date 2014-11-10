@@ -2,7 +2,7 @@
 	<input type="button" id="crear_usuario" value="Crear Usuario">
 </div>
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
-<div id="dialogcontent" title="Modificar Usuario">
+<div id="dialogcontent" title="Crear/Modificar Usuario">
 <p>All form fields are required.</p>
 </div>
 <script type="text/javascript">
@@ -70,8 +70,9 @@
 						});
 });
 	$("#contenedorPpal").on('click' , '.modificar' , function(){
+
 		console.log($(this).attr("id_usuario"));
-		var id_usuario = $(this).attr('id_usuario');
+		var id_usuario = $(this).attr("id_usuario");
 		$.post( "vista/dialog_content.php",
 			{
 				TablaPpal : "Usuarios",
@@ -82,7 +83,8 @@
 			}, function(data){
 				$("#dialogcontent").html(data);
 				$("#dialogcontent").dialog("open");
-			});
+			   }
+		);
 	});
 	$("#contenedorPpal").on('click' , '.eliminar' , function(){
 		console.log($(this).attr("id_usuario"));
@@ -103,9 +105,9 @@
 										location.reload();
 									}
 									else if(responseText == 1) {
-											alert("Se ha eliminado al usuario correctamente");
-													$("#contenedorPpal").load("controlador/UsuariosController.php");
-												}
+										alert("Se ha eliminado al usuario correctamente");
+										$("#contenedorPpal").load("controlador/UsuariosController.php");
+									}
 				else{alert("Hubo algun error");}
 				}
 		});
@@ -121,18 +123,19 @@
 				$("#dialogcontent").html(data);
 				$("#dialogcontent").dialog("open");
 			});
-});
-$( "#dialogcontent" ).dialog({
-	autoOpen: false,
-	show: {
-	effect: "blind",
-	duration: 1000,
-	modal:true
-	},
-	hide: {
-	effect: "explode",
-	duration: 200
-	},
-	width : 400
-});
+	});
+
+	$( "#dialogcontent" ).dialog({
+		autoOpen: false,
+		show: {
+		effect: "blind",
+		duration: 1000,
+		modal:true
+		},
+		hide: {
+		effect: "explode",
+		duration: 200
+		},
+		width : 400
+	});
 </script>

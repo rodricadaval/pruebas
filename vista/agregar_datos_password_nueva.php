@@ -1,6 +1,6 @@
 		<tr>
           <td>Password</td>
-          <td><input type='password' name='password' id='password' value=''></td>
+          <td><input type='password' name='nueva_password' id='nueva_password' value=''></td>
         </tr>
         <tr>
           <td>Confirmar Password</td>

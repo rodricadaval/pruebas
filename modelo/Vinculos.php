@@ -36,7 +36,7 @@ class Vinculos {
 					return false;
 				} else {
 					Consola::mostrar("Se ejecuto correctamente el update del vinculo con el id de monitor correspondiente.");
-					var_dump(BDD::getInstance());
+					//var_dump(BDD::getInstance());
 					return true;
 				}
 			}
