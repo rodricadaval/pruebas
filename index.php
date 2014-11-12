@@ -9,13 +9,15 @@ include 'logueo/chequeo_login.php';
         <meta charset="UTF-8" content="text/html" http-equiv="Content-Type">
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
-        <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
         <script src="lib/jquery.hashchange.js" type="text/javascript"></script>
         <script src="lib/jquery.easytabs.js" type="text/javascript"></script>
         <script src="lib/jquery.validate.js" type="text/javascript"></script>
+         <script src="lib/semantic.js" type="text/javascript"></script>
         <link href="css/jquery-easytabs.css" rel="stylesheet" type="text/css">
         <link href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css" rel=
         "stylesheet" type="text/css">
+        <link href="css/semantic.css" rel="stylesheet" type="text/css">
         <link href="css/styles.css" rel="stylesheet" type="text/css">
         <link href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css"
         rel="stylesheet">

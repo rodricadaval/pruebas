@@ -34,8 +34,10 @@ if (isset($_POST['action'])) {
 			break;
 		case 'crear':
 
-			if (isset($_POST['password']) && isset($_POST['conf_password'])) {
+			if (isset($_POST['nueva_password']) && isset($_POST['conf_password'])) {
 				unset($_POST['conf_password']);
+				$_POST['password'] = $_POST['nueva_password'];
+				unset($_POST['nueva_password']);
 			}
 
 			foreach ($_POST as $clave => $valor) {
@@ -63,6 +65,7 @@ if (isset($_POST['action'])) {
 
 	}
 } else {
+
 	$archivos = array("vista/view_usuarios.php");
 	$parametros = array("TABLA" => "Usuarios", "");
 	echo Disenio::HTML($archivos, $parametros);

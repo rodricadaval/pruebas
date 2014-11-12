@@ -29,9 +29,9 @@
 												{ "sTitle" : "Area" , "mData" : "area"},
 												{ "sTitle" : "Email" , "mData" : "email"},
 												{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
-												'<a class="ventana_usuario " href="#">Accion</a>'}
+												'<a class="ventana_usuario " href="">Accion</a>'}
 												]
-									})
+										})
 									}
 									else if (permisos == 2) {
 										$("#dataTable").dataTable({
@@ -68,7 +68,7 @@
 								});
 							}
 						});
-});
+	});
 	$("#contenedorPpal").on('click' , '.modificar' , function(){
 
 		console.log($(this).attr("id_usuario"));
@@ -86,6 +86,7 @@
 			   }
 		);
 	});
+
 	$("#contenedorPpal").on('click' , '.eliminar' , function(){
 		console.log($(this).attr("id_usuario"));
 		var id_usuario = $(this).attr('id_usuario');
@@ -104,10 +105,10 @@
 									alert("Se ha eliminado a usted mismo, debe volver a iniciar sesion");
 										location.reload();
 									}
-									else if(responseText == 1) {
-										alert("Se ha eliminado al usuario correctamente");
-										$("#contenedorPpal").load("controlador/UsuariosController.php");
-									}
+				else if(responseText == 1) {
+					alert("Se ha eliminado al usuario correctamente");
+					$("#contenedorPpal").load("controlador/UsuariosController.php");
+				}
 				else{alert("Hubo algun error");}
 				}
 		});

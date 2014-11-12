@@ -52,6 +52,9 @@ $(document).ready(function(){
     var conf_password = $('#conf_password');
     var estado = {nuevo};
 
+    $('#select_areas').removeAttr('disabled');
+    $("#select_areas option[value=1]").remove();
+
     if(estado == 1)
     {
         $.get("vista/agregar_datos_password_nueva.php",function(data){
@@ -76,13 +79,16 @@ $(document).ready(function(){
                 url: "checkDisponibilidad.php",
                 type: "post",
                 data: {
-                  username: function() {
+                  dato: function() {
                     if($( "#usuario" ).val() != usuario_orig){
                       return $( "#usuario" ).val();
                     }
                   },
                   action: function(){
                     return "chequeo";
+                  },
+                  tabla: function(){
+                    return "Usuarios";
                   }
                 }
               }
@@ -192,24 +198,9 @@ $(document).ready(function(){
         $.post("vista/agregar_datos_password.php",function(data){
 
             $("#vista_pass").replaceWith(data);
-             //$( "#dialog_cambiar_pass" ).html(data);
-             //$( "#dialog_cambiar_pass" ).dialog("open");
         });
     });
 
-    $( "#dialog_cambiar_pass" ).dialog({
-      autoOpen: false,
-      show: {
-      effect: "blind",
-      duration: 1000,
-      modal:true
-      },
-      hide: {
-      effect: "explode",
-      duration: 200
-      },
-      width : 400
-    });
 /*
 
     $('#nombre').focus();

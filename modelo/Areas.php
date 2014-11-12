@@ -7,7 +7,7 @@ class Areas {
 
 	public function listarTodos() {
 
-		$areas = BDD::getInstance()->query("select * , '<a href=\"#\" class=\"modificar\"id_area=\"' || id_area || '\">MODIFICAR</a>' as m from system." . self::claseMinus());
+		$areas = BDD::getInstance()->query("select * , '<a href=\"#\" class=\"modificar_area\"id_area=\"' || id_area || '\"><i class=\"circular inverted green small edit icon\"></i></a> <a href=\"#\" class=\"eliminar_area\"id_area=\"' || id_area || '\"><i class=\"circular inverted red small trash icon\"></i></a>' as m from system." . self::claseMinus());
 		$i = 0;
 		while ($fila_area = $areas->_fetchRow()) {
 			foreach ($fila_area as $campo => $valor) {
@@ -19,9 +19,7 @@ class Areas {
 	}
 
 	public function getByID($id) {
-		$area = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_area = '$id' ");
-		$elArea = $area->_fetchRow();
-		return $elArea;
+		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_area = '$id' ")->_fetchRow();
 	}
 
 	public function dameSelect($id = "") {
@@ -61,6 +59,29 @@ class Areas {
 
 		}
 		return $array;
+	}
+
+	public function chequeoExistenciaAreas($area) {
+		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where nombre = '$area' ");
+	}
+
+	public function modificarDatos($datos = '') {
+
+		$cadena = '';
+
+		if (isset($datos['id_area'])) {
+			$id_area = $datos['id_area'];
+			unset($datos['id_area']);
+			$nombre = $datos['nombre'];
+		}
+
+		$cadena .= "nombre='$nombre'";
+
+		if (!BDD::getInstance()->query("UPDATE system." . self::claseMinus() . " SET $cadena WHERE id_area = '$id_area' ")->get_error()) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 }
 ?>

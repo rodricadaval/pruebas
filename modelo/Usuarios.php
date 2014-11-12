@@ -7,7 +7,7 @@ class Usuarios {
 	}
 
 	public function listarTodos() {
-		$armar_tabla = BDD::getInstance()->query("select * , '<a href=\"#\" class=\"modificar\"id_usuario=\"' || id_usuario || '\">MODIFICAR</a> <a href=\"#\" class=\"eliminar\"id_usuario=\"' || id_usuario || '\">ELIMINAR</a>' as m from system." . self::claseMinus())->_fetchAll();
+		$armar_tabla = BDD::getInstance()->query("select * , '<a href=\"#\" class=\"modificar\"id_usuario=\"' || id_usuario || '\"><i class=\"circular inverted green small edit icon\"></i></a> <a href=\"#\" class=\"eliminar\"id_usuario=\"' || id_usuario || '\"><i class=\"circular inverted red small trash icon\"></i></a>' as m from system." . self::claseMinus() . " where estado = 1")->_fetchAll();
 		$i = 0;
 
 		foreach ($armar_tabla as $fila) {
@@ -56,7 +56,7 @@ class Usuarios {
 		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where usuario = '$usuario' and password = '$pass'");
 	}
 
-	public function chequeoExistenciaUsuario($usuario) {
+	public function chequeoExistenciaUsuarios($usuario) {
 		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where usuario = '$usuario' ");
 	}
 
@@ -136,7 +136,7 @@ class Usuarios {
 	}
 
 	public function eliminarUsuario($id) {
-		if (!BDD::getInstance()->query("DELETE FROM system." . self::claseMinus() . " WHERE id_usuario = '$id' ")->get_error()) {
+		if (!BDD::getInstance()->query("UPDATE system." . self::claseMinus() . " SET estado = 0 WHERE id_usuario = '$id' ")->get_error()) {
 			if ($_SESSION['userid'] == $id) {
 				session_destroy();
 				return 2;
