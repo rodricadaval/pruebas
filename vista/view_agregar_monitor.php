@@ -78,26 +78,16 @@
 
 		if($('#select_areas').val() == 1){
 			console.log('El area es Stock');
-			$('#select_usuarios').replaceWith("<select disabled id='select_usuarios' name='usuarios'><option selected='selected' value='1'>Ninguno</option>");
+			$('#select_usuarios option:contains("Ninguno")').prop('selected', true);
+			$('#select_usuarios').attr('disabled', 'disabled');
 		}
 		else{
-			if($('#select_usuarios option:selected').val() == 1){
-				$.post('controlador/ProductosController.php',
-				{
-					value : $('#select_usuarios option:selected').val(),
-					tipo : "sel_usuarios",
-					action : "view_agregar_monitor"
-
-				}, function(data) {
-					$("#select_usuarios").replaceWith(data);
-				}
-			);
-			}
+			$('#select_usuarios').removeAttr('disabled');
 		}
 	});
 
 	$('#contenedorPpal').on('change', '#select_usuarios', function(){
-		if($('#select_usuarios option:selected').val() > 1){
+		if($('#select_usuarios option:selected').val() > 1 && $('#select_areas option:selected').val() != 2){
 
 			$.post('controlador/UsuariosController.php',
 			{
@@ -106,16 +96,8 @@
 
 			}, function(id_area) {
 
-					$.post('controlador/ProductosController.php',
-						{
-							value : id_area,
-							tipo : "sel_depositos",
-							action : "view_agregar_monitor"
-
-						}, function(data) {
-							$("#select_areas").replaceWith(data);
-							}
-					);
+					$('#select_areas option[value='+id_area+']').attr('selected', 'selected');
+					$('#select_areas').attr('disabled', 'disabled');
 			   }
 			);
 		}

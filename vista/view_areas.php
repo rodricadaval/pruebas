@@ -21,7 +21,7 @@
 									{ "sTitle" : "ID" , "mData" : "id_area"},
 									{ "sTitle" : "Area" , "mData" : "nombre"},
 									{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
-										'<a class="ventana_area " href="">Modificar</a>'}]
+										'Modificar'}]
 				   			})
 						}
 						else if(answer == 2){
@@ -41,7 +41,7 @@
 	});
 
 
-	$("#contenedorPpal").on('click' , '.modificar_area' , function(){
+	$("#contenedorPpal").on('click' , '#modificar_area' , function(){
 
 			console.log($(this).attr("id_area"));
 			var id_area = $(this).attr("id_area");

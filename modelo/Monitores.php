@@ -8,7 +8,7 @@ class Monitores {
 
 	public function listarTodos() {
 
-		$inst_table = BDD::getInstance()->query("select * from system." . self::claseMinus());
+		$inst_table = BDD::getInstance()->query("select * , '<a id=\"modificar_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted green small edit icon\"></i></a> <a id=\"eliminar_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted red small trash icon\"></i></a>' as m from system." . self::claseMinus() . " where estado = 1");
 		$i = 0;
 		while ($fila = $inst_table->_fetchRow()) {
 			foreach ($fila as $campo => $valor) {
@@ -17,6 +17,51 @@ class Monitores {
 			$i++;
 		}
 		echo json_encode($data);
+	}
+
+	public function listarCorrecto($datos_extra = "") {
+
+		$inst_table = BDD::getInstance()->query("select * , '<a id=\"modificar_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted green small edit icon\"></i></a> <a id=\"eliminar_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted red small trash icon\"></i></a>' as m from system." . self::claseMinus() . " where estado = 1");
+
+		$todo = $inst_table->_fetchAll();
+		$total = $inst_table->get_count();
+
+		for ($i = 0; $i < $total; $i++) {
+
+			$data[$i] = $todo[$i];
+
+			foreach ($data[$i] as $campo => $valor) {
+
+				switch ($campo) {
+					case 'id_monitor_desc':
+						$arrayAsoc_desc = Monitor_desc::dameDatos($valor);
+
+						foreach ($arrayAsoc_desc as $camp => $value) {
+							$data[$i][$camp] = $value;
+						}
+						break;
+
+					case 'id_vinculo':
+						$arrayAsoc_vinculo = Vinculos::dameDatos($valor);
+
+						foreach ($arrayAsoc_vinculo as $camp => $value) {
+							$data[$i][$camp] = $value;
+						}
+						break;
+
+					default:
+						# code...
+						break;
+				}
+
+			}
+		}
+
+		if ($datos_extra[0] == "json") {
+			echo json_encode($data);
+		} else {
+			return $data;
+		}
 	}
 
 	public function getNombre($id) {
@@ -32,14 +77,8 @@ class Monitores {
 		$html_view .= "<select id='select_monitor' name='monitor'>";
 		$first = true;
 		$inst_marca = new Marcas();
-		//$nombres = BDD::getInstance()->query("select nombre from system.marcas");
 
 		while ($fila_monitor = $table->_fetchRow()) {
-
-			//var_dump($fila_monitor);
-			//$marca = $inst_marca->dameNombre($fila_monitor['marca']);
-
-			//$un_nombre = $nombres->_fetchRow();
 
 			if ($first) {
 				$html_view = $html_view . "<option selected='selected' value=" . $fila_monitor['modelo'] . ">" . $fila_monitor['modelo'] . "</option>";
@@ -77,7 +116,8 @@ class Monitores {
 		if (!BDD::getInstance()->query("INSERT INTO system.monitores (num_serie,id_vinculo,id_monitor_desc) VALUES ('$nro_serie',$values)")->get_error()) {
 			return $valor_seq_actual_monitores++;
 
-		} else {var_dump(BDD::getInstance());
+		} else {
+			var_dump(BDD::getInstance());
 			$valor_seq_actual_monitores;
 			BDD::getInstance()->query("select setval('system.monitores_id_monitor_seq'::regclass,'$valor_seq_actual_monitores')");
 			return 0;}
@@ -90,6 +130,10 @@ class Monitores {
 		} else {
 			return 1;
 		}
+	}
+
+	public function getByID($id) {
+		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_monitor = '$id' ")->_fetchRow();
 	}
 }
 ?>

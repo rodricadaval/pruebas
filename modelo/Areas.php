@@ -7,7 +7,7 @@ class Areas {
 
 	public function listarTodos() {
 
-		$areas = BDD::getInstance()->query("select * , '<a href=\"#\" class=\"modificar_area\"id_area=\"' || id_area || '\"><i class=\"circular inverted green small edit icon\"></i></a> <a href=\"#\" class=\"eliminar_area\"id_area=\"' || id_area || '\"><i class=\"circular inverted red small trash icon\"></i></a>' as m from system." . self::claseMinus());
+		$areas = BDD::getInstance()->query("select * , '<a id=\"modificar_area\" class=\"pointer\"id_area=\"' || id_area || '\"><i class=\"circular inverted green small edit icon\"></i></a> <a id=\"eliminar_area\" class=\"pointer\"id_area=\"' || id_area || '\"><i class=\"circular inverted red small trash icon\"></i></a>' as m from system." . self::claseMinus() . " where estado = 1");
 		$i = 0;
 		while ($fila_area = $areas->_fetchRow()) {
 			foreach ($fila_area as $campo => $valor) {
@@ -23,7 +23,7 @@ class Areas {
 	}
 
 	public function dameSelect($id = "") {
-		$table = BDD::getInstance()->query("select nombre, id_area from system." . self::claseMinus());
+		$table = BDD::getInstance()->query("select nombre, id_area from system." . self::claseMinus() . " where estado = 1");
 		if ($id != "") {
 			$html_view = "<select disabled id='select_areas' name='area'>";
 

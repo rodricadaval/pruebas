@@ -8,7 +8,7 @@ class Marcas {
 
 	public function listarTodos() {
 
-		$inst_table = BDD::getInstance()->query("select * from system." . self::claseMinus());
+		$inst_table = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where estado = 1");
 		$i = 0;
 		while ($fila = $inst_table->_fetchRow()) {
 			foreach ($fila as $campo => $valor) {
@@ -45,7 +45,7 @@ class Marcas {
 	}
 
 	public function dameSelect() {
-		$table = BDD::getInstance()->query("select nombre, id_marca from system." . self::claseMinus());
+		$table = BDD::getInstance()->query("select nombre, id_marca from system." . self::claseMinus() . " where estado = 1");
 		$html_view = "<select id='select_marcas' name='marcas'>
 					  <option value=''>Seleccione Marca</option>";
 

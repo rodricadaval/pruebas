@@ -1,18 +1,85 @@
 <?php require_once "../ini.php";
 
-var_dump(Capacidad::get_rel_campos());
+$inst_table = BDD::getInstance()->query("select *, '<a href=\"#\" class=\"modificar_monitor\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted green small edit icon\"></i></a> <a href=\"#\" class=\"eliminar_monitor\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted red small trash icon\"></i></a>' as m from system." . Monitores::claseMinus());
 
-echo "</br></br>";
+$todo = $inst_table->_fetchAll();
+$total = $inst_table->get_count();
 
-var_dump(Marcas::get_rel_campos());
+for ($i = 0; $i < $total; $i++) {
+	echo "</br>";
+	echo "POSICION";
+	echo "</br>";
+	echo "</br>" . $i . "</br>";
 
-echo "</br></br>";
+	$data[$i] = $todo[$i];
+	echo "</br>";
+	echo "FILA:";
+	echo "</br>";
+	var_dump($data[$i]);
+	echo "</br>";
 
-var_dump(Areas::get_rel_campos());
+	foreach ($data[$i] as $campo => $valor) {
 
-echo "</br></br>";
+		if ($campo == "id_monitor_desc") {
+			$arrayAsoc_desc = Monitor_desc::dameDatos($valor);
+			echo "</br>";
+			echo "</br>";
+			echo "VALORES A ASOCIAR";
+			echo "</br>";
+			echo json_encode($arrayAsoc_desc);
+			echo "</br>";
+			echo "</br>";
+			foreach ($arrayAsoc_desc as $camp => $value) {
+				$data[$i][$camp] = $value;
+			}
+			echo "</br>";
+			echo "COMO QUEDA LA FILA";
+			echo "</br>";
+			echo json_encode($data[$i]);
+			echo "</br>";
+			echo "</br>";
+		}
 
-var_dump(Tipo_productos::get_rel_campos());
+		if ($campo == "id_vinculo") {
+			$arrayAsoc_vinculo = Vinculos::dameDatos($valor);
+			echo "</br>";
+			echo "</br>";
+			echo "VALORES A ASOCIAR";
+			echo "</br>";
+			echo json_encode($arrayAsoc_vinculo);
+			echo "</br>";
+			echo "</br>";
+			foreach ($arrayAsoc_vinculo as $camp => $value) {
+				$data[$i][$camp] = $value;
+			}
+			echo "</br>";
+			echo "COMO QUEDA LA FILA";
+			echo "</br>";
+			echo json_encode($data[$i]);
+			echo "</br>";
+			echo "</br>";
+		}
+	}
 
-echo base64_decode(base64_decode(base64_decode("WVVjNWMxbFJQVDA9")));
+	echo "CODEADO";
+	echo "</br>";
+	echo json_encode($data);
+	echo "</br>";
+	echo "</br>";
+}
+
+/* if ($campo == "id_monitor_desc") {
+$arrayAsoc_desc = Monitor_desc::dameDatos($valor);
+foreach ($arrayAsoc_desc as $campo => $value) {
+$data[$i][$campo] = $value;
+}
+} elseif ($campo == "id_vinculo") {
+$arrayAsoc_vinculo = Vinculos::dameDatos($valor);
+foreach ($arrayAsoc_vinculo as $campo => $value) {
+$data[$i][$campo] = $value;
+}
+} else {
+$data[$i][$campo] = $valor;
+}
+ */
 ?>

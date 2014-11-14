@@ -28,6 +28,7 @@
 												{ "sTitle" : "Nombre" , "mData" : "nombre_apellido"},
 												{ "sTitle" : "Area" , "mData" : "area"},
 												{ "sTitle" : "Email" , "mData" : "email"},
+												{ "sTitle" : "Interno" , "mData" : "interno"},
 												{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
 												'<a class="ventana_usuario " href="">Accion</a>'}
 												]
@@ -43,7 +44,8 @@
 												{ "sTitle" : "Permisos" , "mData" : "permisos"},
 												{ "sTitle" : "Nombre" , "mData" : "nombre_apellido"},
 												{ "sTitle" : "Area" , "mData" : "area"},
-												{ "sTitle" : "Email" , "mData" : "email"}
+												{ "sTitle" : "Email" , "mData" : "email"},
+												{ "sTitle" : "Interno" , "mData" : "interno"}
 											]
 									})
 									}
@@ -60,8 +62,9 @@
 												{ "sTitle" : "Pass" , "mData" : "password"},
 												{ "sTitle" : "Area" , "mData" : "area"},
 												{ "sTitle" : "Email" , "mData" : "email"},
+												{ "sTitle" : "Interno" , "mData" : "interno"},
 												{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
-												'<a class="ventana_usuario " href="#">Accion</a>'}
+												'Accion'}
 												]
 									})
 									}
@@ -69,7 +72,7 @@
 							}
 						});
 	});
-	$("#contenedorPpal").on('click' , '.modificar' , function(){
+	$("#contenedorPpal").on('click' , '#modificar_usuario' , function(){
 
 		console.log($(this).attr("id_usuario"));
 		var id_usuario = $(this).attr("id_usuario");
@@ -87,7 +90,7 @@
 		);
 	});
 
-	$("#contenedorPpal").on('click' , '.eliminar' , function(){
+	$("#contenedorPpal").on('click' , '#eliminar_usuario' , function(){
 		console.log($(this).attr("id_usuario"));
 		var id_usuario = $(this).attr('id_usuario');
 		var UrlToPass;

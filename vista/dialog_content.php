@@ -26,16 +26,35 @@ foreach ($_POST as $key => $value) {
 
 	if (substr($key, 0, 6) == "select") {
 		$inst_clase = new $value();
-		$tipo = strtolower(substr($value, 0, -1));
-		if ($tipo == "permiso") {
-			$tipo = $tipo . "s";
+
+		switch ($_POST['queSos']) {
+			case 'usuario':
+				$tipo = strtolower(substr($value, 0, -1));
+				if ($tipo == "permiso") {
+					$tipo = $tipo . "s";
+				}
+				if ($datos_tabla[$tipo] != "") {
+					$parametros[$key] = $inst_clase->dameSelect($datos_tabla[$tipo]);
+				} else {
+					$parametros[$key] = $inst_clase->dameSelect("");
+				}
+
+				break;
+			case 'monitor':
+				$clasePpal = new Vinculos();
+				if ($value == "Areas") {
+					$id = $clasePpal->getIdSector($datos_tabla['id_vinculo']);
+				} else if ($value == "Usuarios") {
+					$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
+				}
+				$parametros[$key] = $inst_clase->dameSelect($id);
+				break;
+
+			default:
+				# code...
+				break;
 		}
 
-		if ($datos_tabla[$tipo] != "") {
-			$parametros[$key] = $inst_clase->dameSelect($datos_tabla[$tipo]);
-		} else {
-			$parametros[$key] = $inst_clase->dameSelect("");
-		}
 	} else { $parametros[$key] = $value;}
 }
 

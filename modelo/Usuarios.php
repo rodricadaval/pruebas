@@ -7,7 +7,7 @@ class Usuarios {
 	}
 
 	public function listarTodos() {
-		$armar_tabla = BDD::getInstance()->query("select * , '<a href=\"#\" class=\"modificar\"id_usuario=\"' || id_usuario || '\"><i class=\"circular inverted green small edit icon\"></i></a> <a href=\"#\" class=\"eliminar\"id_usuario=\"' || id_usuario || '\"><i class=\"circular inverted red small trash icon\"></i></a>' as m from system." . self::claseMinus() . " where estado = 1")->_fetchAll();
+		$armar_tabla = BDD::getInstance()->query("select * , '<a id=\"modificar_usuario\" class=\"pointer\"id_usuario=\"' || id_usuario || '\"><i class=\"circular inverted green small edit icon\"></i></a> <a id=\"eliminar_usuario\" class=\"pointer\"id_usuario=\"' || id_usuario || '\"><i class=\"circular inverted red small trash icon\"></i></a>' as m from system." . self::claseMinus() . " where estado = 1")->_fetchAll();
 		$i = 0;
 
 		foreach ($armar_tabla as $fila) {

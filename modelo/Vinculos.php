@@ -46,5 +46,30 @@ class Vinculos {
 			return false;
 		}
 	}
+
+	public function dameDatos($id) {
+		$fila = BDD::getInstance()->query("select * from system.vinculos where id_vinculo = '$id' ")->_fetchRow();
+
+		if (isset($fila['id_sector'])) {
+			$fila['sector'] = Areas::getNombre($fila['id_sector']);
+		}
+
+		if (isset($fila['id_usuario'])) {
+			$fila['usuario'] = Usuarios::getNombre($fila['id_usuario']);
+		}
+
+		if (isset($fila['id_cpu'])) {
+			//$fila['cpu_serie'] = Computadoras::getSerie($fila['id_cpu']);
+		}
+
+		return $fila;
+	}
+
+	public function getIdSector($id) {
+		return BDD::getInstance()->query("select id_sector from system.vinculos where id_vinculo = '$id' ")->_fetchRow()['id_sector'];
+	}
+	public function getIdUsuario($id) {
+		return BDD::getInstance()->query("select id_usuario from system.vinculos where id_vinculo = '$id' ")->_fetchRow()['id_usuario'];
+	}
 }
 ?>

@@ -1,5 +1,5 @@
 <form id="form_area">
-    <div id="errores"></div>
+    <div id="errores_area" class="error_dialog"></div>
     <table class="mytable">
         <tr>
           <td class="required">Nombre</td>
@@ -10,8 +10,8 @@
           <td><input style="background-color:#D3D3D3" type="text" name="id_area" id="id_area" value="{id_area}" readonly></td>
         </tr>
         </br>
-        <tr>
-          <td><input type="submit" id="submit" tabindex="-1"></td>
+       <tr>
+          <td><input type="submit" id="submit" tabindex="-1" ></td>
           <td></td>
         </tr>
    </table>
@@ -19,15 +19,16 @@
 
 <script>
 
-
 $(document).ready(function(){
 
     var area = $('#nombre');
     var area_orig = '{nombre}';
     var estado = {nuevo};
+    var validado = false;
+
 
     $("#form_area").validate({
-        errorLabelContainer : "#errores" ,
+        errorLabelContainer : "#errores_area" ,
         wrapper : "li" ,
         rules : {
             nombre : {
@@ -62,52 +63,62 @@ $(document).ready(function(){
             }
         } ,
         submitHandler : function (form_area) {
-          console.log ("Formulario OK");
+           if ($(form_area).validate().numberOfInvalids() != 0) {
+              console.log($(form_area).numberOfInvalids());
+              return false;
+           }
+           else{
+           console.log ("Formulario OK");
+           validado = true;
+           }
         } ,
         invalidHandler : function (event , validator) {
-          event.preventDefault();
           console.log(validator);
-          return false;
+          validado = false;
         }
+    });
+
+    $("#form_area").on('submit',function(){
+
+        if(validado){
+            var estado = {nuevo};
+            console.log("Aca empieza el envio de datos de area");
+
+            var UrlToPass;
+            UrlToPass = $("#form_area").serialize();
+
+            if(estado == 1){
+              UrlToPass+="&action=crear";
+            }
+            else if(estado == 0){
+              UrlToPass+="&action=modificar";
+            }
+            console.log(UrlToPass);
+
+              $.ajax({
+                    type : 'POST',
+                    data : UrlToPass,
+                    url  : 'controlador/AreasController.php',
+                    success: function(responseText){ // Obtengo el resultado de exito
+                        if(responseText == 0){
+                          alert("No se pudieron plasmar los datos. Error de en la Base de datos.");
+                        }
+                        else if(responseText == 1){
+                          console.log("Los datos han sido actualizados correctamente!");
+                        }
+                        else{
+                          alert('Problema en la Sql query');
+                        }
+
+                        $("#dialogcontentarea").dialog("close");
+                        $("#contenedorPpal").load("controlador/AreasController.php");
+                    }
+              });
+        }
+        else{console.log('No estan bien los datos');}
     });
 
 });
-
-    $("#form_area").on('submit',function(){
-        var estado = {nuevo};
-        console.log("Aca empieza el envio de datos de area");
-
-        var UrlToPass;
-        UrlToPass = $("#form_area").serialize();
-
-        if(estado == 1){
-          UrlToPass+="&action=crear";
-        }
-        else if(estado == 0){
-          UrlToPass+="&action=modificar";
-        }
-        console.log(UrlToPass);
-
-          $.ajax({
-                type : 'POST',
-                data : UrlToPass,
-                url  : 'controlador/AreasController.php',
-                success: function(responseText){ // Obtengo el resultado de exito
-                    if(responseText == 0){
-                      alert("No se pudieron plasmar los datos. Error de en la Base de datos.");
-                    }
-                    else if(responseText == 1){
-                      console.log("Los datos han sido actualizados correctamente!");
-                    }
-                    else{
-                      alert('Problema en la Sql query');
-                    }
-
-                    $("#dialogcontentarea").dialog("close");
-                    $("#contenedorPpal").load("controlador/AreasController.php");
-                }
-          });
-    });
 
 </script>
 

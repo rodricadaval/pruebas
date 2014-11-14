@@ -42,9 +42,9 @@ class Monitor_desc {
 
 	public function dameSelect($valor = "") {
 		if (!isset($valor)) {
-			$table = BDD::getInstance()->query("select modelo from system." . self::claseMinus());
+			$table = BDD::getInstance()->query("select modelo from system." . self::claseMinus() . " where estado = 1");
 		} else {
-			$table = BDD::getInstance()->query("select modelo from system." . self::claseMinus() . " where id_marca = '$valor'");
+			$table = BDD::getInstance()->query("select modelo from system." . self::claseMinus() . " where id_marca = '$valor' AND estado = 1");
 		}
 
 		$html_view = "<select id='select_modelos' name='modelos'>";
