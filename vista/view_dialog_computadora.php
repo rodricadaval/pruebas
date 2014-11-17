@@ -1,4 +1,4 @@
-<form id="form_monitor">
+<form id="form_computadora">
     <table class="t_monitor">
         <tr>
         <tr type="hidden">
@@ -13,11 +13,7 @@
           <td>{select_Usuarios}</td>
         </tr>
         <tr>
-          <td>Computadora:</td>
-          <td>{select_Computadoras}</td>
-        </tr>
-        <tr>
-          <td><input style="background-color:#D3D3D3" type="hidden" name="id_monitor" id="id_monitor" value="{id_monitor}" readonly></td>
+          <td><input style="background-color:#D3D3D3" type="hidden" name="id_computadora" id="id_computadora" value="{id_computadora}" readonly></td>
         </tr>
         </br>
         <tr>
@@ -29,13 +25,11 @@
 
 <script>
 
-
 $(document).ready(function(){
 
+	var fueRegalo = false;
 
     $('.select_areas').removeAttr('disabled');
-
-    var fueRegalo = false;
 
     $('.select_areas').on('change', function(){
     	console.log('Entro al cambio de area');
@@ -44,9 +38,9 @@ $(document).ready(function(){
 			console.log('El area es Stock');
 			$('.select_usuarios option:contains("Ninguno")').prop('selected', true);
 			$('.select_usuarios').attr('disabled', 'disabled');
-			//$('.select_usuarios').replaceWith("<select disabled id='select_usuarios' name='usuarios'><option selected='selected' value='1'>Ninguno</option>");
 		}
 		else{
+
 			if(fueRegalo){
 
 					if($('.select_usuarios option:selected').val() > 1 && $('.select_areas option:selected').val() != 2){
@@ -57,7 +51,6 @@ $(document).ready(function(){
 							action : "buscar_area"
 
 						}, function(id_area) {
-
 								$('.select_areas').removeAttr('disabled');
 								$('.select_areas option[value='+id_area+']').attr('selected', 'selected');
 								$('.select_areas').attr('disabled', 'disabled');
@@ -70,9 +63,9 @@ $(document).ready(function(){
 				if($('.select_areas').val() == 2){
 				fueRegalo = true;}
 				console.log('seleccionando un area que no es stock');
-				//$('.select_usuarios').removeAttr('disabled');
+
 			}
-			}
+		}
 	})
 
 
@@ -81,7 +74,7 @@ $(document).ready(function(){
 
 		if($('.select_usuarios option:selected').val() > 1 && $('.select_areas option:selected').val() != 2){
 
-			console.log('Entre a cambiar el area');
+			console.log('Entro al cambio de area');
 
 			$.post('controlador/UsuariosController.php',
 			{
@@ -89,9 +82,8 @@ $(document).ready(function(){
 				action : "buscar_area"
 
 			}, function(id_area) {
-
+					$('.select_areas').removeAttr('disabled');
 					$('.select_areas option[value='+id_area+']').attr('selected', 'selected');
-					//$('.select_areas').find('option[value='+id_area+']').attr('selected', 'selected');
 					$('.select_areas').attr('disabled', 'disabled');
 			});
 		}
@@ -103,7 +95,7 @@ $(document).ready(function(){
 		}
 	});
 
-	$("#form_monitor").on('submit',function(event){
+	$("#form_computadora").on('submit',function(event){
 
 		event.preventDefault();
 
@@ -112,7 +104,7 @@ $(document).ready(function(){
 		}
 		else{
 
-		var datosUrl =	$("#form_monitor").serialize();
+		var datosUrl =	$("#form_computadora").serialize();
 		if($(".select_areas option:selected").val() > 2 && $(".select_usuarios option:selected").val() != 1)
 		{
 			datosUrl += "&area="+ $(".select_areas option:selected").val();
@@ -122,7 +114,7 @@ $(document).ready(function(){
 		console.log(datosUrl);
 
 		$.ajax({
-			url: 'controlador/MonitoresController.php',
+			url: 'controlador/ComputadorasController.php',
 			type: 'POST',
 			data: datosUrl,
 		})
@@ -131,8 +123,8 @@ $(document).ready(function(){
 			console.log(response);
 			if(response == 1){
 				alert("Los datos han sido actualizados correctamente");
-				$("#dialogcontent_monitor").dialog("close");
-	            $("#contenedorPpal").load("controlador/MonitoresController.php");
+				$("#dialogcontent_cpu").dialog("close");
+	            $("#contenedorPpal").load("controlador/ComputadorasController.php");
         	}
         	else{console.log('Algo salio mal');}
 

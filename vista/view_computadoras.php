@@ -1,5 +1,5 @@
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
-<div id="dialogcontent_monitor" title="Modificar Asignacion Monitor">
+<div id="dialogcontent_cpu" title="Modificar Asignacion Computadora">
 <p>All form fields are required.</p>
 </div>
 <script type="text/javascript">
@@ -18,14 +18,12 @@
    			 		"bJQueryUI" : true,
 					"aaData" : data,
 					"aoColumns" :[
-						{ "sTitle" : "ID" , "mData" : "id_monitor"},
+						{ "sTitle" : "ID" , "mData" : "id_computadora"},
 						{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
 						{ "sTitle" : "Marca" , "mData" : "marca"},
 						{ "sTitle" : "Modelo" , "mData" : "modelo"},
-						{ "sTitle" : "Pulgadas" , "mData" : "pulgadas"},
 						{ "sTitle" : "Sector" , "mData" : "sector"},
 						{ "sTitle" : "Usuario" , "mData" : "usuario"},
-						{ "sTitle" : "Cpu" , "mData" : "cpu_serie"},
 						{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
 										'<a class="ventana_area " href="">Modificar</a>'}
 						]
@@ -35,34 +33,33 @@
 		});
 	});
 
-	$("#contenedorPpal").on('click' , '#modificar_monitor' , function(){
+	$("#contenedorPpal").on('click' , '#modificar_computadora' , function(){
 
-		console.log($(this).attr("id_monitor"));
-		var id_monitor = $(this).attr("id_monitor");
+		console.log($(this).attr("id_computadora"));
+		var id_computadora = $(this).attr("id_computadora");
 		$.post( "vista/dialog_content.php",
 			{
-				TablaPpal : "Monitores",
-				ID : id_monitor,
+				TablaPpal : "Computadoras",
+				ID : id_computadora,
 				select_Usuarios : "Usuarios",	//Clase de la cual quiero obtener el select
 				select_Areas : "Areas", //Clase de la cual quiero sacar el select
-				select_Computadoras : "Computadoras",
-				queSos : "monitor" //a quien le voy a generar la vista
+				queSos : "computadora" //a quien le voy a generar la vista
 			}, function(data){
-				$("#dialogcontent_monitor").html(data);
-				$("#dialogcontent_monitor").dialog("open");
+				$("#dialogcontent_cpu").html(data);
+				$("#dialogcontent_cpu").dialog("open");
 			   }
 		);
 	});
 
-	$("#contenedorPpal").on('click' , '#eliminar_monitor' , function(){
+	$("#contenedorPpal").on('click' , '#eliminar_computadora' , function(){
 
-		console.log($(this).attr("id_monitor"));
-		var id_monitor = $(this).attr("id_monitor");
-		datosUrl = "id_monitor="+id_monitor+"&action=eliminar";
+		console.log($(this).attr("id_computadora"));
+		var id_computadora = $(this).attr("id_computadora");
+		datosUrl = "id_computadora="+id_computadora+"&action=eliminar";
 		console.log(datosUrl);
 
 		$.ajax({
-			url: 'controlador/MonitoresController.php',
+			url: 'controlador/ComputadorasController.php',
 			type: 'POST',
 			data: datosUrl,
 		})
@@ -70,7 +67,7 @@
 			if(response){
 				console.log("success");
 				alert("El monitor ha sido eliminado correctamente.");
-				$("#contenedorPpal").load("controlador/MonitoresController.php");
+				$("#contenedorPpal").load("controlador/ComputadorasController.php");
 			}
 		})
 		.fail(function() {
@@ -82,7 +79,7 @@
 
 	});
 
-		$( "#dialogcontent_monitor" ).dialog({
+		$( "#dialogcontent_cpu" ).dialog({
 		autoOpen: false,
 		show: {
 		effect: "blind",

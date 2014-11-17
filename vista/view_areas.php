@@ -1,6 +1,7 @@
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
-<p>All form fields are required.</p>
 <div id="dialogcontentarea" title="Crear/Modificar Area">
+<p>All form fields are required.</p>
+</div>
 <script type="text/javascript">
 
 	$(document).ready(function(event){

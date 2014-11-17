@@ -152,7 +152,7 @@ class Usuarios {
 
 	public function dameSelect($id = "") {
 		$table = BDD::getInstance()->query("select usuario, id_usuario, nombre_apellido from system." . self::claseMinus() . " where id_usuario <> 1 order by nombre_apellido,usuario asc");
-		$html_view = "<select id='select_usuarios' name='usuario'>";
+		$html_view = "<select class='select_usuarios' name='usuario'>";
 		$html_view .= "<option selected='selected' value=''>Seleccionar</option>";
 		$html_view .= "<option value=1>Ninguno</option>";
 

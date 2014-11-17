@@ -59,7 +59,7 @@ class Vinculos {
 		}
 
 		if (isset($fila['id_cpu'])) {
-			//$fila['cpu_serie'] = Computadoras::getSerie($fila['id_cpu']);
+			$fila['cpu_serie'] = Computadoras::getSerie($fila['id_cpu']);
 		}
 
 		return $fila;
@@ -70,6 +70,19 @@ class Vinculos {
 	}
 	public function getIdUsuario($id) {
 		return BDD::getInstance()->query("select id_usuario from system.vinculos where id_vinculo = '$id' ")->_fetchRow()['id_usuario'];
+	}
+	public function getIdCpu($id) {
+		return BDD::getInstance()->query("select id_cpu from system.vinculos where id_vinculo = '$id' ")->_fetchRow()['id_cpu'];
+	}
+
+	public function modificarDatos($datos) {
+
+		$id_vinculo = $datos['id_vinculo'];
+		$set = "id_sector=" . $datos['area'] . ", id_usuario=" . $datos['usuario'] . ", id_cpu=" . $datos['id_computadora'];
+		if (BDD::getInstance()->query("UPDATE system.vinculos SET $set where id_vinculo = '$id_vinculo' ")->get_error()) {
+			return 0;
+		}
+		return 1;
 	}
 }
 ?>

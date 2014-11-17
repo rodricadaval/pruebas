@@ -46,6 +46,19 @@ foreach ($_POST as $key => $value) {
 					$id = $clasePpal->getIdSector($datos_tabla['id_vinculo']);
 				} else if ($value == "Usuarios") {
 					$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
+				} else if ($value == "Computadoras") {
+					$id = $clasePpal->getIdCpu($datos_tabla['id_vinculo']);
+
+				}
+				$parametros[$key] = $inst_clase->dameSelect($id);
+				break;
+
+			case 'computadora':
+				$clasePpal = new Vinculos();
+				if ($value == "Areas") {
+					$id = $clasePpal->getIdSector($datos_tabla['id_vinculo']);
+				} else if ($value == "Usuarios") {
+					$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
 				}
 				$parametros[$key] = $inst_clase->dameSelect($id);
 				break;

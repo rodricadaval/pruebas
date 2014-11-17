@@ -135,5 +135,15 @@ class Monitores {
 	public function getByID($id) {
 		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_monitor = '$id' ")->_fetchRow();
 	}
+
+	public function modificarMonitor($datos) {
+		return Vinculos::modificarDatos($datos);
+	}
+
+	public function eliminarMonitor($id) {
+		if (!BDD::getInstance()->query("UPDATE system.monitores SET estado=0 where id_monitor='$id' ")->get_error()) {
+			return 1;
+		} else {return 0;}
+	}
 }
 ?>

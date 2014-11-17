@@ -17,7 +17,7 @@
     				<option value='0'>Seleccionar</option></select></td>
     	</td>
     	<td>Deposito:</td>
-    	<td><select id='select_areas' name='depositos'>
+    	<td><select class='select_areas' name='depositos'>
     				<option value=''>Seleccionar</option></select>
     	</td>
     	<td>Nro de Serie:</td>
@@ -26,7 +26,7 @@
     </br></br>
     <tr>
     	<td>Usuario:</td>
-    	<td><select id='select_usuarios' name='usuarios'>
+    	<td><select class='select_usuarios' name='usuarios'>
     				<option value=''>Sin usuario</option></select>
     	</td>
     </tr>
@@ -58,51 +58,51 @@
 				action : "view_agregar_monitor"
 
 			}, function(data) {
-			$("#select_areas").replaceWith(data);
+			$(".select_areas").replaceWith(data);
 			});
 	});
 
 	$.post('controlador/ProductosController.php',
 			{
-				value : $('#select_usuarios option:selected').val(),
+				value : $('.select_usuarios option:selected').val(),
 				tipo : "sel_usuarios",
 				action : "view_agregar_monitor"
 
 			}, function(data) {
-				$("#select_usuarios").replaceWith(data);
+				$(".select_usuarios").replaceWith(data);
 			}
 	);
 
-	$('#contenedorPpal').on('change', '#select_areas', function(){
+	$('#contenedorPpal').on('change', '.select_areas', function(){
     	console.log('Entro al cambio de area');
 
-		if($('#select_areas').val() == 1){
+		if($('.select_areas').val() == 1){
 			console.log('El area es Stock');
-			$('#select_usuarios option:contains("Ninguno")').prop('selected', true);
-			$('#select_usuarios').attr('disabled', 'disabled');
+			$('.select_usuarios option:contains("Ninguno")').prop('selected', true);
+			$('.select_usuarios').attr('disabled', 'disabled');
 		}
 		else{
-			$('#select_usuarios').removeAttr('disabled');
+			$('.select_usuarios').removeAttr('disabled');
 		}
 	});
 
-	$('#contenedorPpal').on('change', '#select_usuarios', function(){
-		if($('#select_usuarios option:selected').val() > 1 && $('#select_areas option:selected').val() != 2){
+	$('#contenedorPpal').on('change', '.select_usuarios', function(){
+		if($('.select_usuarios option:selected').val() > 1 && $('.select_areas option:selected').val() != 2){
 
 			$.post('controlador/UsuariosController.php',
 			{
-				id_usuario : $('#select_usuarios option:selected').val(),
+				id_usuario : $('.select_usuarios option:selected').val(),
 				action : "buscar_area"
 
 			}, function(id_area) {
 
-					$('#select_areas option[value='+id_area+']').attr('selected', 'selected');
-					$('#select_areas').attr('disabled', 'disabled');
+					$('.select_areas option[value='+id_area+']').attr('selected', 'selected');
+					$('.select_areas').attr('disabled', 'disabled');
 			   }
 			);
 		}
-		else if($('#select_usuarios option:selected').val() == 1){
-			$('#select_areas').removeAttr('disabled');
+		else if($('.select_usuarios option:selected').val() == 1){
+			$('.select_areas').removeAttr('disabled');
 		}
 	});
 
@@ -111,10 +111,10 @@
 		console.log('Evento de click en crear');
 
 		var id_marca = $('#select_marcas option:selected').val();
-		var id_deposito = $('#select_areas option:selected').val();
+		var id_deposito = $('.select_areas option:selected').val();
 		var modelo = $('#select_modelos option:selected').val();
 		var nro_de_serie = $('.input_nro_serie').val();
-		var id_usuario = $('#select_usuarios option:selected').val();
+		var id_usuario = $('.select_usuarios option:selected').val();
 
 		if(id_deposito == "" || id_marca == ""){
 
