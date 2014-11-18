@@ -85,7 +85,21 @@
 				queSos : "usuario" //a quien le voy a generar la vista
 			}, function(data){
 				$("#dialogcontent").html(data);
-				$("#dialogcontent").dialog("open");
+				$("#dialogcontent").dialog({
+											show: {
+											effect: "blind",
+											duration: 1000,
+											modal:true
+											},
+											hide: {
+											effect: "explode",
+											duration: 200
+											},
+											width : 400,
+											close : function(){
+												$(this).dialog("destroy").empty();
+											}
+				});
 			   }
 		);
 	});
@@ -125,21 +139,22 @@
 				queSos : "nuevo" //a quien le voy a generar la vista
 			}, function(data){
 				$("#dialogcontent").html(data);
-				$("#dialogcontent").dialog("open");
+				$("#dialogcontent").dialog({
+											show: {
+											effect: "blind",
+											duration: 1000,
+											modal:true
+											},
+											hide: {
+											effect: "explode",
+											duration: 200
+											},
+											width : 400,
+											close : function(){
+												$(this).dialog("destroy").empty();
+											}
+				});
 			});
 	});
 
-	$( "#dialogcontent" ).dialog({
-		autoOpen: false,
-		show: {
-		effect: "blind",
-		duration: 1000,
-		modal:true
-		},
-		hide: {
-		effect: "explode",
-		duration: 200
-		},
-		width : 400
-	});
 </script>

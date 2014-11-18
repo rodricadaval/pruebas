@@ -46,8 +46,22 @@
 				queSos : "computadora" //a quien le voy a generar la vista
 			}, function(data){
 				$("#dialogcontent_cpu").html(data);
-				$("#dialogcontent_cpu").dialog("open");
-			   }
+				$("#dialogcontent_cpu").dialog({
+											show: {
+											effect: "blind",
+											duration: 1000,
+											modal:true
+											},
+											hide: {
+											effect: "explode",
+											duration: 200
+											},
+											width : 400,
+											close : function(){
+												$(this).dialog("destroy").empty();
+											}
+											});
+			}
 		);
 	});
 
@@ -79,18 +93,5 @@
 
 	});
 
-		$( "#dialogcontent_cpu" ).dialog({
-		autoOpen: false,
-		show: {
-		effect: "blind",
-		duration: 1000,
-		modal:true
-		},
-		hide: {
-		effect: "explode",
-		duration: 200
-		},
-		width : 400
-	});
 
 </script>

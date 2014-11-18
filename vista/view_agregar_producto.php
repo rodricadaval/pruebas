@@ -18,7 +18,8 @@
     	$.post('controlador/ProductosController.php',
 				{
 					action:"view_agregar_monitor",
-					tipo:"sel_marcas"
+					tipo:"sel_marcas",
+          queSos: "n_monitor"
 				}
 				,function(data){
 					$("#tabs1").html(data);

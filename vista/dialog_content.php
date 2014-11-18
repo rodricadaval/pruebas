@@ -50,7 +50,7 @@ foreach ($_POST as $key => $value) {
 					$id = $clasePpal->getIdCpu($datos_tabla['id_vinculo']);
 
 				}
-				$parametros[$key] = $inst_clase->dameSelect($id);
+				$parametros[$key] = $inst_clase->dameSelect($id, $_POST['queSos']);
 				break;
 
 			case 'computadora':
@@ -60,7 +60,7 @@ foreach ($_POST as $key => $value) {
 				} else if ($value == "Usuarios") {
 					$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
 				}
-				$parametros[$key] = $inst_clase->dameSelect($id);
+				$parametros[$key] = $inst_clase->dameSelect($id, $_POST['queSos']);
 				break;
 
 			default:

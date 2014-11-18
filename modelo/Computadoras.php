@@ -69,13 +69,13 @@ return $tabla;
 		return BDD::getInstance()->query("select num_serie from system.computadoras where id_computadora='$id'")->_fetchRow()['num_serie'];
 	}
 
-	public function dameSelect($id = "") {
+	public function dameSelect($id = "", $sos = "") {
 		$table = BDD::getInstance()->query("select num_serie, id_computadora from system." . self::claseMinus() . " where estado = 1");
 		if ($id != "") {
-			$html_view = "<select id='select_computadoras' name='id_computadora'>";
+			$html_view = "<select id=" . 'select_computadoras' . '_' . $sos . " name='id_computadora'>";
 
 		} else if ($id == "") {
-			$html_view = "<select id='select_computadoras' name='id_computadora'>";
+			$html_view = "<select id=" . 'select_computadoras' . '_' . $sos . " name='id_computadora'>";
 			$html_view .= "<option selected='selected' value=''>Seleccione computadora</option>";
 		}
 

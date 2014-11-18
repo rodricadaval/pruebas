@@ -53,23 +53,22 @@
 					queSos : "area" //a quien le voy a generar la vista
 				}, function(data){
 					$("#dialogcontentarea").html(data);
-					$("#dialogcontentarea").dialog("open");
+					$("#dialogcontentarea").dialog({
+											show: {
+											effect: "blind",
+											duration: 1000,
+											modal:true
+											},
+											hide: {
+											effect: "explode",
+											duration: 200
+											},
+											width : 400,
+											close : function(){
+												$(this).dialog("destroy").empty();
+											}
+				});
 				   }
 			);
 		});
-
-	$( "#dialogcontentarea" ).dialog({
-		autoOpen: false,
-		show: {
-		effect: "blind",
-		duration: 1000,
-		modal:true
-		},
-		hide: {
-		effect: "explode",
-		duration: 200
-		},
-		width : 400
-	});
-
 </script>

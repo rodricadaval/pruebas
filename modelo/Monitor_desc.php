@@ -31,23 +31,14 @@ class Monitor_desc {
 		return $fila;
 	}
 
-	public function dameSelects() {
-		$marcas = new Marcas();
-		$select_marcas = $marcas->dameSelect();
-
-		$select_modelos = self::dameSelect();
-
-		return $select_marcas . "<br><br>" . $select_modelos;
-	}
-
-	public function dameSelect($valor = "") {
+	public function dameSelect($valor = "", $sos = "") {
 		if (!isset($valor)) {
 			$table = BDD::getInstance()->query("select modelo from system." . self::claseMinus() . " where estado = 1");
 		} else {
 			$table = BDD::getInstance()->query("select modelo from system." . self::claseMinus() . " where id_marca = '$valor' AND estado = 1");
 		}
 
-		$html_view = "<select id='select_modelos' name='modelos'>";
+		$html_view = "<select id=" . 'select_modelos' . '_' . $sos . " name='modelos'>";
 
 		while ($fila = $table->_fetchRow()) {
 

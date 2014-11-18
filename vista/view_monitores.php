@@ -2,6 +2,7 @@
 <div id="dialogcontent_monitor" title="Modificar Asignacion Monitor">
 <p>All form fields are required.</p>
 </div>
+ <script src="lib/multiple-usuarios.js" type="text/javascript"></script>
 <script type="text/javascript">
 
 	$(document).ready(function(event){
@@ -45,12 +46,25 @@
 				ID : id_monitor,
 				select_Usuarios : "Usuarios",	//Clase de la cual quiero obtener el select
 				select_Areas : "Areas", //Clase de la cual quiero sacar el select
-				select_Computadoras : "Computadoras",
 				queSos : "monitor" //a quien le voy a generar la vista
 			}, function(data){
 				$("#dialogcontent_monitor").html(data);
-				$("#dialogcontent_monitor").dialog("open");
-			   }
+				$("#dialogcontent_monitor").dialog({
+											show: {
+											effect: "blind",
+											duration: 1000,
+											modal:true
+											},
+											hide: {
+											effect: "explode",
+											duration: 200
+											},
+											width : 400,
+											close : function(){
+												$(this).dialog("destroy").empty();
+											}
+				});
+			}
 		);
 	});
 
@@ -80,20 +94,6 @@
 			console.log("complete");
 		});
 
-	});
-
-		$( "#dialogcontent_monitor" ).dialog({
-		autoOpen: false,
-		show: {
-		effect: "blind",
-		duration: 1000,
-		modal:true
-		},
-		hide: {
-		effect: "explode",
-		duration: 200
-		},
-		width : 400
 	});
 
 </script>

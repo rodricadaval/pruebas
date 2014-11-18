@@ -11,7 +11,7 @@ if (!isset($_POST['action'])) {
 			if ($_POST['tipo'] == "sel_marcas") {
 				$url = array("vista/view_agregar_monitor.php");
 				$inst = new Marcas;
-				$select = $inst->dameSelect();
+				$select = $inst->dameSelect($_POST['queSos']);
 				$titulo = "Menu para agregar y asignar (si es necesario) un Monitor";
 				$parametros = array("Producto" => "Monitor", "select_marcas" => $select, "titulo" => $titulo);
 
@@ -19,18 +19,21 @@ if (!isset($_POST['action'])) {
 			} else if ($_POST['tipo'] == "sel_modelos") {
 
 				$inst = new Monitor_desc();
-				echo $inst->dameSelect($_POST['value']);
+				echo $inst->dameSelect($_POST['value'], $_POST['queSos']);
 			} else if ($_POST['tipo'] == "sel_depositos") {
 
 				$inst = new Areas();
 				if (isset($_POST['value'])) {
-					echo $inst->dameSelect($_POST['value']);
+					echo $inst->dameSelect($_POST['value'], $_POST['queSos']);
 				} else {
-					echo $inst->dameSelect();
+					echo $inst->dameSelect("", $_POST['queSos']);
 				}
 			} else if ($_POST['tipo'] == "sel_usuarios") {
 				$inst = new Usuarios();
-				echo $inst->dameSelect();
+				echo $inst->dameSelect("", $_POST['queSos']);
+			} else if ($_POST['tipo'] == "sel_computadoras") {
+				$inst = new Computadoras();
+				echo $inst->dameSelect("", $_POST['queSos']);
 			}
 			break;
 

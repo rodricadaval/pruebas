@@ -135,6 +135,10 @@ class Usuarios {
 		return $datos;
 	}
 
+	public function dameUsuarios() {
+		return BDD::getInstance()->query("select usuario from system." . self::claseMinus() . " where estado = 1")->_fetchAll();
+	}
+
 	public function eliminarUsuario($id) {
 		if (!BDD::getInstance()->query("UPDATE system." . self::claseMinus() . " SET estado = 0 WHERE id_usuario = '$id' ")->get_error()) {
 			if ($_SESSION['userid'] == $id) {
@@ -150,9 +154,9 @@ class Usuarios {
 		return BDD::getInstance()->query("select area FROM system." . self::claseMinus() . " WHERE id_usuario = '$id' ")->_fetchRow()['area'];
 	}
 
-	public function dameSelect($id = "") {
+	public function dameSelect($id = "", $sos = "") {
 		$table = BDD::getInstance()->query("select usuario, id_usuario, nombre_apellido from system." . self::claseMinus() . " where id_usuario <> 1 order by nombre_apellido,usuario asc");
-		$html_view = "<select class='select_usuarios' name='usuario'>";
+		$html_view = "<select id=" . 'select_usuarios' . '_' . $sos . " name='usuario'>";
 		$html_view .= "<option selected='selected' value=''>Seleccionar</option>";
 		$html_view .= "<option value=1>Ninguno</option>";
 
