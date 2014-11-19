@@ -14,7 +14,9 @@ include 'logueo/chequeo_login.php';
         <script src="lib/jquery.easytabs.js" type="text/javascript"></script>
         <script src="lib/jquery.validate.js" type="text/javascript"></script>
         <script src="lib/semantic.js" type="text/javascript"></script>
-        <script src="lib/typeahead.js" type="text/javascript"></script>
+        <!--<script src="lib/typeahead.js" type="text/javascript"></script>-->
+        <script type='text/javascript' src="http://twitter.github.com/typeahead.js/releases/latest/typeahead.bundle.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/typeahead.css">
         <link href="css/jquery-easytabs.css" rel="stylesheet" type="text/css">
         <link href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css" rel=
         "stylesheet" type="text/css">

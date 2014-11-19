@@ -9,13 +9,18 @@
  		  <td>{select_Areas}</td>
         </tr>
         <tr>
-          <td>Usuario:</td>
-          <td>{select_Usuarios}</td>
-        </tr>
-        <tr>
           <td><input style="background-color:#D3D3D3" type="hidden" name="id_monitor" id="id_monitor" value="{id_monitor}" readonly></td>
         </tr>
-        </br>
+        <tr>
+        <td>Usuario:</td>
+        <td>
+        <div id="multiple-datasets">
+     	<input class="typeahead" type="text" placeholder="Nombre de usuario">
+		</div>
+		</td>
+
+		</tr>
+		</br>
         <tr>
           <td><input type="submit" id="submit" tabindex="-1"></td>
           <td></td>
@@ -23,32 +28,40 @@
    </table>
 </form>
 
-<script>
+<script type="text/javascript" src="lib/multiple-usuarios.js"> </script>
 
+<script>
 
 $(document).ready(function(){
 
-
-    $('#select_areas').removeAttr('disabled');
+	$('#select_areas').removeAttr('disabled');
 
     var fueRegalo = false;
+
 
     $('#select_areas').on('change', function(){
     	console.log('Entro al cambio de area');
 
 		if($('#select_areas').val() == 1){
 			console.log('El area es Stock');
-			$('#select_usuarios_monitor option:contains("Ninguno")').prop('selected', true);
-			$('#select_usuarios_monitor').attr('disabled', 'disabled');
+
+
+
+			//$('.typeahead ').val('Sin usuario');
+			$(".typeahead").removeAttr('placeholder');
+			$(".typeahead").attr('readonly','readonly');
+
+			//$('#select_usuarios_monitor option:contains("Ninguno")').prop('selected', true);
+
 		}
 		else{
 			if(fueRegalo){
 
-					if($('#select_usuarios_monitor option:selected').val() > 1 && $('#select_areas option:selected').val() != 2){
+					if(usuario['id'] > 1 && $('#select_areas option:selected').val() != 2){
 
 						$.post('controlador/UsuariosController.php',
 						{
-							id_usuario : $('#select_usuarios_monitor option:selected').val(),
+							id_usuario : usuario['id'],
 							action : "buscar_area"
 
 						}, function(id_area) {
@@ -63,23 +76,27 @@ $(document).ready(function(){
 			}
 			else{
 				if($('#select_areas').val() == 2){
-				fueRegalo = true;}
+				fueRegalo = true;
+				$('.typeahead').removeAttr('readonly');
+				$(".typeahead").removeAttr('placeholder');
+				}
 				console.log('seleccionando un area que no es stock');
 			}
 			}
 	})
 
+	$('.typeahead').on('typeahead:selected', function(event, usuario) {
 
-	$('#select_usuarios_monitor').on('change', function(){
-		console.log('Entro al cambio de usuario');
+		console.log(usuario['id']);
+		console.log($('.typeahead').typeahead('val'));
 
-		if($('#select_usuarios_monitor option:selected').val() > 1 && $('#select_areas option:selected').val() != 2){
+  		if(usuario['id'] > 1 && $('#select_areas option:selected').val() != 2){
 
-			console.log('Entre a cambiar el area');
+  			console.log('Entre a cambiar el area');
 
 			$.post('controlador/UsuariosController.php',
 			{
-				id_usuario : $('#select_usuarios_monitor option:selected').val(),
+				id_usuario : usuario['id'],
 				action : "buscar_area"
 
 			}, function(id_area) {
@@ -88,12 +105,12 @@ $(document).ready(function(){
 					//$('#select_areas').find('option[value='+id_area+']').attr('selected', 'selected');
 					$('#select_areas').attr('disabled', 'disabled');
 			});
-		}
-		else if($('#select_usuarios_monitor option:selected').val() == 1){
+  		}
+  		else if(usuario['id'] == 1){
 			$('#select_areas').removeAttr('disabled');
 		}
 		else{
-			console.log('No entre en ninguno de los 2');
+			console.log('No entre en ninguno de los 2. Probablemente sea un regalo');
 		}
 	});
 
@@ -101,6 +118,10 @@ $(document).ready(function(){
 
 		event.preventDefault();
 
+		console.log($('.typeahead').typeahead('val'));
+
+		console.log($("#form_monitor").serialize());
+/*
 		if($("#select_usuarios_monitor").val() == ""){
 			alert("El usuario no puede ser vacio.");
 		}
@@ -139,6 +160,7 @@ $(document).ready(function(){
 			console.log("complete");
 		})
 		}
+*/
 	});
 
 });

@@ -2,7 +2,7 @@
 <div id="dialogcontent_monitor" title="Modificar Asignacion Monitor">
 <p>All form fields are required.</p>
 </div>
- <script src="lib/multiple-usuarios.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 
 	$(document).ready(function(event){
@@ -59,7 +59,8 @@
 											effect: "explode",
 											duration: 200
 											},
-											width : 400,
+											width : 540,
+											height : 430,
 											close : function(){
 												$(this).dialog("destroy").empty();
 											}

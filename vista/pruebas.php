@@ -1,7 +1,14 @@
 <?php require_once "../ini.php";
 
 $usuarios = new Usuarios();
-var_dump(json_encode($usuarios->dameUsuarios()));
+$vector = $usuarios->dameUsuarios();
+$array = array();
+
+foreach ($vector as $key => $value) {
+	array_push($array, $value['usuario']);
+}
+
+echo json_encode($array);
 
 /*
 

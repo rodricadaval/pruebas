@@ -139,6 +139,10 @@ class Usuarios {
 		return BDD::getInstance()->query("select usuario from system." . self::claseMinus() . " where estado = 1")->_fetchAll();
 	}
 
+	public function dameNombres() {
+		return BDD::getInstance()->query("select nombre_apellido from system." . self::claseMinus() . " where estado = 1")->_fetchAll();
+	}
+
 	public function eliminarUsuario($id) {
 		if (!BDD::getInstance()->query("UPDATE system." . self::claseMinus() . " SET estado = 0 WHERE id_usuario = '$id' ")->get_error()) {
 			if ($_SESSION['userid'] == $id) {
