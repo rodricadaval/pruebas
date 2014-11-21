@@ -25,10 +25,10 @@ class Areas {
 	public function dameSelect($id = "", $sos = "") {
 		$table = BDD::getInstance()->query("select nombre, id_area from system." . self::claseMinus() . " where estado = 1");
 		if ($id != "") {
-			$html_view = "<select disabled id='select_areas' name='area'>";
+			$html_view = "<select disabled id='select_areas' class='form-control' name='area'>";
 
 		} else if ($id == "") {
-			$html_view = "<select id='select_areas' name='area'>";
+			$html_view = "<select id='select_areas' class='form-control' name='area'>";
 			$html_view .= "<option selected='selected' value=''>Seleccione Area</option>";
 		}
 

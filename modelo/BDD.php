@@ -63,5 +63,8 @@ class BDD {
 	public function get_error() {
 		return $this->_error;
 	}
+	public function get_listado() {
+		return $this->_query->fetchAll(PDO::FETCH_COLUMN, 0);
+	}
 }
 ?>

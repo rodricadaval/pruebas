@@ -19,7 +19,7 @@ if (!isset($_POST['action'])) {
 			} else if ($_POST['tipo'] == "sel_modelos") {
 
 				$inst = new Monitor_desc();
-				echo $inst->dameSelect($_POST['value'], $_POST['queSos']);
+				echo $inst->dameSelect();
 			} else if ($_POST['tipo'] == "sel_depositos") {
 
 				$inst = new Areas();

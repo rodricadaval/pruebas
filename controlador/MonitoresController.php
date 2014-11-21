@@ -7,6 +7,7 @@ if (isset($_POST['action'])) {
 	switch ($_POST['action']) {
 		case 'modificar':
 			unset($_POST['action']);
+			$_POST['id_computadora'] = 1;
 			echo $inst_monitor->modificarMonitor($_POST);
 			break;
 

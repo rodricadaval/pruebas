@@ -31,7 +31,7 @@ class Usuarios {
 	}
 
 	public function getById($id) {
-		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_usuario = '$id' ")->_fetchRow();
+		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_usuario = '$id' AND estado=1 ")->_fetchRow();
 		$fila['password'] = base64_decode(base64_decode(base64_decode($fila['password'])));
 		return $fila;
 	}

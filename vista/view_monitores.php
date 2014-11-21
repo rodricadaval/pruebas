@@ -1,7 +1,6 @@
+<h2>{TABLA}</h2>
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
-<div id="dialogcontent_monitor" title="Modificar Asignacion Monitor">
-<p>All form fields are required.</p>
-</div>
+<div id="dialogcontent_monitor" title="Modificar Asignacion Monitor"></div>
 
 <script type="text/javascript">
 
@@ -44,7 +43,6 @@
 			{
 				TablaPpal : "Monitores",
 				ID : id_monitor,
-				select_Usuarios : "Usuarios",	//Clase de la cual quiero obtener el select
 				select_Areas : "Areas", //Clase de la cual quiero sacar el select
 				queSos : "monitor" //a quien le voy a generar la vista
 			}, function(data){

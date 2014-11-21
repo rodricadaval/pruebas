@@ -78,8 +78,8 @@ class Vinculos {
 	public function modificarDatos($datos) {
 
 		$id_vinculo = $datos['id_vinculo'];
-		$set = "id_sector=" . $datos['area'] . ", id_usuario=" . $datos['usuario'] . ", id_cpu=" . $datos['id_computadora'];
-		if (BDD::getInstance()->query("UPDATE system.vinculos SET $set where id_vinculo = '$id_vinculo' ")->get_error()) {
+		$extra = "id_sector=" . $datos['area'] . ", id_usuario=" . $datos['id_usuario'] . ", id_cpu=" . $datos['id_computadora'];
+		if (BDD::getInstance()->query("UPDATE system.vinculos SET id_usuario = (select id_usuario from system.usuarios where )$extra where id_vinculo = '$id_vinculo' ")->get_error()) {
 			return 0;
 		}
 		return 1;

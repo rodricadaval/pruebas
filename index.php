@@ -11,13 +11,13 @@ include 'logueo/chequeo_login.php';
         <script src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
         <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
         <script src="lib/jquery.hashchange.js" type="text/javascript"></script>
-        <script src="lib/jquery.easytabs.js" type="text/javascript"></script>
         <script src="lib/jquery.validate.js" type="text/javascript"></script>
         <script src="lib/semantic.js" type="text/javascript"></script>
-        <!--<script src="lib/typeahead.js" type="text/javascript"></script>-->
+        <script src="lib/bootstrap.js" type="text/javascript"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <!--<script src="lib/typeahead.js" type="text/javascript"></script>
         <script type='text/javascript' src="http://twitter.github.com/typeahead.js/releases/latest/typeahead.bundle.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/typeahead.css">
-        <link href="css/jquery-easytabs.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="css/typeahead.css">-->
         <link href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css" rel=
         "stylesheet" type="text/css">
         <link href="css/semantic.css" rel="stylesheet" type="text/css">
@@ -28,7 +28,7 @@ include 'logueo/chequeo_login.php';
             <title>Inicio</title>
             </head>
             <body>
-                <div class="as_wrapper">
+                <div class="header">
                     <h1>Bienvenido
                     <b><?php echo ucfirst($_SESSION['username']);?></b><span class=
                     "logout" id="logout">Desconectarse</span></h1>
@@ -46,7 +46,7 @@ include 'logueo/chequeo_login.php';
 			                complete: function(){window.location = "logueo/login.php"}
 			            });
 		            });
-	               	$(".test").on('click',function(event){
+	               	$("div.tab-lateral li.test a").on('click',function(event){
 	                	event.preventDefault();
 	                $("#contenedorPpal").load($(this).attr("href"));
 	           		});

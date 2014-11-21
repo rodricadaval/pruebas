@@ -133,7 +133,16 @@ class Monitores {
 	}
 
 	public function getByID($id) {
-		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_monitor = '$id' ")->_fetchRow();
+		$datos = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_monitor = '$id' ")->_fetchRow();
+		foreach ($datos as $key => $value) {
+			if ($key == "id_vinculo") {
+				$id_usuario = Vinculos::getIdUsuario($value);
+				$datos_usuario = Usuarios::getByID($id_usuario);
+				$datos_usuario['nombre_area'] = Areas::getNombre($datos_usuario['area']);
+			}
+		}
+		return array_merge($datos, $datos_usuario);
+
 	}
 
 	public function modificarMonitor($datos) {
