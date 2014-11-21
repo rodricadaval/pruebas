@@ -146,15 +146,50 @@ $(document).ready(function(){
 				}
 			})
 		} ,
-		minLength : 3,
+		minLength : 3
 		updater: function(obj) { console.log(obj); return obj; }
 
 	});
 
+	$("#form_monitor").validate({
+		errorLabelContainer : ".error" ,
+		onfocusout: false,
+		onkeyup: false,
+		onclick: false,
+		onsubmit: true,
+		rules : {
+			nombre_usuario : {
+				required : true,
+				remote 	 : {
+					url 	: 'lib/busca_usuario.php' ,
+					type 	: 'post' ,
+					data 	: {
+						nombre_usuario : function() {
+							console.log($("#nombre_usuario").val());
+							return $("#nombre_usuario").val();
+						}
+					}
+				}
+			}
+		} ,
+		messages : {
+			nombre_usuario : {
+				remote : 'El usuario no existe'
+			}
+		} ,
+		submitHandler : function (form) {
+          validado = true;
+          console.log (validado);
+          console.log ("Formulario OK");
+        } ,
+        invalidHandler : function (event , validator) {
+          console.log(validator);
+          validado = false;
+        }
+	});
+
+
 /*
-	$("#nombre_usuario").on('change',function(){
-		console.log($("#nombre_usuario").val());
-	})
 
 	$('.typeahead').on('typeahead:selected', function(event, usuario) {
 
@@ -188,33 +223,7 @@ $(document).ready(function(){
 
 		event.preventDefault();
 
-		$("#form_monitor").validate({
-		errorLabelContainer : ".error" ,
-		rules : {
-			nombre_usuario : {
-				required : true,
-				remote 	 : {
-					url 	: 'lib/busca_usuario.php' ,
-					type 	: 'post' ,
-					data 	: {
-						nombre_usuario : function() {
-							console.log($("#nombre_usuario").val());
-							return $("#nombre_usuario").val();
-						}
-					}
-				}
-			}
-		} ,
-		messages : {
-			nombre_usuario : {
-				remote : 'El usuario no existe'
-			}
-		} ,
-		submitHandler : function (form) {
-			console.log (form);
-			validado = true;
-		}
-	});
+
 
 		console.log($('.typeahead').typeahead('val'));
 
