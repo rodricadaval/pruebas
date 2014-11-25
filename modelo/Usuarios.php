@@ -125,6 +125,14 @@ class Usuarios {
 		return $inst_table = BDD::getInstance()->query("select usuario from system." . self::claseMinus() . " where id_usuario = '$id' ")->_fetchRow()['usuario'];
 	}
 
+	public function getNombreDePila($id) {
+		return $inst_table = BDD::getInstance()->query("select nombre_apellido from system." . self::claseMinus() . " where id_usuario = '$id' ")->_fetchRow()['nombre_apellido'];
+	}
+
+	public function getIdByNombre($nombre) {
+		return BDD::getInstance()->query("select id_usuario from system.usuarios where nombre_apellido= '$nombre' ")->_fetchRow()['id_usuario'];
+	}
+
 	public function getCampos() {
 
 		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus())->_fetchRow();

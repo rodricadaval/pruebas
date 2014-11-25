@@ -7,8 +7,11 @@ if (isset($_POST['action'])) {
 	switch ($_POST['action']) {
 		case 'modificar':
 			unset($_POST['action']);
-			$_POST['id_computadora'] = 1;
-			echo $inst_monitor->modificarMonitor($_POST);
+			$_POST['id_usuario'] = Usuarios::getIdByNombre($_POST['nombre_usuario']);
+			$_POST['id_cpu'] = Computadoras::getIdBySerie($_POST['cpu_serie']);
+			unset($_POST['nombre_usuario']);
+			unset($_POST['cpu_serie']);
+			echo Vinculos::modificarDatos($_POST);
 			break;
 
 		case 'eliminar':

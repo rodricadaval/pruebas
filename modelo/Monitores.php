@@ -138,6 +138,8 @@ class Monitores {
 			if ($key == "id_vinculo") {
 				$id_usuario = Vinculos::getIdUsuario($value);
 				$datos_usuario = Usuarios::getByID($id_usuario);
+				$id_cpu = Vinculos::getIdCpu($value);
+				$datos_usuario['num_serie_cpu'] = Computadoras::getSerie($id_cpu);
 				$datos_usuario['nombre_area'] = Areas::getNombre($datos_usuario['area']);
 			}
 		}

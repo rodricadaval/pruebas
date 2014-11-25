@@ -55,9 +55,10 @@ if (isset($_POST['action'])) {
 
 		case 'buscar_area':
 
-			if (isset($_POST['id_usuario'])) {
+			if (isset($_POST['nombre_usuario'])) {
 				$inst_usuarios = new Usuarios();
-				echo $inst_usuarios->dame_id_area($_POST['id_usuario']);
+				$id_usuario = $inst_usuarios->getIdByNombre($_POST['nombre_usuario']);
+				echo $inst_usuarios->dame_id_area($id_usuario);
 			}
 			break;
 		default:

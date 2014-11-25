@@ -75,13 +75,22 @@ class Vinculos {
 		return BDD::getInstance()->query("select id_cpu from system.vinculos where id_vinculo = '$id' ")->_fetchRow()['id_cpu'];
 	}
 
+	public function mismaArea($id_vinculo, $id_ingresado) {
+		if (BDD::getInstance()->query("select id_sector from system.vinculos where id_vinculo = '$id_vinculo' ")->_fetchRow()['id_sector'] == $id_ingresado) {
+			return "true";
+		}
+		return "false";
+	}
+
 	public function modificarDatos($datos) {
 
 		$id_vinculo = $datos['id_vinculo'];
-		$extra = "id_sector=" . $datos['area'] . ", id_usuario=" . $datos['id_usuario'] . ", id_cpu=" . $datos['id_computadora'];
-		if (BDD::getInstance()->query("UPDATE system.vinculos SET id_usuario = (select id_usuario from system.usuarios where )$extra where id_vinculo = '$id_vinculo' ")->get_error()) {
+		$extra = "id_sector=" . $datos['area'] . ", id_usuario=" . $datos['id_usuario'] . ", id_cpu=" . $datos['id_cpu'];
+		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_vinculo = '$id_vinculo' ")->get_error()) {
+			var_dump(BDD::getInstance());
 			return 0;
 		}
+		var_dump(BDD::getInstance());
 		return 1;
 	}
 }

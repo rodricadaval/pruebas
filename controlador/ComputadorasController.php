@@ -28,6 +28,14 @@ if (isset($_POST['action'])) {
 			echo $inst_computadoras->eliminar($_POST['id_computadora']);
 			break;
 
+		case 'buscar_area':
+			if (isset($_POST['num_serie'])) {
+				$inst_cpu = new Computadoras();
+				$id_vinc = $inst_cpu->getIdVinculoBySerie($_POST['num_serie']);
+				echo Vinculos::getIdSector($id_vinc);
+			}
+			break;
+
 		default:
 			# code...
 			break;

@@ -69,6 +69,14 @@ return $tabla;
 		return BDD::getInstance()->query("select num_serie from system.computadoras where id_computadora='$id'")->_fetchRow()['num_serie'];
 	}
 
+	public function getIdVinculoBySerie($serie) {
+		return BDD::getInstance()->query("select id_vinculo from system.computadoras where num_serie = '$serie' ")->_fetchRow()['id_vinculo'];
+	}
+
+	public function getIdBySerie($serie) {
+		return BDD::getInstance()->query("select id_computadora from system.computadoras where num_serie = '$serie' ")->_fetchRow()['id_computadora'];
+	}
+
 	public function dameSelect($id = "", $sos = "") {
 		$table = BDD::getInstance()->query("select num_serie, id_computadora from system." . self::claseMinus() . " where estado = 1");
 		if ($id != "") {
@@ -94,6 +102,8 @@ return $tabla;
 	}
 
 	public function modificar($datos) {
+		$datos['id_usuario'] = Usuarios::getIdByNombre($datos['nombre_usuario']);
+		unset($datos['nombre_usuario']);
 		return Vinculos::modificarDatos($datos);
 	}
 
@@ -104,7 +114,14 @@ return $tabla;
 	}
 
 	public function getByID($id) {
-		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_computadora = '$id' ")->_fetchRow();
+		$datos_compu = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_computadora = '$id' ")->_fetchRow();
+
+		$id_usuario = Vinculos::getIdUsuario($datos_compu['id_vinculo']);
+
+		$datos_compu['nombre_apellido'] = Usuarios::getNombreDePila($id_usuario);
+
+		return $datos_compu;
 	}
+
 }
 ?>

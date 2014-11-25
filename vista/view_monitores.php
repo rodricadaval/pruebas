@@ -57,11 +57,20 @@
 											effect: "explode",
 											duration: 200
 											},
-											width : 540,
-											height : 430,
+											width : 350,
+											height : 340,
 											close : function(){
 												$(this).dialog("destroy").empty();
-											}
+											},
+											buttons :
+						                    {
+						                        "Cancelar" : function () {
+						                            $(this).dialog("destroy").empty();
+						                        },
+						                        "Enviar" : function(){
+						                        	$("#form_monitor").submit();
+						                        }
+						                    }
 				});
 			}
 		);

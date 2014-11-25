@@ -1,6 +1,5 @@
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
 <div id="dialogcontent_cpu" title="Modificar Asignacion Computadora">
-<p>All form fields are required.</p>
 </div>
 <script type="text/javascript">
 
@@ -41,7 +40,6 @@
 			{
 				TablaPpal : "Computadoras",
 				ID : id_computadora,
-				select_Usuarios : "Usuarios",	//Clase de la cual quiero obtener el select
 				select_Areas : "Areas", //Clase de la cual quiero sacar el select
 				queSos : "computadora" //a quien le voy a generar la vista
 			}, function(data){
@@ -56,11 +54,21 @@
 											effect: "explode",
 											duration: 200
 											},
-											width : 400,
+											width : 350,
+											height: 300,
 											close : function(){
 												$(this).dialog("destroy").empty();
-											}
-											});
+											},
+											buttons :
+						                    {
+						                        "Cancelar" : function () {
+						                            $(this).dialog("destroy").empty();
+						                        },
+						                        "Enviar" : function(){
+						                        	$("#form_computadora").submit();
+						                        }
+						                    }
+				});
 			}
 		);
 	});
