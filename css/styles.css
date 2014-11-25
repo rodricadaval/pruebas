@@ -75,7 +75,8 @@ h1{
 #nuevo_usuario {
 	float:right;
 	position: relative;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
+	margin-top: 10px;
 }
 
 #errores {

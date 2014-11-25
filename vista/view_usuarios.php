@@ -1,9 +1,9 @@
+<h2>{TABLA}</h2>
 <div id="nuevo_usuario">
 	<input type="button" id="crear_usuario" value="Crear Usuario">
 </div>
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
 <div id="dialogcontent" title="Crear/Modificar Usuario">
-<p>All form fields are required.</p>
 </div>
 <script type="text/javascript">
 	$(document).ready(function(event){
