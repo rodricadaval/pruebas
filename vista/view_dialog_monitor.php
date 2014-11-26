@@ -168,7 +168,7 @@ $("#cpu_serie").typeahead({
         minLength : 3,
         updater: function(obj) { console.log(obj);
 
-        						if(obj != "Sin serie" && $("#nombre_usuario").val() == "Sin usuario"){
+        						if(obj != "Sin serie" && ($("#nombre_usuario").val() == "Sin usuario" || $("#nombre_usuario").val() == "")){
         							console.log('Entre a cambiar el area');
 
                                     $.post('controlador/ComputadorasController.php',
@@ -228,7 +228,7 @@ $("#cpu_serie").typeahead({
                 remote : 'El usuario no existe'
             },
             cpu_serie :{
-            	remote: 'El sector propio del cpu no es el mismo que el del usuario o el numero de serie no existe. Ingrese una cpu nuevamente'
+            	remote: 'El sector propio del cpu no es el mismo que el del usuario o el numero de serie no existe. Ingrese otra cpu o asigne dicha cpu al usuario desde el ABM de Computadoras'
             }
         } ,
         submitHandler : function (form) {

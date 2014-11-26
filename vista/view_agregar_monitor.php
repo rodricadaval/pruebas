@@ -13,12 +13,8 @@
     </tr>
     <tr>
     	<td>Modelo:</td>
-    	<td><select id='select_modelos_n_monitor' name='modelos'>
+    	<td><select id='select_modelos' name='modelos'>
     				<option value='0'>Seleccionar</option></select></td>
-    	</td>
-    	<td>Deposito:</td>
-    	<td><select id='select_areas_n_monitor' name='depositos'>
-    				<option value=''>Seleccionar</option></select>
     	</td>
     	<td>Nro de Serie:</td>
     	<td><input class="input_nro_serie" type="text" name="nro_de_serie"</td>

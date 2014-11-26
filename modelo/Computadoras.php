@@ -107,8 +107,14 @@ return $tabla;
 		return Vinculos::modificarDatos($datos);
 	}
 
-	public function eliminar($id) {
+	public function eliminarLogico($id) {
 		if (!BDD::getInstance()->query("UPDATE system.computadoras SET estado=0 where id_computadora='$id' ")->get_error()) {
+			return 1;
+		} else {return 0;}
+	}
+
+	public function eliminar($id) {
+		if (!BDD::getInstance()->query("DELETE FROM system.computadoras where id_computadora='$id' ")->get_error()) {
 			return 1;
 		} else {return 0;}
 	}

@@ -21,7 +21,7 @@ class Monitores {
 
 	public function listarCorrecto($datos_extra = "") {
 
-		$inst_table = BDD::getInstance()->query("select * , '<a id=\"modificar_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted green small edit icon\" title=\"Asignar a Usuario o cambiar Sector \"></i></a> <a id=\"eliminar_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>' as m from system." . self::claseMinus() . " where estado = 1");
+		$inst_table = BDD::getInstance()->query("select * , '<a id=\"modificar_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted green small edit icon\" title=\"Asignar a Usuario,Cpu o cambiar Sector \"></i></a> <a id=\"eliminar_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>' as m from system." . self::claseMinus() . " where estado = 1");
 
 		$todo = $inst_table->_fetchAll();
 		$total = $inst_table->get_count();
@@ -152,6 +152,12 @@ class Monitores {
 	}
 
 	public function eliminarMonitor($id) {
+		if (!BDD::getInstance()->query("DELETE FROM system.monitores where id_monitor='$id' ")->get_error()) {
+			return 1;
+		} else {return 0;}
+	}
+
+	public function eliminarMonitorLogico($id) {
 		if (!BDD::getInstance()->query("UPDATE system.monitores SET estado=0 where id_monitor='$id' ")->get_error()) {
 			return 1;
 		} else {return 0;}
