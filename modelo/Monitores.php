@@ -106,7 +106,7 @@ class Monitores {
 
 	public function agregar_monitor($datos) {
 
-		$id_monitor_desc = Monitor_desc::buscar_id_por_marca_modelo($datos['id_marca'], $datos['modelo']);
+		$id_monitor_desc = Monitor_desc::buscar_id_por_marca_modelo($datos['marca'], $datos['modelo']);
 		$nro_serie = $datos['num_serie'];
 		$values = $datos['id_vinculo'] . "," . $id_monitor_desc;
 		$valor_seq_actual_monitores = BDD::getInstance()->query("select nextval('system.monitores_id_monitor_seq'::regclass)")->_fetchRow()['nextval'];

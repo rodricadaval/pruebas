@@ -1,7 +1,8 @@
 <ul id="etabs" class='nav nav-tabs'>
-  <li><a data-toggle="tab" data-target="#tabs1" href="controlador/ProductosController.php">Monitor</a></li>
-  <li><a data-toggle="tab" data-target="#tabs2" href="#tabs2">Memoria</a></li>
-  <li><a data-toggle="tab" data-target="#tabs3" href="#tabs3">Disco</a></li>
+  <li><a data-toggle="tab" data-target="#tabs1" href="controlador/ProductosController.php" vista="view_agregar_monitor">Monitor</a></li>
+  <li><a data-toggle="tab" data-target="#tabs2" href="controlador/ProductosController.php" vista="view_agregar_computadora">Computadoras</a></li>
+  <li><a data-toggle="tab" data-target="#tabs3" href="controlador/ProductosController.php" vista="view_agregar_memoria">Memoria</a></li>
+  <li><a data-toggle="tab" data-target="#tabs4" href="controlador/ProductosController.php" vista="view_agregar_disco">Disco</a></li>
 </ul>
 
 <div class="tab-content">
@@ -12,29 +13,13 @@
 
 <script>
 
-
-/*
-
-      $.post('controlador/ProductosController.php',
-        {
-          action:"view_agregar_monitor",
-          tipo:"sel_marcas",
-          queSos: "n_monitor"
-        }
-        ,function(data){
-          $("#tabs1").html(data);
-        }
-      );
-*/
-
-
   $(document).ready(function(){
     $("#etabs").tab();
     $("#etabs").bind("show" , function (e){
       var contentID  = $(e.target).attr("data-target");
       var contentURL = $(e.target).attr("href");
       if (typeof(contentURL != 'undefined')){
-        $(contentID).load(contentURL , {action : 'view_agregar_monitor' , tipo : 'sel_marcas'} , function (){ $("#etabs").tab(); });
+        $(contentID).load(contentURL , {action : $(e.target).attr("vista")} , function (){ $("#etabs").tab(); });
       } else {
         $(contentID).tab('show');
       }

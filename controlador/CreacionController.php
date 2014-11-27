@@ -13,7 +13,6 @@ if (isset($_POST['tipo'])) {
 		$datos['id_tipo_producto'] = array_search($_POST['tipo'], $tipo_productos);
 
 		$metodo = "crearVinculo" . $_POST['tipo'];
-		Consola::mostrar("Muestro los datos con los que voy a crear el Monitor y Vinculo");
 		Consola::mostrar($datos);
 
 		return Vinculos::$metodo($datos);

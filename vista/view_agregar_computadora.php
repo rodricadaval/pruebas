@@ -1,23 +1,23 @@
 
-<h3>{titulo}</h3><p>Seleccione la marca y modelo del monitor</p>
+<h3>{titulo}</h3><p>Seleccione la marca y modelo de la computadora</p>
 
-<form id="form_agregar_monitor">
+<form id="form_agregar_computadora">
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="tabla_agregar"></table>
 	<tr>
             <th>Marca: </th>
     </tr>
     <tr>
-            <td>{select_marcas_Monitor}</td>
+            <td>{select_marcas_Computadora}</td>
     </tr>
     <tr>
     	<td>Modelo:</td>
-    	<td><select id='select_modelos_Monitor' name='modelo'>
+    	<td><select id='select_modelos_Computadora' name='modelo'>
     				<option value=''>Seleccionar</option></select></td>
     	</td>
     	<td>Nro de Serie:</td>
-    	<td><input id="nro_de_serie_m" type="text" name="num_serie_mon"</td>
+    	<td><input id="nro_de_serie_c" type="text" name="num_serie_c"</td>
     </tr>
-    <tr><td><div class="error_ag_monit text-error"> </div></td></tr>
+    <tr><td><div class="error_ag_comp text-error"> </div></td></tr>
      </div>
     <div id="agregar"><input class="boton_agregar_monitor" type="submit" name="crearMonitor" value="Crear"</div>
 </table>
@@ -29,24 +29,24 @@
 
 	var validado = false;
 
-	$("#select_marcas_Monitor").on('change',function(){
+	$("#select_marcas_Computadora").on('change',function(){
 
 		console.log("Evento de seleccion de modelos");
 
 		$.post('controlador/ProductosController.php',
 			{
-				value : $('#select_marcas_Monitor option:selected').val(),
+				value : $('#select_marcas_Computadora option:selected').val(),
 				tipo : "sel_modelos",
-				action : "view_agregar_monitor",
+				action : "view_agregar_computadora",
 
 			}, function(data) {
-			$("#select_modelos_Monitor").replaceWith(data);
+			$("#select_modelos_Computadora").replaceWith(data);
 			});
 	});
 
 
-	$("#form_agregar_monitor").validate({
-        errorLabelContainer : ".error_ag_monit" ,
+	$("#form_agregar_computadora").validate({
+        errorLabelContainer : ".error_ag_comp" ,
         onfocusout: false,
         onkeyup: false,
         onclick: false,
@@ -55,17 +55,17 @@
             marca : {
                 required : true
             },
-            modelo: {
-            	required : true
+            modelo : {
+                required : true
             },
-            num_serie_mon : {
+            num_serie_c : {
             	required : true,
             	remote      : {
-                    url     : 'busquedas/busca_nro_serie_monitor.php' ,
+                    url     : 'busquedas/busca_nro_serie_computadora.php' ,
                     type     : 'post' ,
                     data     : {
                         serie : function() {
-                            return $("#nro_de_serie_m").val();
+                            return $("#nro_de_serie_c").val();
                         }
                     }
                 }
@@ -78,9 +78,9 @@
             modelo : {
                 required : 'Debe seleccionar un modelo'
             },
-            num_serie_mon :{
+            num_serie_c : {
             	required: 'El numero de serie no puede ser nulo',
-            	remote: 'Ya existe un monitor con ese numero de serie'
+            	remote: 'Ya existe una CPU con ese numero de serie'
             }
         } ,
         submitHandler : function (form) {
@@ -95,13 +95,17 @@
     });
 
 
-	$("#form_agregar_monitor").on('submit',function(){
+	$("#form_agregar_computadora").on('submit',function(){
 
 		if(validado){
 			console.log('Evento de click en crear');
-			console.log($("#form_agregar_monitor").serialize());
+			console.log($("#form_agregar_computadora").serialize());
+            var data = $("#select_modelos_Computadora").val().split(' ');
+            var primparte = data[0];
+            var sdaparte = data[1];
 
-			var dataUrl = "marca="+$('#select_marcas_Monitor option:selected').val()+"&modelo="+$("#select_modelos_Monitor").val()+"&num_serie="+$("#nro_de_serie_m").val()+"&tipo=Monitor";
+            var dataUrl = "marca="+$('#select_marcas_Computadora option:selected').val()+"&modelo="+primparte+' '+sdaparte+"&num_serie="+$("#nro_de_serie_c").val()+"&tipo=Computadora";
+            console.log(dataUrl);
 
 			$.ajax({
 							url: 'controlador/CreacionController.php',
@@ -111,13 +115,13 @@
 								console.log(response);
 								console.log("success");
 								alert('Se ha agregado el producto correctamente');
-								$("#tabs1").load("controlador/ProductosController.php",{action:"view_agregar_monitor"});
+								$("#tabs1").load("controlador/ProductosController.php",{action:"view_agregar_computadora"});
 							}
 			})
 			.fail(function() {
 				console.log("error");
 				alert('Hubo un error');
-				$("#tabs1").load("controlador/ProductosController.php",{action:"view_agregar_monitor"});
+				$("#tabs1").load("controlador/ProductosController.php",{action:"view_agregar_computadora"});
 
 			})
 			.always(function() {

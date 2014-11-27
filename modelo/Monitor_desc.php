@@ -38,7 +38,13 @@ class Monitor_desc {
 			$table = BDD::getInstance()->query("select modelo from system." . self::claseMinus() . " where id_marca = '$valor' AND estado = 1");
 		}
 
-		$html_view = "<select id=" . 'select_modelos' . '_' . $sos . " name='modelos'>";
+		if ($sos != "") {
+			$html_view = "<select id='select_modelos" . $sos . "' name='modelo'>";
+
+		} else {
+			$html_view = "<select id='select_modelos' name='modelo'>";
+
+		}
 
 		while ($fila = $table->_fetchRow()) {
 
