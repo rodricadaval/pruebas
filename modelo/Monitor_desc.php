@@ -53,6 +53,7 @@ class Monitor_desc {
 
 		$html_view = $html_view . "</select>";
 		return $html_view;
+
 	}
 
 	public function buscar_id_por_marca_modelo($id_marca, $modelo) {

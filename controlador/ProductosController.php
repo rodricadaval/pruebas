@@ -31,8 +31,9 @@ if (!isset($_POST['action'])) {
 				$url = array("vista/view_agregar_computadora.php");
 				$inst = new Marcas;
 				$select = $inst->dameSelect("_Computadora");
+				$select_clases = Tipos_Computadoras::dameSelect_clase();
 				$titulo = "Menu para agregar una Computadora";
-				$parametros = array("Producto" => "Computadora", "select_marcas_Computadora" => $select, "titulo" => $titulo);
+				$parametros = array("Producto" => "Computadora", "select_marcas_Computadora" => $select, "select_clases_Computadora" => $select_clases, "titulo" => $titulo);
 				echo Disenio::HTML($url, $parametros);
 
 			} else if ($_POST['tipo'] == "sel_modelos") {
@@ -42,7 +43,7 @@ if (!isset($_POST['action'])) {
 			}
 		default:
 			# code...
-			break;
+		break;
 
 	}
 }

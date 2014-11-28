@@ -182,6 +182,8 @@ $("#cpu_serie").typeahead({
                                             $('#select_areas option[value='+id_area+']').attr('selected', 'selected');
                                             $('#select_areas').attr('disabled', 'disabled');
                                     });
+
+
               					}
                                 else{console.log("No entro a cambiar el area por el cpu elegido");}
                                 return obj; }

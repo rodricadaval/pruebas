@@ -16,6 +16,10 @@
                 </div>
             </td>
         </tr>
+         <tr>
+            <td>Tipo:</td>
+            <td>{select_clases}</td>
+        </tr>
         <tr><td></td><td><div class="error text-error"></div></td></tr>
         <tr>
           <td><input style="background-color:#D3D3D3" type="hidden" name="id_cpu" id="id_cpu" value="{id_computadora}" readonly></td>
@@ -161,6 +165,7 @@ $(document).ready(function(){
         } ,
         messages : {
             nombre_usuario : {
+                required : 'Ingrese un usuario o escriba Sin usuario',
                 remote : 'El usuario no existe'
             }
         } ,

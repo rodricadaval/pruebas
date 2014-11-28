@@ -12,10 +12,11 @@ if (isset($_POST['tipo'])) {
 
 		$datos['id_tipo_producto'] = array_search($_POST['tipo'], $tipo_productos);
 
-		$metodo = "crearVinculo" . $_POST['tipo'];
+		//$metodo = "crearVinculo" . $_POST['tipo'];
 		Consola::mostrar($datos);
 
-		return Vinculos::$metodo($datos);
+		//return Vinculos::$metodo($datos, $_POST['tipo']);
+		return Vinculos::crearVinculo($datos, $_POST['tipo']);
 	}
 }
 

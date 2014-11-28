@@ -4,21 +4,19 @@
 <form id="form_agregar_computadora">
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="tabla_agregar"></table>
 	<tr>
-            <th>Marca: </th>
-    </tr>
-    <tr>
-            <td>{select_marcas_Computadora}</td>
-    </tr>
-    <tr>
-    	<td>Modelo:</td>
-    	<td><select id='select_modelos_Computadora' name='modelo'>
+            <td>Marca: </th><td>{select_marcas_Computadora}</td>
+        	<td>Modelo:</td>
+        	<td><select id='select_modelos_Computadora' name='modelo'>
     				<option value=''>Seleccionar</option></select></td>
-    	</td>
-    	<td>Nro de Serie:</td>
-    	<td><input id="nro_de_serie_c" type="text" name="num_serie_c"</td>
+        	</td>
+        	<td>Nro de Serie:</td>
+        	<td><input id="nro_de_serie_c" type="text" name="num_serie_c"</td>
     </tr>
-    <tr><td><div class="error_ag_comp text-error"> </div></td></tr>
-     </div>
+    <br>
+    <tr>
+            <td>Tipo :</td><td>{select_clases_Computadora}</td>
+            <td><div class="error_ag_comp text-error"></div></td>
+    </tr>
     <div id="agregar"><input class="boton_agregar_monitor" type="submit" name="crearMonitor" value="Crear"</div>
 </table>
 </form>
@@ -98,13 +96,26 @@
 	$("#form_agregar_computadora").on('submit',function(){
 
 		if(validado){
+            var primparte = "";
+            var sdaparte = "";
+
 			console.log('Evento de click en crear');
 			console.log($("#form_agregar_computadora").serialize());
-            var data = $("#select_modelos_Computadora").val().split(' ');
-            var primparte = data[0];
-            var sdaparte = data[1];
 
-            var dataUrl = "marca="+$('#select_marcas_Computadora option:selected').val()+"&modelo="+primparte+' '+sdaparte+"&num_serie="+$("#nro_de_serie_c").val()+"&tipo=Computadora";
+            if($("#select_modelos_Computadora").val().indexOf("-") >= 0){
+                var data = $("#select_modelos_Computadora").val().split('-');
+                primparte = data[0];
+                sdaparte = data[1];
+                console.log(primparte);
+                console.log(sdaparte);
+            }
+            else{
+                primparte = $("#select_modelos_Computadora").val();
+                sdaparte = "";
+            }
+
+
+            var dataUrl = "marca="+$('#select_marcas_Computadora option:selected').val()+"&modelo="+primparte+' '+sdaparte+"&num_serie="+$("#nro_de_serie_c").val()+"&clase="+$("#select_clase").val()+"&tipo=Computadora";
             console.log(dataUrl);
 
 			$.ajax({

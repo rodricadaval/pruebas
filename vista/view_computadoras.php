@@ -21,6 +21,7 @@
 						{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
 						{ "sTitle" : "Marca" , "mData" : "marca"},
 						{ "sTitle" : "Modelo" , "mData" : "modelo"},
+						{ "sTitle" : "Tipo" , "mData" : "clase"},
 						{ "sTitle" : "Sector" , "mData" : "sector"},
 						{ "sTitle" : "Usuario" , "mData" : "usuario"},
 						{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
@@ -41,6 +42,7 @@
 				TablaPpal : "Computadoras",
 				ID : id_computadora,
 				select_Areas : "Areas", //Clase de la cual quiero sacar el select
+				select_clases : "Computadoras",
 				queSos : "computadora" //a quien le voy a generar la vista
 			}, function(data){
 				$("#dialogcontent_cpu").html(data);

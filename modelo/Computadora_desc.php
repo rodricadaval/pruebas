@@ -31,6 +31,10 @@ class Computadora_desc {
 		return $fila;
 	}
 
+	public function buscar_id_por_marca_modelo($id_marca, $modelo) {
+		return BDD::getInstance()->query("SELECT id_computadora_desc FROM system.computadora_desc where id_marca ='$id_marca' AND modelo='$modelo' ")->_fetchRow()['id_computadora_desc'];
+	}
+
 	public function dameSelect($valor = "", $sos = "") {
 		if (!isset($valor)) {
 			$table = BDD::getInstance()->query("select modelo from system." . self::claseMinus() . " where estado = 1");
@@ -51,15 +55,19 @@ class Computadora_desc {
 
 		while ($fila = $table->_fetchRow()) {
 
-			$html_view = $html_view . "<option value=" . $fila['modelo'] . ">" . $fila['modelo'] . "</option>";
+			if (preg_match('/\s/', $fila['modelo'])) {
+				$modelo = explode(" ", $fila['modelo']);
+				$modelo[0] .= "-";
+			} else {
+				$modelo[0] = $fila['modelo'];
+				$modelo[1] = "";
+			}
+
+			$html_view = $html_view . "<option value=" . $modelo[0] . $modelo[1] . ">" . $fila['modelo'] . "</option>";
 		}
 
 		$html_view = $html_view . "</select>";
 		return $html_view;
-	}
-
-	public function buscar_id_por_marca_modelo($id_marca, $modelo) {
-		return BDD::getInstance()->query("SELECT id_computadora_desc FROM system.comutadora_desc where id_marca ='$id_marca' AND modelo='$modelo' ")->_fetchRow()['id_monitor_desc'];
 	}
 }
 ?>

@@ -55,17 +55,23 @@ foreach ($_POST as $key => $value) {
 
 			case 'computadora':
 				$clasePpal = new Vinculos();
+
+				$metodo = "dameSelect";
+
 				if ($value == "Areas") {
 					$id = $clasePpal->getIdSector($datos_tabla['id_vinculo']);
 				} else if ($value == "Usuarios") {
 					$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
+				} else if ($value == "Computadoras") {
+					$metodo .= "_clase";
+					$id = $datos_tabla['clase'];
 				}
-				$parametros[$key] = $inst_clase->dameSelect($id, $_POST['queSos']);
+				$parametros[$key] = $inst_clase->$metodo($id, $_POST['queSos']);
 				break;
 
 			default:
 				# code...
-				break;
+			break;
 		}
 
 	} else { $parametros[$key] = $value;}

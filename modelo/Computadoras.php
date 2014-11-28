@@ -38,7 +38,7 @@ class Computadoras {
 
 					default:
 						# code...
-						break;
+					break;
 				}
 
 			}
@@ -65,6 +65,25 @@ $tabla[$campo] = $valor;
 return $tabla;
 }
  */
+
+	public function agregar_computadora($datos) {
+
+		$id_computadora_desc = Computadora_desc::buscar_id_por_marca_modelo($datos['marca'], $datos['modelo']);
+		$nro_serie = $datos['num_serie'];
+		$clase = $datos['clase'];
+		$values = $datos['id_vinculo'] . "," . $id_computadora_desc;
+
+		if (!BDD::getInstance()->query("INSERT INTO system.computadoras (num_serie,clase,id_vinculo,id_computadora_desc) VALUES ('$nro_serie','$clase',$values)")->get_error()) {
+			$valor_seq_actual_computadoras = BDD::getInstance()->query("select nextval('system.computadoras_id_computadora_seq'::regclass)")->_fetchRow()['nextval'];
+			$valor_seq_actual_computadoras--;
+			BDD::getInstance()->query("select setval('system.computadoras_id_computadora_seq'::regclass,'$valor_seq_actual_computadoras')");
+			return $valor_seq_actual_computadoras;
+
+		} else {
+			var_dump(BDD::getInstance());
+			return 0;}
+	}
+
 	public function getSerie($id) {
 		return BDD::getInstance()->query("select num_serie from system.computadoras where id_computadora='$id'")->_fetchRow()['num_serie'];
 	}
@@ -75,6 +94,11 @@ return $tabla;
 
 	public function getIdBySerie($serie) {
 		return BDD::getInstance()->query("select id_computadora from system.computadoras where num_serie = '$serie' ")->_fetchRow()['id_computadora'];
+	}
+
+	public function dameSelect_clase($clase = "", $sos = "") {
+
+		return Tipos_Computadoras::dameSelect_clase($clase, $sos);
 	}
 
 	public function dameSelect($id = "", $sos = "") {
@@ -104,6 +128,9 @@ return $tabla;
 	public function modificar($datos) {
 		$datos['id_usuario'] = Usuarios::getIdByNombre($datos['nombre_usuario']);
 		unset($datos['nombre_usuario']);
+		$clase = $datos['clase'];
+		$id = $datos['id_cpu'];
+		BDD::getInstance()->query("UPDATE system.computadoras SET clase='$clase' where id_computadora='$id'");
 		return Vinculos::modificarDatos($datos);
 	}
 

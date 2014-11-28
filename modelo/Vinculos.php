@@ -1,7 +1,7 @@
 <?php
 class Vinculos {
 
-	public function crearVinculoMonitor($datos = "") {
+	public function crearVinculo($datos = "", $tipo = "") {
 
 		if (!isset($datos['id_usuario'])) {
 			$datos['id_usuario'] = 1;
@@ -19,25 +19,42 @@ class Vinculos {
 		$values = $datos['id_usuario'] . "," . $datos['id_deposito'] . "," . $datos['id_cpu'] . "," . $datos['id_tipo_producto'] . ",1";
 
 		if (!BDD::getInstance()->query("INSERT INTO system.vinculos (id_usuario,id_sector,id_cpu,id_tipo_producto,id_pk_producto) VALUES ($values) ")->get_error()) {
+			var_dump(BDD::getInstance());
 
 			$valor_seq_actual = BDD::getInstance()->query("select nextval('system.vinculos_id_vinculo_seq'::regclass)")->_fetchRow()['nextval'];
 			$valor_seq_actual--;
 			$datos['id_vinculo'] = $valor_seq_actual;
 			BDD::getInstance()->query("select setval('system.vinculos_id_vinculo_seq'::regclass,$valor_seq_actual)");
 
-			$id_monitor = Monitores::agregar_monitor($datos);
+			if (isset($tipo)) {
+				switch ($tipo) {
+					case 'Monitor':
+						$id = Monitores::agregar_monitor($datos);
+						break;
+					case 'Computadora':
+						$id = Computadoras::agregar_computadora($datos);
+						break;
 
-			if ($id_monitor == 0) {
+					default:
+						//nada
+					break;
+				}
+			} else {
+				Consola::mostrar("No hay tipo especificado.");
+				return "false";
+			}
+
+			if ($id == 0) {
 				BDD::getInstance()->query("DELETE FROM system.vinculos WHERE id_vinculo='$valor_seq_actual' ")->get_error();
 				$valor_seq_actual--;
 				BDD::getInstance()->query("select setval('system.vinculos_id_vinculo_seq'::regclass,'$valor_seq_actual')");
 			} else {
 
-				if (BDD::getInstance()->query("UPDATE system.vinculos SET id_pk_producto=$id_monitor WHERE id_vinculo='$valor_seq_actual' ")->get_error()) {
+				if (BDD::getInstance()->query("UPDATE system.vinculos SET id_pk_producto=$id WHERE id_vinculo='$valor_seq_actual' ")->get_error()) {
 					var_dump(BDD::getInstance());
 					return "false";
 				} else {
-					Consola::mostrar("Se ejecuto correctamente el update del vinculo con el id de monitor correspondiente.");
+					Consola::mostrar("Se ejecuto correctamente el update del vinculo con el id del producto correspondiente.");
 					return "true";
 				}
 
