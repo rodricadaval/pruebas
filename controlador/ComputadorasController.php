@@ -36,6 +36,13 @@ if (isset($_POST['action'])) {
 			}
 			break;
 
+		case 'cpus_del_usuario': 
+				$id_usuario = Usuarios::getIdByNombre($_POST['nombre_usuario']);
+			    $inst_cpu = new Computadoras();
+				echo $inst_cpu->dameSelectDeUsuario($id_usuario,$_POST['extra_id_select']); 
+			
+			break;
+
 		default:
 			# code...
 		break;

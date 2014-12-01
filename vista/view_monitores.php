@@ -76,6 +76,49 @@
 		);
 	});
 
+$("#contenedorPpal").on('click' , '#modificar_usuario_monitor' , function(){
+
+		console.log($(this).attr("id_monitor"));
+		var id_monitor = $(this).attr("id_monitor");
+		$.post( "vista/dialog_content.php",
+			{
+				TablaPpal : "Monitores",
+				ID : id_monitor,
+				select_Areas : "Areas", //Clase de la cual quiero sacar el select
+				queSos : "monitor", //a quien le voy a generar la vista
+				select_Computadoras : "Computadoras",
+				action : "modif_usuario"
+			}, function(data){
+				$("#dialogcontent_monitor").html(data);
+				$("#dialogcontent_monitor").dialog({
+											show: {
+											effect: "blind",
+											duration: 1000,
+											modal:true
+											},
+											hide: {
+											effect: "explode",
+											duration: 200
+											},
+											width : 350,
+											height : 360,
+											close : function(){
+												$(this).dialog("destroy").empty();
+											},
+											buttons :
+						                    {
+						                        "Cancelar" : function () {
+						                            $(this).dialog("destroy").empty();
+						                        },
+						                        "Enviar" : function(){
+						                        	$("#form_monitor_mod_usuario").submit();
+						                        }
+						                    }
+				});
+			}
+		);
+	});
+
 	$("#contenedorPpal").on('click' , '#eliminar_monitor' , function(){
 
 		console.log($(this).attr("id_monitor"));

@@ -8,9 +8,16 @@ if (isset($_POST['action'])) {
 		case 'modificar':
 			unset($_POST['action']);
 			$_POST['id_usuario'] = Usuarios::getIdByNombre($_POST['nombre_usuario']);
-			$_POST['id_cpu'] = Computadoras::getIdBySerie($_POST['cpu_serie']);
+			if(isset($_POST['asing_usr']) && $_POST['asing_usr'] == "yes"){
+				$_POST['id_cpu'] = $_POST['id_computadora'];
+				unset($_POST['id_computadora']);
+				unset($_POST['asing_usr']);
+			}
+			else{
+				$_POST['id_cpu'] = Computadoras::getIdBySerie($_POST['cpu_serie']);
+				unset($_POST['cpu_serie']);
+			}
 			unset($_POST['nombre_usuario']);
-			unset($_POST['cpu_serie']);
 			echo Vinculos::modificarDatos($_POST);
 			break;
 

@@ -125,6 +125,45 @@ return $tabla;
 		return $html_view;
 	}
 
+	public function dameSelectDeUsuario($id = "", $sos = "") {
+		
+		$tableVinc = BDD::getInstance()->query("select distinct id_cpu from system.vinculos where id_usuario = '$id' AND id_cpu <> 1 ");
+
+
+		$html_view = "<select id='select_computadoras_" . $sos . "' name='id_computadora'>";
+
+		$nuevo = true;
+		$consulta = "";
+
+		if($id == "" || $id == 1 || $tableVinc->get_count() == 0){
+			$html_view .= "<option value='1'>Sin Cpu</option>";
+		}
+		else{
+
+			while ($fila_vinc = $tableVinc->_fetchRow()) {
+
+				$id_cpu = $fila_vinc['id_cpu'];
+
+				if($nuevo){
+					$consulta .= $id_cpu;
+					$nuevo = false;
+				}
+				else{
+					$consulta = "," . $id_cpu;
+				}
+			}
+			
+			$table = BDD::getInstance()->query("select num_serie,id_computadora from system.computadoras where id_computadora IN ($consulta)");
+
+		    while ($fila_computadora = $table->_fetchRow()) {
+
+					$html_view .= "<option value='" . $fila_computadora['id_computadora'] . "'>" . $fila_computadora['num_serie'] . "</option>";
+				}
+		}
+		$html_view = $html_view . "</select>";
+		return $html_view;
+	}
+
 	public function modificar($datos) {
 		$datos['id_usuario'] = Usuarios::getIdByNombre($datos['nombre_usuario']);
 		unset($datos['nombre_usuario']);

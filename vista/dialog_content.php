@@ -28,6 +28,7 @@ foreach ($_POST as $key => $value) {
 		$inst_clase = new $value();
 
 		switch ($_POST['queSos']) {
+
 			case 'usuario':
 				$tipo = strtolower(substr($value, 0, -1));
 				if ($tipo == "permiso") {
@@ -41,16 +42,22 @@ foreach ($_POST as $key => $value) {
 
 				break;
 			case 'monitor':
-				$clasePpal = new Vinculos();
-				if ($value == "Areas") {
-					$id = $clasePpal->getIdSector($datos_tabla['id_vinculo']);
-				} else if ($value == "Usuarios") {
-					$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
-				} else if ($value == "Computadoras") {
-					$id = $clasePpal->getIdCpu($datos_tabla['id_vinculo']);
 
-				}
-				$parametros[$key] = $inst_clase->dameSelect($id, $_POST['queSos']);
+					$clasePpal = new Vinculos();
+					
+					$metodo = "dameSelect";
+					$sos =  $_POST['queSos'];
+
+					if ($value == "Areas") {
+						$id = $clasePpal->getIdSector($datos_tabla['id_vinculo']);
+					} else if ($value == "Usuarios") {
+						$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
+					} else if ($value == "Computadoras") {
+						$id = $clasePpal->getIdCpu($datos_tabla['id_vinculo']);
+					}
+					
+					$parametros[$key] = $inst_clase->$metodo($id, $sos);
+				
 				break;
 
 			case 'computadora':
@@ -75,6 +82,10 @@ foreach ($_POST as $key => $value) {
 		}
 
 	} else { $parametros[$key] = $value;}
+}
+
+if(isset($_POST['action'])){
+	$_POST['queSos'] .= "_" . $_POST['action'];
 }
 
 $parametros = array_merge($datos_tabla, $parametros);

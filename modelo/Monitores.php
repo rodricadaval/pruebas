@@ -22,8 +22,8 @@ class Monitores {
 	public function listarCorrecto($datos_extra = "") {
 
 		$inst_table = BDD::getInstance()->query("select * ,
-			'<a id=\"modificar_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted green small edit icon\" title=\"Asignar a Usuario,Cpu o cambiar Sector \"></i></a>
-			<a id=\"modificar_sector_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
+			'<a id=\"modificar_usuario_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted green small edit icon\" title=\"Asignar a Usuario,Cpu o cambiar Sector \"></i></a>
+			<a id=\"modificar_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"modificar_cpu_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted blue small laptop icon\" title=\"Asignar por Computadora\"></i></a>
 			<a id=\"modificar_usuario_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted purple small user icon\" title=\"Asignar por Usuario\"></i></a>
 			<a id=\"eliminar_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>
