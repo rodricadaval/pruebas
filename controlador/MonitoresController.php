@@ -12,19 +12,38 @@ if (isset($_POST['action'])) {
 				$_POST['id_cpu'] = $_POST['id_computadora'];
 				unset($_POST['id_computadora']);
 				unset($_POST['asing_usr']);
+				echo Vinculos::modificarDatos($_POST);
+			}
+			else if(isset($_POST['asing_cpu']) && $_POST['asing_cpu'] == "yes"){
+				$_POST['id_cpu'] = $_POST['id_computadora'];
+				unset($_POST['id_computadora']);
+				unset($_POST['asing_usr']);
+				echo Vinculos::cambiarCpu($_POST);
+			}
+			else if(isset($_POST['asing_sector']) && $_POST['asing_sector'] == "yes") {
+				unset($_POST['asing_sector']);
+				$_POST['id_sector'] = $_POST['area'];
+				unset($_POST['area']);
+				echo Vinculos::cambiarSector($_POST);
 			}
 			else{
 				$_POST['id_cpu'] = Computadoras::getIdBySerie($_POST['cpu_serie']);
 				unset($_POST['cpu_serie']);
+			    unset($_POST['nombre_usuario']);
+				echo Vinculos::modificarDatos($_POST);
 			}
-			unset($_POST['nombre_usuario']);
-			echo Vinculos::modificarDatos($_POST);
 			break;
 
 		case 'eliminar':
 			unset($_POST['action']);
 			echo $inst_monitor->eliminarMonitor($_POST['id_monitor']);
 			break;
+
+		case 'liberar':
+			unset($_POST['action']);
+			echo $inst_monitor->liberarMonitor($_POST['id_monitor']);
+			break;
+
 
 		default:
 			# code...

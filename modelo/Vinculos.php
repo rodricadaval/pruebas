@@ -112,5 +112,43 @@ class Vinculos {
 		var_dump(BDD::getInstance());
 		return 1;
 	}
+
+	public function cambiarCpu($datos){
+		$id_vinculo = $datos['id_vinculo'];
+		$extra = "id_cpu=".$datos['id_cpu'];
+		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_vinculo = '$id_vinculo' ")->get_error()) {
+			var_dump(BDD::getInstance());
+			return 0;
+		}
+		var_dump(BDD::getInstance());
+		return 1;
+	}
+
+	public function cambiarSector($datos){
+		$id_vinculo = $datos['id_vinculo'];
+		$extra = "id_sector=".$datos['id_sector'];
+		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_vinculo = '$id_vinculo' ")->get_error()) {
+			var_dump(BDD::getInstance());
+			return 0;
+		}
+		var_dump(BDD::getInstance());
+		return 1;
+	}
+
+	public function estaLibre($id){
+		$resultado = BDD::getInstance()->query("select id_usuario,id_cpu from system.vinculos where id_vinculo = '$id' ")->_fetchRow();
+		if($resultado['id_usuario'] == 1 && $resultado['id_cpu'] == 1){
+			return 1;
+		}
+		else{return 0;}
+	}
+
+	public function liberar($id){
+		if(BDD::getInstance()->query("UPDATE system.vinculos SET id_usuario=1,id_cpu=1 where id_vinculo = '$id' ")->get_error()){
+			var_dump(BDD::getInstance());
+			echo "false";
+		}
+		else{echo "true";}
+	}
 }
 ?>

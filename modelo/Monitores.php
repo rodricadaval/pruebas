@@ -22,12 +22,11 @@ class Monitores {
 	public function listarCorrecto($datos_extra = "") {
 
 		$inst_table = BDD::getInstance()->query("select * ,
-			'<a id=\"modificar_usuario_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted green small edit icon\" title=\"Asignar a Usuario,Cpu o cambiar Sector \"></i></a>
-			<a id=\"modificar_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
-			<a id=\"modificar_cpu_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted blue small laptop icon\" title=\"Asignar por Computadora\"></i></a>
-			<a id=\"modificar_usuario_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted purple small user icon\" title=\"Asignar por Usuario\"></i></a>
+			'<a id=\"modificar_sector_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
+			<a id=\"modificar_cpu_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted blue small laptop icon\" title=\"Asignar una Computadora\"></i></a>
+			<a id=\"modificar_usuario_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted purple small user icon\" title=\"Asignar un Usuario\"></i></a>
 			<a id=\"eliminar_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>
-			<a id=\"desasignar_todo_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular green small minus outline icon\" title=\"Cambiar Sector \"></i></a>'
+			<a id=\"desasignar_todo_monitor\" class=\"pointer\"id_monitor=\"' || id_monitor || '\"><i class=\"circular green small minus outline icon\" title=\"Liberar Monitor (Quita el usuario y el cpu asignados) \"></i></a>'
 			as m from system." . self::claseMinus() . " where estado = 1");
 
 		$todo = $inst_table->_fetchAll();
@@ -166,6 +165,12 @@ class Monitores {
 		if (!BDD::getInstance()->query("UPDATE system.monitores SET estado=0 where id_monitor='$id' ")->get_error()) {
 			return 1;
 		} else {return 0;}
+	}
+
+	public function liberarMonitor($id){
+		$id_vinculo = BDD::getInstance()->query("select id_vinculo from system.monitores where id_monitor='$id' ")->_fetchRow()['id_vinculo'];
+		$inst_vinc = new Vinculos();
+		echo $inst_vinc->liberar($id_vinculo);
 	}
 }
 ?>

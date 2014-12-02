@@ -8,7 +8,7 @@ class Computadoras {
 
 	public function listarCorrecto($datos_extra = "") {
 
-		$inst_table = BDD::getInstance()->query("select * , '<a id=\"modificar_computadora\" class=\"pointer\"id_computadora=\"' || id_computadora || '\"><i class=\"circular inverted green small edit icon\"></i></a> <a id=\"eliminar_computadora\" class=\"pointer\"id_computadora=\"' || id_computadora || '\"><i class=\"circular inverted red small trash icon\"></i></a>' as m from system." . self::claseMinus() . " where estado = 1");
+		$inst_table = BDD::getInstance()->query("select * , '<a id=\"modificar_computadora\" class=\"pointer\"id_computadora=\"' || id_computadora || '\"><i class=\"circular inverted green small edit icon\"></i></a> <a id=\"eliminar_computadora\" class=\"pointer\"id_computadora=\"' || id_computadora || '\"><i class=\"circular inverted red small trash icon\"></i></a>' as m from system." . self::claseMinus() . " where estado = 1 and id_computadora <> 1");
 
 		$todo = $inst_table->_fetchAll();
 		$total = $inst_table->get_count();
@@ -126,16 +126,23 @@ return $tabla;
 	}
 
 	public function dameSelectDeUsuario($id = "", $sos = "") {
-		
-		$tableVinc = BDD::getInstance()->query("select distinct id_cpu from system.vinculos where id_usuario = '$id' AND id_cpu <> 1 ");
-
-
-		$html_view = "<select id='select_computadoras_" . $sos . "' name='id_computadora'>";
 
 		$nuevo = true;
 		$consulta = "";
 
-		if($id == "" || $id == 1 || $tableVinc->get_count() == 0){
+		if($sos == "dialog_monitor_mod_cpu_sin_usr"){
+			$id_sector = BDD::getInstance()->query("select id_sector from system.vinculos where id_vinculo = '$id' ")->_fetchRow()['id_sector'];
+			$tableVinc = BDD::getInstance()->query("select distinct id_cpu from system.vinculos where id_usuario = 1 AND id_sector = '$id_sector' AND id_tipo_producto = 4");
+			$nuevo = false;
+			$consulta .= 1;
+		}
+		else{
+			$tableVinc = BDD::getInstance()->query("select distinct id_cpu from system.vinculos where id_usuario = '$id' AND id_cpu <> 1 ");
+		}
+
+		$html_view = "<select id='select_computadoras_" . $sos . "' name='id_computadora'>";
+
+		if(($id == "" || $id == 1 || $tableVinc->get_count() == 0) && $sos != "dialog_monitor_mod_cpu_sin_usr"){
 			$html_view .= "<option value='1'>Sin Cpu</option>";
 		}
 		else{
@@ -149,10 +156,10 @@ return $tabla;
 					$nuevo = false;
 				}
 				else{
-					$consulta = "," . $id_cpu;
+					$consulta .= "," . $id_cpu;
 				}
 			}
-			
+	
 			$table = BDD::getInstance()->query("select num_serie,id_computadora from system.computadoras where id_computadora IN ($consulta)");
 
 		    while ($fila_computadora = $table->_fetchRow()) {
@@ -161,6 +168,7 @@ return $tabla;
 				}
 		}
 		$html_view = $html_view . "</select>";
+
 		return $html_view;
 	}
 

@@ -1,0 +1,1 @@
+<p>¿Esta seguro que desea liberar el monitor? El usuario y la computadora que tenía asignados se perderán.</p>

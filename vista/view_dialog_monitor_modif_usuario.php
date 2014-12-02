@@ -110,7 +110,7 @@ $(document).ready(function(){
                 success : function(response){
                     if(response){
 	                    console.log(response);
-	                    alert("Los datos han sido actualizados correctamente. Tenga en cuenta que al cambiar de usuario se reemplazará la Cpu asignada por la del usuario nuevo.");
+	                    alert("Los datos han sido actualizados correctamente. Tenga en cuenta que al cambiar de usuario se reemplazará automáticamente la Cpu asignada por la del usuario elegido.");
 	                    $("#dialogcontent_monitor").dialog("destroy").empty();
 	                    $("#contenedorPpal").load("controlador/MonitoresController.php");
                 	}
