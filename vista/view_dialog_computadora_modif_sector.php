@@ -1,6 +1,6 @@
-<form id="form_monitor_mod_sector">
+<form id="form_computadora_mod_sector">
     <table class="t_monitor">
-        <tr><p id="text_no_puede_cambiar">El Monitor no puede ser cambiado de Sector ya que tiene un usuario o cpu asignado/s. Debe clickear en "liberar monitor" si quiere modificar su sector. </p></tr>
+        <tr><p id="text_no_puede_cambiar">La computadora no puede ser cambiada de Sector ya que tiene un usuario o cpu asignado/s. Debe clickear en "liberar computadora" si quiere modificar su sector. </p></tr>
         <tr type="hidden">
            <td><input type="hidden" name="id_vinculo" id="id_vinculo" value="{id_vinculo}"></td>
         </tr>
@@ -23,13 +23,13 @@ $(document).ready(function(){
 
         $("#select_areas").removeAttr("disabled");
 
-        $("#form_monitor_mod_sector").on('submit',function(event){
+        $("#form_computadora_mod_sector").on('submit',function(event){
 
             event.preventDefault();
 
-            	console.log($("#form_monitor_mod_sector").serialize());
+            	console.log($("#form_computadora_mod_sector").serialize());
         
-            	var datosUrl =    $("#form_monitor_mod_sector").serialize();
+            	var datosUrl =    $("#form_computadora_mod_sector").serialize();
                 
                 datosUrl += "&action=modificar&asing_sector=yes";
 
@@ -43,8 +43,8 @@ $(document).ready(function(){
                         if(response){
     	                    console.log(response);
     	                    alert("Los datos han sido actualizados correctamente.");
-    	                    $("#dialogcontent_monitor").dialog("destroy").empty();
-    	                    $("#contenedorPpal").load("controlador/MonitoresController.php");
+    	                    $("#dialogcontent_cpu").dialog("destroy").empty();
+    	                    $("#contenedorPpal").load("controlador/ComputadorasController.php");
                     	}
                     	else{
                     	alert("Error en la query.");

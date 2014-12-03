@@ -18,7 +18,7 @@
    			 		"bJQueryUI" : true,
 					"aaData" : data,
 					"aoColumns" :[
-						{ "sTitle" : "ID" , "mData" : "id_monitor"},
+						//{ "sTitle" : "ID" , "mData" : "id_monitor"},
 						{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
 						{ "sTitle" : "Marca" , "mData" : "marca"},
 						{ "sTitle" : "Modelo" , "mData" : "modelo"},
@@ -103,7 +103,7 @@ $("#contenedorPpal").on('click' , '#modificar_usuario_monitor' , function(){
 											duration: 200
 											},
 											width : 350,
-											height : 360,
+											height : 260,
 											close : function(){
 												$(this).dialog("destroy").empty();
 											},
@@ -147,7 +147,7 @@ $("#contenedorPpal").on('click' , '#modificar_cpu_monitor' , function(){
 											duration: 200
 											},
 											width : 350,
-											height : 360,
+											height : 330,
 											close : function(){
 												$(this).dialog("destroy").empty();
 											},
@@ -200,7 +200,16 @@ $("#contenedorPpal").on('click' , '#modificar_cpu_monitor' , function(){
 							                            $(this).dialog("destroy").empty();
 							                        },
 							                        "Aceptar" : function(){
-							                        	$("#form_monitor_mod_sector").submit();
+							                        	var objeto = $("#form_monitor_mod_sector").serializeArray();
+							                        	if(objeto != ""){
+							                        		if(objeto[0].value != 0 || objeto[0].value != ""){
+							                        			$("#form_monitor_mod_sector").submit();
+							                        		}
+							                        		else{
+							                        			$(this).dialog("destroy").empty();
+							                        		}
+							                          	}
+							                          	else{ $(this).dialog("destroy").empty();}
 							                        }
 							                    }
 					});
@@ -243,28 +252,12 @@ $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
 							                            $(this).dialog("destroy").empty();
 							                        },
 							                        "Aceptar" : function(){
-							                        		$.post( "controlador/MonitoresController.php",
-															{
-																action : "liberar",
-																id_monitor : id_monitor
-															}, function(data){
-																if(data){
-																	$("#contenedorPpal").load("controlador/MonitoresController.php");
-																}
-																else{
-																	$(this).dialog("destroy").empty();
-																}
-															}
-															);
-
+							                        		$("#liberar_monitor").submit();
 													}
 							                    }
 					});
 				}
 			);
-	
-
-		
 		});
 
 

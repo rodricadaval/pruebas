@@ -16,12 +16,22 @@ if (isset($_POST['action'])) {
 
 		case 'modificar':
 
-			foreach ($_POST as $clave => $valor) {
-				$parametros[$clave] = $valor;
+			if(isset($_POST['cuestion'])){
+				switch ($_POST['cuestion']) {
+					case 'tipo':
+						unset($_POST['cuestion']);
+						echo $inst_computadoras->cambiarTipo($_POST);
+						break;
+					
+					default:
+						unset($_POST['cuestion']);
+						foreach ($_POST as $clave => $valor) {
+							$parametros[$clave] = $valor;
+						}
+						echo $inst_computadoras->modificar($parametros);
+						break;
+				}
 			}
-
-			echo $inst_computadoras->modificar($parametros);
-
 			break;
 
 		case 'eliminar':

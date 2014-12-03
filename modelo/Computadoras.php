@@ -8,7 +8,20 @@ class Computadoras {
 
 	public function listarCorrecto($datos_extra = "") {
 
-		$inst_table = BDD::getInstance()->query("select * , '<a id=\"modificar_computadora\" class=\"pointer\"id_computadora=\"' || id_computadora || '\"><i class=\"circular inverted green small edit icon\"></i></a> <a id=\"eliminar_computadora\" class=\"pointer\"id_computadora=\"' || id_computadora || '\"><i class=\"circular inverted red small trash icon\"></i></a>' as m from system." . self::claseMinus() . " where estado = 1 and id_computadora <> 1");
+		$inst_table = BDD::getInstance()->query("
+			select * , 
+			'<a id=\"modificar_sector_computadora\" class=\"pointer\"id_computadora=\"' || id_computadora || '\">
+			<i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i>
+			</a>
+			<a id=\"modificar_tipo_computadora\" class=\"pointer\"id_computadora=\"' || id_computadora || '\">
+			<i class=\"circular inverted green small edit icon\" title=\"Cambiar Tipo\"></i>
+			</a>
+			<a id=\"modificar_usuario_computadora\" class=\"pointer\"id_computadora=\"' || id_computadora || '\">
+			<i class=\"circular inverted purple small user icon\" title=\"Asignar un Usuario\"></i>
+			</a>
+			<a id=\"eliminar_computadora\" class=\"pointer\"id_computadora=\"' || id_computadora || '\"><i class=\"circular inverted red small trash icon\"></i></a>' as m 
+			from system." . self::claseMinus() . " 
+			where estado = 1 and id_computadora <> 1");
 
 		$todo = $inst_table->_fetchAll();
 		$total = $inst_table->get_count();
@@ -90,6 +103,15 @@ return $tabla;
 
 	public function getIdVinculoBySerie($serie) {
 		return BDD::getInstance()->query("select id_vinculo from system.computadoras where num_serie = '$serie' ")->_fetchRow()['id_vinculo'];
+	}
+
+	public function cambiarTipo($datos){
+		$clase = $datos['clase'];
+		$id = $datos['id_computadora'];
+		if(BDD::getInstance()->query("UPDATE system.computadoras SET clase='$clase' where id_computadora='$id'")->get_error()){
+			return "false";
+		}
+		else{return "true";}
 	}
 
 	public function getIdBySerie($serie) {

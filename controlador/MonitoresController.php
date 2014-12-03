@@ -17,7 +17,7 @@ if (isset($_POST['action'])) {
 			else if(isset($_POST['asing_cpu']) && $_POST['asing_cpu'] == "yes"){
 				$_POST['id_cpu'] = $_POST['id_computadora'];
 				unset($_POST['id_computadora']);
-				unset($_POST['asing_usr']);
+				unset($_POST['asing_cpu']);
 				echo Vinculos::cambiarCpu($_POST);
 			}
 			else if(isset($_POST['asing_sector']) && $_POST['asing_sector'] == "yes") {
