@@ -112,6 +112,7 @@ $(document).ready(function(){
 	                    console.log(response);
 	                    alert("Los datos han sido actualizados correctamente. Tenga en cuenta que al cambiar de usuario se reemplazará automáticamente la Cpu asignada por la del usuario elegido.");
 	                    $("#dialogcontent_monitor").dialog("destroy").empty();
+                        $('#dataTableMon').empty();
 	                    $("#contenedorPpal").load("controlador/MonitoresController.php");
                 	}
                 	else{

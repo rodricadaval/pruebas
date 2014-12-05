@@ -59,7 +59,7 @@ foreach ($_POST as $key => $value) {
 						if(isset($_POST['action']) && $_POST['action'] == "modif_cpu"){
 							$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
 							$metodo .= "DeUsuario";
-							$sos .= "modif_cpu";
+							$sos .= "_modif_cpu";
 							if($id == 1 || $id == ""){
 								$id = $datos_tabla['id_vinculo'];
 								$sos = "dialog_monitor_mod_cpu_sin_usr";
@@ -81,6 +81,10 @@ foreach ($_POST as $key => $value) {
 				$metodo = "dameSelect";
 
 				if ($value == "Areas") {
+
+					if(isset($_POST['action']) && $_POST['action'] == "modif_sector"){
+							$parametros['libre'] = $clasePpal->estaLibre($datos_tabla['id_vinculo']);
+					}
 					$id = $clasePpal->getIdSector($datos_tabla['id_vinculo']);
 				} else if ($value == "Usuarios") {
 					$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);

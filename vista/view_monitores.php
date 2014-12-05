@@ -1,6 +1,5 @@
 <h2>{TABLA}</h2>
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
-<div id="dialogcontent_monitor" title=""></div>
 
 <script type="text/javascript">
 
@@ -13,7 +12,7 @@
 				   tipo: 'json'},
 			dataType: 'json',
 			success : function(data){
-				$("#dataTable").dataTable({
+				var dataTable = $("#dataTable").dataTable({
    			 		"destroy" : true,
    			 		"bJQueryUI" : true,
 					"aaData" : data,
@@ -31,55 +30,14 @@
 						]
     			})
 			}
-
 		});
 	});
 
-	$("#contenedorPpal").on('click' , '#modificar_monitor' , function(){
-
-		console.log($(this).attr("id_monitor"));
-		var id_monitor = $(this).attr("id_monitor");
-		$.post( "vista/dialog_content.php",
-			{
-				TablaPpal : "Monitores",
-				ID : id_monitor,
-				select_Areas : "Areas", //Clase de la cual quiero sacar el select
-				queSos : "monitor" //a quien le voy a generar la vista
-			}, function(data){
-				$("#dialogcontent_monitor").html(data);
-				$("#dialogcontent_monitor").attr("title","Modificar Monitor");
-				$("#dialogcontent_monitor").dialog({
-											show: {
-											effect: "blind",
-											duration: 1000,
-											modal:true
-											},
-											hide: {
-											effect: "explode",
-											duration: 200
-											},
-											width : 350,
-											height : 360,
-											close : function(){
-												$(this).dialog("destroy").empty();
-											},
-											buttons :
-						                    {
-						                        "Cancelar" : function () {
-						                            $(this).dialog("destroy").empty();
-						                        },
-						                        "Enviar" : function(){
-						                        	$("#form_monitor").submit();
-						                        }
-						                    }
-				});
-			}
-		);
-	});
 
 $("#contenedorPpal").on('click' , '#modificar_usuario_monitor' , function(){
 
-		console.log($(this).attr("id_monitor"));
+		console.log("Entro a modificar usuario del monitor");
+		console.log("id_monitor: "+$(this).attr("id_monitor"));
 		var id_monitor = $(this).attr("id_monitor");
 		$.post( "vista/dialog_content.php",
 			{
@@ -90,8 +48,11 @@ $("#contenedorPpal").on('click' , '#modificar_usuario_monitor' , function(){
 				select_Computadoras : "Computadoras",
 				action : "modif_usuario"
 			}, function(data){
+				jQuery('<div/>', {
+				    id: 'dialogcontent_monitor',
+				    text: 'Texto por defecto!'
+				}).appendTo('#contenedorPpal');
 				$("#dialogcontent_monitor").html(data);
-				$("#dialogcontent_monitor").attr("title","Cambiar de Usuario");
 				$("#dialogcontent_monitor").dialog({
 											show: {
 											effect: "blind",
@@ -106,11 +67,15 @@ $("#contenedorPpal").on('click' , '#modificar_usuario_monitor' , function(){
 											height : 260,
 											close : function(){
 												$(this).dialog("destroy").empty();
+												$("#dialogcontent_monitor").remove();
+												dataTable.clear().draw();
 											},
 											buttons :
 						                    {
 						                        "Cancelar" : function () {
 						                            $(this).dialog("destroy").empty();
+						                            $("#dialogcontent_monitor").remove();
+						                            dataTable.clear().draw();
 						                        },
 						                        "Enviar" : function(){
 						                        	$("#form_monitor_mod_usuario").submit();
@@ -123,7 +88,8 @@ $("#contenedorPpal").on('click' , '#modificar_usuario_monitor' , function(){
 
 $("#contenedorPpal").on('click' , '#modificar_cpu_monitor' , function(){
 
-		console.log($(this).attr("id_monitor"));
+		console.log("Entro a modificar cpu del monitor");
+		console.log("id_monitor: "+$(this).attr("id_monitor"));
 		var id_monitor = $(this).attr("id_monitor");
 		$.post( "vista/dialog_content.php",
 			{
@@ -134,8 +100,11 @@ $("#contenedorPpal").on('click' , '#modificar_cpu_monitor' , function(){
 				select_Computadoras : "Computadoras",
 				action : "modif_cpu"
 			}, function(data){
+				jQuery('<div/>', {
+				    id: 'dialogcontent_monitor',
+				    text: 'Texto por defecto!'
+				}).appendTo('#contenedorPpal');
 				$("#dialogcontent_monitor").html(data);
-				$("#dialogcontent_monitor").attr("title","Cambiar de CPU");
 				$("#dialogcontent_monitor").dialog({
 											show: {
 											effect: "blind",
@@ -150,11 +119,13 @@ $("#contenedorPpal").on('click' , '#modificar_cpu_monitor' , function(){
 											height : 330,
 											close : function(){
 												$(this).dialog("destroy").empty();
+												$("#dialogcontent_monitor").remove();
 											},
 											buttons :
 						                    {
 						                        "Cancelar" : function () {
 						                            $(this).dialog("destroy").empty();
+						                            $("#dialogcontent_monitor").remove();
 						                        },
 						                        "Enviar" : function(){
 						                        	$("#form_monitor_mod_cpu").submit();
@@ -167,7 +138,8 @@ $("#contenedorPpal").on('click' , '#modificar_cpu_monitor' , function(){
 
 	$("#contenedorPpal").on('click' , '#modificar_sector_monitor' , function(){
 
-			console.log($(this).attr("id_monitor"));
+			console.log("Entro a modificar sector del monitor");
+			console.log("id_monitor: "+$(this).attr("id_monitor"));
 			var id_monitor = $(this).attr("id_monitor");
 			$.post( "vista/dialog_content.php",
 				{
@@ -177,8 +149,11 @@ $("#contenedorPpal").on('click' , '#modificar_cpu_monitor' , function(){
 					queSos : "monitor", //a quien le voy a generar la vista
 					action : "modif_sector"
 				}, function(data){
+					jQuery('<div/>', {
+				    id: 'dialogcontent_monitor',
+				    text: 'Texto por defecto!'
+				}).appendTo('#contenedorPpal');
 					$("#dialogcontent_monitor").html(data);
-					$("#dialogcontent_monitor").attr("title","Cambiar Sector");
 					$("#dialogcontent_monitor").dialog({
 												show: {
 												effect: "blind",
@@ -193,33 +168,27 @@ $("#contenedorPpal").on('click' , '#modificar_cpu_monitor' , function(){
 												height : 360,
 												close : function(){
 													$(this).dialog("destroy").empty();
+													$("#dialogcontent_monitor").remove();
 												},
 												buttons :
 							                    {
 							                        "Cancelar" : function () {
 							                            $(this).dialog("destroy").empty();
+							                            $("#dialogcontent_monitor").remove();
 							                        },
 							                        "Aceptar" : function(){
-							                        	var objeto = $("#form_monitor_mod_sector").serializeArray();
-							                        	if(objeto != ""){
-							                        		if(objeto[0].value != 0 || objeto[0].value != ""){
-							                        			$("#form_monitor_mod_sector").submit();
-							                        		}
-							                        		else{
-							                        			$(this).dialog("destroy").empty();
-							                        		}
-							                          	}
-							                          	else{ $(this).dialog("destroy").empty();}
+							                        	$("#form_monitor_mod_sector").submit();
 							                        }
 							                    }
 					});
 				}
 			);
-		});
+	});
 
 $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
 
-			console.log($(this).attr("id_monitor"));
+			console.log("Entro a desasignar todo del monitor");
+			console.log("id_monitor: "+$(this).attr("id_monitor"));
 			var id_monitor = $(this).attr("id_monitor");
 	
 			$.post( "vista/dialog_content.php",
@@ -229,8 +198,11 @@ $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
 					queSos : "monitor", //a quien le voy a generar la vista
 					action : "liberar"
 				}, function(data){
+					jQuery('<div/>', {
+				    id: 'dialogcontent_monitor',
+				    text: 'Texto por defecto!'
+				}).appendTo('#contenedorPpal');
 					$("#dialogcontent_monitor").html(data);
-					$("#dialogcontent_monitor").attr("title","Liberar");
 					$("#dialogcontent_monitor").dialog({
 												show: {
 												effect: "blind",
@@ -245,11 +217,13 @@ $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
 												height : 200,
 												close : function(){
 													$(this).dialog("destroy").empty();
+													$("#dialogcontent_monitor").remove();
 												},
 												buttons :
 							                    {
 							                        "Cancelar" : function () {
 							                            $(this).dialog("destroy").empty();
+							                            $("#dialogcontent_monitor").remove();
 							                        },
 							                        "Aceptar" : function(){
 							                        		$("#liberar_monitor").submit();
@@ -263,7 +237,8 @@ $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
 
 	$("#contenedorPpal").on('click' , '#eliminar_monitor' , function(){
 
-		console.log($(this).attr("id_monitor"));
+		console.log("Entro a eliminar monitor");
+		console.log("id_monitor: "+$(this).attr("id_monitor"));
 		var id_monitor = $(this).attr("id_monitor");
 		datosUrl = "id_monitor="+id_monitor+"&action=eliminar";
 		console.log(datosUrl);

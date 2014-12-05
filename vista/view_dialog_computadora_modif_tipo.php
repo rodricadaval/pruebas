@@ -34,6 +34,7 @@ $(document).ready(function(){
 	                    console.log(response);
 	                    alert("Los datos han sido actualizados correctamente.");
 	                    $("#dialogcontent_cpu").dialog("destroy").empty();
+	                    $('#dataTableComp').empty();
 	                    $("#contenedorPpal").load("controlador/ComputadorasController.php");
                 	}
                 	else{

@@ -46,10 +46,21 @@ include 'logueo/chequeo_login.php';
 			                complete: function(){window.location = "logueo/login.php"}
 			            });
 		            });
-	               	$("div.tab-lateral li.test a").on('click',function(event){
+                    var primeraVez = true;
+                    $("div.tab-lateral li.test a").on('click',function(event){
 	                	event.preventDefault();
-	                $("#contenedorPpal").load($(this).attr("href"));
-	           		});
+                        if(primeraVez){    
+                             $("#contenedorPpal").load($(this).attr("href"));
+                             primeraVez = false;
+                        }
+                        else{$("#contenedorPpal").remove();
+                            jQuery('<div/>', {
+                            id: 'contenedorPpal',
+                            text: 'Texto por defecto!'
+                            }).appendTo('.realBody');
+                            $("#contenedorPpal").load($(this).attr("href"));
+                        }
+               		});
 	            </script>
             </body>
         </html>

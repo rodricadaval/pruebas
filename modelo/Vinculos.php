@@ -94,12 +94,43 @@ class Vinculos {
 		return BDD::getInstance()->query("select id_cpu from system.vinculos where id_vinculo = '$id' ")->_fetchRow()['id_cpu'];
 	}
 
+	public function getIdCpuDeLaPc($id) {
+		return BDD::getInstance()->query("select id_pk_producto from system.vinculos where id_vinculo = '$id' AND id_tipo_producto = 4 ")->_fetchRow()['id_pk_producto'];
+	}
+
 	public function mismaArea($id_vinculo, $id_ingresado) {
 		if (BDD::getInstance()->query("select id_sector from system.vinculos where id_vinculo = '$id_vinculo' ")->_fetchRow()['id_sector'] == $id_ingresado) {
 			return "true";
 		}
 		return "false";
 	}
+
+	public function cambiarSectorDeAsignados($datos){
+		
+		$id_cpu = self::getIdCpuDeLaPc($datos['id_vinculo']);
+		$extra = "id_sector=" . $datos['id_sector'];
+
+		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_usuario = 1 AND id_cpu = '$id_cpu' ")->get_error()) {
+			var_dump(BDD::getInstance());
+			return 0;
+		}
+		var_dump(BDD::getInstance());
+		return 1;
+	}
+
+	public function desasignarDeCpu($datos){
+		
+		$id_cpu = self::getIdCpuDeLaPc($datos['id_vinculo']);
+		$extra = "id_cpu=1";
+
+		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_cpu = '$id_cpu' ")->get_error()) {
+			var_dump(BDD::getInstance());
+			return 0;
+		}
+		var_dump(BDD::getInstance());
+		return 1;
+	}
+
 
 	public function modificarDatos($datos) {
 

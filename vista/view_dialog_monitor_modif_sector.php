@@ -18,52 +18,55 @@ $(document).ready(function(){
     console.log("El id del vinculo es:"+$("#id_vinculo").val());
 
     if("{libre}" == 1){
-
         $("#text_no_puede_cambiar").hide();
-
         $("#select_areas").removeAttr("disabled");
-
-        $("#form_monitor_mod_sector").on('submit',function(event){
-
-            event.preventDefault();
-
-            	console.log($("#form_monitor_mod_sector").serialize());
-        
-            	var datosUrl =    $("#form_monitor_mod_sector").serialize();
-                
-                datosUrl += "&action=modificar&asing_sector=yes";
-
-                console.log(datosUrl);
-
-                $.ajax({
-                    url: 'controlador/MonitoresController.php',
-                    type: 'POST',
-                    data: datosUrl,
-                    success : function(response){
-                        if(response){
-    	                    console.log(response);
-    	                    alert("Los datos han sido actualizados correctamente.");
-    	                    $("#dialogcontent_monitor").dialog("destroy").empty();
-    	                    $("#contenedorPpal").load("controlador/MonitoresController.php");
-                    	}
-                    	else{
-                    	alert("Error en la query.");
-                    	}
-                    }
-                })
-                .fail(function() {
-                    console.log("error");
-                    alert("Algo no se registro correctaente");
-                })
-                .always(function() {
-                    console.log("complete");
-                })
-        });
     }
     else{
         $("#select_areas").hide();
         $("#id_vinculo").attr('disabled','disabled');
     }
+
+    $("#form_monitor_mod_sector").on('submit',function(event){
+
+        event.preventDefault();
+
+        if("{libre}" == 1){
+        
+        	console.log($("#form_monitor_mod_sector").serialize());
+    
+        	var datosUrl =    $("#form_monitor_mod_sector").serialize();
+            
+            datosUrl += "&action=modificar&asing_sector=yes";
+
+            console.log(datosUrl);
+
+            $.ajax({
+                url: 'controlador/MonitoresController.php',
+                type: 'POST',
+                data: datosUrl,
+                success : function(response){
+                    if(response){
+	                    console.log(response);
+	                    alert("Los datos han sido actualizados correctamente.");
+	                    $("#dialogcontent_monitor").dialog("destroy").empty();
+                        $('#dataTableMon').empty();
+	                    $("#contenedorPpal").load("controlador/MonitoresController.php");
+                	}
+                	else{
+                	alert("Error en la query.");
+                	}
+                }
+            })
+            .fail(function() {
+                console.log("error");
+                alert("Algo no se registro correctaente");
+            })
+            .always(function() {
+                console.log("complete");
+            })
+        }
+        else{$("#dialogcontent_monitor").dialog("destroy").empty();}
+    });
 });
 
 </script>

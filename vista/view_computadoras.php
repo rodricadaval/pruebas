@@ -1,6 +1,4 @@
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
-<div id="dialogcontent_cpu" title="">
-</div>
 <script type="text/javascript">
 
 	$(document).ready(function(event){
@@ -29,56 +27,13 @@
 						]
     			})
 			}
-
 		});
-	});
-
-	$("#contenedorPpal").on('click' , '#modificar_computadora' , function(){
-
-		console.log($(this).attr("id_computadora"));
-		var id_computadora = $(this).attr("id_computadora");
-		$.post( "vista/dialog_content.php",
-			{
-				TablaPpal : "Computadoras",
-				ID : id_computadora,
-				select_Areas : "Areas", //Clase de la cual quiero sacar el select
-				select_clases : "Computadoras",
-				queSos : "computadora" //a quien le voy a generar la vista
-			}, function(data){
-				$("#dialogcontent_cpu").html(data);
-				$("#dialogcontent_cpu").attr("title","Modificar Computadora");
-				$("#dialogcontent_cpu").dialog({
-											show: {
-											effect: "blind",
-											duration: 1000,
-											modal:true
-											},
-											hide: {
-											effect: "explode",
-											duration: 200
-											},
-											width : 350,
-											height: 300,
-											close : function(){
-												$(this).dialog("destroy").empty();
-											},
-											buttons :
-						                    {
-						                        "Cancelar" : function () {
-						                            $(this).dialog("destroy").empty();
-						                        },
-						                        "Enviar" : function(){
-						                        	$("#form_computadora").submit();
-						                        }
-						                    }
-				});
-			}
-		);
 	});
 
 	$("#contenedorPpal").on('click' , '#modificar_tipo_computadora' , function(){
 
-			console.log($(this).attr("id_computadora"));
+			console.log("Entro a modificar tipo");
+			console.log("id_computadora: "+$(this).attr("id_computadora"));
 			var id_computadora = $(this).attr("id_computadora");
 			$.post( "vista/dialog_content.php",
 				{
@@ -88,12 +43,16 @@
 					queSos : "computadora", //a quien le voy a generar la vista
 					action : "modif_tipo"
 				}, function(data){
+					jQuery('<div/>', {
+					    id: 'dialogcontent_cpu',
+					    text: 'Texto por defecto!'
+					}).appendTo('#contenedorPpal');
 					$("#dialogcontent_cpu").html(data);
-					$("#dialogcontent_cpu").attr("title","Cambiar Tipo");
 					$("#dialogcontent_cpu").dialog({
+												title: "Cambiar Tipo",
 												show: {
 												effect: "blind",
-												duration: 1000,
+												duration: 600,
 												modal:true
 												},
 												hide: {
@@ -101,14 +60,16 @@
 												duration: 200
 												},
 												width : 300,
-												height: 230,
+												height: 240,
 												close : function(){
 													$(this).dialog("destroy").empty();
+													$("#dialogcontent_cpu").remove();
 												},
 												buttons :
 							                    {
 							                        "Cancelar" : function () {
-							                            $(this).dialog("destroy").empty();
+							                           $(this).dialog("destroy").empty();
+							                           $("#dialogcontent_cpu").remove();
 							                        },
 							                        "Enviar" : function(){
 							                        	$("#form_cambiar_tipo_computadora").submit();
@@ -121,7 +82,8 @@
 
 	$("#contenedorPpal").on('click' , '#modificar_sector_computadora' , function(){
 
-				console.log($(this).attr("id_computadora"));
+				console.log("Entro a modificar sector");
+				console.log("id_computadora: "+$(this).attr("id_computadora"));
 				var id_computadora = $(this).attr("id_computadora");
 				$.post( "vista/dialog_content.php",
 					{
@@ -131,39 +93,52 @@
 						queSos : "computadora", //a quien le voy a generar la vista
 						action : "modif_sector"
 					}, function(data){
+						jQuery('<div/>', {
+					    id: 'dialogcontent_cpu',
+					    text: 'Texto por defecto!'
+					}).appendTo('#contenedorPpal');
 						$("#dialogcontent_cpu").html(data);
-						$("#dialogcontent_cpu").attr("title","Cambiar Sector");
 						$("#dialogcontent_cpu").dialog({
+													title: "Cambiar Sector",
 													show: {
 													effect: "blind",
-													duration: 1000,
-													modal:true
+													duration: 600,
+													modal:true,
 													},
 													hide: {
 													effect: "explode",
 													duration: 200
 													},
-													width : 300,
-													height: 230,
+													width : 360,
+													height: 290,
 													close : function(){
 														$(this).dialog("destroy").empty();
+														$("#dialogcontent_cpu").remove();
 													},
 													buttons :
 								                    {
 								                        "Cancelar" : function () {
 								                            $(this).dialog("destroy").empty();
+								                       		$("#dialogcontent_cpu").remove();
 								                        },
 								                        "Aceptar" : function(){
-								                        var objeto = $("#form_computadora_mod_sector").serializeArray();
-								                        if(objeto != ""){
-							                        		if(objeto[0].value != 0 || objeto[0].value != ""){
-							                        			$("#form_computadora_mod_sector").submit();
-							                        		}
-							                        		else{
-							                        			$(this).dialog("destroy").empty();
-							                        		}
-							                          	}
-							                          	else{ $(this).dialog("destroy").empty();}
+								                        	
+								                        	/*var objeto = $("#form_computadora_mod_sector").serializeArray();
+									                        if(objeto != ""){
+									                        	console.log(objeto);
+								                        		if(objeto[0].value != 0 || objeto[0].value != ""){*/
+								                        	$("#form_computadora_mod_sector").submit();
+								                        		
+								                        /*		else{
+								                        			console.log("Voy a volver al ABM de computadoras");
+								                        			$("#contenedorPpal").load("controlador/ComputadorasController.php");
+								                        			$(this).dialog("destroy").empty();
+								                        			console.log("Borre el dialogo y todo");
+								                        		}
+								                          	}
+								                          	else{ 
+								                          		$(this).dialog("destroy").empty();
+								                           	}*/
 								                        }
 								                    }
 						});
@@ -173,7 +148,8 @@
 
 	$("#contenedorPpal").on('click' , '#eliminar_computadora' , function(){
 
-		console.log($(this).attr("id_computadora"));
+		console.log("Entro a eliminar");
+		console.log("id_computadora: "+$(this).attr("id_computadora"));
 		var id_computadora = $(this).attr("id_computadora");
 		datosUrl = "id_computadora="+id_computadora+"&action=eliminar";
 		console.log(datosUrl);
@@ -186,7 +162,7 @@
 		.done(function(response) {
 			if(response){
 				console.log("success");
-				alert("El monitor ha sido eliminado correctamente.");
+				alert("La computadora ha sido eliminada correctamente.");
 				$("#contenedorPpal").load("controlador/ComputadorasController.php");
 			}
 		})

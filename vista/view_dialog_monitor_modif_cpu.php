@@ -30,7 +30,7 @@ $(document).ready(function(){
     $('#select_areas').hide();
     $('#select_areas').removeAttr('disabled');     
    
-    console.log($('#select_areas').val());
+    console.log("id_area: "+$('#select_areas').val());
     console.log("{select_Computadoras}");
 
     $("#form_monitor_mod_cpu").on('submit',function(event){
@@ -54,6 +54,7 @@ $(document).ready(function(){
 	                    console.log(response);
 	                    alert("Los datos han sido actualizados correctamente.");
 	                    $("#dialogcontent_monitor").dialog("destroy").empty();
+                        $('#dataTableMon').empty();
 	                    $("#contenedorPpal").load("controlador/MonitoresController.php");
                 	}
                 	else{

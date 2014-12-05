@@ -22,6 +22,20 @@ if (isset($_POST['action'])) {
 						unset($_POST['cuestion']);
 						echo $inst_computadoras->cambiarTipo($_POST);
 						break;
+
+					case 'sector':
+						unset($_POST['cuestion']);
+						$_POST['id_sector'] = $_POST['area'];
+						unset($_POST['area']);
+							if($_POST['en_conjunto'] == "SI"){
+								unset($_POST['en_conjunto']);
+								echo $inst_computadoras->modificarConAsignados($_POST);
+							}
+							else if($_POST['en_conjunto'] == "NO"){
+								unset($_POST['en_conjunto']);
+								echo $inst_computadoras->modificarSinAsignados($_POST);	
+							}
+						break;
 					
 					default:
 						unset($_POST['cuestion']);

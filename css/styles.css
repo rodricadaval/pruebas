@@ -98,6 +98,16 @@ h1{
 
 }
 
+.pointer_mon {cursor: pointer;
+			margin-top: 10px;
+
+}
+
+.pointer_cpu {cursor: pointer;
+			margin-top: 10px;
+
+}
+
 .boton_agregar_monitor {
 	float:right;
 	margin-top: 10px;
@@ -133,3 +143,14 @@ p.acierto_usuario{
 .required:after{ content:" *";
 				 color:red;}
 
+#boton_radio label{  
+			   font-size: 14px;
+			   color: black;
+			   font-style: bold;
+			   background-color: white;
+			   font-family: "Courier";
+			   margin: 0;
+			   padding: 0;}
+
+#boton_radio input[type="radio"] {vertical-align: baseline;
+								  margin-right: 2px;}			   

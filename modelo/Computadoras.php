@@ -10,16 +10,16 @@ class Computadoras {
 
 		$inst_table = BDD::getInstance()->query("
 			select * , 
-			'<a id=\"modificar_sector_computadora\" class=\"pointer\"id_computadora=\"' || id_computadora || '\">
+			'<a id=\"modificar_sector_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
 			<i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i>
 			</a>
-			<a id=\"modificar_tipo_computadora\" class=\"pointer\"id_computadora=\"' || id_computadora || '\">
+			<a id=\"modificar_tipo_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
 			<i class=\"circular inverted green small edit icon\" title=\"Cambiar Tipo\"></i>
 			</a>
-			<a id=\"modificar_usuario_computadora\" class=\"pointer\"id_computadora=\"' || id_computadora || '\">
+			<a id=\"modificar_usuario_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
 			<i class=\"circular inverted purple small user icon\" title=\"Asignar un Usuario\"></i>
 			</a>
-			<a id=\"eliminar_computadora\" class=\"pointer\"id_computadora=\"' || id_computadora || '\"><i class=\"circular inverted red small trash icon\"></i></a>' as m 
+			<a id=\"eliminar_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\"><i class=\"circular inverted red small trash icon\"></i></a>' as m 
 			from system." . self::claseMinus() . " 
 			where estado = 1 and id_computadora <> 1");
 
@@ -154,12 +154,12 @@ return $tabla;
 
 		if($sos == "dialog_monitor_mod_cpu_sin_usr"){
 			$id_sector = BDD::getInstance()->query("select id_sector from system.vinculos where id_vinculo = '$id' ")->_fetchRow()['id_sector'];
-			$tableVinc = BDD::getInstance()->query("select distinct id_cpu from system.vinculos where id_usuario = 1 AND id_sector = '$id_sector' AND id_tipo_producto = 4");
+			$tableVinc = BDD::getInstance()->query("select distinct id_pk_producto from system.vinculos where id_usuario = 1 AND id_sector = '$id_sector' AND id_tipo_producto = 4");
 			$nuevo = false;
 			$consulta .= 1;
 		}
 		else{
-			$tableVinc = BDD::getInstance()->query("select distinct id_cpu from system.vinculos where id_usuario = '$id' AND id_cpu <> 1 ");
+			$tableVinc = BDD::getInstance()->query("select distinct id_pk_producto from system.vinculos where id_usuario = '$id' AND id_tipo_producto = 4 ");
 		}
 
 		$html_view = "<select id='select_computadoras_" . $sos . "' name='id_computadora'>";
@@ -171,7 +171,7 @@ return $tabla;
 
 			while ($fila_vinc = $tableVinc->_fetchRow()) {
 
-				$id_cpu = $fila_vinc['id_cpu'];
+				$id_cpu = $fila_vinc['id_pk_producto'];
 
 				if($nuevo){
 					$consulta .= $id_cpu;
@@ -201,6 +201,36 @@ return $tabla;
 		$id = $datos['id_cpu'];
 		BDD::getInstance()->query("UPDATE system.computadoras SET clase='$clase' where id_computadora='$id'");
 		return Vinculos::modificarDatos($datos);
+	}
+
+	public function modificarConAsignados($datos) {
+		$inst_vinc = new Vinculos();
+		if($inst_vinc->cambiarSector($datos)){
+				if($inst_vinc->cambiarSectorDeAsignados($datos)){
+					return "true";
+				}
+				else{
+					return "false";
+				}
+		} 
+		else{
+			return "false";
+		}
+	}
+	
+	public function modificarSinAsignados($datos) {
+		$inst_vinc = new Vinculos();
+		if($inst_vinc->cambiarSector($datos)){
+				if($inst_vinc->desasignarDeCpu($datos)){
+					return "true";
+				}
+				else{
+					return "false";
+				}
+		} 
+		else{
+			return "false";
+		}
 	}
 
 	public function eliminarLogico($id) {

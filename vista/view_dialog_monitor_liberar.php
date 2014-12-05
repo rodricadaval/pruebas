@@ -20,11 +20,13 @@
 						console.log("Entro a cambiar de contenedor");
 						alert("Los datos han sido actualizados correctamente.");
 	                    $("#dialogcontent_monitor").dialog("destroy").empty();
+	                    $('#dataTableMon').empty();
 	                    $("#contenedorPpal").load("controlador/MonitoresController.php");
 					}
 					else if (data == "false"){
 						alert("Hubo un error en el código. Revisar");
 						console.log("Hubo un error.");
+						$('#dataTableMon').empty();
 						$("#contenedorPpal").load("controlador/MonitoresController.php");
 					}    
 				}
