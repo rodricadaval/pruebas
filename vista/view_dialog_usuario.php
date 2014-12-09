@@ -36,12 +36,7 @@
           <td></td>
           <td><input type="button" id="cambiar_pass" name="boton" value="Cambiar Contraseña"></td>
         </tr>
-        </br>
-        <tr>
-          <td><input type="submit" id="submit" tabindex="-1"></td>
-          <td></td>
-        </tr>
-   </table>
+    </table>
 </form>
 
 <script>
@@ -55,7 +50,6 @@ $(document).ready(function(){
     var nueva_password = $('#nueva_password');
     var conf_password = $('#conf_password');
     var estado = {nuevo};
-    var validado = false;
 
     $('#select_areas').removeAttr('disabled');
     $("#select_areas option[value=1]").remove();
@@ -154,22 +148,9 @@ $(document).ready(function(){
             }
         } ,
         submitHandler : function (form) {
-          validado = true;
-          console.log (validado);
           console.log ("Formulario OK");
-        } ,
-        invalidHandler : function (event , validator) {
-          console.log(validator);
-          validado = false;
-        }
-    });
+          var estado = {nuevo};
 
-
-
-    $("#form").on('submit',function(){
-        var estado = {nuevo};
-
-        if(validado){
             console.log("Aca empieza el envio de datos de usuario");
 
             var UrlToPass;
@@ -197,13 +178,19 @@ $(document).ready(function(){
                         else{
                           alert('Problema en la Sql query');
                         }
-
-                        $("#dialogcontent").dialog("close");
+                        $("#dialogcontent").dialog("destroy").empty();
+                        $("#contenedorPpal").remove();
+                        jQuery('<div/>', {
+                        id: 'contenedorPpal',
+                        text: 'Texto por defecto!'
+                        }).appendTo('.realBody');
                         $("#contenedorPpal").load("controlador/UsuariosController.php");
                     }
               });
+        },
+        invalidHandler : function (event , validator) {
+          console.log(validator);
         }
-        else{console.log('No estan ingresados bien los datos');}
     });
 });
 

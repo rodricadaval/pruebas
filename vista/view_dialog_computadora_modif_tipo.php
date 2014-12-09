@@ -4,8 +4,8 @@
 			<td><input type="hidden" name="id_computadora" id="id_computadora" value="{id_computadora}"></td>
 		</tr>
 		<tr>
-			<td>Tipo:</td>
-			<td>{select_clases}</td>
+			{select_clases}
+
 		</tr>
 	</table>
 </form>
@@ -34,7 +34,11 @@ $(document).ready(function(){
 	                    console.log(response);
 	                    alert("Los datos han sido actualizados correctamente.");
 	                    $("#dialogcontent_cpu").dialog("destroy").empty();
-	                    $('#dataTableComp').empty();
+                        $("#contenedorPpal").remove();
+                        jQuery('<div/>', {
+                        id: 'contenedorPpal',
+                        text: 'Texto por defecto!'
+                        }).appendTo('.realBody');
 	                    $("#contenedorPpal").load("controlador/ComputadorasController.php");
                 	}
                 	else{

@@ -105,6 +105,10 @@ return $tabla;
 		return BDD::getInstance()->query("select id_vinculo from system.computadoras where num_serie = '$serie' ")->_fetchRow()['id_vinculo'];
 	}
 
+	public function getIdVinculoByIdCpu($id) {
+		return BDD::getInstance()->query("select id_vinculo from system.computadoras where id_computadora = '$id' ")->_fetchRow()['id_vinculo'];
+	}
+
 	public function cambiarTipo($datos){
 		$clase = $datos['clase'];
 		$id = $datos['id_computadora'];
@@ -121,6 +125,11 @@ return $tabla;
 	public function dameSelect_clase($clase = "", $sos = "") {
 
 		return Tipos_Computadoras::dameSelect_clase($clase, $sos);
+	}
+
+	public function dameSelect_button_radio_clase($clase = "", $sos = "") {
+
+		return Tipos_Computadoras::dameSelect_button_radio_clase($clase, $sos);
 	}
 
 	public function dameSelect($id = "", $sos = "") {
@@ -203,7 +212,7 @@ return $tabla;
 		return Vinculos::modificarDatos($datos);
 	}
 
-	public function modificarConAsignados($datos) {
+	public function modificarSectorConAsignados($datos) {
 		$inst_vinc = new Vinculos();
 		if($inst_vinc->cambiarSector($datos)){
 				if($inst_vinc->cambiarSectorDeAsignados($datos)){
@@ -218,9 +227,51 @@ return $tabla;
 		}
 	}
 	
-	public function modificarSinAsignados($datos) {
+	public function modificarSectorSinAsignados($datos) {
 		$inst_vinc = new Vinculos();
 		if($inst_vinc->cambiarSector($datos)){
+				if($inst_vinc->desasignarDeCpu($datos)){
+					return "true";
+				}
+				else{
+					return "false";
+				}
+		} 
+		else{
+			return "false";
+		}
+	}
+
+	public function modificarUsuarioConAsignados($datos){
+		$datos['id_sector'] = Usuarios::dame_id_area($datos['id_usuario']);
+		$datos['id_cpu'] = $datos['id_computadora'];
+		unset($datos['id_computadora']);
+		$datos['id_vinculo'] = self::getIdVinculoByIdCpu($datos['id_cpu']);
+		
+		$inst_vinc = new Vinculos();
+		if($inst_vinc->cambiarUsuarioYSector($datos)){
+				if($inst_vinc->cambiarUsuarioYSectorDeAsignados($datos)){
+					return "true";
+				}
+				else{
+					return "false";
+				}
+		} 
+		else{
+			return "false";
+		}
+	}
+
+	public function modificarUsuarioSinAsignados($datos) {
+		$datos['id_sector'] = Usuarios::dame_id_area($datos['id_usuario']);
+		$id_usuario = $datos['id_usuario'];
+		$datos['id_cpu'] = $datos['id_computadora'];
+		unset($datos['id_computadora']);
+
+		$datos['id_vinculo'] = self::getIdVinculoByIdCpu($datos['id_cpu']);
+		
+		$inst_vinc = new Vinculos();
+		if($inst_vinc->cambiarUsuarioYSector($datos)){
 				if($inst_vinc->desasignarDeCpu($datos)){
 					return "true";
 				}

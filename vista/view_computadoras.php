@@ -51,8 +51,8 @@
 					$("#dialogcontent_cpu").dialog({
 												title: "Cambiar Tipo",
 												show: {
-												effect: "blind",
-												duration: 600,
+												effect: "explode",
+												duration: 200,
 												modal:true
 												},
 												hide: {
@@ -80,6 +80,56 @@
 			);
 		});
 
+	$("#contenedorPpal").on('click' , '#modificar_usuario_computadora' , function(){
+
+					console.log("Entro a modificar usuario");
+					console.log("id_computadora: "+$(this).attr("id_computadora"));
+					var id_computadora = $(this).attr("id_computadora");
+					$.post( "vista/dialog_content.php",
+						{
+							TablaPpal : "Computadoras",
+							ID : id_computadora,
+							select_Areas : "Areas",
+							queSos : "computadora", //a quien le voy a generar la vista
+							action : "modif_usuario"
+						}, function(data){
+							jQuery('<div/>', {
+							    id: 'dialogcontent_cpu',
+							    text: 'Texto por defecto!'
+							}).appendTo('#contenedorPpal');
+							$("#dialogcontent_cpu").html(data);
+							$("#dialogcontent_cpu").dialog({
+														title: "Cambiar Usuario",
+														show: {
+														effect: "explode",
+														duration: 150,
+														modal:true
+														},
+														hide: {
+														effect: "explode",
+														duration: 150
+														},
+														width : 400,
+														height: 350,
+														close : function(){
+															$(this).dialog("destroy").empty();
+															$("#dialogcontent_cpu").remove();
+														},
+														buttons :
+									                    {
+									                        "Cancelar" : function () {
+									                           $(this).dialog("destroy").empty();
+									                           $("#dialogcontent_cpu").remove();
+									                        },
+									                        "Enviar" : function(){
+									                        	$("#form_cambiar_usuario_computadora").submit();
+									                        }
+									                    }
+							});
+						}
+					);
+		});
+
 	$("#contenedorPpal").on('click' , '#modificar_sector_computadora' , function(){
 
 				console.log("Entro a modificar sector");
@@ -101,8 +151,8 @@
 						$("#dialogcontent_cpu").dialog({
 													title: "Cambiar Sector",
 													show: {
-													effect: "blind",
-													duration: 600,
+													effect: "explode",
+													duration: 200,
 													modal:true,
 													},
 													hide: {
@@ -122,23 +172,7 @@
 								                       		$("#dialogcontent_cpu").remove();
 								                        },
 								                        "Aceptar" : function(){
-								                        	
-								                        	/*var objeto = $("#form_computadora_mod_sector").serializeArray();
-									                        if(objeto != ""){
-									                        	console.log(objeto);
-								                        		if(objeto[0].value != 0 || objeto[0].value != ""){*/
 								                        	$("#form_computadora_mod_sector").submit();
-								                        		
-								                        /*		else{
-								                        			console.log("Voy a volver al ABM de computadoras");
-								                        			$("#contenedorPpal").load("controlador/ComputadorasController.php");
-								                        			$(this).dialog("destroy").empty();
-								                        			console.log("Borre el dialogo y todo");
-								                        		}
-								                          	}
-								                          	else{ 
-								                          		$(this).dialog("destroy").empty();
-								                           	}*/
 								                        }
 								                    }
 						});

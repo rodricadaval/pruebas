@@ -118,6 +118,19 @@ class Vinculos {
 		return 1;
 	}
 
+	public function cambiarUsuarioYSectorDeAsignados($datos){
+		
+		$id_cpu = $datos['id_cpu'];
+		$extra = "id_sector=" . $datos['id_sector'].","."id_usuario=".$datos['id_usuario'];
+
+		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_cpu = '$id_cpu' ")->get_error()) {
+			var_dump(BDD::getInstance());
+			return 0;
+		}
+		var_dump(BDD::getInstance());
+		return 1;
+	}
+	
 	public function desasignarDeCpu($datos){
 		
 		$id_cpu = self::getIdCpuDeLaPc($datos['id_vinculo']);
@@ -158,6 +171,17 @@ class Vinculos {
 	public function cambiarSector($datos){
 		$id_vinculo = $datos['id_vinculo'];
 		$extra = "id_sector=".$datos['id_sector'];
+		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_vinculo = '$id_vinculo' ")->get_error()) {
+			var_dump(BDD::getInstance());
+			return 0;
+		}
+		var_dump(BDD::getInstance());
+		return 1;
+	}
+
+	public function cambiarUsuarioYSector($datos){
+		$id_vinculo = $datos['id_vinculo'];
+		$extra = "id_usuario=".$datos['id_usuario'].","."id_sector=".$datos['id_sector'];
 		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_vinculo = '$id_vinculo' ")->get_error()) {
 			var_dump(BDD::getInstance());
 			return 0;

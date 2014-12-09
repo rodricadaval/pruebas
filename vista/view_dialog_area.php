@@ -111,6 +111,11 @@ $(document).ready(function(){
                         }
 
                         $("#dialogcontentarea").dialog("close");
+                         $("#contenedorPpal").remove();
+                        jQuery('<div/>', {
+                        id: 'contenedorPpal',
+                        text: 'Texto por defecto!'
+                        }).appendTo('.realBody');
                         $("#contenedorPpal").load("controlador/AreasController.php");
                     }
               });

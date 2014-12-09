@@ -20,7 +20,11 @@
 						console.log("Entro a cambiar de contenedor");
 						alert("Los datos han sido actualizados correctamente.");
 	                    $("#dialogcontent_monitor").dialog("destroy").empty();
-	                    $('#dataTableMon').empty();
+	                     $("#contenedorPpal").remove();
+                        jQuery('<div/>', {
+                        id: 'contenedorPpal',
+                        text: 'Texto por defecto!'
+                        }).appendTo('.realBody');
 	                    $("#contenedorPpal").load("controlador/MonitoresController.php");
 					}
 					else if (data == "false"){

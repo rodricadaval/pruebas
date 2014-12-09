@@ -7,7 +7,7 @@
         <tr>
              <td>{select_Areas}</td>
         </tr>
-        <tr><td><label id="text_pregunta">¿Desea que todos los productos asignados a esta computadora continuén asignados luego de la modificación?</label></td></tr>
+        <tr><td><label id="text_pregunta">¿Desea que todos los productos asignados a esta computadora continuén asignados luego de la modificación? Si no tiene productos asignados elija cualquiera.</label></td></tr>
         <tr>
                 <td id="boton_radio">
                 <label>                
@@ -16,7 +16,6 @@
                 </label>
                </td>
         </tr>
-        
     </table>
 </form>
 

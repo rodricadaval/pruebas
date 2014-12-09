@@ -3,7 +3,6 @@
 	<input type="button" id="crear_usuario" value="Crear Usuario">
 </div>
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
-<div id="dialogcontent" title="Crear/Modificar Usuario">
 </div>
 <script type="text/javascript">
 	$(document).ready(function(event){
@@ -84,11 +83,16 @@
 				select_Permisos : "Permisos", //Clase de la cual quiero sacar el select
 				queSos : "usuario" //a quien le voy a generar la vista
 			}, function(data){
+				jQuery('<div/>', {
+				    id: 'dialogcontent',
+				    text: 'Texto por defecto!'
+				}).appendTo('#contenedorPpal');
 				$("#dialogcontent").html(data);
 				$("#dialogcontent").dialog({
+											title: "Modificar Datos",
 											show: {
 											effect: "blind",
-											duration: 1000,
+											duration: 200,
 											modal:true
 											},
 											hide: {
@@ -98,7 +102,18 @@
 											width : 400,
 											close : function(){
 												$(this).dialog("destroy").empty();
-											}
+												$("#dialogcontent").remove();
+											},
+											buttons :
+						                    {
+						                        "Cancelar" : function () {
+						                            $(this).dialog("destroy").empty();
+						                            $("#dialogcontent").remove();
+						                        },
+						                        "Enviar" : function(){
+						                        	$("#form").submit();
+						                        }
+						                    }
 				});
 			   }
 		);
@@ -124,6 +139,11 @@
 									}
 				else if(responseText == 1) {
 					alert("Se ha eliminado al usuario correctamente");
+					$("#contenedorPpal").remove();
+                        jQuery('<div/>', {
+                        id: 'contenedorPpal',
+                        text: 'Texto por defecto!'
+                        }).appendTo('.realBody');
 					$("#contenedorPpal").load("controlador/UsuariosController.php");
 				}
 				else{alert("Hubo algun error");}
@@ -138,21 +158,36 @@
 				select_Permisos : "Permisos", //Clase de la cual quiero sacar el select
 				queSos : "nuevo" //a quien le voy a generar la vista
 			}, function(data){
+				jQuery('<div/>', {
+				    id: 'dialogcontent',
+				    text: 'Texto por defecto!'
+				}).appendTo('#contenedorPpal');
 				$("#dialogcontent").html(data);
 				$("#dialogcontent").dialog({
 											show: {
-											effect: "blind",
-											duration: 1000,
+											effect: "explode",
+											duration: 200,
 											modal:true
 											},
 											hide: {
-											effect: "explode",
+											effect: "blind",
 											duration: 200
 											},
 											width : 400,
 											close : function(){
 												$(this).dialog("destroy").empty();
-											}
+												$("#dialogcontent").remove();
+											},
+											buttons :
+						                    {
+						                        "Cancelar" : function () {
+						                            $(this).dialog("destroy").empty();
+						                            $("#dialogcontent").remove();
+						                        },
+						                        "Enviar" : function(){
+						                        	$("#form").submit();
+						                        }
+						                    }
 				});
 			});
 	});

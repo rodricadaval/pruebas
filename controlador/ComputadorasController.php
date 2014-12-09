@@ -29,12 +29,29 @@ if (isset($_POST['action'])) {
 						unset($_POST['area']);
 							if($_POST['en_conjunto'] == "SI"){
 								unset($_POST['en_conjunto']);
-								echo $inst_computadoras->modificarConAsignados($_POST);
+								echo $inst_computadoras->modificarSectorConAsignados($_POST);
 							}
 							else if($_POST['en_conjunto'] == "NO"){
 								unset($_POST['en_conjunto']);
-								echo $inst_computadoras->modificarSinAsignados($_POST);	
+								echo $inst_computadoras->modificarSectorSinAsignados($_POST);	
 							}
+						break;
+
+					case 'usuario':
+						unset($_POST['cuestion']);
+						$_POST['id_sector'] = $_POST['area'];
+						unset($_POST['area']);
+						$_POST['id_usuario'] = Usuarios::getIdByNombre($_POST['nombre_usuario']);
+						unset($_POST['nombre_usuario']);
+						if($_POST['en_conjunto'] == "SI"){
+							unset($_POST['en_conjunto']);
+							echo $inst_computadoras->modificarUsuarioConAsignados($_POST);
+							}
+						else if($_POST['en_conjunto'] == "NO"){
+							unset($_POST['en_conjunto']);
+							echo $inst_computadoras->modificarUsuarioSinAsignados($_POST);	
+						}	
+
 						break;
 					
 					default:

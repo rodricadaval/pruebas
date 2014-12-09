@@ -55,8 +55,8 @@ $("#contenedorPpal").on('click' , '#modificar_usuario_monitor' , function(){
 				$("#dialogcontent_monitor").html(data);
 				$("#dialogcontent_monitor").dialog({
 											show: {
-											effect: "blind",
-											duration: 1000,
+											effect: "explode",
+											duration: 200,
 											modal:true
 											},
 											hide: {
@@ -68,14 +68,12 @@ $("#contenedorPpal").on('click' , '#modificar_usuario_monitor' , function(){
 											close : function(){
 												$(this).dialog("destroy").empty();
 												$("#dialogcontent_monitor").remove();
-												dataTable.clear().draw();
 											},
 											buttons :
 						                    {
 						                        "Cancelar" : function () {
 						                            $(this).dialog("destroy").empty();
 						                            $("#dialogcontent_monitor").remove();
-						                            dataTable.clear().draw();
 						                        },
 						                        "Enviar" : function(){
 						                        	$("#form_monitor_mod_usuario").submit();
@@ -107,8 +105,8 @@ $("#contenedorPpal").on('click' , '#modificar_cpu_monitor' , function(){
 				$("#dialogcontent_monitor").html(data);
 				$("#dialogcontent_monitor").dialog({
 											show: {
-											effect: "blind",
-											duration: 1000,
+											effect: "explode",
+											duration: 200,
 											modal:true
 											},
 											hide: {
@@ -156,8 +154,8 @@ $("#contenedorPpal").on('click' , '#modificar_cpu_monitor' , function(){
 					$("#dialogcontent_monitor").html(data);
 					$("#dialogcontent_monitor").dialog({
 												show: {
-												effect: "blind",
-												duration: 1000,
+												effect: "explode",
+												duration: 200,
 												modal:true
 												},
 												hide: {
@@ -205,8 +203,8 @@ $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
 					$("#dialogcontent_monitor").html(data);
 					$("#dialogcontent_monitor").dialog({
 												show: {
-												effect: "blind",
-												duration: 1000,
+												effect: "explode",
+												duration: 200,
 												modal:true
 												},
 												hide: {

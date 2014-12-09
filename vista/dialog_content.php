@@ -89,7 +89,7 @@ foreach ($_POST as $key => $value) {
 				} else if ($value == "Usuarios") {
 					$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
 				} else if ($value == "Computadoras") {
-					$metodo .= "_clase";
+					$metodo .= "_button_radio_clase";
 					$id = $datos_tabla['clase'];
 				}
 				$parametros[$key] = $inst_clase->$metodo($id, $_POST['queSos']);
