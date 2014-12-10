@@ -45,15 +45,37 @@ class Marcas {
 	}
 
 	public function dameSelect($sos = "") {
-		$table = BDD::getInstance()->query("select nombre, id_marca from system." . self::claseMinus() . " where estado = 1");
-		$html_view = "<select id='select_marcas" . $sos . "' name='marca'>
-					  <option value=''>Seleccione Marca</option>";
 
-		while ($fila = $table->_fetchRow()) {
-			$html_view = $html_view . "<option value=" . $fila['id_marca'] . ">" . $fila['nombre'] . "</option>";
+		if(isset($sos)){
+
+			switch ($sos) {
+				case 'computadoras':
+					$table = BDD::getInstance()->query("select distinct id_marca from system.computadora_desc where estado = 1");
+					$add_id = "_computadoras";
+					break;
+				
+				case 'monitores':
+					$table = BDD::getInstance()->query("select distinct id_marca from system.monitor_desc where estado = 1");
+					$add_id = "_monitores";
+					break;
+				default:
+					# code...
+					break;
+			}
 		}
 
-		$html_view = $html_view . "</select>";
+		$html_view = "<select id='select_marcas" . $add_id . "' name='marca'>
+					  <option value=''>Seleccione Marca</option>";
+
+		$fila = $table->_fetchAll();
+
+		foreach ($fila as $array => $campo) {
+
+			$nombre = self::getNombre($campo['id_marca']);
+			$html_view .= "<option value=" . $campo['id_marca'] . ">" . $nombre . "</option>";
+		 } 
+
+		$html_view .= "</select>";
 		return $html_view;
 	}
 }

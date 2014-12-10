@@ -90,7 +90,7 @@ if (isset($_POST['action'])) {
 	}
 } else {
 
-	$archivos = array("vista/view_computadoras.php");
+	$archivos = array("vista/computadora/view_computadoras.php");
 	$parametros = array("TABLA" => "Computadoras", "");
 	echo Disenio::HTML($archivos, $parametros);
 }

@@ -89,6 +89,7 @@ class Usuarios {
 		if (!BDD::getInstance()->query("UPDATE system." . self::claseMinus() . " SET $cadena WHERE id_usuario = '$id' ")->get_error()) {
 			return 1;
 		} else {
+			var_dump(BDD::getInstance());
 			return 0;
 		}
 	}

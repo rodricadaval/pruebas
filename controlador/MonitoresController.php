@@ -50,7 +50,7 @@ if (isset($_POST['action'])) {
 			break;
 	}
 } else {
-	$archivos = array("vista/view_monitores.php");
+	$archivos = array("vista/monitor/view_monitores.php");
 	$parametros = array("TABLA" => "Monitores", "");
 	echo Disenio::HTML($archivos, $parametros);
 }

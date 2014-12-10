@@ -7,6 +7,8 @@ $inst_tabla = new $tabla();
 
 $parametros = array();
 
+
+
 if ($_POST['queSos'] == "nuevo") {
 
 	$_POST['queSos'] = strtolower(substr($_POST['TablaPpal'], 0, -1));
@@ -19,6 +21,8 @@ if ($_POST['queSos'] == "nuevo") {
 	$datos_tabla = $inst_tabla->getById($_POST['ID']);
 	$datos_tabla['nuevo'] = 0;
 }
+
+$vista_folder = $_POST['queSos'];
 
 unset($_POST['TablaPpal']);
 
@@ -109,7 +113,7 @@ if(isset($_POST['action'])){
 
 $parametros = array_merge($datos_tabla, $parametros);
 
-$url = array("vista/view_dialog_" . $_POST['queSos'] . ".php");
+$url = array("vista/".$vista_folder."/view_dialog_" . $_POST['queSos'] . ".php");
 
 unset($_POST['queSos']);
 

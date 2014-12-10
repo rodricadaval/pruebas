@@ -2,19 +2,19 @@
 require_once "../ini.php";
 
 if (!isset($_POST['action'])) {
-	$url = array("vista/view_agregar_producto.php");
+	$url = array("vista/productos/view_agregar_producto.php");
 	$parametros = array("TABLA" => "Agregar Producto", "TITULO" => "Agregar");
 	echo Disenio::HTML($url, $parametros);
 } else {
 	switch ($_POST['action']) {
-		case 'view_agregar_monitor':
+		case 'agregar_monitor':
 			if (!isset($_POST['tipo'])) {
 
-				$url = array("vista/view_agregar_monitor.php");
+				$url = array("vista/monitor/view_agregar_monitor.php");
 				$inst = new Marcas;
-				$select = $inst->dameSelect("_Monitor");
+				$select = $inst->dameSelect("monitores");
 				$titulo = "Menu para agregar un Monitor";
-				$parametros = array("Producto" => "Monitor", "select_marcas_Monitor" => $select, "titulo" => $titulo);
+				$parametros = array("Producto" => "Monitor", "select_marcas_monitores" => $select, "titulo" => $titulo);
 				echo Disenio::HTML($url, $parametros);
 
 			} else if ($_POST['tipo'] == "sel_modelos") {
@@ -25,15 +25,15 @@ if (!isset($_POST['action'])) {
 			}
 
 			break;
-		case 'view_agregar_computadora':
+		case 'agregar_computadora':
 			if (!isset($_POST['tipo'])) {
 
-				$url = array("vista/view_agregar_computadora.php");
-				$inst = new Marcas;
-				$select = $inst->dameSelect("_Computadora");
+				$url = array("vista/computadora/view_agregar_computadora.php");
+				$inst_marcas = new Marcas;
+				$select = $inst_marcas->dameSelect("computadoras");
 				$select_clases = Tipos_Computadoras::dameSelect_clase();
 				$titulo = "Menu para agregar una Computadora";
-				$parametros = array("Producto" => "Computadora", "select_marcas_Computadora" => $select, "select_clases_Computadora" => $select_clases, "titulo" => $titulo);
+				$parametros = array("Producto" => "Computadora", "select_marcas_computadoras" => $select, "select_clases_Computadora" => $select_clases, "titulo" => $titulo);
 				echo Disenio::HTML($url, $parametros);
 
 			} else if ($_POST['tipo'] == "sel_modelos") {

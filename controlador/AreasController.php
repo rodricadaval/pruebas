@@ -30,7 +30,7 @@ if (isset($_POST['action'])) {
 	}
 } else {
 
-	$archivos = array("vista/view_areas.php");
+	$archivos = array("vista/area/view_areas.php");
 //$parametros = array("MODULO" => "Areas", "OTROS" => "LosOtrosValores");
 	$parametros = array("TABLA" => "Areas", "");
 	echo Disenio::HTML($archivos, $parametros);

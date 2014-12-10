@@ -10,20 +10,21 @@ if (isset($_POST['action'])) {
 	unset($_POST['action']);
 
 	if (isset($_POST['password_orig'])) {
+		var_dump("Estoy aca");
+		$_POST['password'] = $_POST['password_orig'];		
 		unset($_POST['password_orig']);
 	}
 
 	switch ($action) {
 		case 'modificar':
 
-			if (isset($_POST['password'])) {
-				if ($_POST['password'] != "") {
-					$_POST['password'] = $_POST['nueva_password'];
-				} else {
-					unset($_POST['password']);
-				}
+			if (isset($_POST['nueva_password'])) {
+				$_POST['password'] = $_POST['nueva_password'];
 				unset($_POST['nueva_password']);
 				unset($_POST['conf_password']);
+			}
+			else{
+				unset($_POST['password']);
 			}
 
 			foreach ($_POST as $clave => $valor) {
@@ -67,7 +68,7 @@ if (isset($_POST['action'])) {
 	}
 } else {
 
-	$archivos = array("vista/view_usuarios.php");
+	$archivos = array("vista/usuario/view_usuarios.php");
 	$parametros = array("TABLA" => "Usuarios", "");
 	echo Disenio::HTML($archivos, $parametros);
 }
