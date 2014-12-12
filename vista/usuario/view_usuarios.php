@@ -91,15 +91,16 @@
 				$("#dialogcontent").dialog({
 											title: "Modificar Datos",
 											show: {
-											effect: "blind",
+											effect: "explode",
 											duration: 200,
 											modal:true
 											},
 											hide: {
-											effect: "explode",
+											effect: "blind",
 											duration: 200
 											},
-											width : 320,
+											width : 705,
+											height: 500,
 											close : function(){
 												$(this).dialog("destroy").empty();
 												$("#dialogcontent").remove();
@@ -173,7 +174,7 @@
 											effect: "blind",
 											duration: 200
 											},
-											width : 370,
+											width : 730,
 											close : function(){
 												$(this).dialog("destroy").empty();
 												$("#dialogcontent").remove();

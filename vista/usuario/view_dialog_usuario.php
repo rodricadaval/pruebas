@@ -1,17 +1,23 @@
 <form id="form">
     <div id="errores" class="error_dialog"></div>
-    <table class="mytable">
+    <table class="fixed_user">
         <tr>
           <td class="required">Nombre</td>
           <td><input type="text" name="nombre_apellido" id="nombre_apellido" value="{nombre_apellido}"></td>
+          <td>Interno</td>
+          <td><input type="text" name="interno" id="interno" value="{interno}"></td>
         </tr>
         <tr>
           <td class="required">Usuario  </td>
           <td><input type="text" name="usuario" id="usuario" value="{usuario}"></td>
+          <td>ID</td>
+          <td><input style="background-color:#D3D3D3" type="text" name="id_usuario" id="id_usuario" value="{id_usuario}" readonly></td>
         </tr>
         <tr>
           <td>Email</td>
           <td><input type="text" name="email" id="email" value="{email}"></td>
+          <td class="f_password">Password Actual </td>
+          <td class="f_password"><input type="password" name="password" id="password" value="" disabled></td>
         </tr>
         <tr type="hidden">
            <td><input type="hidden" name="password_orig" id="password_orig" value="{password}"></td>
@@ -19,21 +25,33 @@
         <tr>
           <td>Area</td>
           <td>{select_Areas}</td>
+          <td class="f_nueva_password">Nueva Password </td>
+          <td class="f_nueva_password"><input type="password" name="nueva_password" id="nueva_password" value="" disabled></td>
         </tr>
         <tr>
           <td>Permisos</td>
           <td>{select_Permisos}</td>
+          <td class="f_conf_password">Confirmar</td>
+          <td class="f_conf_password"><input type="password" name="conf_password" id="conf_password" value="" disabled></td>
+        </tr>
+
+            <td colspan="4" id="vista_pass">
+              <input style="float:right; margin-bottom:20px;" type="button" id="cambiar_pass" name="boton" value="Cambiar Contraseña">
+            </td>
+
+        <tr class="boton_radio">
+            <td colspan="4">
+              <text id="text_pregunta">¿Desea que todos los productos del usuario sigan perteneciendo a él luego de cambiar de area?
+              </text>
+            </td>
         </tr>
         <tr>
-          <td>Interno</td>
-          <td><input type="text" name="interno" id="interno" value="{interno}"></td>
-        </tr>
-        <tr>
-          <td>ID</td>
-          <td><input style="background-color:#D3D3D3" type="text" name="id_usuario" id="id_usuario" value="{id_usuario}" readonly></td>
-        </tr>
-        <tr id="vista_pass">
-          <td colspan="2"><input style="float:right;" type="button" id="cambiar_pass" name="boton" value="Cambiar Contraseña"></td>
+           <td class="boton_radio" colspan="4">
+                <input style="margin-left:220px;display:inline-block;border:0px;width:20px;height:20px;" type="radio" name="con_productos" value="SI" checked>
+                <text style="font-size:17px;vertical-align:middle;color:black;display:inline-block;font-style:bold;"> SI</text>
+               <input style="margin-left:5px;border:0px;display:inline-block;width:20px;height:20px;" type="radio" name="con_productos" value="NO">
+                <text style="font-size:17px;vertical-align:middle;display:inline-block;color:black;font-style:bold;">NO</text>
+           </td>
         </tr>
     </table>
 </form>
@@ -45,19 +63,20 @@ $(document).ready(function(){
 
     var usuario = $('#usuario');
     var usuario_orig = '{usuario}';
-    var password = $('#password');
-    var nueva_password = $('#nueva_password');
-    var conf_password = $('#conf_password');
     var estado = {nuevo};
+    var area_orig = $('#select_areas option:selected').val();
+
+    $(".f_password,.f_nueva_password,.f_conf_password,.boton_radio").hide();
 
     $('#select_areas').removeAttr('disabled');
     $("#select_areas option[value=1]").remove();
 
     if(estado == 1)
     {
-        $.get("vista/usuario/agregar_datos_password_nueva.php",function(data){
-            $("#vista_pass").replaceWith(data);
-        });
+        $(".f_nueva_password, .f_conf_password").show(); 
+        $("#nueva_password, #conf_password").removeAttr("disabled"); 
+        $("#vista_pass").hide();
+        $("#ID").hide();
     }
 
     $("#form").validate({
@@ -98,15 +117,15 @@ $(document).ready(function(){
               required : true
             },
             password :{
-              //required : true,
+              required : true,
               equalTo: "#password_orig"
             },
             conf_password : {
-              //required : true,
+              required : true,
               equalTo: "#nueva_password"
             },
             nueva_password : {
-              //required : true,
+              required : true
             },
             email :{
               required : false,
@@ -132,14 +151,15 @@ $(document).ready(function(){
               required : 'Los permisos son OBLIGATORIOS'
             },
             password : {
-              //required : 'La password no puede ser null'
+              required : 'La password antigua es OBLIGATORIA. Si no desea cambiar de password clickee el boton -No cambiar-',
+              equalTo: 'La password antigua no es la correcta. Si no desea cambiar de password clickee el boton -No cambiar-'
             },
             conf_password : {
-              //required : 'La confirmarcion de password no puede ser null',
+              required : 'La confirmarcion de password es OBLIGATORIA',
               equalTo: 'Las passwords ingresadas no son iguales'
             },
             nueva_password : {
-              //required : 'La nueva password es OBLIGATORIA',
+              required : 'La nueva password es OBLIGATORIA',
               equalTo: "Las passwords ingresadas no son iguales"
             },
             email : {
@@ -148,20 +168,30 @@ $(document).ready(function(){
         },
         submitHandler : function (form) {
           console.log ("Formulario OK");
-          var estado = {nuevo};
-
+  
             console.log("Aca empieza el envio de datos de usuario");
+            $("#password_orig").attr("disabled","disabled");
 
-            var UrlToPass;
+            var UrlToPass; 
 
-            //UrlToPass = $("#form").serialize();
-
-            UrlToPass = "nombre_apellido="+$("#nombre_apellido").val()+"&usuario="+$("#usuario").val()+"&area="+$("#select_areas option:selected").val()+"&permisos="+$("#select_permisos option:selected").val()+"&id_usuario="+$("#id_usuario").val();
-            if($("#email").val != ""){
-              UrlToPass += "&email="+$("#usuario").val();
+            if(estado == 1 && $("#select_permisos option:selected").val() == 2){
+              $("#conf_password").val($("#usuario").val()); 
+              $("#nueva_password").val($("#usuario").val()); 
             }
-            if($("#interno").val != ""){
-              UrlToPass += "&interno="+$("#interno").val();
+
+            if($("#email").val() == ""){
+              $("#email").attr("disabled","disabled");
+            }
+            if($("#interno").val() == ""){
+              $("#interno").attr("disabled","disabled");
+            }
+            if($("#conf_password").val() != ""){
+                $("#conf_password,#nueva_password,#password").attr("disabled","disabled");
+                UrlToPass = $("#form").serialize();
+                UrlToPass += "&password="+$("#conf_password").val();
+              }
+            else{
+              UrlToPass = $("#form").serialize();
             }
             if(estado == 1){
               UrlToPass+="&action=crear";
@@ -169,18 +199,9 @@ $(document).ready(function(){
             else if(estado == 0){
               UrlToPass+="&action=modificar";
             }
-            console.log("antes del password");
 
-            if($("#conf_password").length !== 0){
-
-              console.log("en el password");
-              
-              if(typeof($("#conf_password").val()) != "undefined"){
-                UrlToPass+="&password="+("#conf_password").val();
-              }
-            }
             console.log(UrlToPass);
-/*
+
               $.ajax({
                     type : 'POST',
                     data : UrlToPass,
@@ -191,6 +212,7 @@ $(document).ready(function(){
                         }
                         else if(responseText == 1){
                           console.log("Los datos han sido actualizados correctamente!");
+                          alert("Los datos han sido actualizados correctamente!");
                         }
                         else{
                           console.log(responseText);
@@ -206,22 +228,58 @@ $(document).ready(function(){
                         $("#contenedorPpal").load("controlador/UsuariosController.php");
                     }
               });
-*/
         },
         invalidHandler : function (event , validator) {
           console.log(validator);
         }
     });
-}); 
-     $("#cambiar_pass").on('click',function(){
-        $.post("vista/usuario/agregar_datos_password.php",function(data){
-            $("#vista_pass").replaceWith(data);
-            $("#password").removeAttr("disabled");
-            $("#nueva_password").removeAttr("disabled");
-            $("#conf_password").removeAttr("disabled");
-        });
-    });
  
+     $("#cambiar_pass").on('click',function(){
+           
+            if ($("#cambiar_pass").val() == "Cambiar Contraseña") {
+              $("#cambiar_pass").val("No cambiar");
+              $(".f_password, .f_nueva_password, .f_conf_password").show(); 
+              $("#password,#nueva_password,#conf_password").removeAttr("disabled");
+            }
+            else if ($("#cambiar_pass").val() == "No cambiar") {
+              $("#cambiar_pass").val("Cambiar Contraseña");
+              $(".f_password, .f_nueva_password, .f_conf_password").hide();              
+              $("#password,#nueva_password,#conf_password").attr("disabled","disabled");
+            }            
+    });
+    
+    $("#select_permisos").on('change',function(){
+      if(estado == 1){
+          if($("#select_permisos option:selected").val() == 2){
+              $(".f_nueva_password, .f_conf_password").hide();
+              $("#nueva_password, #conf_password").attr("disabled","disabled");
+              if($("#nombre_apellido").val()!= ""){
+                $("#usuario").val($("#nombre_apellido").val().toLowerCase().split(" ").join(""));
+              }
+          }
+          else{
+              $(".f_nueva_password, .f_conf_password").show();
+              $("#nueva_password, #conf_password").removeAttr("disabled");    
+          } 
+      }
+    });
 
+    $("#nombre_apellido").on('input',function(){
+      if(estado == 1 && $("#select_permisos option:selected").val() == 2){
+          $("#usuario").val($("#nombre_apellido").val().toLowerCase().split(" ").join(""));
+      }
+    });
+
+    $("#select_areas").on('change',function(){
+      if(estado == 0 && area_orig != $("#select_areas option:selected").val()){
+        $(".boton_radio").show();
+      }
+      else{
+        $(".boton_radio").hide();
+        $('input[name="con_productos"][value="SI"]').prop('checked', true);
+        $('input[name="con_productos"][value="NO"]').removeAttr("checked");
+      }
+    })
+
+});
 </script>
-

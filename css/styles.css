@@ -153,4 +153,27 @@ p.acierto_usuario{
 			   padding: 0;}
 
 #boton_radio input[type="radio"] {vertical-align: baseline;
-								  margin-right: 2px;}			   
+								  margin-right: 2px;}
+
+.boton_radio td text{  
+				   font-size: 14px;
+				   color: black;
+				   font-style: bold;
+				   background-color: white;
+				   font-family: "Courier";
+			   }
+
+/*.boton_radio input[type="radio"]{
+									vertical-align: baseline;
+							 	  	margin-right: 2px;
+						 	   	}*/
+
+
+table.fixed_user td{
+					  table-layout:fixed;
+					  min-width:98px;
+					  overflow:hidden;
+					  word-wrap:break-word;
+					  padding-right: 10px;
+					}
+

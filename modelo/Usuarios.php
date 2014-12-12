@@ -71,7 +71,11 @@ class Usuarios {
 		$cadena = "";
 
 		$id = $datos['id_usuario'];
+		$id_area = $datos['area'];
 		unset($datos['id_usuario']);
+
+		$con_productos = $datos['con_productos'];
+		unset($datos['con_productos']);
 
 		$firstTime = true;
 		foreach ($datos as $key => $value) {
@@ -85,14 +89,53 @@ class Usuarios {
 				$cadena .= ", $key = '$value'";
 			}
 		}
-
-		if (!BDD::getInstance()->query("UPDATE system." . self::claseMinus() . " SET $cadena WHERE id_usuario = '$id' ")->get_error()) {
-			return 1;
-		} else {
-			var_dump(BDD::getInstance());
-			return 0;
+		
+		switch ($con_productos) {
+			case 'SI':
+					$id_area_vieja = BDD::getInstance()->query("SELECT area from system." . self::claseMinus() . " WHERE id_usuario = '$id' ")->_fetchRow()['area'];				
+					if($id_area != $id_area_vieja){
+							if(!BDD::getInstance()->query("SELECT system.modificar_area_productos_de_usuario('$id','$id_area')")->get_error()){
+								if (!BDD::getInstance()->query("UPDATE system." . self::claseMinus() . " SET $cadena WHERE id_usuario = '$id' ")->get_error()) {
+									return 1;
+								}
+								else{
+									var_dump(BDD::getInstance());
+									return 0;
+								}
+							}
+							else{	
+								var_dump(BDD::getInstance());
+								return 0;
+								}
+					}
+					else{
+						if (!BDD::getInstance()->query("UPDATE system." . self::claseMinus() . " SET $cadena WHERE id_usuario = '$id' ")->get_error()) {
+							return 1;
+						}
+						else{
+							var_dump(BDD::getInstance());
+							return 0;
+						}
+					}
+				break;
+			
+			case 'NO':
+					if(!BDD::getInstance()->query("SELECT system.limpiar_productos_de_usuario('$id')")->get_error()){
+						if (!BDD::getInstance()->query("UPDATE system." . self::claseMinus() . " SET $cadena WHERE id_usuario = '$id' ")->get_error()) {
+							return 1;
+						}
+						else{
+							var_dump(BDD::getInstance());
+							return 0;
+						}
+					}
+					else{	
+						var_dump(BDD::getInstance());
+						return 0;
+						}
+				break;
 		}
-	}
+}
 
 	public function crearUsuario($datos) {
 
@@ -100,22 +143,22 @@ class Usuarios {
 		$cadena_valores = "";
 
 		$firstTime = true;
+
+		unset($datos['id_usuario']);
+
 		foreach ($datos as $key => $value) {
 
-			if ($value != "") {
-
-				if ($key == "password") {
-					$value = base64_encode(base64_encode(base64_encode($value)));
-				}
-				if ($firstTime) {
-					$cadena_valores .= "'$value'";
-					$cadena_columnas .= "$key";
-					$firstTime = false;
-				} else {
-					$cadena_columnas .= ",$key";
-					$cadena_valores .= ",'$value'";
-				}
-			} else {unset($datos[$key]);}
+			if ($key == "password") {
+				$value = base64_encode(base64_encode(base64_encode($value)));
+			}
+			if ($firstTime) {
+				$cadena_valores .= "'$value'";
+				$cadena_columnas .= "$key";
+				$firstTime = false;
+			} else {
+				$cadena_columnas .= ",$key";
+				$cadena_valores .= ",'$value'";
+			}
 		}
 
 		if (!BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . "($cadena_columnas) VALUES ($cadena_valores) ")->get_error()) {
@@ -153,14 +196,44 @@ class Usuarios {
 	}
 
 	public function eliminarUsuario($id) {
-		if (!BDD::getInstance()->query("UPDATE system." . self::claseMinus() . " SET estado = 0 WHERE id_usuario = '$id' ")->get_error()) {
-			if ($_SESSION['userid'] == $id) {
-				session_destroy();
-				return 2;
-			} else {
-				return 1;
-			}
-		} else {return 0;}
+		if(!BDD::getInstance()->query("SELECT system.limpiar_productos_de_usuario('$id')")->get_error()){
+				if (!BDD::getInstance()->query("UPDATE system." . self::claseMinus() . " SET estado = 0 WHERE id_usuario = '$id' ")->get_error()) {
+					if ($_SESSION['userid'] == $id) {
+						session_destroy();
+						return 2;
+					} else {
+						return 1;
+					}
+				} else {
+						var_dump(BDD::getInstance());
+						return 0;
+				}
+		}
+		else{
+			var_dump(BDD::getInstance());
+			return 0;
+		}
+	}
+
+	public function eliminarRealUsuario($id) {
+		
+		if(!BDD::getInstance()->query("SELECT system.limpiar_productos_de_usuario('$id')")->get_error()){
+				if (!BDD::getInstance()->query("DELETE FROM system." . self::claseMinus() . " WHERE id_usuario = '$id' ")->get_error()) {
+					if ($_SESSION['userid'] == $id) {
+						session_destroy();
+						return 2;
+					} else {
+						return 1;
+					}
+				} else {
+						var_dump(BDD::getInstance());
+						return 0;
+				}
+		}
+		else{
+			var_dump(BDD::getInstance());
+			return 0;
+		}
 	}
 
 	public function dame_id_area($id) {

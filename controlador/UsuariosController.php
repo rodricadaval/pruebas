@@ -9,44 +9,26 @@ if (isset($_POST['action'])) {
 	$action = $_POST['action'];
 	unset($_POST['action']);
 
-	if (isset($_POST['password_orig'])) {
-		var_dump("Estoy aca");
-		$_POST['password'] = $_POST['password_orig'];		
-		unset($_POST['password_orig']);
-	}
-
 	switch ($action) {
 		case 'modificar':
-
-			if (isset($_POST['nueva_password'])) {
-				$_POST['password'] = $_POST['nueva_password'];
-				unset($_POST['nueva_password']);
-				unset($_POST['conf_password']);
-			}
-			else{
-				unset($_POST['password']);
-			}
-
+			
 			foreach ($_POST as $clave => $valor) {
 				$parametros[$clave] = $valor;
 			}
-
 			echo $inst_usuarios->modificarDatos($parametros);
 			break;
+
 		case 'crear':
 
-			if (isset($_POST['nueva_password']) && isset($_POST['conf_password'])) {
-				unset($_POST['conf_password']);
-				$_POST['password'] = $_POST['nueva_password'];
-				unset($_POST['nueva_password']);
-			}
+				unset($_POST['con_productos']);
 
-			foreach ($_POST as $clave => $valor) {
-				$parametros[$clave] = $valor;
-			}
-
-			echo $inst_usuarios->crearUsuario($parametros);
+				foreach ($_POST as $clave => $valor) {
+					$parametros[$clave] = $valor;
+				}
+				echo $inst_usuarios->crearUsuario($parametros);	
+					
 			break;
+		
 		case 'eliminar':
 
 			if ($_POST['id_usuario'] != "") {
@@ -67,7 +49,6 @@ if (isset($_POST['action'])) {
 
 	}
 } else {
-
 	$archivos = array("vista/usuario/view_usuarios.php");
 	$parametros = array("TABLA" => "Usuarios", "");
 	echo Disenio::HTML($archivos, $parametros);
