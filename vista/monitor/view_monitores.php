@@ -238,27 +238,50 @@ $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
 		console.log("Entro a eliminar monitor");
 		console.log("id_monitor: "+$(this).attr("id_monitor"));
 		var id_monitor = $(this).attr("id_monitor");
-		datosUrl = "id_monitor="+id_monitor+"&action=eliminar";
-		console.log(datosUrl);
 
-		$.ajax({
-			url: 'controlador/MonitoresController.php',
-			type: 'POST',
-			data: datosUrl,
-		})
-		.done(function(response) {
-			if(response){
-				console.log("success");
-				alert("El monitor ha sido eliminado correctamente.");
-				$("#contenedorPpal").load("controlador/MonitoresController.php");
-			}
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			console.log("complete");
-		});
+		$.post( "vista/dialog_content.php",
+				{
+					TablaPpal : "Monitores",
+					ID : id_monitor,
+					queSos : "monitor", //a quien le voy a generar la vista
+					action : "eliminar"
+				}, function(data){
+					jQuery('<div/>', {
+				    id: 'dialogcontent_monitor',
+				    text: 'Texto por defecto!'
+				}).appendTo('#contenedorPpal');
+					$("#dialogcontent_monitor").html(data);
+					$("#dialogcontent_monitor").dialog({
+												title: "Motivo de baja",
+												show: {
+												effect: "explode",
+												duration: 200,
+												modal:true
+												},
+												hide: {
+												effect: "explode",
+												duration: 200
+												},
+												width : 300,
+												height : 280,
+												close : function(){
+													$(this).dialog("destroy").empty();
+													$("#dialogcontent_monitor").remove();
+												},
+												buttons :
+							                    {
+							                        "Cancelar" : function () {
+							                            $(this).dialog("destroy").empty();
+							                            $("#dialogcontent_monitor").remove();
+							                        },
+							                        "Aceptar" : function(){
+							                        		$("#form_detalle_eliminar_monitor").submit();
+													}
+							                    }
+					});
+				}
+			);
+		
 
 	});
 

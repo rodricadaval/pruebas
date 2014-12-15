@@ -1,0 +1,57 @@
+<form id="form_detalle_eliminar_computadora">
+    <table class="t_monitor">
+        <tr>
+            <tr type="hidden">
+               <td><input type="hidden" name="id_computadora" id="id_computadora" value="{id_computadora}"></td>
+            </tr>
+        <tr>
+            <td colspan="2">Detalle en descripcion:</td>   
+        </tr>
+        <tr>
+            <td><textarea rows="4" cols="50" name="detalle_baja">{descripcion}</textarea></td>
+        </tr>
+  </table>
+</form>
+
+<script>
+
+$(document).ready(function(){
+
+    $("#form_detalle_eliminar_computadora").on('submit',function(event){
+        event.preventDefault();
+
+        var datosUrl = $("#form_detalle_eliminar_computadora").serialize();
+        
+        datosUrl += "&action=eliminar";
+
+        $.ajax({
+            url: 'controlador/ComputadorasController.php',
+            type: 'POST',
+            data: datosUrl,
+            success: function(response){
+                if(response){
+                    console.log("success");
+                    alert("La computadora ha sido eliminada correctamente.");
+                    $("#dialogcontent_cpu").dialog("destroy").empty();
+                    $("#dialogcontent_cpu").remove();
+                    $("#contenedorPpal").remove();
+                    jQuery('<div/>', {
+                    id: 'contenedorPpal',
+                    text: 'Texto por defecto!'
+                    }).appendTo('.realBody');
+                    $("#contenedorPpal").load("controlador/ComputadorasController.php");
+                }
+            }
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    })
+
+     
+});
+
+</script>

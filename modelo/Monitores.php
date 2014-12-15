@@ -161,6 +161,21 @@ class Monitores {
 		} else {return 0;}
 	}
 
+	public function eliminarLogico($datos) {
+		$id = $datos['id_monitor'];
+		$detalle = $datos['detalle_baja'];
+		$tipos = Tipo_productos::get_rel_campos();
+		$id_tipo_producto = array_search("Monitor", $tipos);
+		$tabla = "system.monitores";
+		$campo_pk = "id_monitor";
+
+		if(!BDD::getInstance()->query("UPDATE system.monitores SET descripcion = '$detalle' where id_monitor = '$id'")->get_error()){
+			if(!BDD::getInstance()->query("SELECT system.baja_logica_producto('$id','$id_tipo_producto','$tabla','$campo_pk')")->get_error()){
+				return 1;
+			} else {var_dump(BDD::getInstance()); return 0;}
+		} else {var_dump(BDD::getInstance()); return 0;}
+	}
+
 	public function eliminarMonitorLogico($id) {
 		if (!BDD::getInstance()->query("UPDATE system.monitores SET estado=0 where id_monitor='$id' ")->get_error()) {
 			return 1;

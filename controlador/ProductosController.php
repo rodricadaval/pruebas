@@ -41,6 +41,23 @@ if (!isset($_POST['action'])) {
 				$inst = new Computadora_desc();
 				echo $inst->dameSelect($_POST['value'], "_Computadora");
 			}
+
+		case 'agregar_memoria':
+			if (!isset($_POST['tipo'])) {
+
+				$url = array("vista/memoria/view_agregar_memoria.php");
+				$inst_marcas = new Marcas;
+				$select = $inst_marcas->dameSelect("memorias");
+				$select_clases = Memoria_desc::dameSelect();
+				$titulo = "Menu para agregar una Computadora";
+				$parametros = array("Producto" => "Computadora", "select_marcas_computadoras" => $select, "select_clases_Computadora" => $select_clases, "titulo" => $titulo);
+				echo Disenio::HTML($url, $parametros);
+
+			} else if ($_POST['tipo'] == "sel_modelos") {
+
+				$inst = new Computadora_desc();
+				echo $inst->dameSelect($_POST['value'], "_Computadora");
+			}
 		default:
 			# code...
 		break;

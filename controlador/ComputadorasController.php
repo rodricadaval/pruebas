@@ -66,8 +66,14 @@ if (isset($_POST['action'])) {
 			break;
 
 		case 'eliminar':
-			echo $inst_computadoras->eliminar($_POST['id_computadora']);
+
+			echo $inst_computadoras->eliminarLogico($_POST);
 			break;
+
+		case 'agregar_desc':
+		
+			echo $inst_computadoras->agregarDescripcion($_POST);
+			break;	
 
 		case 'buscar_area':
 			if (isset($_POST['num_serie'])) {

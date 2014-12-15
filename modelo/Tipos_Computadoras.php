@@ -78,13 +78,4 @@ class Tipos_Computadoras {
 		return $html_view;
 	}
 }
-
-/*
-
-1/2 porcion de mila de pollo napo c fritas 50
-1/2 porcion mila ternera napo con fritas 50
-chebuzan de mila de pollo full 55
-1/2 porcion mila ternera napo 40
-
- */
 ?>

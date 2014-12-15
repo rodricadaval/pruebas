@@ -22,6 +22,7 @@
 						{ "sTitle" : "Tipo" , "mData" : "clase"},
 						{ "sTitle" : "Sector" , "mData" : "sector"},
 						{ "sTitle" : "Usuario" , "mData" : "usuario"},
+						{ "sTitle" : "Descripcion" , "mData" : "descripcion"},
 						{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
 										'<a class="ventana_area " href="">Modificar</a>'}
 						]
@@ -185,29 +186,102 @@
 		console.log("Entro a eliminar");
 		console.log("id_computadora: "+$(this).attr("id_computadora"));
 		var id_computadora = $(this).attr("id_computadora");
-		datosUrl = "id_computadora="+id_computadora+"&action=eliminar";
-		console.log(datosUrl);
 
-		$.ajax({
-			url: 'controlador/ComputadorasController.php',
-			type: 'POST',
-			data: datosUrl,
-		})
-		.done(function(response) {
-			if(response){
-				console.log("success");
-				alert("La computadora ha sido eliminada correctamente.");
-				$("#contenedorPpal").load("controlador/ComputadorasController.php");
+			$.post( "vista/dialog_content.php",
+			{
+				TablaPpal : "Computadoras",
+				ID : id_computadora,
+				queSos : "computadora", //a quien le voy a generar la vista
+				action : "eliminar"
+			}, function(data){
+				jQuery('<div/>', {
+			    id: 'dialogcontent_cpu',
+			    text: 'Texto por defecto!'
+			}).appendTo('#contenedorPpal');
+				$("#dialogcontent_cpu").html(data);
+				$("#dialogcontent_cpu").dialog({
+											title: "Motivo de baja",
+											show: {
+											effect: "explode",
+											duration: 200,
+											modal:true,
+											},
+											hide: {
+											effect: "explode",
+											duration: 200
+											},
+											width : 360,
+											height: 290,
+											close : function(){
+												$(this).dialog("destroy").empty();
+												$("#dialogcontent_cpu").remove();
+											},
+											buttons :
+						                    {
+						                        "Cancelar" : function () {
+						                            $(this).dialog("destroy").empty();
+						                       		$("#dialogcontent_cpu").remove();
+						                        },
+						                        "Guardar" : function(){
+						                        	$("#form_detalle_eliminar_computadora").submit();
+						                        }
+						                    }
+				});
 			}
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			console.log("complete");
-		});
+		);
 
 	});
+
+	$("#contenedorPpal").on('click' , '#agregar_descripcion_computadora' , function(){
+
+			console.log("Entro a agregar descripcion");
+			console.log("id_computadora: "+$(this).attr("id_computadora"));
+			var id_computadora = $(this).attr("id_computadora");
+
+				$.post( "vista/dialog_content.php",
+				{
+					TablaPpal : "Computadoras",
+					ID : id_computadora,
+					queSos : "computadora", //a quien le voy a generar la vista
+					action : "agregar_desc"
+				}, function(data){
+					jQuery('<div/>', {
+				    id: 'dialogcontent_cpu',
+				    text: 'Texto por defecto!'
+				}).appendTo('#contenedorPpal');
+					$("#dialogcontent_cpu").html(data);
+					$("#dialogcontent_cpu").dialog({
+												title: "Descripcion",
+												show: {
+												effect: "explode",
+												duration: 200,
+												modal:true,
+												},
+												hide: {
+												effect: "explode",
+												duration: 200
+												},
+												width : 360,
+												height: 290,
+												close : function(){
+													$(this).dialog("destroy").empty();
+													$("#dialogcontent_cpu").remove();
+												},
+												buttons :
+							                    {
+							                        "Cancelar" : function () {
+							                            $(this).dialog("destroy").empty();
+							                       		$("#dialogcontent_cpu").remove();
+							                        },
+							                        "Guardar" : function(){
+							                        	$("#form_detalle_agregar_desc").submit();
+							                        }
+							                    }
+					});
+				}
+			);
+
+		});
 
 
 </script>

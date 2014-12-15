@@ -71,6 +71,7 @@
 							}
 						});
 	});
+
 	$("#contenedorPpal").on('click' , '#modificar_usuario' , function(){
 
 		console.log($(this).attr("id_usuario"));

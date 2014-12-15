@@ -62,7 +62,7 @@ $(document).ready(function(){
 	                    alert("Los datos han sido actualizados correctamente.");
 	                    $("#dialogcontent_cpu").dialog("destroy").empty();
                         $("#dialogcontent_cpu").remove();
-                         $("#contenedorPpal").remove();
+                        $("#contenedorPpal").remove();
                         jQuery('<div/>', {
                         id: 'contenedorPpal',
                         text: 'Texto por defecto!'

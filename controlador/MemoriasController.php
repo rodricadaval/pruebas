@@ -2,7 +2,7 @@
 require_once "../ini.php";
 
 if (isset($_POST['action'])) {
-	$inst_monitor = new Monitores();
+	$inst_memoria = new Memorias();
 
 	switch ($_POST['action']) {
 		case 'modificar':
@@ -36,12 +36,12 @@ if (isset($_POST['action'])) {
 
 		case 'eliminar':
 			unset($_POST['action']);
-			echo $inst_monitor->eliminarLogico($_POST);
+			echo $inst_memoria->eliminarLogico($_POST);
 			break;
 
 		case 'liberar':
 			unset($_POST['action']);
-			echo $inst_monitor->liberarMonitor($_POST['id_monitor']);
+			echo $inst_memoria->liberarMonitor($_POST['id_monitor']);
 			break;
 
 
@@ -50,8 +50,8 @@ if (isset($_POST['action'])) {
 			break;
 	}
 } else {
-	$archivos = array("vista/monitor/view_monitores.php");
-	$parametros = array("TABLA" => "Monitores", "");
+	$archivos = array("vista/memoria/view_memorias.php");
+	$parametros = array("TABLA" => "Memorias", "");
 	echo Disenio::HTML($archivos, $parametros);
 }
 ?>
