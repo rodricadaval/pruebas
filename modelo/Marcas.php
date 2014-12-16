@@ -58,6 +58,12 @@ class Marcas {
 					$table = BDD::getInstance()->query("select distinct id_marca from system.monitor_desc where estado = 1");
 					$add_id = "_monitores";
 					break;
+
+				case 'memorias':
+					$table = BDD::getInstance()->query("select distinct id_marca from system.memoria_desc where estado = 1");
+					$add_id = "_memorias";
+					break;
+
 				default:
 					# code...
 					break;
@@ -68,7 +74,7 @@ class Marcas {
 					  <option value=''>Seleccione Marca</option>";
 
 		$fila = $table->_fetchAll();
-
+		
 		foreach ($fila as $array => $campo) {
 
 			$nombre = self::getNombre($campo['id_marca']);

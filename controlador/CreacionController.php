@@ -12,10 +12,24 @@ if (isset($_POST['tipo'])) {
 
 		$datos['id_tipo_producto'] = array_search($_POST['tipo'], $tipo_productos);
 
-		//$metodo = "crearVinculo" . $_POST['tipo'];
 		Consola::mostrar($datos);
 
-		//return Vinculos::$metodo($datos, $_POST['tipo']);
+		$i = 1;
+
+		if(isset($_POST['cant_veces']) && $_POST['cant_veces'] > 1){
+			while ($i < $_POST['cant_veces']) 
+			{ 
+				if(Vinculos::crearVinculo($datos, $_POST['tipo']) == "true")
+					{
+						$i++;
+					}
+				else{
+					$i = $_POST['cant_veces'] + 1;
+					return "false";
+				} 	
+			}
+			unset($_POST['cant_veces']);
+		}
 		return Vinculos::crearVinculo($datos, $_POST['tipo']);
 	}
 }

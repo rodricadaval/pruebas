@@ -2,7 +2,7 @@
 <h3>{titulo}</h3><p>Seleccione la marca y modelo de la computadora</p>
 
 <form id="form_agregar_computadora">
-<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="tabla_agregar"></table>
+<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="tabla_agregar_compu"></table>
 	<tr>
             <td>Marca: </th><td>{select_marcas_computadoras}</td>
         	<td>Modelo:</td>
@@ -17,7 +17,7 @@
             <td>Tipo :</td><td>{select_clases_Computadora}</td>
             <td><div class="error_ag_comp text-error"></div></td>
     </tr>
-    <div id="agregar"><input class="boton_agregar_monitor" type="submit" name="crearMonitor" value="Crear"</div>
+    <tr><td><input class="boton_agregar" type="submit" name="crearComputadora" value="Crear"</td></tr>
 </table>
 </form>
 
@@ -42,6 +42,7 @@
 
 	$("#form_agregar_computadora").validate({
         errorLabelContainer : ".error_ag_comp" ,
+        wrapper : "li" ,
         onfocusout: false,
         onkeyup: false,
         onclick: false,
@@ -79,25 +80,13 @@
             }
         } ,
         submitHandler : function (form) {
-          validado = true;
-          console.log (validado);
           console.log ("Formulario OK");
-        } ,
-        invalidHandler : function (event , validator) {
-          console.log(validator);
-          validado = false;
-        }
-    });
 
-
-	$("#form_agregar_computadora").on('submit',function(){
-
-		if(validado){
-            var primparte = "";
+          var primparte = "";
             var sdaparte = "";
 
-			console.log('Evento de click en crear');
-			console.log($("#form_agregar_computadora").serialize());
+            console.log('Evento de click en crear');
+            console.log($("#form_agregar_computadora").serialize());
 
             if($("#select_modelos_Computadora").val().indexOf("-") >= 0){
                 var data = $("#select_modelos_Computadora").val().split('-');
@@ -114,26 +103,28 @@
             var dataUrl = "marca="+$('#select_marcas_computadoras option:selected').val()+"&modelo="+primparte+' '+sdaparte+"&num_serie="+$("#nro_de_serie_c").val()+"&clase="+$("#select_clase").val()+"&tipo=Computadora";
             console.log(dataUrl);
 
-			$.ajax({
-							url: 'controlador/CreacionController.php',
-							type: 'POST',
-							data: dataUrl,
-							success: function(response){
-								console.log(response);
-								console.log("success");
-								alert('Se ha agregado el producto correctamente');
-								$("#tabs1").load("controlador/ProductosController.php",{action:"agregar_computadora"});
-							}
-			})
-			.fail(function() {
-				console.log("error");
-				alert('Hubo un error');
-				$("#tabs1").load("controlador/ProductosController.php",{action:"agregar_computadora"});
-
-			})
-			.always(function() {
-				console.log("complete");
-			});
-		}
-	});
+            $.ajax({
+                            url: 'controlador/CreacionController.php',
+                            type: 'POST',
+                            data: dataUrl,
+                            success: function(response){
+                                console.log(response);
+                                console.log("success");
+                                alert('Se ha agregado el producto correctamente');
+                                $("#tabs3").load("controlador/ProductosController.php",{action:"agregar_computadora"});
+                            }
+            })
+            .fail(function() {
+                console.log("error");
+                alert('Hubo un error');
+                $("#tabs3").load("controlador/ProductosController.php",{action:"agregar_computadora"});
+            })
+            .always(function() {
+                console.log("complete");
+            });
+        } ,
+        invalidHandler : function (event , validator) {
+          console.log(validator);
+        }
+    });
 </script>

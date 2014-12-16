@@ -2,7 +2,7 @@
 <h3>{titulo}</h3><p>Seleccione la marca y modelo del monitor</p>
 
 <form id="form_agregar_monitor">
-<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="tabla_agregar"></table>
+<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="tabla_agregar_monit"></table>
 	<tr>
             <th>Marca: </th>
     </tr>
@@ -45,6 +45,7 @@
 
 	$("#form_agregar_monitor").validate({
         errorLabelContainer : ".error_ag_monit" ,
+        wrapper : "li" ,
         onfocusout: false,
         onkeyup: false,
         onclick: false,

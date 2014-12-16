@@ -116,6 +116,30 @@ h1{
 	color:white;
 }
 
+.boton_agregar_memoria {
+	float:right;
+	margin-top: 10px;
+	font-size: 15px;
+	background-color: blue;
+	color:white;
+}
+
+.boton_agregar {
+	float:right;
+	margin-top: 10px;
+	font-size: 15px;
+	background-color: blue;
+	color:white;
+}
+
+#select_unidades{
+ width:60px;   
+}
+
+#select_capacidades{
+ width:60px;   
+}
+
 .pointer :hover{
 	cursor: pointer;
 }

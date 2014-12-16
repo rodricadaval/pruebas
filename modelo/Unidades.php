@@ -42,5 +42,29 @@ class Unidades {
 		}
 		return $array;
 	}
+	public function dameSelect($valor = "") {
+
+
+		$array_posta = BDD::getInstance()->query("SELECT id_unidad, unidad from system." . self::claseMinus())->_fetchAll();
+
+		$html_view = "<select id='select_unidades' name='unidad'>";
+		if(count($array_posta) == 0){
+			$html_view .= "<option value=''>No hay datos</option>";  
+		}
+
+		for ($i = 0; $i < count($array_posta); $i++) {
+
+			if ($array_posta[$i]['unidad'] != "-") {
+				if ($array_posta[$i]['unidad'] == $valor) {
+					$html_view .= "<option selected='selected' value=" . $array_posta[$i]['id_unidad'] . ">" . $array_posta[$i]['unidad'] . "</option>";
+				} else {
+					$html_view .= "<option value=" . $array_posta[$i]['id_unidad'] . ">" . $array_posta[$i]['unidad'] . "</option>";
+				}
+			}
+		}
+
+		$html_view = $html_view . "</select>";
+		return $html_view;
+	}
 }
 ?>

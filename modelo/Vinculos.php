@@ -19,7 +19,6 @@ class Vinculos {
 		$values = $datos['id_usuario'] . "," . $datos['id_deposito'] . "," . $datos['id_cpu'] . "," . $datos['id_tipo_producto'] . ",1";
 
 		if (!BDD::getInstance()->query("INSERT INTO system.vinculos (id_usuario,id_sector,id_cpu,id_tipo_producto,id_pk_producto) VALUES ($values) ")->get_error()) {
-			var_dump(BDD::getInstance());
 
 			$valor_seq_actual = BDD::getInstance()->query("select nextval('system.vinculos_id_vinculo_seq'::regclass)")->_fetchRow()['nextval'];
 			$valor_seq_actual--;
@@ -34,7 +33,9 @@ class Vinculos {
 					case 'Computadora':
 						$id = Computadoras::agregar_computadora($datos);
 						break;
-
+					case 'Memoria':
+						$id = Memorias::agregar($datos);
+						break;
 					default:
 						//nada
 					break;
@@ -75,6 +76,7 @@ class Vinculos {
 
 		if (isset($fila['id_usuario'])) {
 			$fila['usuario'] = Usuarios::getNombre($fila['id_usuario']);
+			$fila['nombre_apellido'] = Usuarios::getNombreDePila($fila['id_usuario']);
 		}
 
 		if (isset($fila['id_cpu'])) {

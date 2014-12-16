@@ -47,13 +47,16 @@ class Memorias {
 						}
 						break;
 
-					/*case 'id_vinculo':
+					case 'id_vinculo':
 						$arrayAsoc_vinculo = Vinculos::dameDatos($valor);
 
 						foreach ($arrayAsoc_vinculo as $camp => $value) {
-							$data[$i][$camp] = $value;
+							if($camp == "nombre_apellido" && $value == "Sin usuario"){
+								$value = "-";
+							}
+								$data[$i][$camp] = $value;			
 						}
-						break;*/
+						break;
 
 					case 'id_capacidad':
 						$arrayAsoc_vinculo = Capacidades::dameDatos($valor);
@@ -100,6 +103,37 @@ class Memorias {
 			}
 		}
 		return $fila;
+	}
+
+	public function agregar($datos) {
+
+		$id_memoria_desc = Memoria_desc::buscar_id_por_marca_y_tipo($datos['marca'], $datos['tipo_mem']);
+
+		$values = $datos['id_vinculo'] . "," . $datos['capacidad'] . "," . $datos['unidad'] . "," . $id_memoria_desc;
+
+		if (!BDD::getInstance()->query("INSERT INTO system.memorias (id_vinculo,id_capacidad,id_unidad,id_memoria_desc) VALUES ($values)")->get_error()) {
+			$valor_seq_actual_memorias = BDD::getInstance()->query("select nextval('system.memorias_id_memoria_seq1'::regclass)")->_fetchRow()['nextval'];
+			$valor_seq_actual_memorias--;
+			BDD::getInstance()->query("select setval('system.memorias_id_memoria_seq1'::regclass,'$valor_seq_actual_memorias')");
+			return $valor_seq_actual_memorias;
+
+		} else {
+			var_dump(BDD::getInstance());
+			return 0;}
+	}
+
+	public function getByID($id) {
+		$datos = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_memoria = '$id' ")->_fetchRow();
+		foreach ($datos as $key => $value) {
+			if ($key == "id_vinculo") {
+				$id_usuario = Vinculos::getIdUsuario($value);
+				$datos_usuario = Usuarios::getByID($id_usuario);
+				$id_cpu = Vinculos::getIdCpu($value);
+				$datos_usuario['nombre_area'] = Areas::getNombre($datos_usuario['area']);
+			}
+		}
+		return array_merge($datos, $datos_usuario);
+
 	}
 }
 ?>

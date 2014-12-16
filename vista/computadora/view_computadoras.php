@@ -1,3 +1,4 @@
+<h2>{TABLA}</h2>
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
 <script type="text/javascript">
 

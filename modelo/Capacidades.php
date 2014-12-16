@@ -42,5 +42,30 @@ class Capacidades {
 		}
 		return $array;
 	}
+
+		public function dameSelect($valor = "") {
+
+
+		$array_posta = BDD::getInstance()->query("SELECT id_capacidad, capacidad from system." . self::claseMinus())->_fetchAll();
+
+		$html_view = "<select id='select_capacidades' name='capacidad'>";
+		if(count($array_posta) == 0){
+			$html_view .= "<option value=''>No hay datos</option>";  
+		}
+
+		for ($i = 0; $i < count($array_posta); $i++) {
+
+			if ($array_posta[$i]['capacidad'] != "-") {
+				if ($array_posta[$i]['capacidad'] == $valor) {
+					$html_view .= "<option selected='selected' value=" . $array_posta[$i]['id_capacidad'] . ">" . $array_posta[$i]['capacidad'] . "</option>";
+				} else {
+					$html_view .= "<option value=" . $array_posta[$i]['id_capacidad'] . ">" . $array_posta[$i]['capacidad'] . "</option>";
+				}
+			}
+		}
+
+		$html_view = $html_view . "</select>";
+		return $html_view;
+	}
 }
 ?>

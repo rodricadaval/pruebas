@@ -99,6 +99,39 @@ foreach ($_POST as $key => $value) {
 				$parametros[$key] = $inst_clase->$metodo($id, $_POST['queSos']);
 				break;
 
+			case 'memoria':
+
+					$clasePpal = new Vinculos();
+					
+					$metodo = "dameSelect";
+					$sos =  $_POST['queSos'];
+
+					if ($value == "Areas") {
+						if(isset($_POST['action']) && $_POST['action'] == "modif_sector"){
+							$parametros['libre'] = $clasePpal->estaLibre($datos_tabla['id_vinculo']);
+						}
+						$id = $clasePpal->getIdSector($datos_tabla['id_vinculo']);
+					} else if ($value == "Usuarios") {
+						$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
+					} else if ($value == "Computadoras") {
+						if(isset($_POST['action']) && $_POST['action'] == "modif_cpu"){
+							$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
+							$metodo .= "DeUsuario";
+							$sos .= "_modif_cpu";
+							if($id == 1 || $id == ""){
+								$id = $datos_tabla['id_vinculo'];
+								$sos = "dialog_monitor_mod_cpu_sin_usr";
+							}
+						}
+						else{
+							$id = $clasePpal->getIdCpu($datos_tabla['id_vinculo']);
+						}
+					}
+					
+					$parametros[$key] = $inst_clase->$metodo($id, $sos);
+				
+				
+				break;
 			default:
 				# code...
 			break;

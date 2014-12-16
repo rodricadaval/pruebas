@@ -31,24 +31,23 @@ class Memoria_desc {
 		return $fila;
 	}
 
-	public function dameSelect($valor = "", $sos = "") {
-		if (!isset($valor)) {
-			$table = BDD::getInstance()->query("select modelo from system." . self::claseMinus() . " where estado = 1");
+	public function dameSelect( $sos = "", $valor = "") {
+		if ($valor == "") {
+			$table = BDD::getInstance()->query("select distinct tipo from system." . self::claseMinus() . " where estado = 1");
 		} else {
-			$table = BDD::getInstance()->query("select modelo from system." . self::claseMinus() . " where id_marca = '$valor' AND estado = 1");
+			$table = BDD::getInstance()->query("select distinct tipo from system." . self::claseMinus() . " where id_marca = '$valor' AND estado = 1");
 		}
 
 		if ($sos != "") {
-			$html_view = "<select id='select_modelos" . $sos . "' name='modelo'>";
+			$html_view = "<select id='select_tipos" . $sos . "' name='tipo_mem'>";
 
 		} else {
-			$html_view = "<select id='select_modelos' name='modelo'>";
+			$html_view = "<select id='select_tipos' name='tipo_mem'>";
 
 		}
 
 		while ($fila = $table->_fetchRow()) {
-
-			$html_view = $html_view . "<option value=" . $fila['modelo'] . ">" . $fila['modelo'] . "</option>";
+			$html_view = $html_view . "<option value=" . $fila['tipo'] . ">" . $fila['tipo'] . "</option>";
 		}
 
 		$html_view = $html_view . "</select>";
@@ -56,8 +55,8 @@ class Memoria_desc {
 
 	}
 
-	public function buscar_id_por_marca_modelo($id_marca, $modelo) {
-		return BDD::getInstance()->query("SELECT id_memoria_desc FROM system.memoria_desc where id_marca ='$id_marca' AND modelo='$modelo' ")->_fetchRow()['id_memoria_desc'];
+	public function buscar_id_por_marca_y_tipo($id_marca, $tipo) {
+		return BDD::getInstance()->query("SELECT id_memoria_desc FROM system.memoria_desc where id_marca ='$id_marca' AND tipo='$tipo' ")->_fetchRow()['id_memoria_desc'];
 	}
 }
 ?>
