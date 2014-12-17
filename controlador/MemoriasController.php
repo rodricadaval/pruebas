@@ -41,7 +41,7 @@ if (isset($_POST['action'])) {
 
 		case 'liberar':
 			unset($_POST['action']);
-			echo $inst_memoria->liberarMonitor($_POST['id_monitor']);
+			echo $inst_memoria->liberar($_POST['id_memoria']);
 			break;
 
 

@@ -77,18 +77,25 @@ if (isset($_POST['action'])) {
 
 		case 'buscar_area':
 			if (isset($_POST['num_serie'])) {
-				$inst_cpu = new Computadoras();
-				$id_vinc = $inst_cpu->getIdVinculoBySerie($_POST['num_serie']);
+				$id_vinc = $inst_computadoras->getIdVinculoBySerie($_POST['num_serie']);
 				echo Vinculos::getIdSector($id_vinc);
 			}
 			break;
 
 		case 'cpus_del_usuario': 
 				$id_usuario = Usuarios::getIdByNombre($_POST['nombre_usuario']);
-			    $inst_cpu = new Computadoras();
-				echo $inst_cpu->dameSelectDeUsuario($id_usuario,$_POST['extra_id_select']); 
+				echo $inst_computadoras->dameSelectDeUsuario($id_usuario,$_POST['extra_id_select']); 
 			
 			break;
+
+		case 'chequear_slots':
+				echo $inst_computadoras->tieneSlotsLibres($_POST['id_cpu']);
+			break;
+
+		case 'chequear_espacio_mem':
+				echo $inst_computadoras->tieneEspacioMemLibre($_POST);
+			break;
+
 
 		default:
 			# code...

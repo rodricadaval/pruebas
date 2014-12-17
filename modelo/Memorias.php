@@ -127,13 +127,27 @@ class Memorias {
 		foreach ($datos as $key => $value) {
 			if ($key == "id_vinculo") {
 				$id_usuario = Vinculos::getIdUsuario($value);
-				$datos_usuario = Usuarios::getByID($id_usuario);
+				$datos_extra = Usuarios::getByID($id_usuario);
 				$id_cpu = Vinculos::getIdCpu($value);
-				$datos_usuario['nombre_area'] = Areas::getNombre($datos_usuario['area']);
+				$datos_extra['nombre_area'] = Areas::getNombre($datos_extra['area']);
+			}
+			if ($key == "id_capacidad") {
+				$datos['capacidad'] = Capacidades::getNombre($value);
 			}
 		}
-		return array_merge($datos, $datos_usuario);
+		//var_dump($datos);
+		return array_merge($datos, $datos_extra);
+	}
 
+	public function getCapacidad($id){
+		$id_capacidad = BDD::getInstance()->query("select id_capacidad from system.memorias where id_memoria='$id' ")->_fetchRow()['id_capacidad'];
+		return Capacidades::getNombre($id_capacidad);
+	}
+
+	public function liberar($id){
+		$id_vinculo = BDD::getInstance()->query("select id_vinculo from system.memorias where id_memoria='$id' ")->_fetchRow()['id_vinculo'];
+		$inst_vinc = new Vinculos();
+		echo $inst_vinc->liberar($id_vinculo);
 	}
 }
 ?>

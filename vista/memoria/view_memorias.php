@@ -111,7 +111,7 @@
 											duration: 200
 											},
 											width : 350,
-											height : 260,
+											height : 280,
 											close : function(){
 												$(this).dialog("destroy").empty();
 												$("#dialogcontent_memoria").remove();
@@ -130,4 +130,103 @@
 			}
 		);
 	});
+
+	$("#contenedorPpal").on('click' , '#modificar_cpu_memoria' , function(){
+
+			console.log("Entro a modificar cpu de la memoria");
+			console.log("id_memoria: "+$(this).attr("id_memoria"));
+			var id_memoria = $(this).attr("id_memoria");
+			$.post( "vista/dialog_content.php",
+				{
+					TablaPpal : "Memorias",
+					ID : id_memoria,
+					select_Areas : "Areas", //Clase de la cual quiero sacar el select
+					queSos : "memoria", //a quien le voy a generar la vista
+					select_Computadoras : "Computadoras",
+					action : "modif_cpu"
+				}, function(data){
+					jQuery('<div/>', {
+					    id: 'dialogcontent_memoria',
+					    text: 'Texto por defecto!'
+					}).appendTo('#contenedorPpal');
+					$("#dialogcontent_memoria").html(data);
+					$("#dialogcontent_memoria").dialog({
+												show: {
+												effect: "explode",
+												duration: 200,
+												modal:true
+												},
+												hide: {
+												effect: "explode",
+												duration: 200
+												},
+												width : 350,
+												height : 330,
+												close : function(){
+													$(this).dialog("destroy").empty();
+													$("#dialogcontent_memoria").remove();
+												},
+												buttons :
+							                    {
+							                        "Cancelar" : function () {
+							                            $(this).dialog("destroy").empty();
+							                            $("#dialogcontent_memoria").remove();
+							                        },
+							                        "Enviar" : function(){
+							                        	$("#form_memoria_mod_cpu").submit();
+							                        }
+							                    }
+					});
+				}
+			);
+		});
+
+	$("#contenedorPpal").on('click' , '#desasignar_todo_memoria' , function(){
+
+			console.log("Entro a desasignar todo de la memoria");
+			console.log("id_memoria: "+$(this).attr("id_memoria"));
+			var id_memoria = $(this).attr("id_memoria");
+	
+			$.post( "vista/dialog_content.php",
+				{
+					TablaPpal : "Memorias",
+					ID : id_memoria,
+					queSos : "memoria", //a quien le voy a generar la vista
+					action : "liberar"
+				}, function(data){
+					jQuery('<div/>', {
+				    id: 'dialogcontent_memoria',
+				    text: 'Texto por defecto!'
+				}).appendTo('#contenedorPpal');
+					$("#dialogcontent_memoria").html(data);
+					$("#dialogcontent_memoria").dialog({
+												show: {
+												effect: "explode",
+												duration: 200,
+												modal:true
+												},
+												hide: {
+												effect: "explode",
+												duration: 200
+												},
+												width : 350,
+												height : 200,
+												close : function(){
+													$(this).dialog("destroy").empty();
+													$("#dialogcontent_memoria").remove();
+												},
+												buttons :
+							                    {
+							                        "Cancelar" : function () {
+							                            $(this).dialog("destroy").empty();
+							                            $("#dialogcontent_memoria").remove();
+							                        },
+							                        "Aceptar" : function(){
+							                        		$("#liberar_memoria").submit();
+													}
+							                    }
+					});
+				}
+			);
+		});
 </script>

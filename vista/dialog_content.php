@@ -66,7 +66,7 @@ foreach ($_POST as $key => $value) {
 							$sos .= "_modif_cpu";
 							if($id == 1 || $id == ""){
 								$id = $datos_tabla['id_vinculo'];
-								$sos = "dialog_monitor_mod_cpu_sin_usr";
+								$sos = "dialog_mod_cpu_sin_usr";
 							}
 						}
 						else{
@@ -120,7 +120,7 @@ foreach ($_POST as $key => $value) {
 							$sos .= "_modif_cpu";
 							if($id == 1 || $id == ""){
 								$id = $datos_tabla['id_vinculo'];
-								$sos = "dialog_monitor_mod_cpu_sin_usr";
+								$sos = "dialog_mod_cpu_sin_usr";
 							}
 						}
 						else{

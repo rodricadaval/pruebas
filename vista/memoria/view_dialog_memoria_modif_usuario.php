@@ -18,17 +18,22 @@
         </tr>
         <tr>
             <td>{select_Computadoras}</td>
+            <td><input name="capacidad_mem" id="capacidad_mem" type="text" value="{capacidad}"></td>
         </tr>
-        <tr><td></td><td><div class="error text-error"></div></td></tr>
+        <tr><td colspan="2"><div class="error text-error"></div></td></tr>
   </table>
 </form>
+
 
 <script>
 
 $(document).ready(function(){
 
+     $('#select_computadoras_memoria').hide();
+     $("#capacidad_mem").hide();
 
-    $('#select_computadoras_memoria').attr('style', 'display:none');     
+     console.log($("#capacidad_mem").val());
+
 
    	 $("#nombre_usuario").typeahead({
         source : function (query , process) {
@@ -68,13 +73,13 @@ $(document).ready(function(){
                                     {
                                         nombre_usuario : obj,
                                         action : "cpus_del_usuario",
-                                        extra_id_select : "monitor"
+                                        extra_id_select : "memoria"
 
                                     }, function(select) {
                                             console.log("El select es: "+select);
 
-                                            $('#select_computadoras_monitor').replaceWith(select);
-                                             $('#select_computadoras_monitor').attr('style','display:none');
+                                            $('#select_computadoras_memoria').replaceWith(select);
+                                            $('#select_computadoras_memoria').hide();
 
                                     });
 
@@ -87,13 +92,75 @@ $(document).ready(function(){
 
     });
 
-    $("#form_memoria_mod_usuario").on('submit',function(event){
+    $.validator.addMethod("palabra",function (value,element){
+          return value!="Sin usuario"; 
+        }, 'No puede elegir este usuario. Si quiere liberar la memoria clickea en el boton LIBERAR');
 
-        event.preventDefault();
+/*     $.validator.addMethod("check_mem",function (value,element){
+           
+        }, 'No puede elegir este usuario. Si quiere liberar la memoria clickea en el boton LIBERAR');*/
 
-        	console.log($("#form_memoria_mod_usuario").serialize());
+    $("#form_memoria_mod_usuario").validate({
+        errorLabelContainer : ".error" ,
+        wrapper : "li" ,
+        ignore: [],
+        onfocusout: false,
+        onkeyup: false,
+        onclick: false,
+        onsubmit: true,
+        rules : {
+            id_computadora : {
+                remote: {
+                    url: "controlador/ComputadorasController.php",
+                    type: "post",
+                    data: {
+                      id_cpu: function(){
+                        return $("#select_computadoras_memoria option:selected").val();
+                      },
+                      action: function(){
+                        return "chequear_slots";
+                      }
+                    }
+                }
+            },
+            nombre_usuario: {
+                palabra: true
+            },
+            capacidad_mem: {
+                remote: {
+                    url: "controlador/ComputadorasController.php",
+                    type: "post",
+                    data: {
+                      id_cpu: function(){
+                        return $("#select_computadoras_memoria option:selected").val();
+                      },
+                      action: function(){
+                        return "chequear_espacio_mem";
+                      },
+                      capacidad: function(){
+                        return $("capacidad_mem").val();
+                      }
+                    }
+                }
+            }
+        } ,
+        messages : {
+            id_computadora : {
+                remote: 'La CPU del usuario tiene los slots llenos. No puede asignarle mas memorias' 
+            },
+            capacidad_mem : {
+                remote: 'No se puede asignar esta memoria en la computadora del usuario. No alcanza el espacio de memoria'
+            }
+        } ,
+        submitHandler : function (form) {
+
+            console.log ("Formulario OK");
+            
+            /*$("#capacidad_mem").attr("disabled","disabled");
+
+            console.log($("#form_memoria_mod_usuario").serialize());
     
-        	var datosUrl =    $("#form_memoria_mod_usuario").serialize();
+            var datosUrl =    $("#form_memoria_mod_usuario").serialize();
             datosUrl += "&area="+ $("#select_areas option:selected").val();
             
             datosUrl += "&action=modificar&asing_usr=yes";
@@ -106,20 +173,20 @@ $(document).ready(function(){
                 data: datosUrl,
                 success : function(response){
                     if(response){
-	                    console.log(response);
-	                    alert("Los datos han sido actualizados correctamente. Al cambiar de usuario se reemplazará automáticamente el sector de la Cpu por el del usuario elegido.");
-	                    $("#dialogcontent_memoria").dialog("destroy").empty();
+                        console.log(response);
+                        alert("Los datos han sido actualizados correctamente. Al cambiar de usuario se reemplazará automáticamente el sector de la Cpu por el del usuario elegido.");
+                        $("#dialogcontent_memoria").dialog("destroy").empty();
                         $("#dialogcontent_memoria").remove();
                         $("#contenedorPpal").remove();
                         jQuery('<div/>', {
                         id: 'contenedorPpal',
                         text: 'Texto por defecto!'
                         }).appendTo('.realBody');
-	                    $("#contenedorPpal").load("controlador/MemoriasController.php");
-                	}
-                	else{
-                	alert("Error en la query.");
-                	}
+                        $("#contenedorPpal").load("controlador/MemoriasController.php");
+                    }
+                    else{
+                         alert("Error en la query.");
+                    }                     
                 }
             })
             .fail(function() {
@@ -128,9 +195,11 @@ $(document).ready(function(){
             })
             .always(function() {
                 console.log("complete");
-            })
+            })*/
+        } ,
+        invalidHandler : function (event , validator) {
+          console.log(validator);
+        }
     });
-
 });
-
 </script>

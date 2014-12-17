@@ -21,6 +21,7 @@
 						{ "sTitle" : "Marca" , "mData" : "marca"},
 						{ "sTitle" : "Modelo" , "mData" : "modelo"},
 						{ "sTitle" : "Tipo" , "mData" : "clase"},
+						{ "sTitle" : "Slots Libres" , "mData" : "slots_libres"},
 						{ "sTitle" : "Sector" , "mData" : "sector"},
 						{ "sTitle" : "Usuario" , "mData" : "usuario"},
 						{ "sTitle" : "Descripcion" , "mData" : "descripcion"},

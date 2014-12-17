@@ -40,6 +40,9 @@ class Computadoras {
 						$arrayAsoc_desc = Computadora_desc::dameDatos($valor);
 
 						foreach ($arrayAsoc_desc as $camp => $value) {
+							if($camp == "slots"){
+								$slotsTotales = $value;
+							}								
 							$data[$i][$camp] = $value;
 						}
 						break;
@@ -52,11 +55,15 @@ class Computadoras {
 						}
 						break;
 
+					case 'id_computadora':
+						$id_cpu = $valor;
+						break;
+
 					default:
 						# code...
 					break;
 				}
-
+				$data[$i]["slots_libres"] = self::getSlotsLibres($slotsTotales,$id_cpu);
 			}
 		}
 
@@ -159,12 +166,57 @@ return $tabla;
 		return $html_view;
 	}
 
+	public function tieneSlotsLibres($id){
+		$id_desc = 0;
+		$id_desc = BDD::getInstance()->query("select id_computadora_desc from system.computadoras where id_computadora = '$id' ")->_fetchRow()['id_computadora_desc'];
+		$slotsTotales = Computadora_desc::getSlots($id_desc);
+		$tipos = Tipo_productos::get_rel_campos();
+		$id_tipo_producto = array_search("Memoria", $tipos);
+		$cantidadUsada = BDD::getInstance()->query("select count(*) as cantidad from system.vinculos where id_cpu = '$id' AND id_tipo_producto = '$id_tipo_producto' ")->_fetchRow()['cantidad'];
+
+		if($cantidadUsada < $slotsTotales){
+			return "true";
+		}
+		else{
+			return "false";
+		}
+	}
+
+	public function getSlotsLibres($tot,$id){
+		$usados = 0;
+		$tipos = Tipo_productos::get_rel_campos();
+		$id_tipo_producto = array_search("Memoria", $tipos);
+		$usados = BDD::getInstance()->query("select count(*) as cantidad from system.vinculos where id_cpu = '$id' AND id_tipo_producto = '$id_tipo_producto' ")->_fetchRow()['cantidad'];
+		return $tot - $usados;
+	}
+
+	public function tieneEspacioMemLibre($datos){
+		$id = $datos['id_cpu'];
+		$id_desc = 0;
+		$id_desc = BDD::getInstance()->query("select id_computadora_desc from system.computadoras where id_computadora = '$id' ")->_fetchRow()['id_computadora_desc'];
+		$memMax = Computadora_desc::getMemMax($id_desc);
+		$tipos = Tipo_productos::get_rel_campos();
+		$id_tipo_producto = array_search("Memoria", $tipos);
+		$tabla_mem = BDD::getInstance()->query("select id_pk_producto as id_memoria from system.vinculos where id_cpu = '$id' AND id_tipo_producto = '$id_tipo_producto' ");
+
+		while($fila_mem = $tabla_mem->_fetchRow()){
+			$cantidad += Memorias::getCapacidad($fila_mem['id_memoria']);
+		}
+
+		if($cantidad + $datos['capacidad'] <= $memMax){
+			return "true";
+		}
+		else{
+			return "false";
+		}
+	}
+
 	public function dameSelectDeUsuario($id = "", $sos = "") {
 
 		$nuevo = true;
 		$consulta = "";
 
-		if($sos == "dialog_monitor_mod_cpu_sin_usr"){
+		if($sos == "dialog_mod_cpu_sin_usr"){
 			$id_sector = BDD::getInstance()->query("select id_sector from system.vinculos where id_vinculo = '$id' ")->_fetchRow()['id_sector'];
 			$tableVinc = BDD::getInstance()->query("select distinct id_pk_producto from system.vinculos where id_usuario = 1 AND id_sector = '$id_sector' AND id_tipo_producto = 4");
 			$nuevo = false;
@@ -176,7 +228,7 @@ return $tabla;
 
 		$html_view = "<select id='select_computadoras_" . $sos . "' name='id_computadora'>";
 
-		if(($id == "" || $id == 1 || $tableVinc->get_count() == 0) && $sos != "dialog_monitor_mod_cpu_sin_usr"){
+		if(($id == "" || $id == 1 || $tableVinc->get_count() == 0) && $sos != "dialog_mod_cpu_sin_usr"){
 			$html_view .= "<option value='1'>Sin Cpu</option>";
 		}
 		else{

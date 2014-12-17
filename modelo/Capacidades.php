@@ -20,9 +20,7 @@ class Capacidades {
 	}
 
 	public function getNombre($id) {
-		$fila = BDD::getInstance()->query("select capacidad from system." . self::claseMinus() . " where id_capacidad = '$id' ")->_fetchRow();
-
-		return $fila;
+		return BDD::getInstance()->query("select capacidad from system." . self::claseMinus() . " where id_capacidad = '$id' ")->_fetchRow()['capacidad'];
 	}
 
 	public function dameDatos($id) {

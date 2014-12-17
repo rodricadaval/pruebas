@@ -1,9 +1,24 @@
+
 <?php
 
 class Computadora_desc {
 
 	public static function claseMinus() {
 		return strtolower(get_class());
+	}
+
+	public function getSlots($num){
+		$fila = BDD::getInstance()->query("select slots from system." . self::claseMinus() . " where id_computadora_desc = '$num' ")->_fetchRow();
+		if(isset($fila) && $fila != ""){
+			return $fila['slots'];
+		}
+		else{
+			return 0;
+		}
+	}
+
+	public function getMemMax($num){
+		return BDD::getInstance()->query("select mem_max from system." . self::claseMinus() . " where id_computadora_desc = '$num' ")->_fetchRow()['mem_max'];
 	}
 
 	public function listarTodos() {
@@ -69,5 +84,6 @@ class Computadora_desc {
 		$html_view = $html_view . "</select>";
 		return $html_view;
 	}
+
 }
 ?>
