@@ -20,9 +20,7 @@ class Unidades {
 	}
 
 	public function getNombre($id) {
-		$fila = BDD::getInstance()->query("select unidad from system." . self::claseMinus() . " where id_unidad = '$id' ")->_fetchRow();
-
-		return $fila;
+		return BDD::getInstance()->query("select unidad from system." . self::claseMinus() . " where id_unidad = '$id' ")->_fetchRow()['unidad'];
 	}
 
 	public function dameDatos($id) {
@@ -42,6 +40,19 @@ class Unidades {
 		}
 		return $array;
 	}
+
+	public function get_rel_potencia() {
+		$tabla = BDD::getInstance()->query("select * from system." . self::claseMinus());
+		$array = array();
+
+		while ($fila = $tabla->_fetchRow()) {
+
+			$array[$fila['potencia']] = $fila['unidad'];
+
+		}
+		return $array;
+	}
+
 	public function dameSelect($valor = "") {
 
 

@@ -36,6 +36,15 @@ include 'logueo/chequeo_login.php';
                 <div id="contenedorPpal"></div>
             	</div>
                 <script type="text/javascript">
+
+                    $.validator.addMethod("notEqual", function(value, element, param) {
+                     return this.optional(element) || value != param;
+                    });
+
+                      $.validator.addMethod("sinCpu",function (value,element){
+                        return value!=1; 
+                      }, 'El usuario no tiene Cpu.');
+
 	                $("#logout").on('click',function(){
 		                $.ajax({
 			                url : 'logueo/logout.php',

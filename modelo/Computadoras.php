@@ -193,17 +193,23 @@ return $tabla;
 	public function tieneEspacioMemLibre($datos){
 		$id = $datos['id_cpu'];
 		$id_desc = 0;
+		$capacidadEnUso = 0;
 		$id_desc = BDD::getInstance()->query("select id_computadora_desc from system.computadoras where id_computadora = '$id' ")->_fetchRow()['id_computadora_desc'];
 		$memMax = Computadora_desc::getMemMax($id_desc);
+		$array_potencias = Unidades::get_rel_potencia();
+		$exponente = array_search("GB", $array_potencias);
+		$memMax = $memMax * pow(1024,$exponente);
 		$tipos = Tipo_productos::get_rel_campos();
 		$id_tipo_producto = array_search("Memoria", $tipos);
-		$tabla_mem = BDD::getInstance()->query("select id_pk_producto as id_memoria from system.vinculos where id_cpu = '$id' AND id_tipo_producto = '$id_tipo_producto' ");
+		$tabla_mem = BDD::getInstance()->query("select id_pk_producto as id_memoria from system.vinculos where id_cpu = '$id' AND id_tipo_producto = '$id_tipo_producto' ")->_fetchAll();
 
-		while($fila_mem = $tabla_mem->_fetchRow()){
-			$cantidad += Memorias::getCapacidad($fila_mem['id_memoria']);
+		foreach ($tabla_mem as $fila_mem) {
+			$capacidadEnUso += Memorias::getCapacidadEnMegas($fila_mem['id_memoria']);
 		}
 
-		if($cantidad + $datos['capacidad'] <= $memMax){
+		$capacidadTotal = $capacidadEnUso + Memorias::getCapacidadEnMegas($datos['id_memoria']);
+
+		if($capacidadTotal <= $memMax){
 			return "true";
 		}
 		else{

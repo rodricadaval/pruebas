@@ -71,9 +71,6 @@ class Memorias {
 
 						foreach ($arrayAsoc_vinculo as $camp => $value) {
 							$data[$i][$camp] = $value;
-							if($camp == "unidad"){
-								$data[$i]["capacidad"] .= " " . $value;
-							} 
 						}
 						break;
 
@@ -81,8 +78,8 @@ class Memorias {
 						# code...
 					break;
 				}
-
 			}
+			$data[$i]['capacidad'] .= " " . $data[$i]['unidad'];
 		}
 		//var_dump($data);
 
@@ -134,6 +131,9 @@ class Memorias {
 			if ($key == "id_capacidad") {
 				$datos['capacidad'] = Capacidades::getNombre($value);
 			}
+			if ($key == "id_unidad"){
+				$datos['unidad'] = Unidades::getNombre($value);
+			}
 		}
 		//var_dump($datos);
 		return array_merge($datos, $datos_extra);
@@ -142,6 +142,16 @@ class Memorias {
 	public function getCapacidad($id){
 		$id_capacidad = BDD::getInstance()->query("select id_capacidad from system.memorias where id_memoria='$id' ")->_fetchRow()['id_capacidad'];
 		return Capacidades::getNombre($id_capacidad);
+	}
+
+	public function getCapacidadEnMegas($id){
+		$fila = BDD::getInstance()->query("select id_capacidad,id_unidad from system.memorias where id_memoria='$id' ")->_fetchRow();
+		$id_capacidad = $fila['id_capacidad'];
+		$capacidad = Capacidades::getNombre($id_capacidad);
+		$id_unidad = $fila['id_unidad'];
+		$exponente = BDD::getInstance()->query("select potencia from system.unidades where id_unidad='$id_unidad' ")->_fetchRow()['potencia'];
+		$capacidad = $capacidad * pow(1024,$exponente); 
+		return $capacidad;
 	}
 
 	public function liberar($id){

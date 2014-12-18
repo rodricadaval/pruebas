@@ -1,9 +1,7 @@
 <form id="form_memoria_mod_usuario">
     <table class="t_monitor">
         <tr>
-            <tr type="hidden">
-               <td><input type="hidden" name="id_vinculo" id="id_vinculo" value="{id_vinculo}"></td>
-            </tr>
+            <td><input type="hidden" name="id_vinculo" id="id_vinculo" value="{id_vinculo}"></td>
         <tr>
             <td>Usuario:</td>
             <td>
@@ -18,7 +16,8 @@
         </tr>
         <tr>
             <td>{select_Computadoras}</td>
-            <td><input name="capacidad_mem" id="capacidad_mem" type="text" value="{capacidad}"></td>
+            <td><input name="id_memoria" id="id_memoria" type="hidden" value="{id_memoria}"></td>
+        
         </tr>
         <tr><td colspan="2"><div class="error text-error"></div></td></tr>
   </table>
@@ -30,12 +29,13 @@
 $(document).ready(function(){
 
      $('#select_computadoras_memoria').hide();
-     $("#capacidad_mem").hide();
+     console.log("El id de la memoria es "+{id_memoria});
 
-     console.log($("#capacidad_mem").val());
+     console.log("Dialogo de asignacion de una Memoria de: "+{capacidad}+" "+ "{unidad}");
+     var id_memoria = {id_memoria};
+     var id_cpu_orig = $("#select_computadoras_memoria option:selected").val();
 
-
-   	 $("#nombre_usuario").typeahead({
+     $("#nombre_usuario").typeahead({
         source : function (query , process) {
             $.ajax({
                 type         : 'post' ,
@@ -52,6 +52,7 @@ $(document).ready(function(){
         minLength : 3,
         updater: function(obj) { console.log(obj);
 
+                                $(".error").empty();
                                 if(obj != "Sin usuario" && $('#select_areas option:selected').val() != 2){
                                     console.log('Entre a cambiar el area');
 
@@ -79,6 +80,12 @@ $(document).ready(function(){
                                             console.log("El select es: "+select);
 
                                             $('#select_computadoras_memoria').replaceWith(select);
+                                            if($("#select_computadoras_memoria").val() == 1){
+                                                $("#id_memoria").val("");
+                                            }
+                                            else{
+                                                $("#id_memoria").val({id_memoria});
+                                            }
                                             $('#select_computadoras_memoria').hide();
 
                                     });
@@ -91,14 +98,6 @@ $(document).ready(function(){
                                 return obj; }
 
     });
-
-    $.validator.addMethod("palabra",function (value,element){
-          return value!="Sin usuario"; 
-        }, 'No puede elegir este usuario. Si quiere liberar la memoria clickea en el boton LIBERAR');
-
-/*     $.validator.addMethod("check_mem",function (value,element){
-           
-        }, 'No puede elegir este usuario. Si quiere liberar la memoria clickea en el boton LIBERAR');*/
 
     $("#form_memoria_mod_usuario").validate({
         errorLabelContainer : ".error" ,
@@ -121,12 +120,15 @@ $(document).ready(function(){
                         return "chequear_slots";
                       }
                     }
-                }
+                },
+                notEqual: id_cpu_orig,
+                sinCpu: true
             },
             nombre_usuario: {
-                palabra: true
+                notEqual: "Sin usuario"
             },
-            capacidad_mem: {
+            id_memoria: {
+                required: true,
                 remote: {
                     url: "controlador/ComputadorasController.php",
                     type: "post",
@@ -137,8 +139,8 @@ $(document).ready(function(){
                       action: function(){
                         return "chequear_espacio_mem";
                       },
-                      capacidad: function(){
-                        return $("capacidad_mem").val();
+                      id_memoria : function(){
+                        return $("#id_memoria").val();
                       }
                     }
                 }
@@ -146,17 +148,22 @@ $(document).ready(function(){
         } ,
         messages : {
             id_computadora : {
-                remote: 'La CPU del usuario tiene los slots llenos. No puede asignarle mas memorias' 
+                remote: 'La CPU del usuario tiene los slots llenos. No puede asignarle mas memorias',
+                notEqual: 'La cpu del usuario es la misma que la inicial' 
             },
-            capacidad_mem : {
-                remote: 'No se puede asignar esta memoria en la computadora del usuario. No alcanza el espacio de memoria'
+            id_memoria : {
+                required: 'No se puede asignar',
+                remote: 'No se puede asignar esta memoria en la computadora del usuario. No alcanza el espacio o el usuario no tiene pc'
+            },
+            nombre_usuario: {
+                notEqual: 'No se puede asignar a Sin usuario. Para liberar la memoria clickee el boton LIBERAR'
             }
         } ,
         submitHandler : function (form) {
 
             console.log ("Formulario OK");
             
-            /*$("#capacidad_mem").attr("disabled","disabled");
+            $("#id_memoria").attr("disabled","disabled");
 
             console.log($("#form_memoria_mod_usuario").serialize());
     
@@ -195,7 +202,7 @@ $(document).ready(function(){
             })
             .always(function() {
                 console.log("complete");
-            })*/
+            })
         } ,
         invalidHandler : function (event , validator) {
           console.log(validator);
