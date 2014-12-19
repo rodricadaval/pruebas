@@ -124,6 +124,21 @@ h1{
 	color:white;
 }
 
+#agregar_disco{
+	margin-left:10px;
+	margin-right: 5px;
+	font-weight:bold;
+	font-size: 17px;
+}
+
+.boton_agregar_disco {
+	float:right;
+	margin-top: 10px;
+	font-size: 15px;
+	background-color: blue;
+	color:white;
+}
+
 .boton_agregar {
 	float:right;
 	margin-top: 10px;
@@ -132,11 +147,11 @@ h1{
 	color:white;
 }
 
-#select_unidades{
+#select_unidades_memorias{
  width:60px;   
 }
 
-#select_capacidades{
+#select_capacidades_memorias{
  width:60px;   
 }
 

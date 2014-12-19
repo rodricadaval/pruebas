@@ -50,18 +50,23 @@ class Marcas {
 
 			switch ($sos) {
 				case 'computadoras':
-					$table = BDD::getInstance()->query("select distinct id_marca from system.computadora_desc where estado = 1");
+					$table = BDD::getInstance()->query("select distinct id_marca from system.computadora_desc where estado = 1")->_fetchAll();
 					$add_id = "_computadoras";
 					break;
 				
 				case 'monitores':
-					$table = BDD::getInstance()->query("select distinct id_marca from system.monitor_desc where estado = 1");
+					$table = BDD::getInstance()->query("select distinct id_marca from system.monitor_desc where estado = 1")->_fetchAll();
 					$add_id = "_monitores";
 					break;
 
 				case 'memorias':
-					$table = BDD::getInstance()->query("select distinct id_marca from system.memoria_desc where estado = 1");
+					$table = BDD::getInstance()->query("select distinct id_marca from system.memoria_desc where estado = 1")->_fetchAll();
 					$add_id = "_memorias";
+					break;
+
+				case 'discos':
+					$table = array(array("id_marca" => 1),array("id_marca" => 8),array("id_marca" => 9),array("id_marca" => 10),array("id_marca" => 11),array("id_marca" => 12),array("id_marca" => 3));
+					$add_id = "_discos";
 					break;
 
 				default:
@@ -73,8 +78,8 @@ class Marcas {
 		$html_view = "<select id='select_marcas" . $add_id . "' name='marca'>
 					  <option value=''>Seleccione Marca</option>";
 
-		$fila = $table->_fetchAll();
-		
+		$fila = $table;
+
 		foreach ($fila as $array => $campo) {
 
 			$nombre = self::getNombre($campo['id_marca']);
