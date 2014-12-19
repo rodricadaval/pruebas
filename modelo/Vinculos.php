@@ -16,6 +16,10 @@ class Vinculos {
 			return alert("Rompe todo");
 		}
 
+		if($datos['id_tipo_producto'] == 4){
+			$datos['id_cpu'] = 1;
+		}
+
 		$values = $datos['id_usuario'] . "," . $datos['id_deposito'] . "," . $datos['id_cpu'] . "," . $datos['id_tipo_producto'] . ",1";
 
 		if (!BDD::getInstance()->query("INSERT INTO system.vinculos (id_usuario,id_sector,id_cpu,id_tipo_producto,id_pk_producto) VALUES ($values) ")->get_error()) {

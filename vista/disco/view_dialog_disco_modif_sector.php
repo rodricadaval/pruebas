@@ -1,6 +1,6 @@
-<form id="form_memoria_mod_sector">
-    <table class="t_memoria">
-        <tr><p id="text_no_puede_cambiar">La Memoria no puede ser cambiada de Sector ya que tiene un usuario o cpu asignado/s. Debe clickear en "liberar memoria" si quiere modificar su sector. </p></tr>
+<form id="form_disco_mod_sector">
+    <table class="t_disco">
+        <tr><p id="text_no_puede_cambiar">El Disco no puede ser cambiado de Sector ya que tiene un usuario o cpu asignado/s. Debe clickear en "liberar disco" si quiere modificar su sector. </p></tr>
         <tr type="hidden">
            <td><input type="hidden" name="id_vinculo" id="id_vinculo" value="{id_vinculo}"></td>
         </tr>
@@ -26,36 +26,36 @@ $(document).ready(function(){
         $("#id_vinculo").attr('disabled','disabled');
     }
 
-    $("#form_memoria_mod_sector").on('submit',function(event){
+    $("#form_disco_mod_sector").on('submit',function(event){
 
         event.preventDefault();
 
         if("{libre}" == 1){
         
-        	console.log($("#form_memoria_mod_sector").serialize());
+        	console.log($("#form_disco_mod_sector").serialize());
     
-        	var datosUrl =    $("#form_memoria_mod_sector").serialize();
+        	var datosUrl =    $("#form_disco_mod_sector").serialize();
             
             datosUrl += "&action=modificar&asing_sector=yes";
 
             console.log(datosUrl);
 
             $.ajax({
-                url: 'controlador/MemoriasController.php',
+                url: 'controlador/DiscosController.php',
                 type: 'POST',
                 data: datosUrl,
                 success : function(response){
                     if(response){
 	                    console.log(response);
 	                    alert("Los datos han sido actualizados correctamente.");
-	                    $("#dialogcontent_memoria").dialog("destroy").empty();
-                        $("#dialogcontent_memoria").remove();
+	                    $("#dialogcontent_disco").dialog("destroy").empty();
+                        $("#dialogcontent_disco").remove();
                         $("#contenedorPpal").remove();
                         jQuery('<div/>', {
                         id: 'contenedorPpal',
                         text: 'Texto por defecto!'
                         }).appendTo('.realBody');
-	                    $("#contenedorPpal").load("controlador/MemoriasController.php");
+	                    $("#contenedorPpal").load("controlador/DiscosController.php");
                 	}
                 	else{
                 	alert("Error en la query.");
@@ -70,7 +70,7 @@ $(document).ready(function(){
                 console.log("complete");
             })
         }
-        else{$("#dialogcontent_memoria").dialog("destroy").empty();}
+        else{$("#dialogcontent_disco").dialog("destroy").empty();}
     });
 });
 

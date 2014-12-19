@@ -1,5 +1,5 @@
-<form id="form_monitor_mod_usuario">
-    <table class="t_monitor">
+<form id="form_disco_mod_usuario">
+    <table class="t_disco">
         <tr>
             <tr type="hidden">
                <td><input type="hidden" name="id_vinculo" id="id_vinculo" value="{id_vinculo}"></td>
@@ -28,7 +28,7 @@
 $(document).ready(function(){
 
 
-    $('#select_computadoras_monitor').attr('style', 'display:none');     
+    $('#select_computadoras_disco').attr('style', 'display:none');     
 
    	 $("#nombre_usuario").typeahead({
         source : function (query , process) {
@@ -68,18 +68,15 @@ $(document).ready(function(){
                                     {
                                         nombre_usuario : obj,
                                         action : "cpus_del_usuario",
-                                        extra_id_select : "monitor"
+                                        extra_id_select : "disco"
 
                                     }, function(select) {
                                             console.log("El select es: "+select);
 
-                                            $('#select_computadoras_monitor').replaceWith(select);
-                                             $('#select_computadoras_monitor').attr('style','display:none');
+                                            $('#select_computadoras_disco').replaceWith(select);
+                                             $('#select_computadoras_disco').attr('style','display:none');
 
                                     });
-
-
-
                                 }
                                 else{console.log("No entro");}
 
@@ -87,13 +84,13 @@ $(document).ready(function(){
 
     });
 
-    $("#form_monitor_mod_usuario").on('submit',function(event){
+    $("#form_disco_mod_usuario").on('submit',function(event){
 
         event.preventDefault();
 
-        	console.log($("#form_monitor_mod_usuario").serialize());
+        	console.log($("#form_disco_mod_usuario").serialize());
     
-        	var datosUrl =    $("#form_monitor_mod_usuario").serialize();
+        	var datosUrl =    $("#form_disco_mod_usuario").serialize();
             datosUrl += "&area="+ $("#select_areas option:selected").val();
             
             datosUrl += "&action=modificar&asing_usr=yes";
@@ -101,21 +98,21 @@ $(document).ready(function(){
             console.log(datosUrl);
 
             $.ajax({
-                url: 'controlador/MonitoresController.php',
+                url: 'controlador/DiscosController.php',
                 type: 'POST',
                 data: datosUrl,
                 success : function(response){
                     if(response){
 	                    console.log(response);
 	                    alert("Los datos han sido actualizados correctamente. Al cambiar de usuario se reemplazará automáticamente el sector de la Cpu por el del usuario elegido.");
-	                    $("#dialogcontent_monitor").dialog("destroy").empty();
-                        $("#dialogcontent_monitor").remove();
+	                    $("#dialogcontent_disco").dialog("destroy").empty();
+                        $("#dialogcontent_disco").remove();
                         $("#contenedorPpal").remove();
                         jQuery('<div/>', {
                         id: 'contenedorPpal',
                         text: 'Texto por defecto!'
                         }).appendTo('.realBody');
-	                    $("#contenedorPpal").load("controlador/MonitoresController.php");
+	                    $("#contenedorPpal").load("controlador/DiscosController.php");
                 	}
                 	else{
                 	alert("Error en la query.");

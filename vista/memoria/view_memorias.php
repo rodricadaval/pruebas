@@ -229,4 +229,41 @@
 				}
 			);
 		});
+
+	$("#contenedorPpal").on('click' , '#eliminar_memoria' , function(){
+
+		console.log("Entro a eliminar memoria");
+		console.log("id_memoria: "+$(this).attr("id_memoria"));
+		var id_memoria = $(this).attr("id_memoria");
+		var datosUrl = "id_memoria="+id_memoria+"&action=eliminar";
+        
+        datosUrl += "&action=eliminar";
+
+        $.ajax({
+            url: 'controlador/MemoriasController.php',
+            type: 'POST',
+            data: datosUrl,
+            success: function(response){
+                if(response){
+                    console.log("success");
+                    alert("La memoria ha sido dado de baja correctamente.");
+                    $("#contenedorPpal").remove();
+                    jQuery('<div/>', {
+                    id: 'contenedorPpal',
+                    text: 'Texto por defecto!'
+                    }).appendTo('.realBody');
+                    $("#contenedorPpal").load("controlador/MemoriasController.php");
+                }
+            }
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+		
+
+	});
+
 </script>

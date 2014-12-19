@@ -1,9 +1,9 @@
-<form id="form_monitor_mod_cpu">
-    <table class="t_monitor">
+<form id="form_disco_mod_cpu">
+    <table class="t_disco">
         <tr type="hidden">
            <td><input type="hidden" name="id_vinculo" id="id_vinculo" value="{id_vinculo}"></td>
         </tr>
-        <tr><p style="font-size:12px;">* Las computadoras que aparecen sólo son las del mismo sector del monitor. <br> Modifique el sector de la computadora primero si desea asignarle el monitor. </p></tr>
+        <tr><p style="font-size:12px;">* Las computadoras que aparecen sólo son las del mismo sector del disco. <br> Modifique el sector de la computadora primero si desea asignarle el disco. </p></tr>
         <tr>
             <td>Usuario:</td>
             <td>
@@ -33,34 +33,34 @@ $(document).ready(function(){
     console.log("id_area: "+$('#select_areas').val());
     console.log("{select_Computadoras}");
 
-    $("#form_monitor_mod_cpu").on('submit',function(event){
+    $("#form_disco_mod_cpu").on('submit',function(event){
 
         event.preventDefault();
 
-        	console.log($("#form_monitor_mod_cpu").serialize());
+        	console.log($("#form_disco_mod_cpu").serialize());
     
-        	var datosUrl =    $("#form_monitor_mod_cpu").serialize();
+        	var datosUrl =    $("#form_disco_mod_cpu").serialize();
            
             datosUrl += "&action=modificar&asing_cpu=yes";
 
             console.log(datosUrl);
 
             $.ajax({
-                url: 'controlador/MonitoresController.php',
+                url: 'controlador/DiscosController.php',
                 type: 'POST',
                 data: datosUrl,
                 success : function(response){
                     if(response){
 	                    console.log(response);
 	                    alert("Los datos han sido actualizados correctamente.");
-	                    $("#dialogcontent_monitor").dialog("destroy").empty();
-                        $("#dialogcontent_monitor").remove();
+	                    $("#dialogcontent_disco").dialog("destroy").empty();
+                        $("#dialogcontent_disco").remove();
                         $("#contenedorPpal").remove();
                         jQuery('<div/>', {
                         id: 'contenedorPpal',
                         text: 'Texto por defecto!'
                         }).appendTo('.realBody');
-	                    $("#contenedorPpal").load("controlador/MonitoresController.php");
+	                    $("#contenedorPpal").load("controlador/DiscosController.php");
                 	}
                 	else{
                 	alert("Error en la query.");

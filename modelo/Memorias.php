@@ -159,5 +159,19 @@ class Memorias {
 		$inst_vinc = new Vinculos();
 		echo $inst_vinc->liberar($id_vinculo);
 	}
+
+	public function eliminarLogico($datos) {
+		$id = $datos['id_memoria'];
+		$tipos = Tipo_productos::get_rel_campos();
+		$id_tipo_producto = array_search("Memoria", $tipos);
+		$tabla = "system.memorias";
+		$campo_pk = "id_memoria";
+
+		
+		if(!BDD::getInstance()->query("SELECT system.baja_logica_producto('$id','$id_tipo_producto','$tabla','$campo_pk')")->get_error()){
+			return 1;
+		} else {var_dump(BDD::getInstance()); return 0;}
+
+	}
 }
 ?>

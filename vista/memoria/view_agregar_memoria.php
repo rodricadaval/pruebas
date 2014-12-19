@@ -7,7 +7,8 @@
             <td>Marca: </th>{select_marcas_memorias}</td>
         	<td><text>Tipo:</text>{select_tipos_memorias}</td>
         	</td> 
-            <td colspan="1">Velocidad:<select id='select_velocidades' name='velocidad'>
+            <td colspan="1">Velocidad:
+                <select id='select_velocidades' name='velocidad'>
                     <option value=''>Seleccionar</option>
                 </select>
             </td>

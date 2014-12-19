@@ -36,7 +36,7 @@ if (isset($_POST['action'])) {
 
 		case 'eliminar':
 			unset($_POST['action']);
-			echo $inst_disco->eliminar($_POST);
+			echo $inst_disco->eliminarLogico($_POST);
 			break;
 
 		case 'liberar':

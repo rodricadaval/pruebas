@@ -1,20 +1,19 @@
-<form id="liberar_monitor">
-	<p>¿Esta seguro que desea liberar el monitor? El usuario y la computadora que tenía asignados se perderán.</p>
-	<!--<input type="hidden" name="boton" id="boton" value="enviar">-->
-	<input type="hidden" name="id_monitor" id="id_monitor" value="{id_monitor}">
+<form id="liberar_disco">
+	<p>¿Esta seguro que desea liberar el disco? El usuario y la computadora que tenía asignados se perderán.</p>
+	<input type="hidden" name="id_disco" id="id_disco" value="{id_disco}">
 </form>
 
 <script type="text/javascript">
 	
-	$("#liberar_monitor").on('submit',function(event){
+	$("#liberar_disco").on('submit',function(event){
 		event.preventDefault();
 
-			var id_monitor = $("#id_monitor").val();
+			var id_disco = $("#id_disco").val();
 		
-    		$.post( "controlador/MonitoresController.php",
+    		$.post( "controlador/DiscosController.php",
 				{
 					action : "liberar",
-					id_monitor : id_monitor
+					id_disco : id_disco
 				}, function(data){
 					if(data == "true"){
 						console.log("Entro a cambiar de contenedor");
@@ -24,14 +23,14 @@
 						alert("Hubo un error en el código. Revisar");
 						console.log("Hubo un error.");
 					}	
-						$("#dialogcontent_monitor").dialog("destroy").empty();
-	                    $("#dialogcontent_monitor").remove();
+						$("#dialogcontent_disco").dialog("destroy").empty();
+	                    $("#dialogcontent_disco").remove();
                         $("#contenedorPpal").remove();
                         jQuery('<div/>', {
                         id: 'contenedorPpal',
                         text: 'Texto por defecto!'
                         }).appendTo('.realBody');
-	                    $("#contenedorPpal").load("controlador/MonitoresController.php");
+	                    $("#contenedorPpal").load("controlador/DiscosController.php");
 					    
 				}
 			);

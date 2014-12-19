@@ -1,8 +1,8 @@
-<form id="form_detalle_eliminar_monitor">
-    <table class="t_monitor">
+<form id="form_detalle_eliminar_memoria">
+    <table class="t_memoria">
         <tr>
             <tr type="hidden">
-               <td><input type="hidden" name="id_monitor" id="id_monitor" value="{id_monitor}"></td>
+               <td><input type="hidden" name="id_memoria" id="id_memoria" value="{id_memoria}"></td>
             </tr>
         <tr>
             <td colspan="2">Detalle:</td>   
@@ -17,29 +17,29 @@
 
 $(document).ready(function(){
 
-    $("#form_detalle_eliminar_monitor").on('submit',function(event){
+    $("#form_detalle_eliminar_memoria").on('submit',function(event){
         event.preventDefault();
 
-        var datosUrl = $("#form_detalle_eliminar_monitor").serialize();
+        var datosUrl = $("#form_detalle_eliminar_memoria").serialize();
         
         datosUrl += "&action=eliminar";
 
         $.ajax({
-            url: 'controlador/MonitoresController.php',
+            url: 'controlador/MemoriasController.php',
             type: 'POST',
             data: datosUrl,
             success: function(response){
                 if(response){
                     console.log("success");
-                    alert("El monitor ha sido dado de baja correctamente.");
-                    $("#dialogcontent_monitor").dialog("destroy").empty();
-                    $("#dialogcontent_monitor").remove();
+                    alert("El memoria ha sido dado de baja correctamente.");
+                    $("#dialogcontent_memoria").dialog("destroy").empty();
+                    $("#dialogcontent_memoria").remove();
                     $("#contenedorPpal").remove();
                     jQuery('<div/>', {
                     id: 'contenedorPpal',
                     text: 'Texto por defecto!'
                     }).appendTo('.realBody');
-                    $("#contenedorPpal").load("controlador/MonitoresController.php");
+                    $("#contenedorPpal").load("controlador/MemoriasController.php");
                 }
             }
         })
