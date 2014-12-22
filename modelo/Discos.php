@@ -100,14 +100,12 @@ class Discos {
 
 	public function agregar($datos) {
 
-		$id_disco_desc = Memoria_desc::buscar_id_por_marca_y_tipo($datos['marca'], $datos['tipo_mem']);
+		$values = $datos['id_vinculo'] . "," . $datos['capacidad'] . "," . $datos['unidad'] . "," . $datos['marca'];
 
-		$values = $datos['id_vinculo'] . "," . $datos['capacidad'] . "," . $datos['unidad'] . "," . $id_disco_desc;
-
-		if (!BDD::getInstance()->query("INSERT INTO system.discos (id_vinculo,id_capacidad,id_unidad,id_disco_desc) VALUES ($values)")->get_error()) {
-			$valor_seq_actual_discos = BDD::getInstance()->query("select nextval('system.discos_id_disco_seq1'::regclass)")->_fetchRow()['nextval'];
+		if (!BDD::getInstance()->query("INSERT INTO system.discos (id_vinculo,id_capacidad,id_unidad,id_marca) VALUES ($values)")->get_error()) {
+			$valor_seq_actual_discos = BDD::getInstance()->query("select nextval('system.discos_id_disco_seq'::regclass)")->_fetchRow()['nextval'];
 			$valor_seq_actual_discos--;
-			BDD::getInstance()->query("select setval('system.discos_id_disco_seq1'::regclass,'$valor_seq_actual_discos')");
+			BDD::getInstance()->query("select setval('system.discos_id_disco_seq'::regclass,'$valor_seq_actual_discos')");
 			return $valor_seq_actual_discos;
 
 		} else {

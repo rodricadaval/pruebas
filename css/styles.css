@@ -108,35 +108,11 @@ h1{
 
 }
 
-.boton_agregar_monitor {
-	float:right;
-	margin-top: 10px;
-	font-size: 15px;
-	background-color: blue;
-	color:white;
-}
-
-.boton_agregar_memoria {
-	float:right;
-	margin-top: 10px;
-	font-size: 15px;
-	background-color: blue;
-	color:white;
-}
-
 #agregar_disco{
 	margin-left:10px;
 	margin-right: 5px;
 	font-weight:bold;
 	font-size: 17px;
-}
-
-.boton_agregar_disco {
-	float:right;
-	margin-top: 10px;
-	font-size: 15px;
-	background-color: blue;
-	color:white;
 }
 
 .boton_agregar {
@@ -216,3 +192,338 @@ table.fixed_user td{
 					  padding-right: 10px;
 					}
 
+/*-----------------------------------Agregar Monitor--------------------------------------*/
+
+#form_agregar_monitor
+{
+    /**/
+}
+
+#form_agregar_monitor ul 
+{
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+#form_agregar_monitor ul li
+{
+    vertical-align: middle;
+    height: 40px;
+    line-height: 40px;
+}
+
+#boton_crear_monitor
+{
+    float:right;
+    margin-right: 135px;
+    margin-top: 10px;
+    font-size: 15px;
+    background-color: blue;
+    color:white;
+}
+
+#select_marcas_monitores
+{
+    width: 160px;
+}
+
+#select_modelos_Monitor
+{
+    width: 160px;
+}
+
+#form_agregar_monitor fieldset {
+	overflow: auto;
+	min-height: 500px;
+}
+
+#form_agregar_monitor ul li input[id="nro_de_serie_m"]
+{
+    width: 146px;
+    text-align: center;
+}
+
+#form_agregar_monitor ul li text { 
+    float: left;
+    width: 110px;
+    font-size: 17px;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+/*-----------------------------------Termino agregar monitor------------------------------------*/
+
+/*-----------------------------------Agregar Disco--------------------------------------*/
+
+#form_agregar_disco
+{
+    /**/
+}
+
+#form_agregar_disco ul 
+{
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+#form_agregar_disco ul li
+{
+    vertical-align: middle;
+    height: 40px;
+    line-height: 40px;
+}
+
+#boton_crear_disco
+{
+    float:right;
+    margin-right: 135px;
+    margin-top: 10px;
+    font-size: 15px;
+    background-color: blue;
+    color:white;
+}
+
+#select_marcas_discos 
+{
+    width: 160px;
+}
+
+#select_capacidades_discos
+{
+    text-align: right;
+    width: 80px;
+}
+
+#select_unidades_discos
+{
+    width: 80px;
+}
+
+#form_agregar_disco ul li input[id="cantidad"]
+{
+    width: 156px;
+    text-align: center;
+}
+
+#form_agregar_disco ul li text { 
+    float: left;
+    width: 110px;
+    font-size: 17px;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+/*-----------------------------------Termino agregar disco------------------------------------*/
+
+/*-----------------------------------Agregar Computadora--------------------------------------*/
+
+#form_agregar_computadora
+{
+    /**/
+}
+
+#form_agregar_computadora ul 
+{
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+#form_agregar_computadora ul li
+{
+    vertical-align: middle;
+    height: 40px;
+    line-height: 40px;
+}
+
+#boton_crear_computadora
+{
+    float:right;
+    margin-right: 135px;
+    margin-top: 10px;
+    font-size: 15px;
+    background-color: blue;
+    color:white;
+}
+
+#select_marcas_computadoras 
+{
+    width: 160px;
+}
+
+#select_modelos_Computadora
+{
+    width: 160px;
+}
+
+#select_clase
+{
+    width: 160px;
+}
+
+#form_agregar_computadora fieldset {
+	overflow: auto;
+	min-height: 500px;
+}
+
+#form_agregar_computadora ul li input[id="nro_de_serie_c"]
+{
+    width: 146px;
+    text-align: center;
+}
+
+#form_agregar_computadora ul li text { 
+    float: left;
+    width: 110px;
+    font-size: 17px;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+/*-----------------------------------Termino agregar computadora------------------------------------*/
+
+/*-----------------------------------Agregar Memoria--------------------------------------*/
+
+#form_agregar_memoria
+{
+    /**/
+}
+
+#form_agregar_memoria ul 
+{
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+#form_agregar_memoria ul li
+{
+    vertical-align: middle;
+    height: 40px;
+    line-height: 40px;
+}
+
+#boton_crear_memoria
+{
+    float:right;
+    margin-right: 135px;
+    margin-top: 10px;
+    font-size: 15px;
+    background-color: blue;
+    color:white;
+}
+
+#select_marcas_memorias 
+{
+    width: 160px;
+}
+
+#select_capacidades_memorias
+{
+    text-align: right;
+    width: 80px;
+}
+
+#select_unidades_memorias
+{
+    width: 80px;
+}
+
+#select_tipos_memorias
+{
+    width: 160px;
+}
+
+#select_velocidades
+{
+    width: 160px;
+}
+
+#form_agregar_memoria fieldset {
+	overflow: auto;
+	min-height: 500px;
+}
+
+#form_agregar_memoria ul li input[name="cant_veces"]
+{
+    width: 156px;
+    text-align: center;
+}
+
+#form_agregar_memoria ul li text { 
+    float: left;
+    width: 110px;
+    font-size: 17px;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+/*-----------------------------------Termino agregar memoria------------------------------------*/
+
+
+
+/*-----------------------------------Agregar Impresora----------------------------------------*/
+
+#form_agregar_impresora
+{
+    /**/
+}
+
+#form_agregar_impresora ul 
+{
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+#form_agregar_impresora ul li
+{
+    vertical-align: middle;
+    height: 40px;
+    line-height: 40px;
+}
+
+#boton_crear_impresora
+{
+    float:right;
+    margin-right: 135px;
+    margin-top: 10px;
+    font-size: 15px;
+    background-color: blue;
+    color:white;
+}
+
+#form_agregar_impresora ul li input[id="ip"]
+{
+    width: 146px;
+    text-align: center;
+}
+
+#form_agregar_impresora ul li input[id="nro_de_serie_i"]
+{
+    width: 146px;
+    text-align: center;
+}
+
+#form_agregar_impresora fieldset {
+	overflow: auto;
+	min-height: 500px;
+}
+
+
+#select_marcas_impresoras 
+{
+    width: 160px;
+}
+
+#select_modelos_Impresora 
+{
+    width: 160px;
+}
+
+#form_agregar_impresora ul li text { 
+    float: left;
+    width: 110px;
+    font-size: 17px;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+/*-----------------------------------Termino agregar impresora----------------------------------*/

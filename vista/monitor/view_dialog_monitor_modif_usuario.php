@@ -87,49 +87,71 @@ $(document).ready(function(){
 
     });
 
-    $("#form_monitor_mod_usuario").on('submit',function(event){
-
-        event.preventDefault();
-
-        	console.log($("#form_monitor_mod_usuario").serialize());
-    
-        	var datosUrl =    $("#form_monitor_mod_usuario").serialize();
-            datosUrl += "&area="+ $("#select_areas option:selected").val();
-            
-            datosUrl += "&action=modificar&asing_usr=yes";
-
-            console.log(datosUrl);
-
-            $.ajax({
-                url: 'controlador/MonitoresController.php',
-                type: 'POST',
-                data: datosUrl,
-                success : function(response){
-                    if(response){
-	                    console.log(response);
-	                    alert("Los datos han sido actualizados correctamente. Al cambiar de usuario se reemplazará automáticamente el sector de la Cpu por el del usuario elegido.");
-	                    $("#dialogcontent_monitor").dialog("destroy").empty();
-                        $("#dialogcontent_monitor").remove();
-                        $("#contenedorPpal").remove();
-                        jQuery('<div/>', {
-                        id: 'contenedorPpal',
-                        text: 'Texto por defecto!'
-                        }).appendTo('.realBody');
-	                    $("#contenedorPpal").load("controlador/MonitoresController.php");
-                	}
-                	else{
-                	alert("Error en la query.");
-                	}
+    $("#form_monitor_mod_usuario").validate({
+            errorLabelContainer : ".error" ,
+            wrapper : "li" ,
+            ignore: [],
+            onfocusout: false,
+            onkeyup: false,
+            onclick: false,
+            onsubmit: true,
+            rules : {
+                nombre_usuario: {
+                    notEqual: "Sin usuario"
                 }
-            })
-            .fail(function() {
-                console.log("error");
-                alert("Algo no se registro correctaente");
-            })
-            .always(function() {
-                console.log("complete");
-            })
-    });
+            } ,
+            messages : {
+                nombre_usuario: {
+                    notEqual: 'No se puede asignar a Sin usuario. Para liberar el monitor clickee el boton LIBERAR'
+                }
+            } ,
+            submitHandler : function (form) {
+
+                console.log ("Formulario OK");
+                
+                console.log($("#form_monitor_mod_usuario").serialize());
+        
+                var datosUrl =    $("#form_monitor_mod_usuario").serialize();
+                datosUrl += "&area="+ $("#select_areas option:selected").val();
+                
+                datosUrl += "&action=modificar&asing_usr=yes";
+
+                console.log(datosUrl);
+
+                $.ajax({
+                    url: 'controlador/MonitoresController.php',
+                    type: 'POST',
+                    data: datosUrl,
+                    success : function(response){
+                        if(response){
+                            console.log(response);
+                            alert("Los datos han sido actualizados correctamente. Al cambiar de usuario se reemplazará automáticamente el sector de la Cpu por el del usuario elegido.");
+                            $("#dialogcontent_monitor").dialog("destroy").empty();
+                            $("#dialogcontent_monitor").remove();
+                            $("#contenedorPpal").remove();
+                            jQuery('<div/>', {
+                            id: 'contenedorPpal',
+                            text: 'Texto por defecto!'
+                            }).appendTo('.realBody');
+                            $("#contenedorPpal").load("controlador/MonitoresController.php");
+                        }
+                        else{
+                        alert("Error en la query.");
+                        }
+                    }
+                })
+                .fail(function() {
+                    console.log("error");
+                    alert("Algo no se registro correctaente");
+                })
+                .always(function() {
+                    console.log("complete");
+                })
+            } ,
+            invalidHandler : function (event , validator) {
+              console.log(validator);
+            }
+        });
 
 });
 

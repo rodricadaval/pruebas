@@ -1,38 +1,29 @@
-
-<h3>{titulo}</h3><p>Seleccione marca, tipo y velocidad de Memoria RAM</p>
-
 <form id="form_agregar_memoria">
-<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="tabla_agregar_memo"></table>
-	<tr>
-            <td>Marca: </th>{select_marcas_memorias}</td>
-        	<td><text>Tipo:</text>{select_tipos_memorias}</td>
-        	</td> 
-            <td colspan="1">Velocidad:
-                <select id='select_velocidades' name='velocidad'>
-                    <option value=''>Seleccionar</option>
-                </select>
-            </td>
-    </tr>
+<fieldset>
+<legend>Complete los Datos</legend>
+<ul>
+    <li><text>Marca:</text>{select_marcas_memorias}</li>
+    <li><text>Tipo:</text>{select_tipos_memorias}</li> 
+    <li colspan="1"><text>Velocidad:</text>
+        <select id='select_velocidades' name='velocidad'>
+                        <option value=''>Seleccionar</option>
+        </select>
+    </li>
+    <li><text>Capacidad:</text>{select_capacidades}{select_unidades}</li>
+    <li><text>Cantidad:</text><input name="cant_veces" placeholder="Ingrese cantidad"></li>
+    <li><input id="boton_crear_memoria" type="submit" name="crearMemoria" value="Crear"></li>
     <br>
     <br>
-    <tr>
-            <td>Cantidad:<input name="cant_veces" placeholder="Ingrese cantidad"</input></td>
-            <td>Capacidad:{select_capacidades}</td>
-            <td>{select_unidades}</td>
-            <td><input class="boton_agregar_memoria" type="submit" name="crearMemoria" value="Crear"</td>
-    </tr>
-    <br>
-    <br>
-    <tr><td><div class="error_ag_mem text-error"></div></td></tr>  
-    
-</table>
+    <li class="error_ag_mem text-error"></li>   
+</ul> 
+</fieldset>   
 </form>
-
-
 
 <script type="text/javascript">
 
     console.log("{select_tipos_memorias}");
+
+    $('#select_unidades_memorias option[value='+2+']').attr('selected', 'selected');
 
 	$("#select_marcas_memorias,#select_tipos_memorias").on('change',function(){
 

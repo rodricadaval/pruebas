@@ -15,7 +15,9 @@ class Vinculos {
 		if (!isset($datos['id_tipo_producto'])) {
 			return alert("Rompe todo");
 		}
-
+		if (!isset($datos['cant_veces'])) {
+				unset($datos['cant_veces']);
+			}
 		if($datos['id_tipo_producto'] == 4){
 			$datos['id_cpu'] = 1;
 		}
@@ -39,6 +41,12 @@ class Vinculos {
 						break;
 					case 'Memoria':
 						$id = Memorias::agregar($datos);
+						break;
+					case 'Disco':
+						$id = Discos::agregar($datos);
+						break;
+					case 'Impresora':
+						$id = Impresoras::agregar($datos);
 						break;
 					default:
 						//nada

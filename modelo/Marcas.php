@@ -69,6 +69,11 @@ class Marcas {
 					$add_id = "_discos";
 					break;
 
+				case 'impresoras':
+					$table = BDD::getInstance()->query("select distinct id_marca from system.impresora_desc where estado = 1")->_fetchAll();
+					$add_id = "_impresoras";
+					break;
+
 				default:
 					# code...
 					break;

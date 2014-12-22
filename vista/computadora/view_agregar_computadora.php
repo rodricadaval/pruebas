@@ -1,27 +1,20 @@
-
-<h3>{titulo}</h3><p>Seleccione la marca y modelo de la computadora</p>
-
 <form id="form_agregar_computadora">
-<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="tabla_agregar_compu"></table>
-	<tr>
-            <td>Marca: </th><td>{select_marcas_computadoras}</td>
-        	<td>Modelo:</td>
-        	<td><select id='select_modelos_Computadora' name='modelo'>
-    				<option value=''>Seleccionar</option></select></td>
-        	</td>
-        	<td>Nro de Serie:</td>
-        	<td><input id="nro_de_serie_c" type="text" name="num_serie_c"</td>
-    </tr>
+<fieldset>
+<legend>Complete los Datos</legend>
+<ul>
+    <li><text>Marca:</text>{select_marcas_computadoras}</li>
+    <li><text>Modelo:</text><select id='select_modelos_Computadora' name='modelo'>
+                        <option value=''>Seleccionar</option></select>
+    </li>
+    <li><text>Nro de Serie:</text><input id="nro_de_serie_c" type="text" name="num_serie_c"></li>
+    <li><text>Tipo :</text>{select_clases_Computadora}</li>
+    <li><input id="boton_crear_computadora" type="submit" name="crearComputadora" value="Crear"</td></tr>
     <br>
-    <tr>
-            <td>Tipo :</td><td>{select_clases_Computadora}</td>
-            <td><div class="error_ag_comp text-error"></div></td>
-    </tr>
-    <tr><td><input class="boton_agregar" type="submit" name="crearComputadora" value="Crear"</td></tr>
-</table>
+    <br>
+    <li class="error_ag_comp text-error"></li>
+</ul>
+</fieldset>
 </form>
-
-
 
 <script type="text/javascript">
 
@@ -82,11 +75,13 @@
         submitHandler : function (form) {
           console.log ("Formulario OK");
 
-          var primparte = "";
+            var primparte = "";
             var sdaparte = "";
-
+            var dataUrl
             console.log('Evento de click en crear');
             console.log($("#form_agregar_computadora").serialize());
+
+            dataUrl = "marca="+$('#select_marcas_computadoras option:selected').val()+"&num_serie="+$("#nro_de_serie_c").val()+"&clase="+$("#select_clase").val()+"&tipo=Computadora";
 
             if($("#select_modelos_Computadora").val().indexOf("-") >= 0){
                 var data = $("#select_modelos_Computadora").val().split('-');
@@ -94,13 +89,14 @@
                 sdaparte = data[1];
                 console.log(primparte);
                 console.log(sdaparte);
+                dataUrl += "&modelo="+primparte+' '+sdaparte;
             }
             else{
                 primparte = $("#select_modelos_Computadora").val();
                 sdaparte = "";
+                dataUrl += "&modelo="+primparte;
             }
 
-            var dataUrl = "marca="+$('#select_marcas_computadoras option:selected').val()+"&modelo="+primparte+' '+sdaparte+"&num_serie="+$("#nro_de_serie_c").val()+"&clase="+$("#select_clase").val()+"&tipo=Computadora";
             console.log(dataUrl);
 
             $.ajax({

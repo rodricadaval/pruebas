@@ -45,7 +45,7 @@ foreach ($_POST as $key => $value) {
 				}
 
 				break;
-			case 'monitor' || 'disco':
+			case 'monitor' || 'disco' || 'impresora':
 
 					$clasePpal = new Vinculos();
 					

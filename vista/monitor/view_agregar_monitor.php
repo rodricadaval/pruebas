@@ -1,29 +1,17 @@
-
-<h3>{titulo}</h3><p>Seleccione la marca y modelo del monitor</p>
-
 <form id="form_agregar_monitor">
-<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="tabla_agregar_monit"></table>
-	<tr>
-            <th>Marca: </th>
-    </tr>
-    <tr>
-            <td>{select_marcas_monitores}</td>
-    </tr>
-    <tr>
-    	<td>Modelo:</td>
-    	<td><select id='select_modelos_Monitor' name='modelo'>
-    				<option value=''>Seleccionar</option></select></td>
-    	</td>
-    	<td>Nro de Serie:</td>
-    	<td><input id="nro_de_serie_m" type="text" name="num_serie_mon"</td>
-    </tr>
-    <tr><td><div class="error_ag_monit text-error"> </div></td></tr>
-     </div>
-    <div id="agregar"><input class="boton_agregar_monitor" type="submit" name="crearMonitor" value="Crear"</div>
-</table>
+<fieldset>
+<legend>Complete los Datos</legend>
+<ul>
+    <li><text>Marca:</text>{select_marcas_monitores}</li>
+    <li><text>Modelo:</text><select id='select_modelos_Monitor' name='modelo'>
+                        <option value=''>Seleccionar</option></select>
+    </li>
+    <li><text>Nro de Serie:</text><input id="nro_de_serie_m" type="text" name="num_serie_mon"></li>
+    <li><input id="boton_crear_monitor" type="submit" name="crearMonitor" value="Crear"></li>
+    <li class="error_ag_monit text-error"></li>
+</ul>
+</fieldset>
 </form>
-
-
 
 <script type="text/javascript">
 

@@ -23,8 +23,12 @@
 						{ "sTitle" : "Modelo" , "mData" : "modelo"},
 						{ "sTitle" : "Pulgadas" , "mData" : "pulgadas"},
 						{ "sTitle" : "Sector" , "mData" : "sector"},
-						{ "sTitle" : "Usuario" , "mData" : "usuario"},
 						{ "sTitle" : "Cpu" , "mData" : "cpu_serie"},
+						{ "sTitle" : "Usuario" ,"mDataProp": "usuario",
+              				"mRender": function ( data, type, row ) {
+  								return '<div id="ver_usuario"><a title="Ver productos de '+data+'" href="edit.php?usuario='+ data+'">'+data+'</a></div>';
+							}
+						},
 						{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
 										'<a class="ventana_area " href="">Modificar</a>'}
 						]
@@ -64,7 +68,7 @@ $("#contenedorPpal").on('click' , '#modificar_usuario_monitor' , function(){
 											duration: 200
 											},
 											width : 350,
-											height : 260,
+											height : 300,
 											close : function(){
 												$(this).dialog("destroy").empty();
 												$("#dialogcontent_monitor").remove();

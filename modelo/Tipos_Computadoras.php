@@ -4,21 +4,20 @@ class Tipos_Computadoras {
 
 	public function dameSelect_clase($clase = "", $sos = "") {
 
-		$array_de_tipos = array("E", "N", "A", "S");
+		$array_de_tipos = array("Escritorio" => "E","Notebook" => "N","All in One" => "A","Servidor" => "S");
 
 		$html_view = "<select id='select_clase" . $sos . "' name='clase'>";
 
-		for ($i = 0; $i < count($array_de_tipos); $i++) {
-
-			if ($array_de_tipos[$i] != "-") {
-				if ($array_de_tipos[$i] == $clase) {
-					$html_view .= "<option selected='selected' value=" . $array_de_tipos[$i] . ">" . $array_de_tipos[$i] . "</option>";
+		foreach ($array_de_tipos as $campo => $valor) {
+			if ($valor != "-") {
+				if ($valor == $clase) {
+					$html_view .= "<option selected='selected' value=" . $valor . ">" . $campo . "</option>";
 				} else {
-					$html_view .= "<option value=" . $array_de_tipos[$i] . ">" . $array_de_tipos[$i] . "</option>";
+					$html_view .= "<option value=" . $valor . ">" . $campo . "</option>";
 				}
 			}
 		}
-
+			
 		$html_view = $html_view . "</select>";
 		return $html_view;
 	}

@@ -67,14 +67,32 @@ if (!isset($_POST['action'])) {
 				
 				$url = array("vista/disco/view_agregar_disco.php");
 				$select_marcas = $inst_marcas->dameSelect("discos");
-				//$select_marcas = $inst_marcas->dameSelect("discos");
 				$select_capacidades = Capacidades::dameSelect("","_discos");
 				$select_unidades = Unidades::dameSelect("","_discos");
 				$titulo = "Menu para agregar un Disco";
 				$parametros = array("Producto" => "Disco", "select_marcas_discos" => $select_marcas,"select_capacidades" => $select_capacidades,"select_unidades" => $select_unidades , "titulo" => $titulo);
 				echo Disenio::HTML($url, $parametros);
 
-				break;	
+				break;
+
+		case 'agregar_impresora':
+				
+				if (!isset($_POST['tipo'])) {
+
+				$url = array("vista/impresora/view_agregar_impresora.php");
+				$select_marcas = $inst_marcas->dameSelect("impresoras");
+				$titulo = "Menu para agregar una Impresora";
+				$parametros = array("Producto" => "Impresora", "select_marcas_impresoras" => $select_marcas, "titulo" => $titulo);
+				echo Disenio::HTML($url, $parametros);
+
+				} else if ($_POST['tipo'] == "sel_modelos") {
+
+				$inst_imp_desc = new Impresora_desc();
+				echo $inst_imp_desc->dameSelect($_POST['value'], "_Impresora");
+
+				}
+
+				break;		
 
 		default:
 			# code...
