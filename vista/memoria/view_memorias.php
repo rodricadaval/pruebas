@@ -115,7 +115,7 @@
 											duration: 200
 											},
 											width : 350,
-											height : 330,
+											height : 360,
 											close : function(){
 												$(this).dialog("destroy").empty();
 												$("#dialogcontent_memoria").remove();

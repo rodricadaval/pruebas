@@ -50,6 +50,7 @@
 				}).appendTo('#contenedorPpal');
 					$("#dialogcontent_impresora").html(data);
 					$("#dialogcontent_impresora").dialog({
+												title: "Cambiar Sector",
 												show: {
 												effect: "explode",
 												duration: 200,
@@ -59,8 +60,8 @@
 												effect: "explode",
 												duration: 200
 												},
-												width : 350,
-												height : 360,
+												width : 260,
+												height : 230,
 												close : function(){
 													$(this).dialog("destroy").empty();
 													$("#dialogcontent_impresora").remove();
