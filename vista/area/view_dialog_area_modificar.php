@@ -6,7 +6,6 @@
           <td><input type="text" name="nombre" id="nombre" value="{nombre}"></td>
         </tr>
         <tr>
-          <td>ID</td>
           <td><input style="background-color:#D3D3D3" type="text" name="id_area" id="id_area" value="{id_area}" readonly></td>
         </tr>
    </table>
@@ -20,6 +19,7 @@ $(document).ready(function(){
     var area_orig = '{nombre}';
     var estado = {nuevo};
     var validado = false;
+    $("#id_area").hide();
 
 
     $("#form_area").validate({
@@ -88,7 +88,7 @@ $(document).ready(function(){
                           alert("No se pudieron plasmar los datos. Error de en la Base de datos.");
                         }
                         else if(responseText == 1){
-                          console.log("Los datos han sido actualizados correctamente!");
+                          alert("Los datos han sido actualizados correctamente!");
                         }
                         else{
                           alert('Problema en la Sql query');

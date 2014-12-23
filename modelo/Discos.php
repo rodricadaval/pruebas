@@ -87,7 +87,7 @@ class Discos {
 	}
 
 	public function dameDatos($id) {
-		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where $id_disco = '$id' ")->_fetchRow();
+		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_disco = '$id' ")->_fetchRow();
 		foreach ($fila as $campo => $valor) {
 			if ($campo == "marca") {
 				$fila['marca'] = Marcas::getNombre($valor);
@@ -120,6 +120,7 @@ class Discos {
 				$id_usuario = Vinculos::getIdUsuario($value);
 				$datos_extra = Usuarios::getByID($id_usuario);
 				$id_cpu = Vinculos::getIdCpu($value);
+				$datos_extra['num_serie_cpu'] = Computadoras::getSerie($id_cpu);
 				$datos_extra['nombre_area'] = Areas::getNombre($datos_extra['area']);
 			}
 			if ($key == "id_capacidad") {
@@ -131,6 +132,55 @@ class Discos {
 		}
 		//var_dump($datos);
 		return array_merge($datos, $datos_extra);
+	}
+
+	public function dameListaDeUsuario($id_usuario){
+		
+		$tipos = Tipo_productos::get_rel_campos();
+		$id_tipo_producto = array_search("Disco", $tipos);
+
+		$lista = BDD::getInstance()->query("SELECT id_pk_producto FROM system.vinculos where id_tipo_producto='$id_tipo_producto' and id_usuario='$id_usuario' ")->_fetchAll();
+		$i = 0;
+		foreach ($lista as $campo) {
+			$lista_con_datos[$i] = self::getByID($campo['id_pk_producto']);
+			$i++;
+		}
+		return self::generarListadoDeUsuario($lista_con_datos);	
+	}
+
+	public function generarListadoDeUsuario($listado){
+
+		$html_view = "";
+		$html_view .= "<fieldset>";
+		$html_view .= "<h4>Discos</h4>";
+		$html_view .= "<table class='table table-condensed' id='tabla_productos_user'>";
+		$html_view .= "<tr>";
+		$html_view .= "<th>Marca</th>
+					   <th>Capacidad</th>
+					   <th>Serie Cpu</th>";
+		$html_view .= "</tr>";
+
+		if(count($listado) == 0 ){
+			$html_view .= "<tr>";
+			$html_view .= "<td colspan='3'>No tiene discos</td>";
+			$html_view .= "</tr>";
+		}
+
+		foreach ($listado as $fila => $contenido) {
+			$html_view .= "<tr>";
+
+			$datos_desc = self::dameDatos($contenido['id_disco']);
+			
+			$html_view .= "<td>".Marcas::getNombre($contenido['id_marca'])."</td>";
+			$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
+			$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
+	
+			$html_view .= "</tr>";
+		}
+
+		$html_view .= "</table>";
+		$html_view .= "</fieldset>";
+		return $html_view;
 	}
 
 	public function getCapacidad($id){

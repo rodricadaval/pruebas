@@ -22,6 +22,10 @@ class Tipos_Computadoras {
 		return $html_view;
 	}
 
+	public function get_rel_campos() {
+		return array("Escritorio" => "E","Notebook" => "N","All in One" => "A","Servidor" => "S");
+	}
+
 	public function dameSelect_button_radio_clase($clase = "", $sos = "") {
 
 		$array_de_tipos = array("E", "N", "A", "S");

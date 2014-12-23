@@ -9,7 +9,7 @@
 </li>
 <li><text>Nro de Serie:</text><input id="nro_de_serie_i" type="text" name="num_serie_imp"></li>
 <li><text>IP:</text><input id="ip" type="text" name="ip"></li>
-<li><input id="boton_crear_impresora" type="submit" name="crearImpresora" value="Crear"></li>
+<li><input class="btn btn-primary" id="boton_crear_impresora" type="submit" name="crearImpresora" value="Crear"></li>
 <br>
 <br>
 <li class="error_ag_i text-error"></li>

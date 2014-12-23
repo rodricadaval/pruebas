@@ -1,6 +1,6 @@
 <h2>{TABLA}</h2>
 <div id="nuevo_usuario">
-	<input type="button" id="crear_usuario" value="Crear Usuario">
+	<input type="button" class="btn btn-success" id="crear_usuario" value="Crear Usuario">
 </div>
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
 </div>

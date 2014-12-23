@@ -65,6 +65,14 @@ class Areas {
 		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where nombre = '$area' ");
 	}
 
+	public function crearArea($datos) {
+
+		$nombre = $datos['nombre'];
+
+		if (!BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . "(nombre) VALUES ('$nombre') ")->get_error()) {
+			return 1;} else {return 0;}
+	}
+
 	public function modificarDatos($datos = '') {
 
 		$cadena = '';

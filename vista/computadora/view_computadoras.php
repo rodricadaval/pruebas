@@ -23,7 +23,11 @@
 						{ "sTitle" : "Tipo" , "mData" : "clase"},
 						{ "sTitle" : "Slots Libres" , "mData" : "slots_libres"},
 						{ "sTitle" : "Sector" , "mData" : "sector"},
-						{ "sTitle" : "Usuario" , "mData" : "usuario"},
+						{ "sTitle" : "Usuario" ,"mDataProp": "nombre_apellido",
+              				"mRender": function ( data, type, row ) {
+  								return '<div id="ver_usuario" usuario="'+data+'"><a title="Ver productos de '+data+' "href="edit.php?usuario='+ data+'">'+data+'</a></div>';
+							}
+						},
 						{ "sTitle" : "Descripcion" , "mData" : "descripcion"},
 						{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
 										'<a class="ventana_area " href="">Modificar</a>'}
@@ -233,6 +237,54 @@
 		);
 
 	});
+
+	$("#contenedorPpal").on('click','#ver_usuario',function(event){
+	event.preventDefault();
+	console.log("Entro a ver los productos del usuario");
+	console.log("usuario: "+$(this).attr("usuario"));
+	var usuario = $(this).attr("usuario");
+
+	$.post( "vista/dialog_productos_usuario.php",
+			{
+				usuario : usuario,
+				action : "ver_productos"
+			}, function(data){
+				jQuery('<div/>', {
+				    id: 'dialogcontent_prod_usuario',
+				    text: 'Texto por defecto!'
+				}).appendTo('#contenedorPpal');
+				$("#dialogcontent_prod_usuario").html(data);
+				$("#dialogcontent_prod_usuario").dialog({
+											title: "Productos de "+usuario,
+											show: {
+											effect: "explode",
+											duration: 200,
+											modal:true
+											},
+											hide: {
+											effect: "explode",
+											duration: 200
+											},
+											width : 600,
+											height : 600,
+											close : function(){
+												$(this).dialog("destroy").empty();
+												$("#dialogcontent_prod_usuario").remove();
+											},
+											buttons :
+						                    {
+						                        "Cancelar" : function () {
+						                            $(this).dialog("destroy").empty();
+						                            $("#dialogcontent_prod_usuario").remove();
+						                        },
+						                        "Enviar" : function(){
+						                        	$("#dialogcontent_prod_usuario").submit();
+						                        }
+						                    }
+				});
+			}
+		);
+})
 
 	$("#contenedorPpal").on('click' , '#agregar_descripcion_computadora' , function(){
 

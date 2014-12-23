@@ -12,6 +12,11 @@ if (isset($_POST['action'])) {
 	switch ($action) {
 		case 'crear':
 
+			foreach ($_POST as $clave => $valor) {
+					$parametros[$clave] = $valor;
+				}
+				echo $inst_areas->crearArea($parametros);	
+
 			break;
 
 		case 'modificar':
@@ -31,7 +36,6 @@ if (isset($_POST['action'])) {
 } else {
 
 	$archivos = array("vista/area/view_areas.php");
-//$parametros = array("MODULO" => "Areas", "OTROS" => "LosOtrosValores");
 	$parametros = array("TABLA" => "Areas", "");
 	echo Disenio::HTML($archivos, $parametros);
 }

@@ -8,7 +8,7 @@
     </li>
     <li><text>Nro de Serie:</text><input id="nro_de_serie_c" type="text" name="num_serie_c"></li>
     <li><text>Tipo :</text>{select_clases_Computadora}</li>
-    <li><input id="boton_crear_computadora" type="submit" name="crearComputadora" value="Crear"</td></tr>
+    <li><input class="btn btn-primary" id="boton_crear_computadora" type="submit" name="crearComputadora" value="Crear"</td></tr>
     <br>
     <br>
     <li class="error_ag_comp text-error"></li>

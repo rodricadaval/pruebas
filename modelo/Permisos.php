@@ -7,7 +7,7 @@ class Permisos {
 	}
 
 	public function listarTodos() {
-		$inst_table = BDD::getInstance()->query("select *, '<a href=\"#\" class=\"modificar\"tipo_acceso=\"' || tipo_acceso || '\">MODIFICAR</a>' as m from system." . self::claseMinus());
+		$inst_table = BDD::getInstance()->query("select *, '<a id=\"modificar_permiso\" class=\"pointer_mon\"tipo_acceso=\"' || tipo_acceso || '\"><i class=\"circular inverted green small edit icon\" title=\"Modificar Nombre \"></i></a>' as m from system." . self::claseMinus());
 		$i = 0;
 		while ($fila = $inst_table->_fetchRow()) {
 			foreach ($fila as $campo => $valor) {

@@ -36,6 +36,46 @@ h1{
 	font-size: 8px;
 }
 
+#tabla_productos_user td{
+    text-align: center;
+    font-family:courier;
+}
+
+.dialogo_productos_usuario h4{
+    color: #474747;
+}
+
+#tabla_productos_user tr#total{
+    text-transform:uppercase;
+}
+
+#tabla_productos_user th {
+    text-align: center;
+    color: #8C8C8C;
+}
+
+/*.tabla_productos_de_usuario {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla_productos_de_usuario th {
+    font-size: 1.1em;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    background-color: #A7C942;
+    color: #ffffff;
+}
+
+.tabla_productos_de_usuario td, #tabla_productos_de_usuario th {
+   font-size: 1em;
+   border: 1px solid #98bf21;
+   padding: 3px 7px 2px 7px;
+   text-align: center;
+}*/
+
 .logout {
 		cursor: pointer;
 		float: right;
@@ -77,6 +117,13 @@ h1{
 	position: relative;
 	margin-bottom: 10px;
 	margin-top: 10px;
+}
+
+#nueva_area {
+    float:right;
+    position: relative;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 #errores {
@@ -217,9 +264,6 @@ table.fixed_user td{
     float:right;
     margin-right: 135px;
     margin-top: 10px;
-    font-size: 15px;
-    background-color: blue;
-    color:white;
 }
 
 #select_marcas_monitores
@@ -279,8 +323,6 @@ table.fixed_user td{
     margin-right: 135px;
     margin-top: 10px;
     font-size: 15px;
-    background-color: blue;
-    color:white;
 }
 
 #select_marcas_discos 
@@ -341,8 +383,6 @@ table.fixed_user td{
     margin-right: 135px;
     margin-top: 10px;
     font-size: 15px;
-    background-color: blue;
-    color:white;
 }
 
 #select_marcas_computadoras 
@@ -407,8 +447,6 @@ table.fixed_user td{
     margin-right: 135px;
     margin-top: 10px;
     font-size: 15px;
-    background-color: blue;
-    color:white;
 }
 
 #select_marcas_memorias 
@@ -486,8 +524,6 @@ table.fixed_user td{
     margin-right: 135px;
     margin-top: 10px;
     font-size: 15px;
-    background-color: blue;
-    color:white;
 }
 
 #form_agregar_impresora ul li input[id="ip"]

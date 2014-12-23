@@ -51,9 +51,6 @@ class Memorias {
 						$arrayAsoc_vinculo = Vinculos::dameDatos($valor);
 
 						foreach ($arrayAsoc_vinculo as $camp => $value) {
-							if($camp == "nombre_apellido" && $value == "Sin usuario"){
-								$value = "-";
-							}
 								$data[$i][$camp] = $value;			
 						}
 						break;
@@ -80,6 +77,9 @@ class Memorias {
 				}
 			}
 			$data[$i]['capacidad'] .= " " . $data[$i]['unidad'];
+			if($data[$i]["nombre_apellido"] == "Sin usuario"){
+					$data[$i]["nombre_apellido"] = "-";
+			}
 		}
 		//var_dump($data);
 
@@ -126,6 +126,7 @@ class Memorias {
 				$id_usuario = Vinculos::getIdUsuario($value);
 				$datos_extra = Usuarios::getByID($id_usuario);
 				$id_cpu = Vinculos::getIdCpu($value);
+				$datos_extra['num_serie_cpu'] = Computadoras::getSerie($id_cpu);
 				$datos_extra['nombre_area'] = Areas::getNombre($datos_extra['area']);
 			}
 			if ($key == "id_capacidad") {
@@ -135,8 +136,63 @@ class Memorias {
 				$datos['unidad'] = Unidades::getNombre($value);
 			}
 		}
-		//var_dump($datos);
 		return array_merge($datos, $datos_extra);
+	}
+
+	public function dameListaDeUsuario($id_usuario){
+		
+		$tipos = Tipo_productos::get_rel_campos();
+		$id_tipo_producto = array_search("Memoria", $tipos);
+
+		$lista = BDD::getInstance()->query("SELECT id_pk_producto FROM system.vinculos where id_tipo_producto='$id_tipo_producto' and id_usuario='$id_usuario' ")->_fetchAll();
+		$i = 0;
+		foreach ($lista as $campo) {
+			$lista_con_datos[$i] = self::getByID($campo['id_pk_producto']);
+			$i++;
+		}
+		return self::generarListadoDeUsuario($lista_con_datos);	
+	}
+
+	public function generarListadoDeUsuario($listado){
+		
+		$html_view = "";
+		$html_view .= "<fieldset>";
+		$html_view .= "<h4>Memorias</h4>";
+		$html_view .= "<table class='table table-condensed' id='tabla_productos_user'>";
+		$html_view .= "<tr>";
+		$html_view .= "<th>Marca</th>
+					   <th>Tipo</th>
+					   <th>Capacidad</th>
+					   <th>Velocidad (Mhz)</th>
+					   <th>Serie Cpu</th>";
+		$html_view .= "</tr>";
+
+		if(count($listado) == 0 ){
+			$html_view .= "<tr>";
+			$html_view .= "<td colspan='5'>No tiene memorias</td>";
+			$html_view .= "</tr>";
+		}
+
+		foreach ($listado as $fila => $contenido) {
+			$html_view .= "<tr>";
+
+			$datos_desc = Memoria_desc::dameDatos($contenido['id_memoria_desc']);
+			
+			$html_view .= "<td>".$datos_desc['marca']."</td>";
+			$html_view .= "<td>".$datos_desc['tipo']."</td>";
+			$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
+			$html_view .= "<td>".$datos_desc['velocidad']."</td>";
+			$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
+	
+			$html_view .= "</tr>";
+		}
+		$html_view .= "<tr id='total'>";
+		$html_view .= "<td colspan='3'>Total</td>";
+		$html_view .= "<td colspan='2'>".count($listado)."</td>";
+		$html_view .= "</tr>";
+		$html_view .= "</table>";
+		$html_view .= "</fieldset>";
+		return $html_view;
 	}
 
 	public function getCapacidad($id){

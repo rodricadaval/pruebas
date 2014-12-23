@@ -59,7 +59,9 @@ class Monitores {
 						# code...
 					break;
 				}
-
+			}
+			if($data[$i]["nombre_apellido"] == "Sin usuario"){
+					$data[$i]["nombre_apellido"] = "-";
 			}
 		}
 
@@ -108,6 +110,61 @@ class Monitores {
 			}
 		}
 		return $fila;
+	}
+
+	public function dameListaDeUsuario($id_usuario){
+		
+		$tipos = Tipo_productos::get_rel_campos();
+		$id_tipo_producto = array_search("Monitor", $tipos);
+
+		$lista = BDD::getInstance()->query("SELECT id_pk_producto FROM system.vinculos where id_tipo_producto='$id_tipo_producto' and id_usuario='$id_usuario' ")->_fetchAll();
+		$i = 0;
+		foreach ($lista as $campo) {
+			$lista_con_datos[$i] = self::getByID($campo['id_pk_producto']);
+			$i++;
+		}
+		return self::generarListadoDeUsuario($lista_con_datos);	
+	}
+
+	public function generarListadoDeUsuario($listado){
+
+		$html_view = "";
+		$html_view .= "<fieldset>";
+		$html_view .= "<h4>Monitor</h4>";
+		$html_view .= "<table class='table table-condensed' id='tabla_productos_user'>";
+		$html_view .= "<tr>";
+		$html_view .= "<th>Serie</th>
+					   <th>Marca</th>
+					   <th>Modelo</th>
+					   <th>Pulgadas</th>
+					   <th>Serie Cpu</th>";
+		$html_view .= "</tr>";
+
+		if(count($listado) == 0 ){
+			$html_view .= "<tr>";
+			$html_view .= "<td colspan='5'>No tiene monitores</td>";
+			$html_view .= "</tr>";
+		}
+
+		foreach ($listado as $fila => $contenido) {
+			$html_view .= "<tr>";
+
+			$html_view .= "<td>".$contenido['num_serie']."</td>";
+
+			$datos_desc = Monitor_desc::dameDatos($contenido['id_monitor_desc']);
+			if($datos_desc['pulgadas'] == ""){$datos_desc['pulgadas'] = "-";}
+			
+			$html_view .= "<td>".$datos_desc['marca']."</td>";
+			$html_view .= "<td>".$datos_desc['modelo']."</td>";
+			$html_view .= "<td>".$datos_desc['pulgadas']."</td>";
+			$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
+	
+			$html_view .= "</tr>";
+		}
+
+		$html_view .= "</table>";
+		$html_view .= "</fieldset>";
+		return $html_view;
 	}
 
 	public function agregar_monitor($datos) {

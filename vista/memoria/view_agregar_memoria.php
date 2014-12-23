@@ -11,7 +11,7 @@
     </li>
     <li><text>Capacidad:</text>{select_capacidades}{select_unidades}</li>
     <li><text>Cantidad:</text><input name="cant_veces" placeholder="Ingrese cantidad"></li>
-    <li><input id="boton_crear_memoria" type="submit" name="crearMemoria" value="Crear"></li>
+    <li><input class="btn btn-primary" id="boton_crear_memoria" type="submit" name="crearMemoria" value="Crear"></li>
     <br>
     <br>
     <li class="error_ag_mem text-error"></li>   

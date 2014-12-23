@@ -10,8 +10,8 @@
         <tr>
           <td class="required">Usuario  </td>
           <td><input type="text" name="usuario" id="usuario" value="{usuario}"></td>
-          <td>ID</td>
-          <td><input style="background-color:#D3D3D3" type="text" name="id_usuario" id="id_usuario" value="{id_usuario}" readonly></td>
+          <td class="ID">ID</td>
+          <td class="ID"><input style="background-color:#D3D3D3" type="text" name="id_usuario" id="id_usuario" value="{id_usuario}" readonly></td>
         </tr>
         <tr>
           <td>Email</td>
@@ -76,7 +76,7 @@ $(document).ready(function(){
         $(".f_nueva_password, .f_conf_password").show(); 
         $("#nueva_password, #conf_password").removeAttr("disabled"); 
         $("#vista_pass").hide();
-        $("#ID").hide();
+        $(".ID").hide();
     }
 
     $("#form").validate({

@@ -7,7 +7,7 @@
                         <option value=''>Seleccionar</option></select>
     </li>
     <li><text>Nro de Serie:</text><input id="nro_de_serie_m" type="text" name="num_serie_mon"></li>
-    <li><input id="boton_crear_monitor" type="submit" name="crearMonitor" value="Crear"></li>
+    <li><input class="btn btn-primary" id="boton_crear_monitor" type="submit" name="crearMonitor" value="Crear"></li>
     <li class="error_ag_monit text-error"></li>
 </ul>
 </fieldset>
