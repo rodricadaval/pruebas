@@ -152,6 +152,7 @@
 				}
 		});
 	});
+
 	$("#nuevo_usuario").on('click' , '#crear_usuario' , function(){
 		$.post( "vista/dialog_content.php",
 			{

@@ -29,6 +29,11 @@ if (isset($_POST['action'])) {
 
 			break;
 
+		case 'eliminar':
+
+			echo $inst_areas->eliminar($_POST['id_area']);
+			break;
+
 		default:
 			# code...
 			break;

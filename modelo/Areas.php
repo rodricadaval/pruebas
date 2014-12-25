@@ -73,6 +73,26 @@ class Areas {
 			return 1;} else {return 0;}
 	}
 
+	public function getCampos() {
+
+		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus())->_fetchRow();
+
+		foreach ($fila as $key => $value) {
+			$datos[$key] = "";
+		}
+		return $datos;
+	}
+
+	public function eliminar($id){
+		if(!BDD::getInstance()->query("DELETE FROM system." .self::claseMinus()." where id_area = '$id' ")->get_error()){
+			return 1;
+		}
+		else{
+			var_dump(BDD::getInstance());
+			return 0;
+		}
+	}
+
 	public function modificarDatos($datos = '') {
 
 		$cadena = '';

@@ -61,13 +61,13 @@
                                 console.log(response);
                                 console.log("success");
                                 alert('Se ha agregado el producto correctamente');
-                                $("#tabs2").load("controlador/ProductosController.php",{action:"agregar_disco"});
+                                $("#tabs4").load("controlador/ProductosController.php",{action:"agregar_disco"});
                             }
             })
             .fail(function() {
                 console.log("error");
                 alert('Hubo un error');
-                $("#tabs2").load("controlador/ProductosController.php",{action:"agregar_disco"});
+                $("#tabs4").load("controlador/ProductosController.php",{action:"agregar_disco"});
 
             })
             .always(function() {

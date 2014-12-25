@@ -162,7 +162,7 @@ class Usuarios {
 		}
 
 		if (!BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . "($cadena_columnas) VALUES ($cadena_valores) ")->get_error()) {
-			return 1;} else {return 0;}
+			return 1;} else {var_dump(BDD::getInstance());return 0;}
 	}
 
 	public function getNombre($id) {

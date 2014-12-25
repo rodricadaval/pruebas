@@ -8,7 +8,6 @@ $inst_tabla = new $tabla();
 $parametros = array();
 
 
-
 if ($_POST['queSos'] == "nuevo") {
 
 	$_POST['queSos'] = strtolower(substr($_POST['TablaPpal'], 0, -1));

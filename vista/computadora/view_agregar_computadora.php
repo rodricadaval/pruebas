@@ -107,13 +107,13 @@
                                 console.log(response);
                                 console.log("success");
                                 alert('Se ha agregado el producto correctamente');
-                                $("#tabs3").load("controlador/ProductosController.php",{action:"agregar_computadora"});
+                                $("#tabs2").load("controlador/ProductosController.php",{action:"agregar_computadora"});
                             }
             })
             .fail(function() {
                 console.log("error");
                 alert('Hubo un error');
-                $("#tabs3").load("controlador/ProductosController.php",{action:"agregar_computadora"});
+                $("#tabs2").load("controlador/ProductosController.php",{action:"agregar_computadora"});
             })
             .always(function() {
                 console.log("complete");

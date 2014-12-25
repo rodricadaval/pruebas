@@ -50,8 +50,7 @@
 				{
 					TablaPpal : "Areas",
 					ID : id_area,
-					queSos : "area", //a quien le voy a generar la vista
-					action : "modificar"
+					queSos : "area" //a quien le voy a generar la vista
 				}, function(data){
 					jQuery('<div/>', {
 				    id: 'dialogcontentarea',
@@ -94,8 +93,7 @@
 			$.post( "vista/dialog_content.php",
 				{
 					TablaPpal : "Areas",
-					queSos : "area", //a quien le voy a generar la vista
-					action : "nueva"
+					queSos : "nuevo" //a quien le voy a generar la vista
 				}, function(data){
 					jQuery('<div/>', {
 				    id: 'dialogcontentarea',
@@ -125,12 +123,40 @@
 						                            $(this).remove();
 						                        },
 						                        "Enviar" : function(){
-						                        	$("#form_nueva_area").submit();
+						                        	$("#form_area").submit();
 						                        }
 						                    }
 					});
 				  }
 			);
 		});
+
+	$("#contenedorPpal").on('click' , '#eliminar_area' , function(){
+			console.log($(this).attr("id_area"));
+			var id_area = $(this).attr('id_area');
+			var UrlToPass;
+			UrlToPass="id_area="+id_area+"&action=eliminar";
+			console.log(UrlToPass);
+			$.ajax({
+					type : 'POST',
+					data : UrlToPass,
+					url  : 'controlador/AreasController.php',
+					success: function(responseText){ // Get the result and asign to each cases
+					if(responseText == 0){
+						alert("No se pudo eliminar el area");
+					}
+					else if(responseText == 1) {
+						alert("Se ha eliminado el area correctamente");
+						$("#contenedorPpal").remove();
+	                        jQuery('<div/>', {
+	                        id: 'contenedorPpal',
+	                        text: 'Texto por defecto!'
+	                        }).appendTo('.realBody');
+						$("#contenedorPpal").load("controlador/AreasController.php");
+					}
+					else{alert("Hubo algun error");}
+					}
+			});
+	});
 
 </script>

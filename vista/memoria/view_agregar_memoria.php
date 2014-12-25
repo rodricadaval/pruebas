@@ -94,13 +94,13 @@
                                 console.log(response);
                                 console.log("success");
                                 alert('Se ha agregado el producto correctamente');
-                                $("#tabs2").load("controlador/ProductosController.php",{action:"agregar_memoria"});
+                                $("#tabs3").load("controlador/ProductosController.php",{action:"agregar_memoria"});
                             }
             })
             .fail(function() {
                 console.log("error");
                 alert('Hubo un error');
-                $("#tabs2").load("controlador/ProductosController.php",{action:"agregar_memoria"});
+                $("#tabs3").load("controlador/ProductosController.php",{action:"agregar_memoria"});
 
             })
             .always(function() {
