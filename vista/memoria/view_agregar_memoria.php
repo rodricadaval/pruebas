@@ -6,17 +6,16 @@
     <li><text>Tipo:</text>{select_tipos_memorias}</li> 
     <li colspan="1"><text>Velocidad:</text>
         <select id='select_velocidades' name='velocidad'>
-                        <option value=''>Seleccionar</option>
+            <option value=''>Seleccionar</option>
         </select>
     </li>
     <li><text>Capacidad:</text>{select_capacidades}{select_unidades}</li>
     <li><text>Cantidad:</text><input name="cant_veces" placeholder="Ingrese cantidad"></li>
-    <li><input class="btn btn-primary" id="boton_crear_memoria" type="submit" name="crearMemoria" value="Crear"></li>
-    <br>
-    <br>
-    <li class="error_ag_mem text-error"></li>   
+    <li><input type="button" class="btn btn-success" id="boton_nueva_marca" value="Nueva Marca"><input class="btn btn-primary" id="boton_crear_memoria" type="submit" name="crearMemoria" value="Crear"></li>
 </ul> 
 </fieldset>   
+    <br>
+    <div><p class="error_ag_mem text-error"></p></div>
 </form>
 
 <script type="text/javascript">

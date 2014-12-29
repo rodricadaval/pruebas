@@ -239,6 +239,49 @@ table.fixed_user td{
 					  padding-right: 10px;
 					}
 
+#form_nueva_marca_y_modelo ul, #form_nueva_marca_y_modelo_computadora ul
+{
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+#form_nueva_marca_y_modelo ul li, #form_nueva_marca_y_modelo_computadora ul li
+{
+    vertical-align: middle;
+    height: 40px;
+    line-height: 40px;
+}
+
+#boton_nueva_marca
+{
+    float:left;
+    margin-top: 10px;
+}
+
+#form_nueva_marca_y_modelo fieldset{
+    overflow: auto;
+}
+
+#form_nueva_marca_y_modelo_computadora fieldset{
+    overflow: auto;
+}
+
+#form_nueva_marca_y_modelo_computadora div{
+    margin-left: 27px;
+}
+
+#form_nueva_marca_y_modelo div{
+    margin-left: 27px;   
+}
+
+#form_nueva_marca_y_modelo ul li text, #form_nueva_marca_y_modelo_computadora ul li text { 
+    float: left;
+    width: 110px;
+    font-size: 17px;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
 /*-----------------------------------Agregar Monitor--------------------------------------*/
 
 #form_agregar_monitor
@@ -246,7 +289,7 @@ table.fixed_user td{
     /**/
 }
 
-#form_agregar_monitor ul 
+#form_agregar_monitor ul
 {
     list-style-type: none;
     padding-left: 0px;
@@ -276,9 +319,12 @@ table.fixed_user td{
     width: 160px;
 }
 
-#form_agregar_monitor fieldset {
+#form_agregar_monitor fieldset{
 	overflow: auto;
-	min-height: 500px;
+}
+
+#form_agregar_monitor div p{
+    margin-left: 28px;
 }
 
 #form_agregar_monitor ul li input[id="nro_de_serie_m"]
@@ -287,7 +333,7 @@ table.fixed_user td{
     text-align: center;
 }
 
-#form_agregar_monitor ul li text { 
+#form_agregar_monitor ul li text{ 
     float: left;
     width: 110px;
     font-size: 17px;
@@ -315,6 +361,10 @@ table.fixed_user td{
     vertical-align: middle;
     height: 40px;
     line-height: 40px;
+}
+
+#form_agregar_disco div p{
+    margin-left: 28px;
 }
 
 #boton_crear_disco
@@ -377,6 +427,10 @@ table.fixed_user td{
     line-height: 40px;
 }
 
+#form_agregar_computadora div p{
+    margin-left: 28px;
+}
+
 #boton_crear_computadora
 {
     float:right;
@@ -402,7 +456,6 @@ table.fixed_user td{
 
 #form_agregar_computadora fieldset {
 	overflow: auto;
-	min-height: 500px;
 }
 
 #form_agregar_computadora ul li input[id="nro_de_serie_c"]
@@ -441,6 +494,10 @@ table.fixed_user td{
     line-height: 40px;
 }
 
+#form_agregar_memoria div p{
+    margin-left: 28px;
+}
+
 #boton_crear_memoria
 {
     float:right;
@@ -477,7 +534,6 @@ table.fixed_user td{
 
 #form_agregar_memoria fieldset {
 	overflow: auto;
-	min-height: 500px;
 }
 
 #form_agregar_memoria ul li input[name="cant_veces"]
@@ -518,6 +574,10 @@ table.fixed_user td{
     line-height: 40px;
 }
 
+#form_agregar_impresora div p{
+    margin-left: 28px;
+}
+
 #boton_crear_impresora
 {
     float:right;
@@ -540,7 +600,6 @@ table.fixed_user td{
 
 #form_agregar_impresora fieldset {
 	overflow: auto;
-	min-height: 500px;
 }
 
 

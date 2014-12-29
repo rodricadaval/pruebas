@@ -32,6 +32,11 @@ class Marcas {
 		return $fila;
 	}
 
+	public function getIdByNombre($nombre) {
+		return BDD::getInstance()->query("select id_marca from system." . self::claseMinus() . " where nombre = '$nombre' ")->_fetchRow()['id_marca'];
+	}
+
+
 	public function get_rel_campos() {
 		$tabla = BDD::getInstance()->query("select * from system." . self::claseMinus());
 		$array = array();
@@ -42,6 +47,59 @@ class Marcas {
 
 		}
 		return $array;
+	}
+
+	public function agregar($datos){
+		if(isset($datos['tipo'])){
+			switch ($datos['tipo']) {
+			 	case 'Monitor':
+			 			unset($datos['tipo']);
+			 			if(self::existe($datos['marca'])){
+			 				$datos['id_marca'] = self::getIdByNombre($datos['marca']);
+			 			}
+			 			else{
+			 				$datos['id_marca'] = self::agregar($datos['marca']);
+			 			}
+			 			unset($datos['marca']);
+			 			echo Monitor_desc::agregar_marca_y_modelo($datos);		
+			 		
+			 		break;
+
+			 	case 'Computadora':
+			 			unset($datos['tipo']);
+			 			if(self::existe($datos['marca'])){
+			 				$datos['id_marca'] = self::getIdByNombre($datos['marca']);
+			 			}
+			 			else{
+			 				$datos['id_marca'] = self::agregar($datos['marca']);
+			 			}
+			 			unset($datos['marca']);
+			 			echo Computadora_desc::agregar_marca_y_modelo($datos);		
+			 		
+			 		break;
+			 	
+			 	default:
+			 		# code...
+			 		break;
+			 } 
+		}
+		else{
+			if(BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . " (nombre) VALUES('$datos') ")->get_error()){
+				return BDD::getInstance();
+			}
+			else{
+				return BDD::getInstance()->query("select id_marca from system." . self::claseMinus() . " where nombre = '$datos' ")->_fetchRow()['id_marca'];
+			}
+		}
+	}
+
+	public function existe($marca){
+		if(BDD::getInstance()->query("select * from system." . self::claseMinus() . " where lower(nombre) = lower('$marca') ")->get_count() > 0){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	public function dameSelect($sos = "") {

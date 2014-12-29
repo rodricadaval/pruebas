@@ -7,10 +7,11 @@
                         <option value=''>Seleccionar</option></select>
     </li>
     <li><text>Nro de Serie:</text><input id="nro_de_serie_m" type="text" name="num_serie_mon"></li>
-    <li><input class="btn btn-primary" id="boton_crear_monitor" type="submit" name="crearMonitor" value="Crear"></li>
-    <li class="error_ag_monit text-error"></li>
+    <li><input type="button" class="btn btn-success" id="boton_nueva_marca" name="nueva_marca_monitor" value="Nueva Marca y Modelo"><input class="btn btn-primary" id="boton_crear_monitor" type="submit" name="crearMonitor" value="Crear"></li>
 </ul>
 </fieldset>
+    <br>
+    <div><p class="error_ag_monit text-error"></p></div>
 </form>
 
 <script type="text/javascript">
@@ -103,5 +104,48 @@
         invalidHandler : function (event , validator) {
           console.log(validator);
         }
+    });
+
+    $("#form_agregar_monitor").on('click',"#boton_nueva_marca",function(){
+     
+        $.post( "controlador/CreacionController.php",
+                {
+                    tablaPpal : "Monitor",
+                    action : "nueva_marca"
+                }, function(data){
+                    jQuery('<div/>', {
+                        id: 'dialogcontent_nueva_marca',
+                        text: 'Texto por defecto!'
+                    }).appendTo('#contenedorPpal');
+                    $("#dialogcontent_nueva_marca").html(data);
+                    $("#dialogcontent_nueva_marca").dialog({
+                                                show: {
+                                                effect: "explode",
+                                                duration: 200,
+                                                modal:true
+                                                },
+                                                hide: {
+                                                effect: "explode",
+                                                duration: 200
+                                                },
+                                                width : 440,
+                                                height : 350,
+                                                close : function(){
+                                                    $(this).dialog("destroy");
+                                                    $("#dialogcontent_nueva_marca").remove();
+                                                },
+                                                buttons :
+                                                {
+                                                    "Cancelar" : function () {
+                                                        $(this).dialog("destroy");
+                                                        $("#dialogcontent_nueva_marca").remove();
+                                                    },
+                                                    "Aceptar" : function(){
+                                                        $("#form_nueva_marca_y_modelo").submit();
+                                                    }
+                                                }
+                    });
+                }
+        );
     });
 </script>

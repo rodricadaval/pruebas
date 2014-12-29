@@ -8,12 +8,11 @@
     </li>
     <li><text>Nro de Serie:</text><input id="nro_de_serie_c" type="text" name="num_serie_c"></li>
     <li><text>Tipo :</text>{select_clases_Computadora}</li>
-    <li><input class="btn btn-primary" id="boton_crear_computadora" type="submit" name="crearComputadora" value="Crear"</td></tr>
-    <br>
-    <br>
-    <li class="error_ag_comp text-error"></li>
+    <li><input type="button" class="btn btn-success" id="boton_nueva_marca" value="Nueva Marca y Modelo"><input class="btn btn-primary" id="boton_crear_computadora" type="submit" name="crearComputadora" value="Crear"></li>
 </ul>
 </fieldset>
+    <br>
+    <div><p class="error_ag_comp text-error"></p></div>
 </form>
 
 <script type="text/javascript">
@@ -122,5 +121,48 @@
         invalidHandler : function (event , validator) {
           console.log(validator);
         }
+    });
+
+    $("#form_agregar_computadora").on('click',"#boton_nueva_marca",function(){
+     
+        $.post( "controlador/CreacionController.php",
+                {
+                    tablaPpal : "Computadora",
+                    action : "nueva_marca"
+                }, function(data){
+                    jQuery('<div/>', {
+                        id: 'dialogcontent_nueva_marca',
+                        text: 'Texto por defecto!'
+                    }).appendTo('#contenedorPpal');
+                    $("#dialogcontent_nueva_marca").html(data);
+                    $("#dialogcontent_nueva_marca").dialog({
+                                                show: {
+                                                effect: "explode",
+                                                duration: 200,
+                                                modal:true
+                                                },
+                                                hide: {
+                                                effect: "explode",
+                                                duration: 200
+                                                },
+                                                width : 440,
+                                                height : 450,
+                                                close : function(){
+                                                    $(this).dialog("destroy");
+                                                    $("#dialogcontent_nueva_marca").remove();
+                                                },
+                                                buttons :
+                                                {
+                                                    "Cancelar" : function () {
+                                                        $(this).dialog("destroy");
+                                                        $("#dialogcontent_nueva_marca").remove();
+                                                    },
+                                                    "Aceptar" : function(){
+                                                        $("#form_nueva_marca_y_modelo_computadora").submit();  
+                                                    }
+                                                }
+                    });
+                }
+        );
     });
 </script>

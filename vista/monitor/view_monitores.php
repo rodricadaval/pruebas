@@ -70,13 +70,13 @@ $("#contenedorPpal").on('click' , '#modificar_usuario_monitor' , function(){
 											width : 350,
 											height : 300,
 											close : function(){
-												$(this).dialog("destroy").empty();
+												$(this).dialog("destroy");
 												$("#dialogcontent_monitor").remove();
 											},
 											buttons :
 						                    {
 						                        "Cancelar" : function () {
-						                            $(this).dialog("destroy").empty();
+						                            $(this).dialog("destroy");
 						                            $("#dialogcontent_monitor").remove();
 						                        },
 						                        "Enviar" : function(){
@@ -118,13 +118,13 @@ $("#contenedorPpal").on('click' , '#modificar_usuario_monitor' , function(){
 												width : 600,
 												height : 600,
 												close : function(){
-													$(this).dialog("destroy").empty();
+													$(this).dialog("destroy");
 													$("#dialogcontent_prod_usuario").remove();
 												},
 												buttons :
 							                    {
 							                        "Cancelar" : function () {
-							                            $(this).dialog("destroy").empty();
+							                            $(this).dialog("destroy");
 							                            $("#dialogcontent_prod_usuario").remove();
 							                        },
 							                        "Enviar" : function(){
@@ -168,13 +168,13 @@ $("#contenedorPpal").on('click' , '#modificar_cpu_monitor' , function(){
 											width : 350,
 											height : 330,
 											close : function(){
-												$(this).dialog("destroy").empty();
+												$(this).dialog("destroy");
 												$("#dialogcontent_monitor").remove();
 											},
 											buttons :
 						                    {
 						                        "Cancelar" : function () {
-						                            $(this).dialog("destroy").empty();
+						                            $(this).dialog("destroy");
 						                            $("#dialogcontent_monitor").remove();
 						                        },
 						                        "Enviar" : function(){
@@ -217,13 +217,13 @@ $("#contenedorPpal").on('click' , '#modificar_cpu_monitor' , function(){
 												width : 350,
 												height : 360,
 												close : function(){
-													$(this).dialog("destroy").empty();
+													$(this).dialog("destroy");
 													$("#dialogcontent_monitor").remove();
 												},
 												buttons :
 							                    {
 							                        "Cancelar" : function () {
-							                            $(this).dialog("destroy").empty();
+							                            $(this).dialog("destroy");
 							                            $("#dialogcontent_monitor").remove();
 							                        },
 							                        "Aceptar" : function(){
@@ -266,13 +266,13 @@ $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
 												width : 350,
 												height : 200,
 												close : function(){
-													$(this).dialog("destroy").empty();
+													$(this).dialog("destroy");
 													$("#dialogcontent_monitor").remove();
 												},
 												buttons :
 							                    {
 							                        "Cancelar" : function () {
-							                            $(this).dialog("destroy").empty();
+							                            $(this).dialog("destroy");
 							                            $("#dialogcontent_monitor").remove();
 							                        },
 							                        "Aceptar" : function(){
@@ -317,13 +317,13 @@ $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
 												width : 300,
 												height : 280,
 												close : function(){
-													$(this).dialog("destroy").empty();
+													$(this).dialog("destroy");
 													$("#dialogcontent_monitor").remove();
 												},
 												buttons :
 							                    {
 							                        "Cancelar" : function () {
-							                            $(this).dialog("destroy").empty();
+							                            $(this).dialog("destroy");
 							                            $("#dialogcontent_monitor").remove();
 							                        },
 							                        "Aceptar" : function(){

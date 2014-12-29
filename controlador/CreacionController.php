@@ -33,5 +33,27 @@ if (isset($_POST['tipo'])) {
 		return Vinculos::crearVinculo($datos, $_POST['tipo']);
 	}
 }
+else if($_POST['action'] == "nueva_marca"){
+	unset($_POST['action']);
+	switch ($_POST['tablaPpal']) {
+		
+		case 'Computadora':
+			$url = array("vista/productos/nueva_marca_y_modelo_computadora.php");
+			$parametros = array("Producto" => $_POST['tablaPpal']);
+			echo Disenio::HTML($url, $parametros);
+			break;
+
+		case 'Monitor' || 'Impresora':
+			$url = array("vista/productos/nueva_marca_y_modelo.php");
+			$parametros = array("Producto" => $_POST['tablaPpal']);
+			echo Disenio::HTML($url, $parametros);
+			break;
+		
+		default:
+			# code...
+			break;
+	}
+
+}
 
 ?>

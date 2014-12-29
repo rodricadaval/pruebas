@@ -1,20 +1,20 @@
 <form id="form_agregar_impresora">
 <fieldset>
 <legend>Complete los Datos</legend>
-<ul>
-<li><text>Marca:</text>{select_marcas_impresoras}</li>
-<li><text>Modelo:</text>
-    <select id='select_modelos_Impresora' name='modelo'>
-                    <option value=''>Seleccionar</option></select>
-</li>
-<li><text>Nro de Serie:</text><input id="nro_de_serie_i" type="text" name="num_serie_imp"></li>
-<li><text>IP:</text><input id="ip" type="text" name="ip"></li>
-<li><input class="btn btn-primary" id="boton_crear_impresora" type="submit" name="crearImpresora" value="Crear"></li>
-<br>
-<br>
-<li class="error_ag_i text-error"></li>
-</ul>
+    <ul>
+        <li><text>Marca:</text>{select_marcas_impresoras}</li>
+        <li><text>Modelo:</text>
+            <select id='select_modelos_Impresora' name='modelo'>
+                <option value=''>Seleccionar</option>
+            </select>
+        </li>
+        <li><text>Nro de Serie:</text><input id="nro_de_serie_i" type="text" name="num_serie_imp"></li>
+        <li><text>IP:</text><input id="ip" type="text" name="ip"></li>
+        <li><input type="button" class="btn btn-success" id="boton_nueva_marca" value="Nueva Marca y Modelo"><input class="btn btn-primary" id="boton_crear_impresora" type="submit" name="crearImpresora" value="Crear"></li>
+    </ul>
 </fieldset>
+    <br>
+    <div><p class="error_ag_i text-error"></p></div>
 </form>
 
 <script type="text/javascript">

@@ -34,6 +34,19 @@ class Computadora_desc {
 		echo json_encode($data);
 	}
 
+	public function agregar_marca_y_modelo($datos){
+		$id_marca = $datos['id_marca'];
+		$modelo = $datos['modelo'];
+
+		if(BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . " (id_marca,modelo) VALUES('$id_marca','$modelo') ")->get_error()){
+				var_dump(BDD::getInstance());
+				return "false";
+		}
+		else{
+				return "true";
+		}
+	}
+
 	public function dameDatos($id) {
 		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_computadora_desc = '$id' ")->_fetchRow();
 		foreach ($fila as $campo => $valor) {

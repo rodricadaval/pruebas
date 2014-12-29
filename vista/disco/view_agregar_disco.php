@@ -1,16 +1,15 @@
 <form id="form_agregar_disco">
 <fieldset>
 <legend>Complete los Datos</legend>
-<ul>
-<li><text>Marca:</text>{select_marcas_discos}</li>
-<li><text>Capacidad:</text>{select_capacidades}{select_unidades}</li>
-<li><text>Cantidad:</text><input id="cantidad" name="cant_veces" placeholder="Ingrese cantidad"></li>
-<li><input class="btn btn-primary" id="boton_crear_disco" type="submit" name="crearDisco" value="Crear"></li>
-<br>
-<br>
-<li class="error_ag_disc text-error"></li>
-</ul>
-</fieldset>
+    <ul>
+        <li><text>Marca:</text>{select_marcas_discos}</li>
+        <li><text>Capacidad:</text>{select_capacidades}{select_unidades}</li>
+        <li><text>Cantidad:</text><input id="cantidad" name="cant_veces" placeholder="Ingrese cantidad"></li>
+        <li><input type="button" class="btn btn-success" id="boton_nueva_marca" value="Nueva Marca"><input class="btn btn-primary" id="boton_crear_disco" type="submit" name="crearDisco" value="Crear"></li>
+    </ul>
+    </fieldset>
+    <br>
+    <div><p class="error_ag_disc text-error"></p></div>
 </form>
 
 
