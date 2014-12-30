@@ -39,13 +39,23 @@ else if($_POST['action'] == "nueva_marca"){
 		
 		case 'Computadora':
 			$url = array("vista/productos/nueva_marca_y_modelo_computadora.php");
+			$select_capacidades = Capacidades::dameSelect("","_computadoras");
+			$select_unidades = Unidades::dameSelect("","_computadoras");
+			$parametros = array("Producto" => $_POST['tablaPpal'], "select_capacidades" => $select_capacidades,"select_unidades" => $select_unidades);
+			echo Disenio::HTML($url, $parametros);
+			break;
+
+		case ($_POST['tablaPpal'] == 'Monitor' || $_POST['tablaPpal'] == 'Impresora'):
+			$url = array("vista/productos/nueva_marca_y_modelo.php");
 			$parametros = array("Producto" => $_POST['tablaPpal']);
 			echo Disenio::HTML($url, $parametros);
 			break;
 
-		case 'Monitor' || 'Impresora':
-			$url = array("vista/productos/nueva_marca_y_modelo.php");
-			$parametros = array("Producto" => $_POST['tablaPpal']);
+		case 'Memoria':
+			$url = array("vista/productos/nueva_marca_y_velocidad_memoria.php");
+			$select_velocidades = Velocidades::dameSelectVelocidadesPosiblesParaTipo("DDR3");
+			$select_tipos = Memoria_desc::dameSelect();
+			$parametros = array("Producto" => $_POST['tablaPpal'], "select_velocidades" => $select_velocidades,"select_tipos" => $select_tipos);
 			echo Disenio::HTML($url, $parametros);
 			break;
 		

@@ -31,6 +31,20 @@ class Memoria_desc {
 		return $fila;
 	}
 
+	public function agregar_nueva_memoria($datos){
+		$id_marca = $datos['id_marca'];
+		$velocidad = $datos['velocidad'];
+		$tipo = $datos['tecnologia'];
+
+		if(BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . " (id_marca,velocidad,tipo) VALUES('$id_marca','$velocidad','$tipo') ")->get_error()){
+				var_dump(BDD::getInstance());
+				return "false";
+		}
+		else{
+				return "true";
+		}
+	}	
+
 	public function dameSelect( $sos = "", $valor = "") {
 		if ($valor == "") {
 			$table = BDD::getInstance()->query("select distinct tipo from system." . self::claseMinus() . " where estado = 1");

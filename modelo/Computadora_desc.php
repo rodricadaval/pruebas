@@ -37,8 +37,10 @@ class Computadora_desc {
 	public function agregar_marca_y_modelo($datos){
 		$id_marca = $datos['id_marca'];
 		$modelo = $datos['modelo'];
+		$slots = $datos['slots'];
+		$mem_max = $datos['mem_max'];
 
-		if(BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . " (id_marca,modelo) VALUES('$id_marca','$modelo') ")->get_error()){
+		if(BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . " (id_marca,modelo,slots,mem_max) VALUES('$id_marca','$modelo','$slots','$mem_max') ")->get_error()){
 				var_dump(BDD::getInstance());
 				return "false";
 		}

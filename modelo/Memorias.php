@@ -195,6 +195,21 @@ class Memorias {
 		return $html_view;
 	}
 
+	public function agregar_marca_y_modelo($datos){
+		$id_marca = $datos['id_marca'];
+		$modelo = $datos['modelo'];
+		$slots = $datos['slots'];
+		$mem_max = $datos['mem_max'];
+
+		if(BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . " (id_marca,modelo,slots,mem_max) VALUES('$id_marca','$modelo','$slots','$mem_max') ")->get_error()){
+				var_dump(BDD::getInstance());
+				return "false";
+		}
+		else{
+				return "true";
+		}
+	}
+
 	public function getCapacidad($id){
 		$id_capacidad = BDD::getInstance()->query("select id_capacidad from system.memorias where id_memoria='$id' ")->_fetchRow()['id_capacidad'];
 		return Capacidades::getNombre($id_capacidad);

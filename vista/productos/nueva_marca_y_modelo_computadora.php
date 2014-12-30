@@ -5,7 +5,8 @@
     <li><text>Marca</text><input name="marca" id="marcas" class="typeahead" type="text" placeholder="Ingrese Marca"></li>
     <li><text>Modelo</text><input name="modelo" id="modelo" type="text" placeholder="Ingrese Modelo"></li>
     <li><text>Slots</text><input name="slots" id="slots" type="text" placeholder="Ingrese Slots"></li>
-    <li><text>Memoria Max</text><input name="memoria_max" id="memoria_max" type="text" placeholder="Cantidad Soportada"></li>
+    <li><text>Memoria Max</text>{select_capacidades}{select_unidades}</li>
+
 </ul>
 </fieldset>
     <div class="error_n_marc text-error"></div>
@@ -30,6 +31,10 @@
         minLength : 2
     });
 
+    $("#select_unidades_computadoras option[value=2]").attr("selected","selected");
+    $("#select_unidades_computadoras").attr("disabled","disabled");
+
+
     $("#form_nueva_marca_y_modelo_computadora").validate({
         errorLabelContainer : ".error_n_marc",
         wrapper : "li",
@@ -43,6 +48,10 @@
             },
             modelo : {
                 required : true
+            },
+            slots : {
+                required : true,
+                number : true
             }
         } ,
         messages : {
@@ -51,6 +60,10 @@
             },
             modelo : {
                 required : 'El campo Modelo no puede ser vacío'
+            },
+            slots : {
+                required : 'El campo Slots no puede ser vacío',
+                number : 'La cantidad de slots debe ser numérica'
             }
         } ,
         submitHandler : function (form) {
@@ -63,7 +76,9 @@
                                metodo: 'agregar',
                                tipo: "{Producto}",
                                marca: $("#marcas").val(),
-                               modelo: $("#modelo").val()
+                               modelo: $("#modelo").val(),
+                               slots: $("#slots").val(),
+                               mem_max: $("#select_capacidades_computadoras").val()
                              },
                         dataType: 'json',
                         success : function(data){
@@ -72,12 +87,7 @@
                                 alert('Se ha agregado el producto correctamente');
                                 $("#dialogcontent_nueva_marca").dialog("destroy");
                                 $("#dialogcontent_nueva_marca").remove();
-                                if({Producto} == "Monitor"){
-                                    $("#tabs1").load("controlador/ProductosController.php",{action:"agregar_monitor"});
-                                }
-                                else if({Producto} == "Impresora"){
-                                    $("#tabs5").load("controlador/ProductosController.php",{action:"agregar_impresora"});
-                                }
+                                $("#tabs2").load("controlador/ProductosController.php",{action:"agregar_computadora"});
                             }
                             else{
                                 alert("Hubo un error");

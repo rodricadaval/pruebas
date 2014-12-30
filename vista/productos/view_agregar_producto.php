@@ -8,11 +8,11 @@
 </ul>
 
 <div class="tab-content">
-  <div class="tab-pane" id="tabs1"><h2>Menu para agregar un Monitor</h2></div>
-  <div class="tab-pane" id="tabs2"><h2>Menu para agregar una Computadora</h2></div>
-  <div class="tab-pane" id="tabs3"><h2>Menu para agregar una Memoria</h2></div>
-  <div class="tab-pane" id="tabs4"><h2>Menu para agregar un Disco</h2></div>
-  <div class="tab-pane" id="tabs5"><h2>Menu para agregar una Impresora</h2></div>
+  <div class="tab-pane" id="tabs1"></div>
+  <div class="tab-pane" id="tabs2"></div>
+  <div class="tab-pane" id="tabs3"></div>
+  <div class="tab-pane" id="tabs4"></div>
+  <div class="tab-pane" id="tabs5"></div>
 
 </div>
 

@@ -60,6 +60,10 @@ if (!isset($_POST['action'])) {
 
 				$inst_vel = new Velocidades();
 				echo $inst_vel->dameSelect($_POST['value_marca'],$_POST['value_tipo']);
+				
+			} else if ($_POST['tipo'] == "sel_velocidades_nueva_marca"){
+				$inst_vel = new Velocidades();
+				echo $inst_vel->dameSelectVelocidadesPosiblesParaTipo($_POST['value_tipo']);
 			}
 			break;
 

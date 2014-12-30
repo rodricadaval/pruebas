@@ -39,8 +39,8 @@ class Discos {
 			foreach ($data[$i] as $campo => $valor) {
 
 				switch ($campo) {
-					case 'id_marca':
-						$data[$i]['marca'] = Marcas::getNombre($valor);
+					case 'id_disco_desc':
+						$data[$i]['marca'] = Disco_desc::dameMarca($valor);
 						break;
 
 					case 'id_vinculo':
@@ -89,8 +89,8 @@ class Discos {
 	public function dameDatos($id) {
 		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_disco = '$id' ")->_fetchRow();
 		foreach ($fila as $campo => $valor) {
-			if ($campo == "marca") {
-				$fila['marca'] = Marcas::getNombre($valor);
+			if ($campo == "id_disco_desc") {
+				$fila['marca'] = Disco_desc::dameMarcas($valor);
 			} else {
 				$fila[$campo] = $valor;
 			}
@@ -100,9 +100,11 @@ class Discos {
 
 	public function agregar($datos) {
 
-		$values = $datos['id_vinculo'] . "," . $datos['capacidad'] . "," . $datos['unidad'] . "," . $datos['marca'];
+		$id_disco_desc = Disco_desc::buscar_id_por_marca($datos['marca']);
 
-		if (!BDD::getInstance()->query("INSERT INTO system.discos (id_vinculo,id_capacidad,id_unidad,id_marca) VALUES ($values)")->get_error()) {
+		$values = $datos['id_vinculo'] . "," . $datos['capacidad'] . "," . $datos['unidad'] . "," . $id_disco_desc;
+
+		if (!BDD::getInstance()->query("INSERT INTO system.discos (id_vinculo,id_capacidad,id_unidad,id_disco_desc) VALUES ($values)")->get_error()) {
 			$valor_seq_actual_discos = BDD::getInstance()->query("select nextval('system.discos_id_disco_seq'::regclass)")->_fetchRow()['nextval'];
 			$valor_seq_actual_discos--;
 			BDD::getInstance()->query("select setval('system.discos_id_disco_seq'::regclass,'$valor_seq_actual_discos')");
@@ -170,8 +172,8 @@ class Discos {
 			$html_view .= "<tr>";
 
 			$datos_desc = self::dameDatos($contenido['id_disco']);
-			
-			$html_view .= "<td>".Marcas::getNombre($contenido['id_marca'])."</td>";
+
+			$html_view .= "<td>".$datos_desc['marca']."</td>";
 			$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
 			$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
 	

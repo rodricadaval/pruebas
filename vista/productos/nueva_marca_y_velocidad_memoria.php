@@ -1,12 +1,14 @@
-<form id="form_nueva_marca_y_modelo">
+<form id="form_nueva_marca_y_velocidad_memoria">
 <fieldset>
 <legend><text style="font-size:15px;">Escriba una marca nueva o elija una existente</text></legend>
 <ul>
     <li><text>Marca</text><input name="marca" id="marcas" class="typeahead" type="text" placeholder="Ingrese Marca"></li>
-    <li><text>Modelo</text><input name="modelo" id="modelo" type="text" name="nuevo_modelo" placeholder="Ingrese Modelo"></li>
+    <li><text>Tipo</text>{select_tipos}</li>
+    <li><text>Velocidad</text>{select_velocidades}</li>
+
 </ul>
 </fieldset>
-    <div><p class="error_n_marc text-error"></p></div>
+    <div class="error_n_marc text-error"></div>
 </form>
 
 <script type="text/javascript">
@@ -28,7 +30,23 @@
         minLength : 2
     });
 
-    $("#form_nueva_marca_y_modelo").validate({
+    $("#select_tipos").on('change',function(){
+
+        console.log("Evento de seleccion de tipos");
+
+        $.post('controlador/ProductosController.php',
+            {
+                value_tipo : $('#select_tipos option:selected').val(),
+                tipo : "sel_velocidades_nueva_marca",
+                action : "agregar_memoria"
+
+            }, function(data) {
+            $("#select_velocidades_nueva_memoria").replaceWith(data);
+            });
+    });
+
+
+    $("#form_nueva_marca_y_velocidad_memoria").validate({
         errorLabelContainer : ".error_n_marc",
         wrapper : "li",
         onfocusout: false,
@@ -38,19 +56,13 @@
         rules : {
             marca : {
                 required : true
-            },
-            modelo : {
-                required : true
             }
         } ,
         messages : {
             marca : {
                 required : 'El campo Marca no puede ser vacío'
-            },
-            modelo : {
-                required : 'El campo Modelo no puede ser vacío'
             }
-        } ,
+        },
         submitHandler : function (form) {
             console.log ("Formulario OK");
 
@@ -61,7 +73,8 @@
                                metodo: 'agregar',
                                tipo: "{Producto}",
                                marca: $("#marcas").val(),
-                               modelo: $("#modelo").val()
+                               tecnologia: $("#select_tipos").val(),
+                               velocidad: $("#select_velocidades_nueva_memoria option:selected").val()
                              },
                         dataType: 'json',
                         success : function(data){
@@ -70,12 +83,7 @@
                                 alert('Se ha agregado el producto correctamente');
                                 $("#dialogcontent_nueva_marca").dialog("destroy");
                                 $("#dialogcontent_nueva_marca").remove();
-                                if({Producto} == "Monitor"){
-                                    $("#tabs1").load("controlador/ProductosController.php",{action:"agregar_monitor"});
-                                }
-                                else if({Producto} == "Impresora"){
-                                    $("#tabs5").load("controlador/ProductosController.php",{action:"agregar_impresora"});
-                                }
+                                $("#tabs3").load("controlador/ProductosController.php",{action:"agregar_memoria"});
                             }
                             else{
                                 alert("Hubo un error");

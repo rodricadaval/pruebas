@@ -74,7 +74,21 @@ class Marcas {
 			 				$datos['id_marca'] = self::agregar($datos['marca']);
 			 			}
 			 			unset($datos['marca']);
+			 			$datos['mem_max'] = Capacidades::getNombre($datos['mem_max']);
 			 			echo Computadora_desc::agregar_marca_y_modelo($datos);		
+			 		
+			 		break;
+
+			 	case 'Memoria':
+			 			unset($datos['tipo']);
+			 			if(self::existe($datos['marca'])){
+			 				$datos['id_marca'] = self::getIdByNombre($datos['marca']);
+			 			}
+			 			else{
+			 				$datos['id_marca'] = self::agregar($datos['marca']);
+			 			}
+			 			unset($datos['marca']);
+			 			echo Memoria_desc::agregar_nueva_memoria($datos);		
 			 		
 			 		break;
 			 	
@@ -123,7 +137,9 @@ class Marcas {
 					break;
 
 				case 'discos':
-					$table = array(array("id_marca" => 1),array("id_marca" => 8),array("id_marca" => 9),array("id_marca" => 10),array("id_marca" => 11),array("id_marca" => 12),array("id_marca" => 3));
+					/*$table = array(array("id_marca" => 1),array("id_marca" => 8),array("id_marca" => 9),array("id_marca" => 10),array("id_marca" => 11),array("id_marca" => 12),array("id_marca" => 3));*/
+					
+					$table = BDD::getInstance()->query("select distinct id_marca from system.disco_desc where estado = 1")->_fetchAll();
 					$add_id = "_discos";
 					break;
 
