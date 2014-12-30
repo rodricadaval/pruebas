@@ -131,6 +131,9 @@ class Discos {
 			if ($key == "id_unidad"){
 				$datos['unidad'] = Unidades::getNombre($value);
 			}
+			if($key == "id_disco_desc"){
+				$datos['marca'] = Disco_desc::dameMarca($value);
+			}
 		}
 		//var_dump($datos);
 		return array_merge($datos, $datos_extra);
@@ -171,9 +174,7 @@ class Discos {
 		foreach ($listado as $fila => $contenido) {
 			$html_view .= "<tr>";
 
-			$datos_desc = self::dameDatos($contenido['id_disco']);
-
-			$html_view .= "<td>".$datos_desc['marca']."</td>";
+			$html_view .= "<td>".$contenido['marca']."</td>";
 			$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
 			$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
 	

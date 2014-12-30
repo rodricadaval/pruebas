@@ -8,7 +8,7 @@ class Marcas {
 
 	public function listarTodos() {
 
-		$inst_table = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where estado = 1");
+		$inst_table = BDD::getInstance()->query("select *, '<a id=\"modificar_marca\" class=\"pointer\"id_marca=\"' || id_marca || '\"><i class=\"circular inverted green small edit icon\" title=\"Modificar Marca \"></i></a>' as m from system." . self::claseMinus() . " where estado = 1");
 		$i = 0;
 		while ($fila = $inst_table->_fetchRow()) {
 			foreach ($fila as $campo => $valor) {
@@ -25,11 +25,40 @@ class Marcas {
 		return $marca;
 	}
 
+	public function chequeoExistenciaMarcas($marca) {
+		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where nombre = '$marca' ");
+	}
+
+	public function getByID($id) {
+		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_marca = '$id' ")->_fetchRow();
+	}
+
+
 	public function dameDatos($id) {
 		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_marca = '$id' ")->_fetchRow();
 		$fila['marca'] = $fila['nombre'];
 		unset($fila['nombre']);
 		return $fila;
+	}
+
+	public function modificarDatos($datos = '') {
+
+		$cadena = '';
+
+		if (isset($datos['id_marca'])) {
+			$id_marca = $datos['id_marca'];
+			unset($datos['id_marca']);
+			$nombre = $datos['nombre'];
+		}
+
+		$cadena .= "nombre='$nombre'";
+
+		if (!BDD::getInstance()->query("UPDATE system." . self::claseMinus() . " SET $cadena WHERE id_marca = '$id_marca' ")->get_error()) {
+			return 1;
+		} else {
+			var_dump(BDD::getInstance());
+			return 0;
+		}
 	}
 
 	public function getIdByNombre($nombre) {
@@ -65,6 +94,19 @@ class Marcas {
 			 		
 			 		break;
 
+			 	case 'Impresora':
+			 			unset($datos['tipo']);
+			 			if(self::existe($datos['marca'])){
+			 				$datos['id_marca'] = self::getIdByNombre($datos['marca']);
+			 			}
+			 			else{
+			 				$datos['id_marca'] = self::agregar($datos['marca']);
+			 			}
+			 			unset($datos['marca']);
+			 			echo Impresora_desc::agregar_marca_y_modelo($datos);		
+			 		
+			 		break;
+
 			 	case 'Computadora':
 			 			unset($datos['tipo']);
 			 			if(self::existe($datos['marca'])){
@@ -89,6 +131,19 @@ class Marcas {
 			 			}
 			 			unset($datos['marca']);
 			 			echo Memoria_desc::agregar_nueva_memoria($datos);		
+			 		
+			 		break;
+
+			 	case 'Disco':
+			 			unset($datos['tipo']);
+			 			if(self::existe($datos['marca'])){
+			 				$datos['id_marca'] = self::getIdByNombre($datos['marca']);
+			 			}
+			 			else{
+			 				$datos['id_marca'] = self::agregar($datos['marca']);
+			 			}
+			 			unset($datos['marca']);
+			 			echo Disco_desc::agregar_nueva_marca($datos);		
 			 		
 			 		break;
 			 	

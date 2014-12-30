@@ -50,12 +50,19 @@ $(document).ready(function(){
 	                    alert("Los datos han sido actualizados correctamente.");
 	                    $("#dialogcontent_memoria").dialog("destroy").empty();
                         $("#dialogcontent_memoria").remove();
-                        $("#contenedorPpal").remove();
-                        jQuery('<div/>', {
-                        id: 'contenedorPpal',
-                        text: 'Texto por defecto!'
-                        }).appendTo('.realBody');
-	                    $("#contenedorPpal").load("controlador/MemoriasController.php");
+                       
+	                    if("{viene}" == "normal"){
+                            $("#contenedorPpal").remove();
+                            jQuery('<div/>', {
+                            id: 'contenedorPpal',
+                            text: 'Texto por defecto!'
+                            }).appendTo('.realBody');
+                            $("#contenedorPpal").load("controlador/MemoriasController.php");
+                        }
+                        else if("{viene}" == "stock"){
+                            $("#dataTable_stock_memorias").remove();
+                            $("#tabs3_stock").load("controlador/StockController.php",{action:"ver_memorias"});
+                        }
                 	}
                 	else{
                 	alert("Error en la query.");

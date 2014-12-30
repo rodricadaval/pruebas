@@ -249,13 +249,13 @@ table.fixed_user td{
 					  padding-right: 10px;
 					}
 
-#form_nueva_marca_y_modelo ul, #form_nueva_marca_y_modelo_computadora ul, #form_nueva_marca_y_velocidad_memoria ul
+#form_nueva_marca_y_modelo ul, #form_nueva_marca_y_modelo_computadora ul, #form_nueva_marca_y_velocidad_memoria ul, #form_nueva_marca ul
 {
     list-style-type: none;
     padding-left: 0px;
 }
 
-#form_nueva_marca_y_modelo ul li, #form_nueva_marca_y_modelo_computadora ul li, #form_nueva_marca_y_velocidad_memoria ul li
+#form_nueva_marca_y_modelo ul li, #form_nueva_marca_y_modelo_computadora ul li, #form_nueva_marca_y_velocidad_memoria ul li, #form_nueva_marca ul li
 {
     vertical-align: middle;
     height: 40px;
@@ -268,23 +268,22 @@ table.fixed_user td{
     margin-top: 10px;
 }
 
-#form_nueva_marca_y_modelo fieldset, #form_nueva_marca_y_modelo_computadora fieldset, #form_nueva_marca_y_velocidad_memoria fieldset{
+#form_nueva_marca_y_modelo ul li input[name="marca"],#form_nueva_marca_y_modelo_computadora ul li input[name="marca"],#form_nueva_marca_y_velocidad_memoria ul li input[name="marca"],#form_nueva_marca ul li input[name="marca"]
+{
+    text-transform: uppercase;
+}
 
+#form_nueva_marca_y_modelo fieldset, #form_nueva_marca_y_modelo_computadora fieldset, #form_nueva_marca_y_velocidad_memoria fieldset, #form_nueva_marca fieldset
+{
     overflow: auto;
 }
 
-    overflow: auto;
-}
-
-#form_nueva_marca_y_modelo_computadora div, #form_nueva_marca_y_velocidad_memoria div{
+#form_nueva_marca_y_modelo_computadora div p, #form_nueva_marca_y_velocidad_memoria div p, #form_nueva_marca_y_modelo div p, #form_nueva_marca div p{
     margin-left: 27px;
 }
 
-#form_nueva_marca_y_modelo div{
-    margin-left: 27px;   
-}
-
-#form_nueva_marca_y_modelo ul li text, #form_nueva_marca_y_modelo_computadora ul li text, #form_nueva_marca_y_velocidad_memoria ul li text { 
+#form_nueva_marca_y_modelo ul li text, #form_nueva_marca_y_modelo_computadora ul li text, #form_nueva_marca_y_velocidad_memoria ul li text, #form_nueva_marca ul li text 
+{ 
     float: left;
     width: 110px;
     font-size: 17px;

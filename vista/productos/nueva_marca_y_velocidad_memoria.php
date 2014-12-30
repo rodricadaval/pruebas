@@ -79,8 +79,14 @@
                         dataType: 'json',
                         success : function(data){
                             
-                            if(data){
+                            if(data == true){
                                 alert('Se ha agregado el producto correctamente');
+                                $("#dialogcontent_nueva_marca").dialog("destroy");
+                                $("#dialogcontent_nueva_marca").remove();
+                                $("#tabs3").load("controlador/ProductosController.php",{action:"agregar_memoria"});
+                            }
+                            else if(data == "estaba"){
+                                alert('Ya esta esa marca y modelo agregada');
                                 $("#dialogcontent_nueva_marca").dialog("destroy");
                                 $("#dialogcontent_nueva_marca").remove();
                                 $("#tabs3").load("controlador/ProductosController.php",{action:"agregar_memoria"});

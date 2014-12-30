@@ -69,5 +69,21 @@ class Impresora_desc {
 	public function buscar_id_por_marca_modelo($id_marca, $modelo) {
 		return BDD::getInstance()->query("SELECT id_impresora_desc FROM system.impresora_desc where id_marca ='$id_marca' AND modelo='$modelo' ")->_fetchRow()['id_impresora_desc'];
 	}
+
+	public function agregar_marca_y_modelo($datos){
+		$id_marca = $datos['id_marca'];
+		$modelo = $datos['modelo'];
+
+		if(BDD::getInstance()->query("SELECT * FROM system." . self::claseMinus() . " where id_marca = '$id_marca' AND modelo = '$modelo' ")->get_count() > 0){
+				return '"estaba"';
+		}
+		else if(BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . " (id_marca,modelo) VALUES('$id_marca','$modelo') ")->get_error()){
+				var_dump(BDD::getInstance());
+				return "false";
+		}
+		else{
+				return "true";
+		}
+	}
 }
 ?>

@@ -14,8 +14,7 @@
 			success : function(data){
 				var dataTable = $("#dataTable").dataTable({
    			 		"destroy" : true,
-   			 		"bJQueryUI" : true,
-					"aaData" : data,
+   			 		"aaData" : data,
 					"aoColumns" :[
 						{ "sTitle" : "Marca" , "mData" : "marca"},
 						{ "sTitle" : "Capacidad" , "mData" : "capacidad"},

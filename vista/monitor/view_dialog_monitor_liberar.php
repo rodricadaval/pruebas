@@ -31,8 +31,7 @@
                         id: 'contenedorPpal',
                         text: 'Texto por defecto!'
                         }).appendTo('.realBody');
-	                    $("#contenedorPpal").load("controlador/MonitoresController.php");
-					    
+                        $("#contenedorPpal").load("controlador/MonitoresController.php");					    
 				}
 			);
 

@@ -40,7 +40,10 @@ class Computadora_desc {
 		$slots = $datos['slots'];
 		$mem_max = $datos['mem_max'];
 
-		if(BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . " (id_marca,modelo,slots,mem_max) VALUES('$id_marca','$modelo','$slots','$mem_max') ")->get_error()){
+		if(BDD::getInstance()->query("SELECT * FROM system." . self::claseMinus() . " where id_marca = '$id_marca' AND modelo = '$modelo' ")->get_count() > 0){
+				return '"estaba"';
+		}
+		else if(BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . " (id_marca,modelo,slots,mem_max) VALUES('$id_marca','$modelo','$slots','$mem_max') ")->get_error()){
 				var_dump(BDD::getInstance());
 				return "false";
 		}

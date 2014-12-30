@@ -184,12 +184,17 @@ $(document).ready(function(){
                         alert("Los datos han sido actualizados correctamente. Al cambiar de usuario se reemplazará automáticamente el sector de la Cpu por el del usuario elegido.");
                         $("#dialogcontent_memoria").dialog("destroy").empty();
                         $("#dialogcontent_memoria").remove();
-                        $("#contenedorPpal").remove();
-                        jQuery('<div/>', {
-                        id: 'contenedorPpal',
-                        text: 'Texto por defecto!'
-                        }).appendTo('.realBody');
-                        $("#contenedorPpal").load("controlador/MemoriasController.php");
+                        if("{viene}" == "normal"){
+                            $("#contenedorPpal").remove();
+                            jQuery('<div/>', {
+                            id: 'contenedorPpal',
+                            text: 'Texto por defecto!'
+                            }).appendTo('.realBody');
+                            $("#contenedorPpal").load("controlador/MemoriasController.php");
+                        }
+                        else if("{viene}" == "stock"){
+                            $("#tabs3_stock").load("controlador/StockController.php",{action:"ver_memorias"});
+                        }
                     }
                     else{
                          alert("Error en la query.");

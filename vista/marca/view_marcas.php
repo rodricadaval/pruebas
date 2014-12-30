@@ -1,3 +1,4 @@
+<h2>{TABLA}</h2>
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
 
 <script type="text/javascript">
@@ -18,10 +19,8 @@
 								"aoColumns" :[
 									{ "sTitle" : "ID" , "mData" : "id_marca"},
 									{ "sTitle" : "Marca" , "mData" : "nombre"},
-									{ "mData" : "id_marca" , "mRender": function(data, type, row) {
-									  			return '<a class="btn btn-info btn-sm" href=vista/editar_marca.php?' +'id_marca=' + data + '>' + 'Modificar' + '</a>';
-			  					  				 }					  
-			  						}
+									{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
+										'<a class="ventana_area " href="">Modificar</a>'}
 			  					]
 			    			})
 						}
@@ -39,5 +38,51 @@
 
 		});
 	});
+
+	$("#contenedorPpal").on('click' , '#modificar_marca' , function(){
+
+			console.log($(this).attr("id_marca"));
+			var id_marca = $(this).attr("id_marca");
+			$.post( "vista/dialog_content.php",
+				{
+					TablaPpal : "Marcas",
+					ID : id_marca,
+					queSos : "marca" //a quien le voy a generar la vista
+				}, function(data){
+					jQuery('<div/>', {
+				    id: 'dialogcontentmarca',
+				    text: 'Texto por defecto!'
+					}).appendTo('#contenedorPpal');
+					$("#dialogcontentmarca").html(data);
+					$("#dialogcontentmarca").dialog({
+											title: "Modificar Marca",
+											show: {
+											effect: "explode",
+											duration: 200,
+											modal:true
+											},
+											hide: {
+											effect: "blind",
+											duration: 200
+											},
+											width : 400,
+											close : function(){
+												$(this).dialog("destroy").empty();
+												$(this).remove();
+											},
+											buttons :
+						                    {
+						                        "Cancelar" : function () {
+						                            $(this).dialog("destroy").empty();
+						                            $(this).remove();
+						                        },
+						                        "Enviar" : function(){
+						                        	$("#form_marca").submit();
+						                        }
+						                    }
+					});
+				  }
+			);
+		});
 
 </script>

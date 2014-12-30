@@ -7,6 +7,9 @@ $inst_tabla = new $tabla();
 
 $parametros = array();
 
+if(isset($_POST['viene'])){
+	$datos_tabla['viene'] = $_POST['viene'];
+}
 
 if ($_POST['queSos'] == "nuevo") {
 

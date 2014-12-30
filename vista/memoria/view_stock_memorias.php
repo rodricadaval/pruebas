@@ -1,5 +1,5 @@
 <h2>{TABLA}</h2>
-<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
+<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable_stock_memorias"></table>
 
 <script type="text/javascript">
 
@@ -8,11 +8,11 @@
 			url : 'metodos_ajax.php',
 			method: 'post',
 			data:{ clase: '{TABLA}',
-				   metodo: 'listarCorrecto',
+				   metodo: 'listarEnStock',
 				   tipo: 'json'},
 			dataType: 'json',
 			success : function(data){
-				var dataTable = $("#dataTable").dataTable({
+				var dataTable = $("#dataTable_stock_memorias").dataTable({
    			 		"destroy" : true,
 					"aaData" : data,
 					"aoColumns" :[
@@ -47,7 +47,7 @@
 					select_Areas : "Areas", //Clase de la cual quiero sacar el select
 					queSos : "memoria", //a quien le voy a generar la vista
 					action : "modif_sector",
-					viene : "normal"
+					viene : "stock"
 				}, function(data){
 					jQuery('<div/>', {
 				    id: 'dialogcontent_memoria',
@@ -98,7 +98,7 @@
 				queSos : "memoria", //a quien le voy a generar la vista
 				select_Computadoras : "Computadoras",
 				action : "modif_usuario",
-				viene : "normal"
+				viene : "stock"
 			}, function(data){
 				jQuery('<div/>', {
 				    id: 'dialogcontent_memoria',
@@ -149,7 +149,7 @@
 					queSos : "memoria", //a quien le voy a generar la vista
 					select_Computadoras : "Computadoras",
 					action : "modif_cpu",
-					viene : "normal"
+					viene : "stock"
 				}, function(data){
 					jQuery('<div/>', {
 					    id: 'dialogcontent_memoria',
@@ -187,54 +187,6 @@
 			);
 		});
 
-	$("#contenedorPpal").on('click' , '#desasignar_todo_memoria' , function(){
-
-			console.log("Entro a desasignar todo de la memoria");
-			console.log("id_memoria: "+$(this).attr("id_memoria"));
-			var id_memoria = $(this).attr("id_memoria");
-	
-			$.post( "vista/dialog_content.php",
-				{
-					TablaPpal : "Memorias",
-					ID : id_memoria,
-					queSos : "memoria", //a quien le voy a generar la vista
-					action : "liberar"
-				}, function(data){
-					jQuery('<div/>', {
-				    id: 'dialogcontent_memoria',
-				    text: 'Texto por defecto!'
-				}).appendTo('#contenedorPpal');
-					$("#dialogcontent_memoria").html(data);
-					$("#dialogcontent_memoria").dialog({
-												show: {
-												effect: "explode",
-												duration: 200,
-												modal:true
-												},
-												hide: {
-												effect: "explode",
-												duration: 200
-												},
-												width : 350,
-												height : 200,
-												close : function(){
-													$(this).dialog("destroy").empty();
-													$("#dialogcontent_memoria").remove();
-												},
-												buttons :
-							                    {
-							                        "Cancelar" : function () {
-							                            $(this).dialog("destroy").empty();
-							                            $("#dialogcontent_memoria").remove();
-							                        },
-							                        "Aceptar" : function(){
-							                        		$("#liberar_memoria").submit();
-													}
-							                    }
-					});
-				}
-			);
-		});
 
 	$("#contenedorPpal").on('click','#ver_usuario',function(event){
 		event.preventDefault();

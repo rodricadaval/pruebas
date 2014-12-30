@@ -64,7 +64,10 @@ class Monitor_desc {
 		$id_marca = $datos['id_marca'];
 		$modelo = $datos['modelo'];
 
-		if(BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . " (id_marca,modelo) VALUES('$id_marca','$modelo') ")->get_error()){
+		if(BDD::getInstance()->query("SELECT * FROM system." . self::claseMinus() . " where id_marca = '$id_marca' AND modelo = '$modelo' ")->get_count() > 0){
+				return '"estaba"';
+		}
+		else if(BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . " (id_marca,modelo) VALUES('$id_marca','$modelo') ")->get_error()){
 				var_dump(BDD::getInstance());
 				return "false";
 		}

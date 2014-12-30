@@ -55,8 +55,13 @@ $(document).ready(function(){
                         id: 'contenedorPpal',
                         text: 'Texto por defecto!'
                         }).appendTo('.realBody');
-	                    $("#contenedorPpal").load("controlador/MonitoresController.php");
-                	}
+                        if("{viene}" == "normal"){
+	                       $("#contenedorPpal").load("controlador/MonitoresController.php");
+                	    }
+                        else if("{viene}" == "stock"){
+                           $("#contenedorPpal").load("vista/stock/view_stock_productos.php",{vista:"ver_monitores"});
+                        }
+                    }
                 	else{
                 	alert("Error en la query.");
                 	}

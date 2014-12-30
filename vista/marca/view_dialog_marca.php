@@ -1,12 +1,12 @@
-<form id="form_area">
-    <div id="errores_area" class="error_dialog"></div>
+<form id="form_marca">
+    <div id="errores_marca" class="error_dialog"></div>
     <table class="mytable">
         <tr>
           <td class="required">Nombre</td>
           <td><input type="text" name="nombre" id="nombre" value="{nombre}"></td>
         </tr>
         <tr>
-          <td><input style="background-color:#D3D3D3" type="text" name="id_area" id="id_area" value="{id_area}" readonly></td>
+          <td><input style="background-color:#D3D3D3" type="text" name="id_marca" id="id_marca" value="{id_marca}" readonly></td>
         </tr>
    </table>
 </form>
@@ -15,27 +15,26 @@
 
 $(document).ready(function(){
 
-    var area = $('#nombre');
-    var area_orig = '{nombre}';
-    var estado = {nuevo};
+    var marca = $('#nombre');
+    var marca_orig = '{nombre}';
     var validado = false;
-    $("#id_area").hide();
+    $("#id_marca").hide();
 
 
-    $("#form_area").validate({
-        errorLabelContainer : "#errores_area" ,
+    $("#form_marca").validate({
+        errorLabelContainer : "#errores_marca" ,
         wrapper : "li" ,
         rules : {
             nombre : {
               required : true,
-              minlength : 3,
+              minlength : 2,
               maxlength : 30,
               remote: {
                 url: "checkDisponibilidad.php",
                 type: "post",
                 data: {
                   dato: function() {
-                    if($( "#nombre" ).val() != area_orig){
+                    if($( "#nombre" ).val() != marca_orig){
                       return $( "#nombre" ).val();
                     }
                   },
@@ -43,7 +42,7 @@ $(document).ready(function(){
                     return "chequeo";
                   },
                   tabla: function(){
-                    return "Areas";
+                    return "Marcas";
                   }
                 }
               }
@@ -51,32 +50,28 @@ $(document).ready(function(){
         } ,
         messages : {
             nombre : {
-              required : 'El area es OBLIGATORIA',
-              minlength : 'El area debe tener más de 3 caracteres',
-              maxlength : 'El area debe tener menos de 30 caracteres',
-              remote : 'El nombre de area ya existe'
+              required : 'El marca es OBLIGATORIA',
+              minlength : 'El marca debe tener más de 1 caracter',
+              maxlength : 'El marca debe tener menos de 30 caracteres',
+              remote : 'El nombre de marca ya existe'
             }
         } ,
-        submitHandler : function (form_area) {
+        submitHandler : function (form_marca) {
            console.log ("Formulario OK");
             
-            console.log("Aca empieza el envio de datos de area");
+            console.log("Aca empieza el envio de datos de marca");
 
             var UrlToPass;
-            UrlToPass = $("#form_area").serialize();
+            UrlToPass = $("#form_marca").serialize();
 
-            if(estado == 1){
-              UrlToPass+="&action=crear";
-            }
-            else if(estado == 0){
-              UrlToPass+="&action=modificar";
-            }
+            UrlToPass+="&action=modificar";
+            
             console.log(UrlToPass);
 
               $.ajax({
                     type : 'POST',
                     data : UrlToPass,
-                    url  : 'controlador/AreasController.php',
+                    url  : 'controlador/MarcasController.php',
                     success: function(responseText){ // Obtengo el resultado de exito
                         if(responseText == 0){
                           alert("No se pudieron plasmar los datos. Error de en la Base de datos.");
@@ -87,14 +82,14 @@ $(document).ready(function(){
                         else{
                           alert('Problema en la Sql query');
                         }
-                        $("#dialogcontentarea").dialog("destroy");
-                        $("#dialogcontentarea").remove();
+                        $("#dialogcontentmarca").dialog("destroy");
+                        $("#dialogcontentmarca").remove();
                         $("#contenedorPpal").remove();
                         jQuery('<div/>', {
                         id: 'contenedorPpal',
                         text: 'Texto por defecto!'
                         }).appendTo('.realBody');
-                        $("#contenedorPpal").load("controlador/AreasController.php");
+                        $("#contenedorPpal").load("controlador/MarcasController.php");
                     }
               });       
         } ,

@@ -18,7 +18,6 @@
 								if( permisos == 1) {
 										$("#dataTable").dataTable({
 											"destroy" : true,
-											"bJQueryUI" : true,
 											"aaData" : data,
 											"aoColumns" :[
 												{ "sTitle" : "ID" , "mData" : "id_usuario"},
@@ -35,8 +34,7 @@
 									}
 									else if (permisos == 2) {
 										$("#dataTable").dataTable({
-											"destroy" : true,
-											"bJQueryUI" : true,
+											"destroy" : true,											
 											"aaData" : data,
 											"aoColumns" :[
 												{ "sTitle" : "Usuario" , "mData" : "usuario"},
@@ -50,8 +48,7 @@
 									}
 									else if( permisos == 3) {
 										$("#dataTable").dataTable({
-											"destroy" : true,
-											"bJQueryUI" : true,
+											"destroy" : true,											
 											"aaData" : data,
 											"aoColumns" :[
 												{ "sTitle" : "ID" , "mData" : "id_usuario"},
@@ -194,5 +191,53 @@
 				});
 			});
 	});
+
+	$("#contenedorPpal").on('click','#ver_productos',function(event){
+		event.preventDefault();
+		console.log("Entro a ver los productos del usuario");
+		console.log("usuario: "+$(this).attr("usuario"));
+		var usuario = $(this).attr("usuario");
+
+		$.post( "vista/dialog_productos_usuario.php",
+				{
+					usuario : usuario,
+					action : "ver_productos"
+				}, function(data){
+					jQuery('<div/>', {
+					    id: 'dialogcontent_prod_usuario',
+					    text: 'Texto por defecto!'
+					}).appendTo('#contenedorPpal');
+					$("#dialogcontent_prod_usuario").html(data);
+					$("#dialogcontent_prod_usuario").dialog({
+												title: "Productos de "+usuario,
+												show: {
+												effect: "explode",
+												duration: 200,
+												modal:true
+												},
+												hide: {
+												effect: "explode",
+												duration: 200
+												},
+												width : 600,
+												height : 600,
+												close : function(){
+													$(this).dialog("destroy");
+													$("#dialogcontent_prod_usuario").remove();
+												},
+												buttons :
+							                    {
+							                        "Cancelar" : function () {
+							                            $(this).dialog("destroy");
+							                            $("#dialogcontent_prod_usuario").remove();
+							                        },
+							                        "Enviar" : function(){
+							                        	$("#dialogcontent_prod_usuario").submit();
+							                        }
+							                    }
+					});
+				}
+			);
+	})
 
 </script>

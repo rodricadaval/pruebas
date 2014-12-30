@@ -12,8 +12,7 @@
 			dataType: 'json',
 			success : function(data){
 				$("#dataTable").dataTable({
-   			 		"destroy" : true,
-   			 		"bJQueryUI" : true,
+   			 		"destroy" : true,   			 		
 					"aaData" : data,
 					"aoColumns" :[
 						//{ "sTitle" : "ID" , "mData" : "id_computadora"},

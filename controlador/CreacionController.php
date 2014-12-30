@@ -58,6 +58,12 @@ else if($_POST['action'] == "nueva_marca"){
 			$parametros = array("Producto" => $_POST['tablaPpal'], "select_velocidades" => $select_velocidades,"select_tipos" => $select_tipos);
 			echo Disenio::HTML($url, $parametros);
 			break;
+
+		case 'Disco':
+			$url = array("vista/productos/nueva_marca.php");
+			$parametros = array("Producto" => $_POST['tablaPpal']);
+			echo Disenio::HTML($url, $parametros);
+			break;
 		
 		default:
 			# code...

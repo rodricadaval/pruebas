@@ -17,7 +17,6 @@
      					if(answer == 1 || answer == 3){
 							$("#dataTable").dataTable({
 			   			 		"destroy" : true,
-			   			 		"bJQueryUI" : true,
 								"aaData" : data,
 								"aoColumns" :[
 									{ "sTitle" : "ID" , "mData" : "id_area"},
@@ -29,7 +28,7 @@
 						else if(answer == 2){
 							$("#dataTable").dataTable({
 			   			 		"destroy" : true,
-			   			 		"bJQueryUI" : true,
+			   			 		//"bJQueryUI" : true,
 								"aaData" : data,
 								"aoColumns" :[
 									{ "sTitle" : "Area" , "mData" : "nombre"}

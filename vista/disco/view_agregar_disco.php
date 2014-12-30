@@ -77,4 +77,48 @@
           console.log(validator);
         }
     });
+
+
+    $("#form_agregar_disco").on('click',"#boton_nueva_marca",function(){
+     
+        $.post( "controlador/CreacionController.php",
+                {
+                    tablaPpal : "Disco",
+                    action : "nueva_marca"
+                }, function(data){
+                    jQuery('<div/>', {
+                        id: 'dialogcontent_nueva_marca',
+                        text: 'Texto por defecto!'
+                    }).appendTo('#contenedorPpal');
+                    $("#dialogcontent_nueva_marca").html(data);
+                    $("#dialogcontent_nueva_marca").dialog({
+                                                show: {
+                                                effect: "explode",
+                                                duration: 200,
+                                                modal:true
+                                                },
+                                                hide: {
+                                                effect: "explode",
+                                                duration: 200
+                                                },
+                                                width : 430,
+                                                height : 280,
+                                                close : function(){
+                                                    $(this).dialog("destroy");
+                                                    $("#dialogcontent_nueva_marca").remove();
+                                                },
+                                                buttons :
+                                                {
+                                                    "Cancelar" : function () {
+                                                        $(this).dialog("destroy");
+                                                        $("#dialogcontent_nueva_marca").remove();
+                                                    },
+                                                    "Aceptar" : function(){
+                                                        $("#form_nueva_marca").submit();
+                                                    }
+                                                }
+                    });
+                }
+        );
+    });
 </script>

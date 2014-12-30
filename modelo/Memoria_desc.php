@@ -36,7 +36,10 @@ class Memoria_desc {
 		$velocidad = $datos['velocidad'];
 		$tipo = $datos['tecnologia'];
 
-		if(BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . " (id_marca,velocidad,tipo) VALUES('$id_marca','$velocidad','$tipo') ")->get_error()){
+		if(BDD::getInstance()->query("SELECT * FROM system." . self::claseMinus() . " where id_marca = '$id_marca' AND velocidad = '$velocidad' AND tipo = '$tipo' ")->get_count() > 0){
+				return '"estaba"';
+		}
+		else if(BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . " (id_marca,velocidad,tipo) VALUES('$id_marca','$velocidad','$tipo') ")->get_error()){
 				var_dump(BDD::getInstance());
 				return "false";
 		}

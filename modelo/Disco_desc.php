@@ -76,5 +76,20 @@ class Disco_desc {
 				return "true";
 		}
 	}
+
+	public function agregar_nueva_marca($datos){
+		$id_marca = $datos['id_marca'];
+
+		if(BDD::getInstance()->query("SELECT * FROM system." . self::claseMinus() . " where id_marca = '$id_marca' ")->get_count() > 0){
+				return '"estaba"';
+		}
+		else if(BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . " (id_marca) VALUES('$id_marca') ")->get_error()){
+				Consola::mostrar(var_dump(BDD::getInstance()));
+				return "false";
+		}
+		else{
+				return "true";
+		}
+	}
 }
 ?>

@@ -72,6 +72,58 @@ class Monitores {
 		}
 	}
 
+	public function listarEnStock($datos_extra = "") {
+
+		$inst_table = BDD::getInstance()->query("select * ,
+			'<a id=\"modificar_sector_monitor\" class=\"pointer_mon\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
+			<a id=\"modificar_cpu_monitor\" class=\"pointer_mon\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted blue small laptop icon\" title=\"Asignar una Computadora\"></i></a>
+			<a id=\"modificar_usuario_monitor\" class=\"pointer_mon\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted purple small user icon\" title=\"Asignar un Usuario\"></i></a>
+			<a id=\"eliminar_monitor\" class=\"pointer_mon\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>'
+			as m from system." . self::claseMinus() . " where estado = 1 AND id_vinculo IN (select id_vinculo from system.vinculos where id_usuario=1 AND id_cpu=1 AND id_tipo_producto=1)");
+
+		$todo = $inst_table->_fetchAll();
+		$total = $inst_table->get_count();
+
+		for ($i = 0; $i < $total; $i++) {
+
+				$data[$i] = $todo[$i];
+			
+					foreach ($data[$i] as $campo => $valor) {
+
+						switch ($campo) {
+							case 'id_monitor_desc':
+								$arrayAsoc_desc = Monitor_desc::dameDatos($valor);
+
+								foreach ($arrayAsoc_desc as $camp => $value) {
+									$data[$i][$camp] = $value;
+								}
+								break;
+
+							case 'id_vinculo':
+								$arrayAsoc_vinculo = Vinculos::dameDatos($valor);
+
+								foreach ($arrayAsoc_vinculo as $camp => $value) {
+									$data[$i][$camp] = $value;
+								}
+								break;
+
+							default:
+								# code...
+							break;
+						}
+					}
+					if($data[$i]["nombre_apellido"] == "Sin usuario"){
+							$data[$i]["nombre_apellido"] = "-";
+					}
+		}
+
+		if ($datos_extra[0] == "json") {
+			echo json_encode($data);
+		} else {
+			return $data;
+		}
+	}
+
 	public function getNombre($id) {
 		return BDD::getInstance()->query("select nombre from system." . self::claseMinus() . " where id_monitor = '$id' ")->_fetchRow()['id_monitor'];
 	}

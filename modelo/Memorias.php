@@ -90,6 +90,78 @@ class Memorias {
 		}
 	}
 
+	public function listarEnStock($datos_extra = "") {
+
+		$tipos = Tipo_productos::get_rel_campos();
+		$id_tipo_producto = array_search("Memoria", $tipos);
+
+		$inst_table = BDD::getInstance()->query("select * ,
+			'<a id=\"modificar_sector_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
+			<a id=\"modificar_cpu_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted blue small laptop icon\" title=\"Asignar una Computadora\"></i></a>
+			<a id=\"modificar_usuario_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted purple small user icon\" title=\"Asignar un Usuario\"></i></a>
+			<a id=\"eliminar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>'
+			as m from system." . self::claseMinus() . " where estado = 1 AND id_vinculo IN (select id_vinculo from system.vinculos where id_usuario=1 AND id_cpu=1 AND id_tipo_producto='$id_tipo_producto')");
+
+		$todo = $inst_table->_fetchAll();
+		$total = $inst_table->get_count();
+
+		for ($i = 0; $i < $total; $i++) {
+
+			$data[$i] = $todo[$i];
+
+			foreach ($data[$i] as $campo => $valor) {
+
+				switch ($campo) {
+					case 'id_memoria_desc':
+						$arrayAsoc_desc = Memoria_desc::dameDatos($valor);
+
+						foreach ($arrayAsoc_desc as $camp => $value) {
+							$data[$i][$camp] = $value;
+						}
+						break;
+
+					case 'id_vinculo':
+						$arrayAsoc_vinculo = Vinculos::dameDatos($valor);
+
+						foreach ($arrayAsoc_vinculo as $camp => $value) {
+								$data[$i][$camp] = $value;			
+						}
+						break;
+
+					case 'id_capacidad':
+						$arrayAsoc_vinculo = Capacidades::dameDatos($valor);
+
+						foreach ($arrayAsoc_vinculo as $camp => $value) {
+							$data[$i][$camp] = $value;
+						}
+						break;
+
+					case 'id_unidad':
+						$arrayAsoc_vinculo = Unidades::dameDatos($valor);
+
+						foreach ($arrayAsoc_vinculo as $camp => $value) {
+							$data[$i][$camp] = $value;
+						}
+						break;
+
+					default:
+						# code...
+					break;
+				}
+			}
+			$data[$i]['capacidad'] .= " " . $data[$i]['unidad'];
+			if($data[$i]["nombre_apellido"] == "Sin usuario"){
+					$data[$i]["nombre_apellido"] = "-";
+			}
+		}
+
+		if ($datos_extra[0] == "json") {
+			echo json_encode($data);
+		} else {
+			return $data;
+		}
+	}
+
 	public function dameDatos($id) {
 		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where $id_memoria = '$id' ")->_fetchRow();
 		foreach ($fila as $campo => $valor) {
