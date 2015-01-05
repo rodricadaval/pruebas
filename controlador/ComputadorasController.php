@@ -96,6 +96,17 @@ if (isset($_POST['action'])) {
 				echo $inst_computadoras->tieneEspacioMemLibre($_POST);
 			break;
 
+		case 'liberar':
+				if($_POST['en_conjunto'] == "SI"){
+					unset($_POST['en_conjunto']);
+					echo $inst_computadoras->quitarUsuarioConAsignados($_POST);
+				}
+				else if($_POST['en_conjunto'] == "NO"){
+					unset($_POST['en_conjunto']);
+					echo $inst_computadoras->quitarUsuarioSinAsignados($_POST);	
+				}
+			break;
+
 
 		default:
 			# code...

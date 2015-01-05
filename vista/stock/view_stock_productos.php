@@ -21,24 +21,29 @@
   $(document).ready(function(){
     $("#etabs").tab();
     $("#etabs").bind("show" , function (e){
-      var contentID  = $(e.target).attr("data-target");
-      var contentURL = $(e.target).attr("href");
-      if (typeof(contentURL != 'undefined')){
-        $(contentID).load(contentURL , {action : $(e.target).attr("vista")} , function (){ $("#etabs").tab(); });
-      } else {
-        $(contentID).tab('show');
-      }
+        $("#contenedorPpal").remove();
+        jQuery('<div/>', {
+            id: 'contenedorPpal',
+            text: 'Texto por defecto!'
+            }).appendTo('.realBody');
+        $("#contenedorPpal").load("controlador/StockController.php", {vista: $(e.target).attr("vista")});
     });
 
-    if("{vista}" == "ver_monitores"){
-      $("#tabs1_stock").load("controlador/StockController.php",{action:"ver_monitores"}); 
-    }
-    else if("{vista}" == "ver_memorias"){
-      $("#tabs3_stock").load("controlador/StockController.php",{action:"ver_memorias"}); 
-    }
-    else{
-      $("#etabs a:first").tab('show');  
-    }
+      var contentURL = "controlador/StockController.php";
+      var contentID = "";
+      var vista = "{vista}";
 
+      if("{vista}" == "nada"){
+        vista = "ver_monitores";
+        contentID = $("#etabs a[vista=ver_monitores]").attr("data-target");
+      }
+      else
+      {
+        contentID = $("#etabs a[vista="+"{vista}"+"]").attr("data-target");  
+      }   
+      
+      $(contentID).load(contentURL , {action : vista} , function (){ $("#etabs").tab(); });
+      $(contentID).addClass('active');
+      $("#etabs a[data-target="+contentID+"]").parent().addClass("active");    
   });
 </script>

@@ -55,12 +55,17 @@ $(document).ready(function(){
 	                    alert("Los datos han sido actualizados correctamente.");
 	                    $("#dialogcontent_disco").dialog("destroy").empty();
                         $("#dialogcontent_disco").remove();
-                        $("#contenedorPpal").remove();
-                        jQuery('<div/>', {
-                        id: 'contenedorPpal',
-                        text: 'Texto por defecto!'
-                        }).appendTo('.realBody');
-	                    $("#contenedorPpal").load("controlador/DiscosController.php");
+	                    if("{viene}" == "normal"){
+                            $("#contenedorPpal").remove();
+                            jQuery('<div/>', {
+                            id: 'contenedorPpal',
+                            text: 'Texto por defecto!'
+                            }).appendTo('.realBody');
+                            $("#contenedorPpal").load("controlador/DiscosController.php");
+                        }
+                        else if("{viene}" == "stock"){
+                            $("#contenedorPpal").load("controlador/StockController.php", {vista: "ver_discos"});
+                        }
                 	}
                 	else{
                 	alert("Error en la query.");

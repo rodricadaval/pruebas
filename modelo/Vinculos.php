@@ -158,6 +158,17 @@ class Vinculos {
 		return 1;
 	}
 
+	public function quitarUsuarioDeAsignados($id_cpu){
+
+		$extra = "id_usuario=1";
+
+		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_cpu = '$id_cpu' ")->get_error()) {
+			var_dump(BDD::getInstance());
+			return 0;
+		}
+		return 1;
+	}
+
 
 	public function modificarDatos($datos) {
 

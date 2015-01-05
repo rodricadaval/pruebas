@@ -69,6 +69,59 @@ class Impresoras {
 		}
 	}
 
+	public function listarEnStock($datos_extra = "") {
+
+		$tipos = Tipo_productos::get_rel_campos();
+		$id_tipo_producto = array_search("Impresora", $tipos);
+
+		$inst_table = BDD::getInstance()->query("select * ,
+			'<a id=\"modificar_sector_impresora\" class=\"pointer_mon\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
+			<a id=\"agregar_descripcion_impresora\" class=\"pointer_cpu\"id_impresora=\"' || id_impresora || '\">
+			<i class=\"circular inverted blue small book icon\" title=\"Ver o editar descripcion\"></i></a>
+			<a id=\"eliminar_impresora\" class=\"pointer_mon\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>'
+			as m from system." . self::claseMinus() . " where estado = 1 AND id_vinculo IN (select id_vinculo from system.vinculos where id_sector=1 AND id_tipo_producto='$id_tipo_producto')");
+
+		$todo = $inst_table->_fetchAll();
+		$total = $inst_table->get_count();
+
+		for ($i = 0; $i < $total; $i++) {
+
+			$data[$i] = $todo[$i];
+
+			foreach ($data[$i] as $campo => $valor) {
+
+				switch ($campo) {
+					case 'id_impresora_desc':
+						$arrayAsoc_desc = Impresora_desc::dameDatos($valor);
+
+						foreach ($arrayAsoc_desc as $camp => $value) {
+							$data[$i][$camp] = $value;
+						}
+						break;
+
+					case 'id_vinculo':
+						$arrayAsoc_vinculo = Vinculos::dameDatos($valor);
+
+						foreach ($arrayAsoc_vinculo as $camp => $value) {
+							$data[$i][$camp] = $value;
+						}
+						break;
+
+					default:
+						# code...
+					break;
+				}
+
+			}
+		}
+
+		if ($datos_extra[0] == "json") {
+			echo json_encode($data);
+		} else {
+			return $data;
+		}
+	}
+
 	public function dameComboBoxCrear() {
 
 		$html_view = "<p>Rellene los campos deseados</p>";

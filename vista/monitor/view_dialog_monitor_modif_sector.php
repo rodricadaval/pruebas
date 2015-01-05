@@ -59,7 +59,7 @@ $(document).ready(function(){
 	                       $("#contenedorPpal").load("controlador/MonitoresController.php");
                 	    }
                         else if("{viene}" == "stock"){
-                           $("#contenedorPpal").load("vista/stock/view_stock_productos.php",{vista:"ver_monitores"});
+                           $("#contenedorPpal").load("controlador/StockController.php", {vista: "ver_monitores"});
                         }
                     }
                 	else{

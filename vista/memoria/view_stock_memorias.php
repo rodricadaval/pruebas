@@ -1,5 +1,5 @@
-<h2>{TABLA}</h2>
-<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable_stock_memorias"></table>
+<h2>Memorias en Stock</h2>
+<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
 
 <script type="text/javascript">
 
@@ -12,7 +12,7 @@
 				   tipo: 'json'},
 			dataType: 'json',
 			success : function(data){
-				var dataTable = $("#dataTable_stock_memorias").dataTable({
+				$("#dataTable").dataTable({
    			 		"destroy" : true,
 					"aaData" : data,
 					"aoColumns" :[
@@ -21,12 +21,6 @@
 						{ "sTitle" : "Capacidad" , "mData" : "capacidad"},
 						{ "sTitle" : "Velocidad (Mhz)" , "mData" : "velocidad"},
 						{ "sTitle" : "Sector" , "mData" : "sector"},
-						{ "sTitle" : "Usuario" ,"mDataProp": "nombre_apellido",
-              				"mRender": function ( data, type, row ) {
-  								return '<div id="ver_usuario" usuario="'+data+'"><a title="Ver productos de '+data+' "href="edit.php?usuario='+ data+'">'+data+'</a></div>';
-							}
-						},						
-						{ "sTitle" : "Cpu" , "mData" : "cpu_serie"},
 						{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
 										'<a class="ventana_area " href="">Modificar</a>'}
 						]
@@ -186,55 +180,6 @@
 				}
 			);
 		});
-
-
-	$("#contenedorPpal").on('click','#ver_usuario',function(event){
-		event.preventDefault();
-		console.log("Entro a ver los productos del usuario");
-		console.log("usuario: "+$(this).attr("usuario"));
-		var usuario = $(this).attr("usuario");
-
-		$.post( "vista/dialog_productos_usuario.php",
-				{
-					usuario : usuario,
-					action : "ver_productos"
-				}, function(data){
-					jQuery('<div/>', {
-					    id: 'dialogcontent_prod_usuario',
-					    text: 'Texto por defecto!'
-					}).appendTo('#contenedorPpal');
-					$("#dialogcontent_prod_usuario").html(data);
-					$("#dialogcontent_prod_usuario").dialog({
-												title: "Productos de "+usuario,
-												show: {
-												effect: "explode",
-												duration: 200,
-												modal:true
-												},
-												hide: {
-												effect: "explode",
-												duration: 200
-												},
-												width : 600,
-												height : 600,
-												close : function(){
-													$(this).dialog("destroy").empty();
-													$("#dialogcontent_prod_usuario").remove();
-												},
-												buttons :
-							                    {
-							                        "Cancelar" : function () {
-							                            $(this).dialog("destroy").empty();
-							                            $("#dialogcontent_prod_usuario").remove();
-							                        },
-							                        "Enviar" : function(){
-							                        	$("#dialogcontent_prod_usuario").submit();
-							                        }
-							                    }
-					});
-				}
-		);
-	})
 
 	$("#contenedorPpal").on('click' , '#eliminar_memoria' , function(){
 

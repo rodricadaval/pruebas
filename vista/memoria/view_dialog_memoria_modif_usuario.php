@@ -193,7 +193,7 @@ $(document).ready(function(){
                             $("#contenedorPpal").load("controlador/MemoriasController.php");
                         }
                         else if("{viene}" == "stock"){
-                            $("#tabs3_stock").load("controlador/StockController.php",{action:"ver_memorias"});
+                            $("#contenedorPpal").load("controlador/StockController.php", {vista: "ver_memorias"});
                         }
                     }
                     else{

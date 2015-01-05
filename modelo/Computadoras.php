@@ -22,9 +22,88 @@ class Computadoras {
 			<a id=\"agregar_descripcion_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
 			<i class=\"circular inverted blue small book icon\" title=\"Ver o editar descripcion\"></i>
 			</a>
+			<a id=\"desasignar_usuario_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
+			<i class=\"circular green small minus outline icon\" title=\"Liberar Computadora\"></i>
+			</a>
+			<a id=\"eliminar_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
+			<i class=\"circular inverted red small trash icon\" title=\"Dar de baja\"></i>
+			</a>' 
+			as m from system." . self::claseMinus() . " 
+			where estado = 1 and id_computadora <> 1");
+
+		$todo = $inst_table->_fetchAll();
+		$total = $inst_table->get_count();
+
+		for ($i = 0; $i < $total; $i++) {
+
+			$data[$i] = $todo[$i];
+
+			foreach ($data[$i] as $campo => $valor) {
+
+				switch ($campo) {
+					case 'id_computadora_desc':
+						$arrayAsoc_desc = Computadora_desc::dameDatos($valor);
+
+						foreach ($arrayAsoc_desc as $camp => $value) {
+							if($camp == "slots"){
+								$slotsTotales = $value;
+							}								
+							$data[$i][$camp] = $value;
+						}
+						break;
+
+					case 'id_vinculo':
+						$arrayAsoc_vinculo = Vinculos::dameDatos($valor);
+
+						foreach ($arrayAsoc_vinculo as $camp => $value) {
+							$data[$i][$camp] = $value;
+						}
+						break;
+
+					case 'id_computadora':
+						$id_cpu = $valor;
+						break;
+
+					default:
+						# code...
+					break;
+				}				
+			}
+				$data[$i]["slots_libres"] = self::getSlotsLibres($slotsTotales,$id_cpu);
+				if($data[$i]["nombre_apellido"] == "Sin usuario"){
+					$data[$i]["nombre_apellido"] = "-";
+				}
+		}
+
+		if ($datos_extra[0] == "json") {
+			echo json_encode($data);
+		} else {
+			return $data;
+		}
+	}
+
+	public function listarEnStock($datos_extra = "") {
+
+		$tipos = Tipo_productos::get_rel_campos();
+		$id_tipo_producto = array_search("Computadora", $tipos);
+
+		$inst_table = BDD::getInstance()->query("
+			select * , 
+			'<a id=\"modificar_sector_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
+			<i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i>
+			</a>
+			<a id=\"modificar_tipo_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
+			<i class=\"circular inverted green small edit icon\" title=\"Cambiar Tipo\"></i>
+			</a>
+			<a id=\"modificar_usuario_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
+			<i class=\"circular inverted purple small user icon\" title=\"Asignar un Usuario\"></i>
+			</a>
+			<a id=\"agregar_descripcion_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
+			<i class=\"circular inverted blue small book icon\" title=\"Ver o editar descripcion\"></i>
+			</a>
 			<a id=\"eliminar_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\"><i class=\"circular inverted red small trash icon\" title=\"Dar de baja\"></i></a>' as m 
 			from system." . self::claseMinus() . " 
-			where estado = 1 and id_computadora <> 1");
+			where estado = 1 and id_computadora <> 1 AND id_vinculo IN (select id_vinculo from system.vinculos where id_usuario=1 AND id_cpu=1 AND id_tipo_producto='$id_tipo_producto')");
 
 		$todo = $inst_table->_fetchAll();
 		$total = $inst_table->get_count();
@@ -403,6 +482,33 @@ return $tabla;
 		}
 	}
 
+	public function quitarUsuarioConAsignados($datos){
+
+		$inst_vinc = new Vinculos();
+
+		$id_cpu = $inst_vinc->getIdCpuDeLaPc($datos['id_vinculo']);
+		
+		if($inst_vinc->quitarUsuarioDeAsignados($id_cpu)){
+			return $inst_vinc->liberar($datos['id_vinculo']);;
+		}
+		else{
+			return "false";
+		}
+	}
+
+	public function quitarUsuarioSinAsignados($datos){
+		$inst_vinc = new Vinculos();
+
+		$id_cpu = $inst_vinc->getIdCpuDeLaPc($datos['id_vinculo']);
+		
+		if($inst_vinc->desasignarDeCpu($datos)){
+			return $inst_vinc->liberar($datos['id_vinculo']);;
+		}
+		else{
+			return "false";
+		}
+	}
+
 	public function agregarDescripcion($datos) {
 		$id = $datos['id_computadora'];
 		$detalle = $datos['descripcion'];
@@ -435,6 +541,23 @@ return $tabla;
 			return 1;
 		} else {return 0;}
 	}
+
+/*	public function liberar($id){
+		$id_vinculo = BDD::getInstance()->query("select id_vinculo from system.computadoras where id_computadora='$id' ")->_fetchRow()['id_vinculo'];
+		$inst_vinc = new Vinculos();
+		if($inst_vinc->liberar($id_vinculo) == "true"){
+			$datos['id_vinculo'] = $id_vinculo);
+			if($inst_vinc->desasignarDeCpu($datos)){
+				echo "true";
+			}
+			else{
+				echo "false";
+			}
+		}
+		else{
+			echo "false";
+		}
+	}*/
 
 	public function getByID($id) {
 		$datos_compu = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_computadora = '$id' ")->_fetchRow();

@@ -41,10 +41,10 @@ $(document).ready(function(){
                             text: 'Texto por defecto!'
                             }).appendTo('.realBody');
                             $("#contenedorPpal").load("controlador/MemoriasController.php");
-                        }
-                        else if("{viene}" == "stock"){
-                            $("#tabs3_stock").load("controlador/StockController.php",{action:"ver_memorias"});
-                        }
+                    }
+                    else if("{viene}" == "stock"){
+                        $("#contenedorPpal").load("controlador/StockController.php", {vista: "ver_memorias"});
+                    }
                 }
             }
         })

@@ -35,12 +35,17 @@ $(document).ready(function(){
 	                    alert("Los datos han sido actualizados correctamente.");
 	                    $("#dialogcontent_cpu").dialog("destroy").empty();
                         $("#dialogcontent_cpu").remove();
-                         $("#contenedorPpal").remove();
-                        jQuery('<div/>', {
-                        id: 'contenedorPpal',
-                        text: 'Texto por defecto!'
-                        }).appendTo('.realBody');
-	                    $("#contenedorPpal").load("controlador/ComputadorasController.php");
+	                    if("{viene}" == "normal"){
+                            $("#contenedorPpal").remove();
+                            jQuery('<div/>', {
+                            id: 'contenedorPpal',
+                            text: 'Texto por defecto!'
+                            }).appendTo('.realBody');
+                            $("#contenedorPpal").load("controlador/ComputadorasController.php");
+                        }
+                        else if("{viene}" == "stock"){
+                            $("#contenedorPpal").load("controlador/StockController.php", {vista: "ver_computadoras"});
+                        }
                 	}
                 	else{
                 		alert("Error en la query.");

@@ -50,12 +50,17 @@ $(document).ready(function(){
 	                    alert("Los datos han sido actualizados correctamente.");
 	                    $("#dialogcontent_impresora").dialog("destroy").empty();
                         $("#dialogcontent_impresora").remove();
-                        $("#contenedorPpal").remove();
-                        jQuery('<div/>', {
-                        id: 'contenedorPpal',
-                        text: 'Texto por defecto!'
-                        }).appendTo('.realBody');
-	                    $("#contenedorPpal").load("controlador/ImpresorasController.php");
+                        if("{viene}" == "normal"){
+                            $("#contenedorPpal").remove();
+                            jQuery('<div/>', {
+                            id: 'contenedorPpal',
+                            text: 'Texto por defecto!'
+                            }).appendTo('.realBody');
+                            $("#contenedorPpal").load("controlador/ImpresorasController.php");
+                        }
+                        else if("{viene}" == "stock"){
+                            $("#contenedorPpal").load("controlador/StockController.php", {vista: "ver_impresoras"});
+                        }
                 	}
                 	else{
                 	alert("Error en la query.");

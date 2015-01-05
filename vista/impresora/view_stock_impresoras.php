@@ -1,4 +1,4 @@
-<h2>{TABLA}</h2>
+<h2>{TABLA} en Stock</h2>
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
 
 <script type="text/javascript">
@@ -8,7 +8,7 @@
 			url : 'metodos_ajax.php',
 			method: 'post',
 			data:{ clase: '{TABLA}',
-				   metodo: 'listarCorrecto',
+				   metodo: 'listarEnStock',
 				   tipo: 'json'},
 			dataType: 'json',
 			success : function(data){
@@ -42,7 +42,7 @@
 					select_Areas : "Areas", //Clase de la cual quiero sacar el select
 					queSos : "impresora", //a quien le voy a generar la vista
 					action : "modif_sector",
-					viene : "normal"
+					viene : "stock"
 				}, function(data){
 					jQuery('<div/>', {
 				    id: 'dialogcontent_impresora',
@@ -93,7 +93,7 @@
 					ID : id_impresora,
 					queSos : "impresora", //a quien le voy a generar la vista
 					action : "eliminar",
-					viene : "normal"
+					viene : "stock"
 				}, function(data){
 					jQuery('<div/>', {
 				    id: 'dialogcontent_impresora',
@@ -144,7 +144,7 @@
 				ID : id_impresora,
 				queSos : "impresora", //a quien le voy a generar la vista
 				action : "agregar_desc",
-				viene : "normal"
+				viene : "stock"
 			}, function(data){
 				jQuery('<div/>', {
 			    id: 'dialogcontent_impresora',
