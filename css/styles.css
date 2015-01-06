@@ -1,4 +1,4 @@
-body{font-family: arial;}
+body{font-family: ubuntu;}
 
 .a{
 	color:#0033FF;
@@ -36,12 +36,13 @@ h1{
 	font-size: 8px;
 }
 
-#tabla_productos_user td{
+#tabla_productos_user td, #tabla_listado_memorandum_user td{
     text-align: center;
     font-family:courier;
 }
 
-.dialogo_productos_usuario h4{
+
+.dialogo_productos_usuario h4, .dialogo_listado_memorandum_usuario h4{
     color: #474747;
 }
 
@@ -49,7 +50,7 @@ h1{
     text-transform:uppercase;
 }
 
-#tabla_productos_user th {
+#tabla_productos_user th, #tabla_listado_memorandum_user th{
     text-align: center;
     color: #8C8C8C;
 }
@@ -112,11 +113,22 @@ h1{
 		min-height: 500px;
 }
 
-#nuevo_usuario {
+#crear_usuario {
 	float:right;
 	position: relative;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 	margin-top: 10px;
+}
+
+#dataTable_usuario_wrapper tr{
+    height: 10px; /* or whatever height you need to make them all consistent */
+}
+
+#generar_memorandum_usuario {
+    float:left;
+    position: relative;
+    margin-bottom: 15px;
+    margin-top: 10px;
 }
 
 #nueva_area {

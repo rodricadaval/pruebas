@@ -21,7 +21,10 @@
 						{ "sTitle" : "Sector" , "mData" : "sector"},
 						{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
 										'<a class="ventana_area " href="">Modificar</a>'}
-						]
+						],
+					"aoColumnDefs": [
+			            { "sWidth": "20%", "aTargets": [ -1 ] }
+			        ]
     			})
 			}
 		});

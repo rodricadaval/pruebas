@@ -119,6 +119,49 @@ class Vinculos {
 		return "false";
 	}
 
+	public function getByID($id_vinculo){
+
+		$fila = BDD::getInstance()->query("SELECT id_tipo_producto,id_pk_producto FROM system.vinculos WHERE id_vinculo='$id_vinculo' ")->_fetchRow();
+		$tipos = Tipo_productos::get_rel_campos();
+		$tipo_producto = $tipos[$fila['id_tipo_producto']];
+		$id_producto = $fila['id_pk_producto'];
+
+		switch ($tipo_producto) {
+			case 'Monitor':
+				$datos = Monitores::getByID($id_producto);
+				$id_desc = BDD::getInstance()->query("SELECT id_monitor_desc FROM system.monitores WHERE id_monitor='$id_producto' ")->_fetchRow()['id_monitor_desc'];
+				$masDatos = Monitor_desc::dameDatos($id_desc);
+				$datosFinal = array_merge($datos,$masDatos);
+				break;
+
+			case 'Disco':
+				$datosFinal = Discos::getByID($fila['id_pk_producto']);
+				break;
+
+			case 'Memoria':
+				$datos = Memorias::getByID($fila['id_pk_producto']);
+				$id_desc = BDD::getInstance()->query("SELECT id_memoria_desc FROM system.memorias WHERE id_memoria='$id_producto' ")->_fetchRow()['id_memoria_desc'];
+				$masDatos = Memoria_desc::dameDatos($id_desc);
+				$datosFinal = array_merge($datos,$masDatos);
+				break;
+
+			case 'Computadora':
+				$datos = Computadoras::getByID($fila['id_pk_producto']);
+				$id_desc = BDD::getInstance()->query("SELECT id_computadora_desc FROM system.computadoras WHERE id_computadora='$id_producto' ")->_fetchRow()['id_computadora_desc'];
+				$masDatos = Computadora_desc::dameDatos($id_desc);
+				$datosFinal = array_merge($datos,$masDatos);
+				break;
+
+			default:
+				# code...
+				break;
+		}
+		
+		$datosFinal['producto'] = $tipo_producto;
+		return $datosFinal;
+		//return var_dump($datosFinal);
+	}
+
 	public function cambiarSectorDeAsignados($datos){
 		
 		$id_cpu = self::getIdCpuDeLaPc($datos['id_vinculo']);

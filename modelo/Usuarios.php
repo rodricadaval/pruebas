@@ -7,7 +7,7 @@ class Usuarios {
 	}
 
 	public function listarTodos() {
-		$armar_tabla = BDD::getInstance()->query("select * , '<a id=\"modificar_usuario\" class=\"pointer\"id_usuario=\"' || id_usuario || '\"><i title=\"Editar usuario\" class=\"circular inverted green small edit icon\"></i></a> <a id=\"ver_productos\" class=\"pointer\"usuario=\"' || nombre_apellido || '\"><i title=\"Ver productos\" class=\"circular inverted blue small tasks icon\"></i></a> <a id=\"eliminar_usuario\" class=\"pointer\"id_usuario=\"' || id_usuario || '\"><i title=\"Eliminar usuario\" class=\"circular inverted red small trash icon\"></i></a>' as m from system." . self::claseMinus() . " where estado = 1 AND id_usuario <> 1")->_fetchAll();
+		$armar_tabla = BDD::getInstance()->query("select * , '<a id=\"modificar_usuario\" class=\"pointer\"id_usuario=\"' || id_usuario || '\"><i title=\"Editar usuario\" class=\"circular inverted green small edit icon\"></i></a> <a id=\"ver_productos\" class=\"pointer\"usuario=\"' || nombre_apellido || '\"><i title=\"Ver productos\" class=\"circular inverted blue small tasks icon\"></i></a> <a id=\"generar_memorandum\" class=\"pointer\"id_usuario=\"' || id_usuario || '\"><i title=\"Generar Memorandum\" class=\"circular inverted orange file pdf outline small icon\"></i></a> <a id=\"eliminar_usuario\" class=\"pointer\"id_usuario=\"' || id_usuario || '\"><i title=\"Eliminar usuario\" class=\"circular inverted red small trash icon\"></i></a>' as m from system." . self::claseMinus() . " where estado = 1 AND id_usuario <> 1")->_fetchAll();
 		$i = 0;
 
 		foreach ($armar_tabla as $fila) {
@@ -258,5 +258,113 @@ class Usuarios {
 		$html_view = $html_view . "</select>";
 		return $html_view;
 	}
+
+	public function dameListadoMemoDeUsuario($id){
+		
+		$lista = BDD::getInstance()->query("SELECT id_vinculo FROM system.vinculos WHERE id_usuario='$id' ")->_fetchAll();
+		$i = 0;
+		foreach ($lista as $campo) {
+			$lista_con_datos[$i] = Vinculos::getByID($campo['id_vinculo']);
+			$i++;
+		}
+		return self::generarListadoMemorandum($lista_con_datos);	
+	}
+
+	public function generarListadoMemorandum($listado){
+
+		$html_view = "";
+		$html_view .= "<table class='table table-condensed' id='tabla_listado_memorandum_user'>";
+		$html_view .= "<tr>";
+		$html_view .= "<th></th>";
+		$html_view .= "<th>Producto</th>
+					   <th>Detalle</th>";
+		$html_view .= "</tr>";
+
+		if(count($listado) == 0 ){
+			$html_view .= "<tr>";
+			$html_view .= "<td colspan='2'>No tiene productos</td>";
+			$html_view .= "</tr>";
+		}
+
+		foreach ($listado as $fila => $contenido) {
+			$html_view .= "<tr>";
+			$vinculo = $contenido['id_vinculo'];
+			
+			$html_view .= "<td><input type='checkbox' id='productos_seleccionados' value='$vinculo'></td>";
+			$html_view .= "<td>".$contenido['producto']."</td>";
+			switch ($contenido['producto']) {
+				case "Computadora":
+					$tipos = Tipos_Computadoras::get_rel_campos();
+					$clase = $contenido['clase'];
+					$tipo_producto = array_search($clase, $tipos);
+
+					$html_view .= "<td>".$tipo_producto.": ".$contenido['marca'].",".$contenido['modelo'].",".$contenido['num_serie']."</td>";
+					break;
+
+				case 'Monitor':
+					$html_view .= "<td>".$contenido['marca'].",".$contenido['modelo'].",".$contenido['num_serie']."</td>";
+					break;
+				
+				case 'Memoria':
+					$html_view .= "<td>".$contenido['marca'].",".$contenido['capacidad']." ".$contenido['unidad'].",".$contenido['tipo']." ".$contenido['velocidad']."</td>";
+					break;
+
+				case 'Disco':
+						$html_view .= "<td>".$contenido['marca']." ".$contenido['capacidad'].$contenido['unidad']."</td>";	
+						break;	
+				default:
+					$html_view .= "<td>".$contenido['marca']."</td>";
+					break;
+			}
+	
+			$html_view .= "</tr>";
+		}
+
+		$html_view .= "</table>";
+		return $html_view;
+
+	}
+
+	/*public function generarListadoDeUsuario($listado){
+
+		$html_view = "";
+		$html_view .= "<fieldset>";
+		$html_view .= "<h4>Productos</h4>";
+		$html_view .= "<table class='table table-condensed' id='tabla_listado_memorandum_user'>";
+		$html_view .= "<tr>";
+		$html_view .= "<th>Producto</th>
+					   <th>Marca</th>";
+					   <th>Modelo</th>
+					   <th>Pulgadas</th>
+					   <th>Serie Cpu</th>";
+		$html_view .= "</tr>";
+
+		if(count($listado) == 0 ){
+			$html_view .= "<tr>";
+			$html_view .= "<td colspan='5'>No tiene productos</td>";
+			$html_view .= "</tr>";
+		}
+
+		foreach ($listado as $fila => $contenido) {
+			$html_view .= "<tr>";
+
+			$html_view .= "<td>".$contenido['num_serie']."</td>";
+
+			$datos_desc = Monitor_desc::dameDatos($contenido['id_monitor_desc']);
+			if($datos_desc['pulgadas'] == ""){$datos_desc['pulgadas'] = "-";}
+			
+			$html_view .= "<td>".$datos_desc['marca']."</td>";
+			$html_view .= "<td>".$datos_desc['modelo']."</td>";
+			$html_view .= "<td>".$datos_desc['pulgadas']."</td>";
+			$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
+	
+			$html_view .= "</tr>";
+		}
+
+		$html_view .= "</table>";
+		$html_view .= "</fieldset>";
+		return $html_view;
+
+	}*/
 }
 ?>
