@@ -25,8 +25,8 @@ class Discos {
 			'<a id=\"modificar_sector_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"modificar_cpu_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted blue small laptop icon\" title=\"Asignar una Computadora\"></i></a>
 			<a id=\"modificar_usuario_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted purple small user icon\" title=\"Asignar un Usuario\"></i></a>
-			<a id=\"eliminar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>
-			<a id=\"desasignar_todo_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular green small minus outline icon\" title=\"Liberar disco (Quita el usuario y el cpu asignados) \"></i></a>'
+			<a id=\"desasignar_todo_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular green small minus outline icon\" title=\"Liberar disco (Quita el usuario y el cpu asignados) \"></i></a>
+			<a id=\"eliminar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>'
 			as m from system." . self::claseMinus() . " where estado = 1");
 
 		$todo = $inst_table->_fetchAll();

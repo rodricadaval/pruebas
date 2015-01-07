@@ -270,7 +270,7 @@ $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
 												duration: 200
 												},
 												width : 350,
-												height : 200,
+												height : 220,
 												close : function(){
 													$(this).dialog("destroy");
 													$("#dialogcontent_monitor").remove();

@@ -165,8 +165,8 @@ $("#contenedorPpal").on('click' , '#modificar_cpu_monitor' , function(){
 												effect: "explode",
 												duration: 200
 												},
-												width : 350,
-												height : 360,
+												width : 300,
+												height : 250,
 												close : function(){
 													$(this).dialog("destroy");
 													$("#dialogcontent_monitor").remove();

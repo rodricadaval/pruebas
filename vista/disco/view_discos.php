@@ -266,7 +266,7 @@ $("#contenedorPpal").on('click' , '#desasignar_todo_disco' , function(){
 												duration: 200
 												},
 												width : 350,
-												height : 200,
+												height : 220,
 												close : function(){
 													$(this).dialog("destroy").empty();
 													$("#dialogcontent_disco").remove();

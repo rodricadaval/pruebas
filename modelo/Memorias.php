@@ -25,8 +25,8 @@ class Memorias {
 			'<a id=\"modificar_sector_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"modificar_cpu_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted blue small laptop icon\" title=\"Asignar una Computadora\"></i></a>
 			<a id=\"modificar_usuario_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted purple small user icon\" title=\"Asignar un Usuario\"></i></a>
-			<a id=\"eliminar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>
-			<a id=\"desasignar_todo_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular green small minus outline icon\" title=\"Liberar memoria (Quita el usuario y el cpu asignados) \"></i></a>'
+			<a id=\"desasignar_todo_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular green small minus outline icon\" title=\"Liberar memoria (Quita el usuario y el cpu asignados) \"></i></a>
+			<a id=\"eliminar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>'
 			as m from system." . self::claseMinus() . " where estado = 1");
 
 		$todo = $inst_table->_fetchAll();
