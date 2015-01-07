@@ -1,48 +1,117 @@
 <?php 
 	require_once "../ini.php";
 	require "../lib/fpdf/fpdf.php";
+  
+  $datosUsuario = Usuarios::getById($_GET['id_usuario']);
+  $area = Areas::getNombre($datosUsuario['area']);
+  $area = HTML_ENTITIES_DECODE::text_to_pdf_decode($area);
+  unset($_GET['id_usuario']);
 
- class PDF extends FPDF
-{
-// Cabecera de página
-function Header()
-{
-    // Logo
-    $this->Image('../images/cabecera_memo.png',0,0,215);
-    // Arial bold 15
-    $this->SetFont('Arial','BI',9);
-    $this->SetTextColor(120,120,120);
-    // Movernos a la derecha
-    $this->Cell(25);
-    // Título
-    $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode('2014  – “Año de Homenaje al Almirante Guillermo Brown, en el Bicentenario del Combate Naval de Montevideo”.
-');
-    $this->Cell(10,37,$texto,0,1);
-    // Salto de línea
-    $this->Ln(20);
-}
-
-// Pie de página
-function Footer()
-{
-    // Posición: a 1,5 cm del final
-    $this->SetY(-15);
-    // Arial italic 8
-    $this->SetFont('Arial','I',8);
-    // Número de página
-    $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
-}
-}
-
-// Creación del objeto de la clase heredada
-$pdf = new PDF();
+$pdf=new PDF();
+//Títulos de las columnas
+$columnas=array('MEMORANDUM','','SISTEMAS');
 $pdf->AliasNbPages();
+//Primera página
 $pdf->AddPage();
-$pdf->SetFont('Arial','',12);
-$pdf->Cell(40,20,'MEMORANDUM',1,1,'C');
-for($i=1;$i<=10;$i++)
-    $pdf->Cell(0,10,'Imprimiendo linea numero '.$i,0,1);
-$pdf->Output();
-?>
+$y = 45;
+$pdf->SetY($y);
+$pdf->SetX(130);
+$pdf->TablaSimple($columnas);
+$pdf->SetFont('Arial','B',11);
+$y += 30;
+$pdf->SetY($y);
+$pdf->SetX(25);
+$pdf->Cell(0,0,"AREA ".$area,0,1);
+$y += 10;
+$pdf->SetY($y);
+$pdf->SetX(138);
+$pdf->SetFont('Arial','I',11);
+$pdf->Cell(0,0,'Ref./ Entrega de Equipamiento',0,1);
+$y += 10;
+$pdf->SetY($y);
+$pdf->SetX(30);
+$pdf->SetFont('Arial','',11);
+$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode('Por la presente dejo constancia de la remisión de los ítems que a continuación se detallan:');
+$pdf->Cell(0,0,$texto,0,1);
 
- ?>
+  $i = 0;
+  $y+=15;
+
+  foreach ($_GET as $key => $value) {
+  	$datos[$i] = Vinculos::getByID($value);
+	$pdf->SetY($y);
+	$pdf->SetX(35);  
+	$pdf->SetFont('Arial','',11);	
+
+  	switch ($datos[$i]['producto']) {
+  		case 'Computadora':	
+  			$tipos = Tipos_Computadoras::get_rel_campos();
+			$clase = $datos[$i]['clase'];
+			$tipo_producto = array_search($clase, $tipos);
+			$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode($tipo_producto.": ".$datos[$i]['marca']." ".$datos[$i]['modelo']."   Serie N° ".$datos[$i]['num_serie']);
+  			$pdf->Cell(0,0,$texto,0,1);
+  			break;
+
+  		case 'Monitor':	
+  			$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode($datos[$i]['producto'].": ".$datos[$i]['marca']." ".$datos[$i]['modelo']."   Serie N° ".$datos[$i]['num_serie']);
+  			$pdf->Cell(0,0,$texto,0,1);
+  			break;
+
+  		case 'Disco':	
+  			$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode($datos[$i]['producto'].": ".$datos[$i]['marca']."  ".$datos[$i]['capacidad'].$datos[$i]['unidad']);
+  			$pdf->Cell(0,0,$texto,0,1);
+  			break;
+
+  		case 'Memoria':	
+  			$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode($datos[$i]['producto'].": ".$datos[$i]['marca']."  ".$datos[$i]['tipo']."  ".$datos[$i]['capacidad'].$datos[$i]['unidad']);
+  			$pdf->Cell(0,0,$texto,0,1);		
+  			break;	
+  		
+  		default:
+  			# code...
+  			break;
+  	}
+  	$y+=5;
+  }
+
+  	$y+=5;
+  	$pdf->SetY($y);
+	$pdf->SetX(35); 
+    $pdf->Cell(0,0,"Total: ".count($_GET),0,1);
+    $y+=10;
+  	$pdf->SetY($y);
+  	$pdf->SetX(35);
+    $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("También  se  deja  constancia  de  haber  recibido  las  partes en perfecto estado de");
+    $pdf->Cell(0,0,$texto,0,1);
+    $y+=5;
+  	$pdf->SetY($y);
+  	$pdf->SetX(35);
+    $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("funcionamiento y me responsabilizo de su cuidado. Y por cualquier tipo de cambio o");
+    $pdf->Cell(0,0,$texto,0,1);
+    $y+=5;
+  	$pdf->SetY($y);
+  	$pdf->SetX(35);
+    $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("defecto me contactaré con el Área de Sistemas Informáticos.");
+    $pdf->Cell(0,0,$texto,0,1);
+    $y+=10;
+  	$pdf->SetY($y);
+  	$pdf->SetX(35);
+    $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("Sin otro motivo saludo atentamente.");
+    $pdf->Cell(0,0,$texto,0,1);
+    $y+=25;
+  	$pdf->SetY($y);
+  	$pdf->SetX(25);
+    $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("RECIBIO / FIRMA:");
+    $pdf->Cell(0,0,$texto,0,1);   
+    $y+=27;
+  	$pdf->SetY($y);
+  	$pdf->SetX(25);
+    $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("ACLARACION:  ".$datosUsuario['nombre_apellido']);
+    $pdf->Cell(0,0,$texto,0,1);
+
+
+
+
+$pdf->Output();
+
+?>

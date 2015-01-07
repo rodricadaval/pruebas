@@ -5,37 +5,23 @@
 <script>
 	$(document).ready(function(){
 
-	var inicio = true;
 		$("#form_listado_memorandum_usuario").on("submit",function(e){
 			e.preventDefault();
 
 			var checked='';
 
+			checked = "id_usuario="+"{id_usuario}";
+			var i = 1;
+
 	    	$('#productos_seleccionados:checked').each(function(){
-	        	if(inicio){
-	        		checked="id_vinculo="+$(this).val();
-	        		inicio = false;
-	        	}
-	        	else{
-	        		checked=checked+"&id_vinculo="+$(this).val();
-	        	}
+	        		checked=checked+"&"+"prod"+i+"="+$(this).val();
+	        		i++;
 	    	});
 
-	            console.log(checked);
+	        console.log(checked);
 
-	    /*        $.ajax({
-                    type : 'POST',
-                    data : checked,
-                    url  : 'controlador/APDF.php',
-                    success: function(responseText){ // Obtengo el resultado de exito
-                     
-                        $("#form_listado_memorandum_usuario").dialog("destroy");
-                        $("#form_listado_memorandum_usuario").remove();
-                    }
-              });*/
-
-	          window.open("controlador/APDF.php?"+checked);
-			})
+	         window.open("controlador/APDF.php?"+checked);
+		})
 
 	});
 	

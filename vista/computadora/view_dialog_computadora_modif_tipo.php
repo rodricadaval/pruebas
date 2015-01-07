@@ -5,7 +5,6 @@
 		</tr>
 		<tr>
 			{select_clases}
-
 		</tr>
 	</table>
 </form>

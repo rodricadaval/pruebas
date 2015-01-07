@@ -15,7 +15,7 @@ if(isset($_POST['action']) && $_POST['action'] == "ver_listado_para_memorandum")
 
 	$url = array("vista/usuario/view_dialog_listado_memorandum_de_usuario.php");
 
-	$parametros = array("LISTADO" => $listado);
+	$parametros = array("LISTADO" => $listado,"id_usuario" => $id_usuario);
 
 	echo Disenio::HTML($url, $parametros);
 }
