@@ -48,6 +48,9 @@ class Vinculos {
 					case 'Impresora':
 						$id = Impresoras::agregar($datos);
 						break;
+					case 'Router':
+						$id = Routers::agregar($datos);
+						break;
 					default:
 						//nada
 					break;
