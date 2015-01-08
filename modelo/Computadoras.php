@@ -441,7 +441,8 @@ return $tabla;
 	}
 
 	public function modificarUsuarioConAsignados($datos){
-		$datos['id_sector'] = Usuarios::dame_id_area($datos['id_usuario']);
+		if(!isset($datos['']))
+		//$datos['id_sector'] = Usuarios::dame_id_area($datos['id_usuario']);
 		$datos['id_cpu'] = $datos['id_computadora'];
 		unset($datos['id_computadora']);
 		$datos['id_vinculo'] = self::getIdVinculoByIdCpu($datos['id_cpu']);
@@ -461,7 +462,7 @@ return $tabla;
 	}
 
 	public function modificarUsuarioSinAsignados($datos) {
-		$datos['id_sector'] = Usuarios::dame_id_area($datos['id_usuario']);
+		//$datos['id_sector'] = Usuarios::dame_id_area($datos['id_usuario']);
 		$id_usuario = $datos['id_usuario'];
 		$datos['id_cpu'] = $datos['id_computadora'];
 		unset($datos['id_computadora']);

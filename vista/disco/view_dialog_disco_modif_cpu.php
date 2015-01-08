@@ -55,12 +55,12 @@ $(document).ready(function(){
 	                    alert("Los datos han sido actualizados correctamente.");
 	                    $("#dialogcontent_disco").dialog("destroy").empty();
                         $("#dialogcontent_disco").remove();
+                        $("#contenedorPpal").remove();
+                        jQuery('<div/>', {
+                        id: 'contenedorPpal',
+                        text: 'Texto por defecto!'
+                        }).appendTo('.realBody');
 	                    if("{viene}" == "normal"){
-                            $("#contenedorPpal").remove();
-                            jQuery('<div/>', {
-                            id: 'contenedorPpal',
-                            text: 'Texto por defecto!'
-                            }).appendTo('.realBody');
                             $("#contenedorPpal").load("controlador/DiscosController.php");
                         }
                         else if("{viene}" == "stock"){

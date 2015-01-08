@@ -45,7 +45,7 @@ else if($_POST['action'] == "nueva_marca"){
 			echo Disenio::HTML($url, $parametros);
 			break;
 
-		case ($_POST['tablaPpal'] == 'Monitor' || $_POST['tablaPpal'] == 'Impresora'):
+		case ($_POST['tablaPpal'] == 'Monitor' || $_POST['tablaPpal'] == 'Impresora' || $_POST['tablaPpal'] == 'Router' || $_POST['tablaPpal'] == 'Switch'):
 			$url = array("vista/productos/nueva_marca_y_modelo.php");
 			$parametros = array("Producto" => $_POST['tablaPpal']);
 			echo Disenio::HTML($url, $parametros);

@@ -97,12 +97,24 @@ $(document).ready(function(){
             onsubmit: true,
             rules : {
                 nombre_usuario: {
-                    notEqual: "Sin usuario"
+                    remote      : {
+                        url     : 'lib/busca_usuario.php' ,
+                        type     : 'post' ,
+                        data     : {
+                            nombre_usuario : function() {
+                                return $("#nombre_usuario").val();
+                            }
+                        }
+                    },
+                    notEqual: 'Sin usuario',
+                    required: true
                 }
             } ,
             messages : {
                 nombre_usuario: {
-                    notEqual: 'No se puede asignar a Sin usuario. Para liberar el monitor clickee el boton LIBERAR'
+                    remote: 'No existe dicho usuario',
+                    notEqual: 'No se puede asignar a Sin usuario. Para liberar el monitor clickee el boton LIBERAR',
+                    required: 'El campo usuario es OBLIGATORIO'
                 }
             } ,
             submitHandler : function (form) {

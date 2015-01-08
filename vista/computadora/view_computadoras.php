@@ -121,7 +121,7 @@
 														duration: 150
 														},
 														width : 400,
-														height: 350,
+														height: 420,
 														close : function(){
 															$(this).dialog("destroy").empty();
 															$("#dialogcontent_cpu").remove();
@@ -172,7 +172,7 @@
 													duration: 200
 													},
 													width : 360,
-													height: 290,
+													height: 310,
 													close : function(){
 														$(this).dialog("destroy").empty();
 														$("#dialogcontent_cpu").remove();
@@ -234,7 +234,7 @@
 						                            $(this).dialog("destroy").empty();
 						                       		$("#dialogcontent_cpu").remove();
 						                        },
-						                        "Guardar" : function(){
+						                        "Aceptar" : function(){
 						                        	$("#form_detalle_eliminar_computadora").submit();
 						                        }
 						                    }

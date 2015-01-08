@@ -1,4 +1,4 @@
-<h2>{TABLA}</h2>
+<h2>{TABLA} en Stock</h2>
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
 
 <script type="text/javascript">
@@ -8,7 +8,7 @@
 			url : 'metodos_ajax.php',
 			method: 'post',
 			data:{ clase: '{TABLA}',
-				   metodo: 'listarCorrecto',
+				   metodo: 'listarEnStock',
 				   tipo: 'json'},
 			dataType: 'json',
 			success : function(data){
@@ -33,26 +33,26 @@
 		});
 	});
 
-	$("#contenedorPpal").on('click' , '#modificar_sector_impresora' , function(){
+	$("#contenedorPpal").on('click' , '#modificar_sector_switch' , function(){
 
-			console.log("Entro a modificar sector de la impresora");
-			console.log("id_impresora: "+$(this).attr("id_impresora"));
-			var id_impresora = $(this).attr("id_impresora");
+			console.log("Entro a modificar sector del switch");
+			console.log("id_switch: "+$(this).attr("id_switch"));
+			var id_switch = $(this).attr("id_switch");
 			$.post( "vista/dialog_content.php",
 				{
-					TablaPpal : "Impresoras",
-					ID : id_impresora,
+					TablaPpal : "Switchs",
+					ID : id_switch,
 					select_Areas : "Areas", //Clase de la cual quiero sacar el select
-					queSos : "impresora", //a quien le voy a generar la vista
+					queSos : "switch", //a quien le voy a generar la vista
 					action : "modif_sector",
-					viene : "normal"
+					viene : "stock"
 				}, function(data){
 					jQuery('<div/>', {
-				    id: 'dialogcontent_impresora',
+				    id: 'dialogcontent_switch',
 				    text: 'Texto por defecto!'
 				}).appendTo('#contenedorPpal');
-					$("#dialogcontent_impresora").html(data);
-					$("#dialogcontent_impresora").dialog({
+					$("#dialogcontent_switch").html(data);
+					$("#dialogcontent_switch").dialog({
 												title: "Cambiar Sector",
 												show: {
 												effect: "explode",
@@ -67,16 +67,16 @@
 												height : 230,
 												close : function(){
 													$(this).dialog("destroy").empty();
-													$("#dialogcontent_impresora").remove();
+													$("#dialogcontent_switch").remove();
 												},
 												buttons :
 							                    {
 							                        "Cancelar" : function () {
 							                            $(this).dialog("destroy").empty();
-							                            $("#dialogcontent_impresora").remove();
+							                            $("#dialogcontent_switch").remove();
 							                        },
 							                        "Aceptar" : function(){
-							                        	$("#form_impresora_mod_sector").submit();
+							                        	$("#form_switch_mod_sector").submit();
 							                        }
 							                    }
 					});
@@ -84,26 +84,76 @@
 			);
 	});
 
-	$("#contenedorPpal").on('click' , '#eliminar_impresora' , function(){
+	$("#contenedorPpal").on('click' , '#modificar_ip_switch' , function(){
 
-		console.log("Entro a eliminar impresora");
-		console.log("id_impresora: "+$(this).attr("id_impresora"));
-		var id_impresora = $(this).attr("id_impresora");
+			console.log("Entro a modificar ip del switch");
+			console.log("id_switch: "+$(this).attr("id_switch"));
+			var id_switch = $(this).attr("id_switch");
+			$.post( "vista/dialog_content.php",
+				{
+					TablaPpal : "Switchs",
+					ID : id_switch,
+					queSos : "switch", //a quien le voy a generar la vista
+					action : "modif_ip",
+					viene : "stock"
+				}, function(data){
+					jQuery('<div/>', {
+				    id: 'dialogcontent_switch',
+				    text: 'Texto por defecto!'
+				}).appendTo('#contenedorPpal');
+					$("#dialogcontent_switch").html(data);
+					$("#dialogcontent_switch").dialog({
+												title: "Cambiar IP",
+												show: {
+												effect: "explode",
+												duration: 200,
+												modal:true
+												},
+												hide: {
+												effect: "explode",
+												duration: 200
+												},
+												width : 290,
+												height : 230,
+												close : function(){
+													$(this).dialog("destroy").empty();
+													$("#dialogcontent_switch").remove();
+												},
+												buttons :
+							                    {
+							                        "Cancelar" : function () {
+							                            $(this).dialog("destroy").empty();
+							                            $("#dialogcontent_switch").remove();
+							                        },
+							                        "Aceptar" : function(){
+							                        	$("#form_switch_mod_ip").submit();
+							                        }
+							                    }
+					});
+				}
+			);
+	});
+
+	$("#contenedorPpal").on('click' , '#eliminar_switch' , function(){
+
+		console.log("Entro a eliminar switch");
+		console.log("id_switch: "+$(this).attr("id_switch"));
+		var id_switch = $(this).attr("id_switch");
 
 		$.post( "vista/dialog_content.php",
 				{
-					TablaPpal : "Impresoras",
-					ID : id_impresora,
-					queSos : "impresora", //a quien le voy a generar la vista
+					TablaPpal : "Switchs",
+					ID : id_switch,
+					queSos : "switch", //a quien le voy a generar la vista
 					action : "eliminar",
-					viene : "normal"
+					viene : "stock"
 				}, function(data){
 					jQuery('<div/>', {
-				    id: 'dialogcontent_impresora',
+				    id: 'dialogcontent_switch',
 				    text: 'Texto por defecto!'
 				}).appendTo('#contenedorPpal');
-					$("#dialogcontent_impresora").html(data);
-					$("#dialogcontent_impresora").dialog({
+					$("#dialogcontent_switch").html(data);
+					$("#dialogcontent_switch").dialog({
 												title: "Motivo de baja",
 												show: {
 												effect: "explode",
@@ -118,16 +168,16 @@
 												height : 280,
 												close : function(){
 													$(this).dialog("destroy").empty();
-													$("#dialogcontent_impresora").remove();
+													$("#dialogcontent_switch").remove();
 												},
 												buttons :
 							                    {
 							                        "Cancelar" : function () {
 							                            $(this).dialog("destroy").empty();
-							                            $("#dialogcontent_impresora").remove();
+							                            $("#dialogcontent_switch").remove();
 							                        },
 							                        "Aceptar" : function(){
-							                        		$("#form_detalle_eliminar_impresora").submit();
+							                        		$("#form_detalle_eliminar_switch").submit();
 													}
 							                    }
 					});
@@ -135,26 +185,26 @@
 			);
 	});
 
-	$("#contenedorPpal").on('click' , '#agregar_descripcion_impresora' , function(){
+	$("#contenedorPpal").on('click' , '#agregar_descripcion_switch' , function(){
 
 		console.log("Entro a agregar descripcion");
-		console.log("id_impresora: "+$(this).attr("id_impresora"));
-		var id_impresora = $(this).attr("id_impresora");
+		console.log("id_switch: "+$(this).attr("id_switch"));
+		var id_switch = $(this).attr("id_switch");
 
 			$.post( "vista/dialog_content.php",
 			{
-				TablaPpal : "Impresoras",
-				ID : id_impresora,
-				queSos : "impresora", //a quien le voy a generar la vista
+				TablaPpal : "Switchs",
+				ID : id_switch,
+				queSos : "switch", //a quien le voy a generar la vista
 				action : "agregar_desc",
-				viene : "normal"
+				viene : "stock"
 			}, function(data){
 				jQuery('<div/>', {
-			    id: 'dialogcontent_impresora',
+			    id: 'dialogcontent_switch',
 			    text: 'Texto por defecto!'
 			}).appendTo('#contenedorPpal');
-				$("#dialogcontent_impresora").html(data);
-				$("#dialogcontent_impresora").dialog({
+				$("#dialogcontent_switch").html(data);
+				$("#dialogcontent_switch").dialog({
 											title: "Descripcion",
 											show: {
 											effect: "explode",
@@ -169,13 +219,13 @@
 											height: 290,
 											close : function(){
 												$(this).dialog("destroy").empty();
-												$("#dialogcontent_impresora").remove();
+												$("#dialogcontent_switch").remove();
 											},
 											buttons :
 						                    {
 						                        "Cancelar" : function () {
 						                            $(this).dialog("destroy").empty();
-						                       		$("#dialogcontent_impresora").remove();
+						                       		$("#dialogcontent_switch").remove();
 						                        },
 						                        "Guardar" : function(){
 						                        	$("#form_detalle_agregar_desc").submit();

@@ -145,6 +145,10 @@ h1{
 	font-style: italic;
 }
 
+.error{
+    margin-top: 15px;
+}
+
 .error_dialog {
 	color:red;
 	font-size: 14px;
@@ -643,3 +647,75 @@ table.fixed_user td{
 }
 
 /*-----------------------------------Termino agregar impresora----------------------------------*/
+
+/*-----------------------------------Agregar Router y Switch----------------------------------------*/
+
+#form_agregar_router
+{
+    /**/
+}
+
+#form_agregar_router ul, #form_agregar_switch ul  
+{
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+#form_agregar_router ul li, #form_agregar_switch ul li 
+{
+    vertical-align: middle;
+    height: 40px;
+    line-height: 40px;
+}
+
+#form_agregar_router div p, #form_agregar_switch div p
+{
+    margin-left: 28px;
+}
+
+#boton_crear_router, #boton_crear_switch
+{
+    float:right;
+    margin-right: 135px;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+#form_agregar_router ul li input[id="ip"], #form_agregar_switch ul li input[id="ip"]
+{
+    width: 146px;
+    text-align: center;
+}
+
+#form_agregar_router ul li input[id="nro_de_serie_r"], #form_agregar_switch ul li input[id="nro_de_serie_s"]
+{
+    width: 146px;
+    text-align: center;
+}
+
+#form_agregar_router fieldset, #form_agregar_switch fieldset
+{
+    overflow: auto;
+}
+
+
+#select_marcas_routers, #select_marcas_switchs 
+{
+    width: 160px;
+}
+
+#select_modelos_Router, #select_modelos_Switch  
+{
+    width: 160px;
+}
+
+#form_agregar_router ul li text, #form_agregar_switch ul li text  
+{ 
+    float: left;
+    width: 110px;
+    font-size: 17px;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+/*-----------------------------------Termino agregar router y switch----------------------------------*/

@@ -1,5 +1,5 @@
-<form id="form_impresora_mod_sector">
-    <table class="t_impresora">
+<form id="form_router_mod_sector">
+    <table class="t_router">        
         <tr type="hidden">
            <td><input type="hidden" name="id_vinculo" id="id_vinculo" value="{id_vinculo}"></td>
         </tr>
@@ -14,41 +14,41 @@
 $(document).ready(function(){
 
     console.log("El id del vinculo es:"+$("#id_vinculo").val());
-
+    
     $("#select_areas").removeAttr("disabled");
 
-    $("#form_impresora_mod_sector").on('submit',function(event){
+    $("#form_router_mod_sector").on('submit',function(event){
 
         event.preventDefault();
         
-        	console.log($("#form_impresora_mod_sector").serialize());
+        	console.log($("#form_router_mod_sector").serialize());
     
-        	var datosUrl =    $("#form_impresora_mod_sector").serialize();
+        	var datosUrl =    $("#form_router_mod_sector").serialize();
             
             datosUrl += "&action=modificar&asing_sector=yes";
 
             console.log(datosUrl);
 
             $.ajax({
-                url: 'controlador/ImpresorasController.php',
+                url: 'controlador/RoutersController.php',
                 type: 'POST',
                 data: datosUrl,
                 success : function(response){
                     if(response){
 	                    console.log(response);
 	                    alert("Los datos han sido actualizados correctamente.");
-	                    $("#dialogcontent_impresora").dialog("destroy").empty();
-                        $("#dialogcontent_impresora").remove();
+	                    $("#dialogcontent_router").dialog("destroy").empty();
+                        $("#dialogcontent_router").remove();
                         $("#contenedorPpal").remove();
-                        jQuery('<div/>', {
-                        id: 'contenedorPpal',
-                        text: 'Texto por defecto!'
-                        }).appendTo('.realBody');
+                            jQuery('<div/>', {
+                            id: 'contenedorPpal',
+                            text: 'Texto por defecto!'
+                            }).appendTo('.realBody');
                         if("{viene}" == "normal"){
-                            $("#contenedorPpal").load("controlador/ImpresorasController.php");
+                            $("#contenedorPpal").load("controlador/RoutersController.php");
                         }
                         else if("{viene}" == "stock"){
-                            $("#contenedorPpal").load("controlador/StockController.php", {vista: "ver_impresoras"});
+                            $("#contenedorPpal").load("controlador/StockController.php", {vista: "ver_routers"});
                         }
                 	}
                 	else{

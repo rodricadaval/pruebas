@@ -76,6 +76,7 @@ $(document).ready(function(){
 
      $("#form_cambiar_usuario_computadora").validate({
         errorLabelContainer : ".error" ,
+        wrapper : "li" ,
         onfocusout: false,
         onkeyup: false,
         onclick: false,
@@ -91,12 +92,15 @@ $(document).ready(function(){
                             return $("#nombre_usuario").val();
                         }
                     }
-                }
+                },
+                notEqual: "Sin usuario"
             }    
         } ,
         messages : {
             nombre_usuario : {
-                remote : 'El usuario no existe'
+                remote : 'El usuario no existe',
+                required: "El campo usuario es OBLIGATORIO",
+                notEqual: "No se puede asignar a Sin usuario. Si quieres quitar el usuario LIBERA la cpu"
             }
         } ,
         submitHandler : function (form) {
@@ -105,7 +109,7 @@ $(document).ready(function(){
             console.log($("#form_cambiar_usuario_computadora").serialize());
     
             var datosUrl =    $("#form_cambiar_usuario_computadora").serialize();
-            if($("#select_areas option:selected").val() > 2)
+            if($("#select_areas option:selected").val() > 1)
             {
                 datosUrl += "&area="+ $("#select_areas option:selected").val();
             }
@@ -123,12 +127,12 @@ $(document).ready(function(){
                         alert("Los datos han sido actualizados correctamente. Tenga en cuenta que al cambiar de usuario se reemplazará automáticamente la Cpu asignada por la del usuario elegido.");
                         $("#dialogcontent_cpu").dialog("destroy").empty();
                         $("#dialogcontent_cpu").remove();
+                        $("#contenedorPpal").remove();
+                        jQuery('<div/>', {
+                        id: 'contenedorPpal',
+                        text: 'Texto por defecto!'
+                        }).appendTo('.realBody');
                         if("{viene}" == "normal"){
-                            $("#contenedorPpal").remove();
-                            jQuery('<div/>', {
-                            id: 'contenedorPpal',
-                            text: 'Texto por defecto!'
-                            }).appendTo('.realBody');
                             $("#contenedorPpal").load("controlador/ComputadorasController.php");
                         }
                         else if("{viene}" == "stock"){

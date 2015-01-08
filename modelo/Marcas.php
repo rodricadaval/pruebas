@@ -80,6 +80,8 @@ class Marcas {
 
 	public function agregar($datos){
 		if(isset($datos['tipo'])){
+			$datos['marca'] = strtoupper($datos['marca']);
+			
 			switch ($datos['tipo']) {
 			 	case 'Monitor':
 			 			unset($datos['tipo']);
@@ -146,7 +148,33 @@ class Marcas {
 			 			echo Disco_desc::agregar_nueva_marca($datos);		
 			 		
 			 		break;
-			 	
+
+			 	case 'Router':
+			 			unset($datos['tipo']);
+			 			if(self::existe($datos['marca'])){
+			 				$datos['id_marca'] = self::getIdByNombre($datos['marca']);
+			 			}
+			 			else{
+			 				$datos['id_marca'] = self::agregar($datos['marca']);
+			 			}
+			 			unset($datos['marca']);
+			 			echo Router_desc::agregar_marca_y_modelo($datos);		
+			 		
+			 		break;
+
+				case 'Switch':
+			 			unset($datos['tipo']);
+			 			if(self::existe($datos['marca'])){
+			 				$datos['id_marca'] = self::getIdByNombre($datos['marca']);
+			 			}
+			 			else{
+			 				$datos['id_marca'] = self::agregar($datos['marca']);
+			 			}
+			 			unset($datos['marca']);
+			 			echo Switch_desc::agregar_marca_y_modelo($datos);		
+			 		
+			 		break;				
+
 			 	default:
 			 		# code...
 			 		break;
@@ -201,6 +229,16 @@ class Marcas {
 				case 'impresoras':
 					$table = BDD::getInstance()->query("select distinct id_marca from system.impresora_desc where estado = 1")->_fetchAll();
 					$add_id = "_impresoras";
+					break;
+
+				case 'routers':
+					$table = BDD::getInstance()->query("select distinct id_marca from system.router_desc where estado = 1")->_fetchAll();
+					$add_id = "_routers";
+					break;
+
+				case 'switchs':
+					$table = BDD::getInstance()->query("select distinct id_marca from system.switch_desc where estado = 1")->_fetchAll();
+					$add_id = "_switchs";
 					break;
 
 				default:

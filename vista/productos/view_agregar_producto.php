@@ -4,6 +4,8 @@
   <li><a data-toggle="tab" data-target="#tabs3" href="controlador/ProductosController.php" vista="agregar_memoria">Memoria</a></li>
   <li><a data-toggle="tab" data-target="#tabs4" href="controlador/ProductosController.php" vista="agregar_disco">Disco</a></li>
   <li><a data-toggle="tab" data-target="#tabs5" href="controlador/ProductosController.php" vista="agregar_impresora">Impresora</a></li>
+  <li><a data-toggle="tab" data-target="#tabs6" href="controlador/ProductosController.php" vista="agregar_router">Router</a></li>
+  <li><a data-toggle="tab" data-target="#tabs7" href="controlador/ProductosController.php" vista="agregar_switch">Switch</a></li>
   
 </ul>
 
@@ -13,6 +15,8 @@
   <div class="tab-pane" id="tabs3"></div>
   <div class="tab-pane" id="tabs4"></div>
   <div class="tab-pane" id="tabs5"></div>
+  <div class="tab-pane" id="tabs6"></div>
+  <div class="tab-pane" id="tabs7"></div>
 
 </div>
 

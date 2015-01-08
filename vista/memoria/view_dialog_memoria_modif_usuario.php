@@ -125,7 +125,17 @@ $(document).ready(function(){
                 sinCpu: true
             },
             nombre_usuario: {
-                notEqual: "Sin usuario"
+                remote      : {
+                        url     : 'lib/busca_usuario.php' ,
+                        type     : 'post' ,
+                        data     : {
+                            nombre_usuario : function() {
+                                return $("#nombre_usuario").val();
+                            }
+                        }
+                    },
+                notEqual: "Sin usuario",
+                required: true
             },
             id_memoria: {
                 required: true,
@@ -156,7 +166,9 @@ $(document).ready(function(){
                 remote: 'No se puede asignar esta memoria en la computadora del usuario. No alcanza el espacio o el usuario no tiene pc'
             },
             nombre_usuario: {
-                notEqual: 'No se puede asignar a Sin usuario. Para liberar la memoria clickee el boton LIBERAR'
+                remote: 'El usuario no existe',
+                notEqual: 'No se puede asignar a Sin usuario. Para liberar la memoria clickee el boton LIBERAR',
+                required : 'El campo usuario es obligatorio'
             }
         } ,
         submitHandler : function (form) {
@@ -184,12 +196,12 @@ $(document).ready(function(){
                         alert("Los datos han sido actualizados correctamente. Al cambiar de usuario se reemplazará automáticamente el sector de la Cpu por el del usuario elegido.");
                         $("#dialogcontent_memoria").dialog("destroy").empty();
                         $("#dialogcontent_memoria").remove();
-                        if("{viene}" == "normal"){
-                            $("#contenedorPpal").remove();
+                        $("#contenedorPpal").remove();
                             jQuery('<div/>', {
                             id: 'contenedorPpal',
                             text: 'Texto por defecto!'
                             }).appendTo('.realBody');
+                        if("{viene}" == "normal"){
                             $("#contenedorPpal").load("controlador/MemoriasController.php");
                         }
                         else if("{viene}" == "stock"){

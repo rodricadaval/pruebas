@@ -48,7 +48,7 @@ foreach ($_POST as $key => $value) {
 
 				break;
 				
-			case ($_POST['queSos'] == 'monitor' || $_POST['queSos'] == 'disco' || $_POST['queSos'] == 'impresora'):
+			case ($_POST['queSos'] == 'monitor' || $_POST['queSos'] == 'disco' || $_POST['queSos'] == 'impresora' || $_POST['queSos'] == 'router' || $_POST['queSos'] == 'switch'):
 
 					$clasePpal = new Vinculos();
 					

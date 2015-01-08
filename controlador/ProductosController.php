@@ -96,7 +96,45 @@ if (!isset($_POST['action'])) {
 
 				}
 
-				break;		
+				break;
+
+		case 'agregar_router':
+				
+				if (!isset($_POST['tipo'])) {
+
+				$url = array("vista/router/view_agregar_router.php");
+				$select_marcas = $inst_marcas->dameSelect("routers");
+				$titulo = "Menu para agregar un Router";
+				$parametros = array("Producto" => "Router", "select_marcas_routers" => $select_marcas, "titulo" => $titulo);
+				echo Disenio::HTML($url, $parametros);
+
+				} else if ($_POST['tipo'] == "sel_modelos") {
+
+				$inst_rout_desc = new Router_desc();
+				echo $inst_rout_desc->dameSelect($_POST['value'], "_Router");
+
+				}
+
+				break;
+
+		case 'agregar_switch':
+				
+				if (!isset($_POST['tipo'])) {
+
+				$url = array("vista/switch/view_agregar_switch.php");
+				$select_marcas = $inst_marcas->dameSelect("switchs");
+				$titulo = "Menu para agregar un Switch";
+				$parametros = array("Producto" => "Switch", "select_marcas_switchs" => $select_marcas, "titulo" => $titulo);
+				echo Disenio::HTML($url, $parametros);
+
+				} else if ($_POST['tipo'] == "sel_modelos") {
+
+				$inst_swi_desc = new Switch_desc();
+				echo $inst_swi_desc->dameSelect($_POST['value'], "_Switch");
+
+				}
+
+				break;			
 
 		default:
 			# code...

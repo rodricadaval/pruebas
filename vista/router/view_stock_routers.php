@@ -1,4 +1,4 @@
-<h2>{TABLA}</h2>
+<h2>{TABLA} en Stock</h2>
 <table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
 
 <script type="text/javascript">
@@ -8,7 +8,7 @@
 			url : 'metodos_ajax.php',
 			method: 'post',
 			data:{ clase: '{TABLA}',
-				   metodo: 'listarCorrecto',
+				   metodo: 'listarEnStock',
 				   tipo: 'json'},
 			dataType: 'json',
 			success : function(data){
@@ -26,33 +26,33 @@
 										'<a class="ventana_area " href="">Modificar</a>'}
 						],
 					"aoColumnDefs": [
-			            { "sWidth": "20%", "aTargets": [ -1 ] }
+			            { "sWidth": "25%", "aTargets": [ -1 ] }
 			        ]
     			})
 			}
 		});
 	});
 
-	$("#contenedorPpal").on('click' , '#modificar_sector_impresora' , function(){
+	$("#contenedorPpal").on('click' , '#modificar_sector_router' , function(){
 
-			console.log("Entro a modificar sector de la impresora");
-			console.log("id_impresora: "+$(this).attr("id_impresora"));
-			var id_impresora = $(this).attr("id_impresora");
+			console.log("Entro a modificar sector del router");
+			console.log("id_router: "+$(this).attr("id_router"));
+			var id_router = $(this).attr("id_router");
 			$.post( "vista/dialog_content.php",
 				{
-					TablaPpal : "Impresoras",
-					ID : id_impresora,
+					TablaPpal : "Routers",
+					ID : id_router,
 					select_Areas : "Areas", //Clase de la cual quiero sacar el select
-					queSos : "impresora", //a quien le voy a generar la vista
+					queSos : "router", //a quien le voy a generar la vista
 					action : "modif_sector",
-					viene : "normal"
+					viene : "stock"
 				}, function(data){
 					jQuery('<div/>', {
-				    id: 'dialogcontent_impresora',
+				    id: 'dialogcontent_router',
 				    text: 'Texto por defecto!'
 				}).appendTo('#contenedorPpal');
-					$("#dialogcontent_impresora").html(data);
-					$("#dialogcontent_impresora").dialog({
+					$("#dialogcontent_router").html(data);
+					$("#dialogcontent_router").dialog({
 												title: "Cambiar Sector",
 												show: {
 												effect: "explode",
@@ -67,16 +67,16 @@
 												height : 230,
 												close : function(){
 													$(this).dialog("destroy").empty();
-													$("#dialogcontent_impresora").remove();
+													$("#dialogcontent_router").remove();			     							        
 												},
 												buttons :
 							                    {
 							                        "Cancelar" : function () {
 							                            $(this).dialog("destroy").empty();
-							                            $("#dialogcontent_impresora").remove();
+							                            $("#dialogcontent_router").remove();							                            
 							                        },
 							                        "Aceptar" : function(){
-							                        	$("#form_impresora_mod_sector").submit();
+							                        	$("#form_router_mod_sector").submit();
 							                        }
 							                    }
 					});
@@ -84,26 +84,77 @@
 			);
 	});
 
-	$("#contenedorPpal").on('click' , '#eliminar_impresora' , function(){
+	$("#contenedorPpal").on('click' , '#modificar_ip_router' , function(){
 
-		console.log("Entro a eliminar impresora");
-		console.log("id_impresora: "+$(this).attr("id_impresora"));
-		var id_impresora = $(this).attr("id_impresora");
+			console.log("Entro a modificar ip del router");
+			console.log("id_router: "+$(this).attr("id_router"));
+			var id_router = $(this).attr("id_router");
+			$.post( "vista/dialog_content.php",
+				{
+					TablaPpal : "Routers",
+					ID : id_router,
+					queSos : "router", //a quien le voy a generar la vista
+					action : "modif_ip",
+					viene : "stock"
+				}, function(data){
+					jQuery('<div/>', {
+				    id: 'dialogcontent_router',
+				    text: 'Texto por defecto!'
+				}).appendTo('#contenedorPpal');
+					$("#dialogcontent_router").html(data);
+					$("#dialogcontent_router").dialog({
+												title: "Cambiar IP",
+												show: {
+												effect: "explode",
+												duration: 200,
+												modal:true
+												},
+												hide: {
+												effect: "explode",
+												duration: 200
+												},
+												width : 290,
+												height : 230,
+												close : function(){
+													$(this).dialog("destroy");
+													$("#dialogcontent_router").remove();
+												},
+												buttons :
+							                    {
+							                        "Cancelar" : function () {
+							                            $(this).dialog("destroy");
+							                            $("#dialogcontent_router").remove();							                           
+							                        },
+							                        "Aceptar" : function(){
+							                        	$("#form_router_mod_ip").submit();
+							                        }
+							                    }
+					});
+				}
+			);
+	});
+
+
+	$("#contenedorPpal").on('click' , '#eliminar_router' , function(){
+
+		console.log("Entro a eliminar router");
+		console.log("id_router: "+$(this).attr("id_router"));
+		var id_router = $(this).attr("id_router");
 
 		$.post( "vista/dialog_content.php",
 				{
-					TablaPpal : "Impresoras",
-					ID : id_impresora,
-					queSos : "impresora", //a quien le voy a generar la vista
+					TablaPpal : "Routers",
+					ID : id_router,
+					queSos : "router", //a quien le voy a generar la vista
 					action : "eliminar",
-					viene : "normal"
+					viene : "stock"
 				}, function(data){
 					jQuery('<div/>', {
-				    id: 'dialogcontent_impresora',
+				    id: 'dialogcontent_router',
 				    text: 'Texto por defecto!'
 				}).appendTo('#contenedorPpal');
-					$("#dialogcontent_impresora").html(data);
-					$("#dialogcontent_impresora").dialog({
+					$("#dialogcontent_router").html(data);
+					$("#dialogcontent_router").dialog({
 												title: "Motivo de baja",
 												show: {
 												effect: "explode",
@@ -118,16 +169,16 @@
 												height : 280,
 												close : function(){
 													$(this).dialog("destroy").empty();
-													$("#dialogcontent_impresora").remove();
+													$("#dialogcontent_router").remove();													
 												},
 												buttons :
 							                    {
 							                        "Cancelar" : function () {
 							                            $(this).dialog("destroy").empty();
-							                            $("#dialogcontent_impresora").remove();
+							                            $("#dialogcontent_router").remove();							                            
 							                        },
 							                        "Aceptar" : function(){
-							                        		$("#form_detalle_eliminar_impresora").submit();
+							                        		$("#form_detalle_eliminar_router").submit();
 													}
 							                    }
 					});
@@ -135,26 +186,26 @@
 			);
 	});
 
-	$("#contenedorPpal").on('click' , '#agregar_descripcion_impresora' , function(){
+	$("#contenedorPpal").on('click' , '#agregar_descripcion_router' , function(){
 
 		console.log("Entro a agregar descripcion");
-		console.log("id_impresora: "+$(this).attr("id_impresora"));
-		var id_impresora = $(this).attr("id_impresora");
+		console.log("id_router: "+$(this).attr("id_router"));
+		var id_router = $(this).attr("id_router");
 
 			$.post( "vista/dialog_content.php",
 			{
-				TablaPpal : "Impresoras",
-				ID : id_impresora,
-				queSos : "impresora", //a quien le voy a generar la vista
+				TablaPpal : "Routers",
+				ID : id_router,
+				queSos : "router", //a quien le voy a generar la vista
 				action : "agregar_desc",
-				viene : "normal"
+				viene : "stock"
 			}, function(data){
 				jQuery('<div/>', {
-			    id: 'dialogcontent_impresora',
+			    id: 'dialogcontent_router',
 			    text: 'Texto por defecto!'
 			}).appendTo('#contenedorPpal');
-				$("#dialogcontent_impresora").html(data);
-				$("#dialogcontent_impresora").dialog({
+				$("#dialogcontent_router").html(data);
+				$("#dialogcontent_router").dialog({
 											title: "Descripcion",
 											show: {
 											effect: "explode",
@@ -169,13 +220,13 @@
 											height: 290,
 											close : function(){
 												$(this).dialog("destroy").empty();
-												$("#dialogcontent_impresora").remove();
+												$("#dialogcontent_router").remove();												
 											},
 											buttons :
 						                    {
 						                        "Cancelar" : function () {
 						                            $(this).dialog("destroy").empty();
-						                       		$("#dialogcontent_impresora").remove();
+						                       		$("#dialogcontent_router").remove();						                       		
 						                        },
 						                        "Guardar" : function(){
 						                        	$("#form_detalle_agregar_desc").submit();

@@ -84,54 +84,88 @@ $(document).ready(function(){
 
     });
 
-    $("#form_disco_mod_usuario").on('submit',function(event){
+    $("#form_disco_mod_usuario").validate({
+            errorLabelContainer : ".error" ,
+            wrapper : "li" ,
+            ignore: [],
+            onfocusout: false,
+            onkeyup: false,
+            onclick: false,
+            onsubmit: true,
+            rules : {
+                nombre_usuario: {
+                    remote      : {
+                        url     : 'lib/busca_usuario.php' ,
+                        type     : 'post' ,
+                        data     : {
+                            nombre_usuario : function() {
+                                return $("#nombre_usuario").val();
+                            }
+                        }
+                    },
+                    notEqual: 'Sin usuario',
+                    required: true
+                }
+            } ,
+            messages : {
+                nombre_usuario: {
+                    remote: 'No existe dicho usuario',
+                    notEqual: 'No se puede asignar a Sin usuario. Para liberar el disco clickee el boton LIBERAR',
+                    required: 'El campo usuario es OBLIGATORIO'
+                }
+            } ,
+            submitHandler : function (form) {
 
-        event.preventDefault();
+                console.log ("Formulario OK");
+                
+                console.log($("#form_disco_mod_usuario").serialize());
+        
+                var datosUrl =    $("#form_disco_mod_usuario").serialize();
+                datosUrl += "&area="+ $("#select_areas option:selected").val();
+                
+                datosUrl += "&action=modificar&asing_usr=yes";
 
-        	console.log($("#form_disco_mod_usuario").serialize());
-    
-        	var datosUrl =    $("#form_disco_mod_usuario").serialize();
-            datosUrl += "&area="+ $("#select_areas option:selected").val();
-            
-            datosUrl += "&action=modificar&asing_usr=yes";
+                console.log(datosUrl);
 
-            console.log(datosUrl);
-
-            $.ajax({
+                 $.ajax({
                 url: 'controlador/DiscosController.php',
                 type: 'POST',
                 data: datosUrl,
                 success : function(response){
                     if(response){
-	                    console.log(response);
-	                    alert("Los datos han sido actualizados correctamente. Al cambiar de usuario se reemplazará automáticamente el sector de la Cpu por el del usuario elegido.");
-	                    $("#dialogcontent_disco").dialog("destroy").empty();
+                        console.log(response);
+                        alert("Los datos han sido actualizados correctamente. Al cambiar de usuario se reemplazará automáticamente el sector de la Cpu por el del usuario elegido.");
+                        $("#dialogcontent_disco").dialog("destroy").empty();
                         $("#dialogcontent_disco").remove();
-	                    if("{viene}" == "normal"){
-                            $("#contenedorPpal").remove();
-                            jQuery('<div/>', {
-                            id: 'contenedorPpal',
-                            text: 'Texto por defecto!'
-                            }).appendTo('.realBody');
+                        $("#contenedorPpal").remove();
+                        jQuery('<div/>', {
+                        id: 'contenedorPpal',
+                        text: 'Texto por defecto!'
+                        }).appendTo('.realBody');
+                        if("{viene}" == "normal"){
                             $("#contenedorPpal").load("controlador/DiscosController.php");
                         }
                         else if("{viene}" == "stock"){
                             $("#contenedorPpal").load("controlador/StockController.php", {vista: "ver_discos"});
                         }
-                	}
-                	else{
-                	alert("Error en la query.");
-                	}
+                    }
+                    else{
+                    alert("Error en la query.");
+                    }
                 }
-            })
-            .fail(function() {
-                console.log("error");
-                alert("Algo no se registro correctaente");
-            })
-            .always(function() {
-                console.log("complete");
-            })
-    });
+                })
+                .fail(function() {
+                    console.log("error");
+                    alert("Algo no se registro correctaente");
+                })
+                .always(function() {
+                    console.log("complete");
+                })
+            } ,
+            invalidHandler : function (event , validator) {
+              console.log(validator);
+            }
+        });
 
 });
 

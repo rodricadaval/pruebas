@@ -51,6 +51,9 @@ class Vinculos {
 					case 'Router':
 						$id = Routers::agregar($datos);
 						break;
+					case 'Switch':
+						$id = Switchs::agregar($datos);
+						break;
 					default:
 						//nada
 					break;
@@ -152,6 +155,20 @@ class Vinculos {
 				$datos = Computadoras::getByID($fila['id_pk_producto']);
 				$id_desc = BDD::getInstance()->query("SELECT id_computadora_desc FROM system.computadoras WHERE id_computadora='$id_producto' ")->_fetchRow()['id_computadora_desc'];
 				$masDatos = Computadora_desc::dameDatos($id_desc);
+				$datosFinal = array_merge($datos,$masDatos);
+				break;
+
+			case 'Router':
+				$datos = Routers::getByID($fila['id_pk_producto']);
+				$id_desc = BDD::getInstance()->query("SELECT id_router_desc FROM system.routers WHERE id_router='$id_producto' ")->_fetchRow()['id_router_desc'];
+				$masDatos = Router_desc::dameDatos($id_desc);
+				$datosFinal = array_merge($datos,$masDatos);
+				break;
+
+			case 'Switch':
+				$datos = Switchs::getByID($fila['id_pk_producto']);
+				$id_desc = BDD::getInstance()->query("SELECT id_switch_desc FROM system.switchs WHERE id_switch='$id_producto' ")->_fetchRow()['id_switch_desc'];
+				$masDatos = Switch_desc::dameDatos($id_desc);
 				$datosFinal = array_merge($datos,$masDatos);
 				break;
 

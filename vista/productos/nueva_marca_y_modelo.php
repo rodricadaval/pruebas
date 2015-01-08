@@ -76,6 +76,12 @@
                                 else if("{Producto}" == "Impresora"){
                                     $("#tabs5").load("controlador/ProductosController.php",{action:"agregar_impresora"});
                                 }
+                                 else if("{Producto}" == "Router"){
+                                    $("#tabs6").load("controlador/ProductosController.php",{action:"agregar_router"});
+                                }
+                                 else if("{Producto}" == "Switch"){
+                                    $("#tabs7").load("controlador/ProductosController.php",{action:"agregar_switch"});
+                                }
                             }
                             else if (data = "estaba"){
                                 alert('Ya esta esa marca y modelo agregada');
@@ -86,6 +92,12 @@
                                 }
                                 else if("{Producto}" == "Impresora"){
                                     $("#tabs5").load("controlador/ProductosController.php",{action:"agregar_impresora"});
+                                }
+                                 else if("{Producto}" == "Router"){
+                                    $("#tabs6").load("controlador/ProductosController.php",{action:"agregar_router"});
+                                }
+                                 else if("{Producto}" == "Switch"){
+                                    $("#tabs7").load("controlador/ProductosController.php",{action:"agregar_switch"});
                                 }
                             }
                             else if(data == false){

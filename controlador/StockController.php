@@ -51,7 +51,23 @@ if (!isset($_POST['action'])) {
 				$parametros = array("TABLA" => "Impresoras", "");
 				echo Disenio::HTML($archivos, $parametros);
 
-				break;		
+				break;
+
+		case 'ver_routers':
+			
+			$archivos = array("vista/router/view_stock_routers.php");
+			$parametros = array("TABLA" => "Routers", "");
+			echo Disenio::HTML($archivos, $parametros);
+
+			break;		
+
+		case 'ver_switchs':
+			
+			$archivos = array("vista/switch/view_stock_switchs.php");
+			$parametros = array("TABLA" => "Switchs", "");
+			echo Disenio::HTML($archivos, $parametros);
+
+			break;				
 
 		default:
 			# code...

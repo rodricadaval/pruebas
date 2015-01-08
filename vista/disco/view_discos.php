@@ -68,7 +68,7 @@ $("#contenedorPpal").on('click' , '#modificar_usuario_disco' , function(){
 											duration: 200
 											},
 											width : 350,
-											height : 260,
+											height : 350,
 											close : function(){
 												$(this).dialog("destroy").empty();
 												$("#dialogcontent_disco").remove();
@@ -88,7 +88,7 @@ $("#contenedorPpal").on('click' , '#modificar_usuario_disco' , function(){
 		);
 	});
 
-$("#contenedorPpal").on('click' , '#modificar_cpu_disco' , function(){
+	$("#contenedorPpal").on('click' , '#modificar_cpu_disco' , function(){
 
 		console.log("Entro a modificar cpu del disco");
 		console.log("id_disco: "+$(this).attr("id_disco"));

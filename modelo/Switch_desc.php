@@ -1,6 +1,6 @@
 <?php
 
-class Router_desc {
+class Switch_desc {
 
 	public static function claseMinus() {
 		return strtolower(get_class());
@@ -20,7 +20,7 @@ class Router_desc {
 	}
 
 	public function dameDatos($id) {
-		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_router_desc = '$id' ")->_fetchRow();
+		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_switch_desc = '$id' ")->_fetchRow();
 		foreach ($fila as $campo => $valor) {
 			if ($campo == "id_marca") {
 				$fila['marca'] = Marcas::getNombre($valor);
@@ -67,7 +67,7 @@ class Router_desc {
 	}
 
 	public function buscar_id_por_marca_modelo($id_marca, $modelo) {
-		return BDD::getInstance()->query("SELECT id_router_desc FROM system.router_desc where id_marca ='$id_marca' AND modelo='$modelo' ")->_fetchRow()['id_router_desc'];
+		return BDD::getInstance()->query("SELECT id_switch_desc FROM system.switch_desc where id_marca ='$id_marca' AND modelo='$modelo' ")->_fetchRow()['id_switch_desc'];
 	}
 
 	public function agregar_marca_y_modelo($datos){
@@ -82,7 +82,6 @@ class Router_desc {
 				return "false";
 		}
 		else{
-				var_dump(BDD::getInstance());
 				return "true";
 		}
 	}

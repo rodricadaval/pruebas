@@ -34,12 +34,12 @@ $(document).ready(function(){
 	                    alert("Los datos han sido actualizados correctamente.");
 	                    $("#dialogcontent_cpu").dialog("destroy").empty();
                         $("#dialogcontent_cpu").remove();
+                        $("#contenedorPpal").remove();
+                        jQuery('<div/>', {
+                        id: 'contenedorPpal',
+                        text: 'Texto por defecto!'
+                        }).appendTo('.realBody');
 	                    if("{viene}" == "normal"){
-                            $("#contenedorPpal").remove();
-                            jQuery('<div/>', {
-                            id: 'contenedorPpal',
-                            text: 'Texto por defecto!'
-                            }).appendTo('.realBody');
                             $("#contenedorPpal").load("controlador/ComputadorasController.php");
                         }
                         else if("{viene}" == "stock"){

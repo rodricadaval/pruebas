@@ -34,12 +34,12 @@ $(document).ready(function(){
                     alert("El memoria ha sido dado de baja correctamente.");
                     $("#dialogcontent_memoria").dialog("destroy").empty();
                     $("#dialogcontent_memoria").remove();
+                    $("#contenedorPpal").remove();
+                        jQuery('<div/>', {
+                        id: 'contenedorPpal',
+                        text: 'Texto por defecto!'
+                        }).appendTo('.realBody');
                     if("{viene}" == "normal"){
-                            $("#contenedorPpal").remove();
-                            jQuery('<div/>', {
-                            id: 'contenedorPpal',
-                            text: 'Texto por defecto!'
-                            }).appendTo('.realBody');
                             $("#contenedorPpal").load("controlador/MemoriasController.php");
                     }
                     else if("{viene}" == "stock"){
