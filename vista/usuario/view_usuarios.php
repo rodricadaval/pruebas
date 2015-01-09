@@ -207,6 +207,7 @@
 		console.log("Entro a seleccionar los productos para el memorandum del usuario");
 		console.log("id_usuario: "+$(this).attr("id_usuario"));
 		var id_usuario = $(this).attr("id_usuario");
+		var usuario = $(this).attr("usuario");
 
 		$.post( "vista/dialog_listado_memorandum_usuario.php",
 				{
@@ -219,7 +220,7 @@
 					}).appendTo('#contenedorPpal');
 					$("#dialogcontent_memorandum_usuario").html(data);
 					$("#dialogcontent_memorandum_usuario").dialog({
-												title: "Generar Memorandum",
+												title: "Generar Memorandum para "+usuario,
 												show: {
 												effect: "explode",
 												duration: 200,
@@ -278,7 +279,7 @@
 												duration: 200
 												},
 												width : 600,
-												height : 600,
+												height : 630,
 												close : function(){
 													$(this).dialog("destroy");
 													$("#dialogcontent_prod_usuario").remove();

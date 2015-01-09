@@ -135,6 +135,56 @@
 			);
 	});
 
+	$("#contenedorPpal").on('click' , '#modificar_ip_impresora' , function(){
+
+			console.log("Entro a modificar ip de la impresora");
+			console.log("id_impresora: "+$(this).attr("id_impresora"));
+			var id_impresora = $(this).attr("id_impresora");
+			$.post( "vista/dialog_content.php",
+				{
+					TablaPpal : "Impresoras",
+					ID : id_impresora,
+					queSos : "impresora", //a quien le voy a generar la vista
+					action : "modif_ip",
+					viene : "normal"
+				}, function(data){
+					jQuery('<div/>', {
+				    id: 'dialogcontent_impresora',
+				    text: 'Texto por defecto!'
+				}).appendTo('#contenedorPpal');
+					$("#dialogcontent_impresora").html(data);
+					$("#dialogcontent_impresora").dialog({
+												title: "Cambiar IP",
+												show: {
+												effect: "explode",
+												duration: 200,
+												modal:true
+												},
+												hide: {
+												effect: "explode",
+												duration: 200
+												},
+												width : 290,
+												height : 230,
+												close : function(){
+													$(this).dialog("destroy").empty();
+													$("#dialogcontent_impresora").remove();
+												},
+												buttons :
+							                    {
+							                        "Cancelar" : function () {
+							                            $(this).dialog("destroy").empty();
+							                            $("#dialogcontent_impresora").remove();
+							                        },
+							                        "Aceptar" : function(){
+							                        	$("#form_impresora_mod_ip").submit();
+							                        }
+							                    }
+					});
+				}
+			);
+	});
+
 	$("#contenedorPpal").on('click' , '#agregar_descripcion_impresora' , function(){
 
 		console.log("Entro a agregar descripcion");

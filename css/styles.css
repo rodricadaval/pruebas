@@ -265,7 +265,12 @@ table.fixed_user td{
 					  padding-right: 10px;
 					}
 
-#form_nueva_marca_y_modelo ul, #form_nueva_marca_y_modelo_computadora ul, #form_nueva_marca_y_velocidad_memoria ul, #form_nueva_marca ul
+#boton_nueva_marca
+{
+    float:left;
+}
+
+/*#form_nueva_marca_y_modelo ul, #form_nueva_marca_y_modelo_computadora ul, #form_nueva_marca_y_velocidad_memoria ul, #form_nueva_marca ul
 {
     list-style-type: none;
     padding-left: 0px;
@@ -276,12 +281,6 @@ table.fixed_user td{
     vertical-align: middle;
     height: 40px;
     line-height: 40px;
-}
-
-#boton_nueva_marca
-{
-    float:left;
-    margin-top: 10px;
 }
 
 #form_nueva_marca_y_modelo ul li input[name="marca"],#form_nueva_marca_y_modelo_computadora ul li input[name="marca"],#form_nueva_marca_y_velocidad_memoria ul li input[name="marca"],#form_nueva_marca ul li input[name="marca"]
@@ -305,417 +304,236 @@ table.fixed_user td{
     font-size: 17px;
     font-weight: bold;
     vertical-align: middle;
+}*/
+
+
+/*-----------------------------------Validation con bootstrap----------------------------------------*/
+
+label.valid {
+  width: 24px;
+  height: 24px;
+  background: url(../images/valid.png) center center no-repeat;
+  display: inline-block;
+  text-indent: -9999px;
 }
+
+label.error {
+  font-weight: bold;
+  color: red;
+  padding: 2px 8px;
+  margin-top: 2px;
+}
+
+label.control-label 
+{
+    display: inline-block;
+    font-weight: bold; 
+    width: 120px;
+}
+
+div.controls{
+    display: inline;
+}
+
+div.form-actions input{
+    display: inline-block;
+}
+
+div.controls input
+{
+    width: 150px;
+    text-align: center;
+}
+
+div.control-group
+{
+    margin-left: 40px;
+    width: auto;
+}
+
+/*-----------------------------------Termino validation con bootstrap------------------------------------*/
 
 /*-----------------------------------Agregar Monitor--------------------------------------*/
 
 #form_agregar_monitor
 {
-    /**/
-}
-
-#form_agregar_monitor ul
-{
-    list-style-type: none;
-    padding-left: 0px;
-}
-
-#form_agregar_monitor ul li
-{
-    vertical-align: middle;
-    height: 40px;
-    line-height: 40px;
+    margin-left: 130px;
+    text-align: left;
 }
 
 #boton_crear_monitor
 {
     float:right;
-    margin-right: 135px;
-    margin-top: 10px;
+    margin-right: 0;
+    font-size: 15px;
 }
 
-#select_marcas_monitores
+#form_agregar_monitor div.controls select
 {
-    width: 160px;
-}
-
-#select_modelos_Monitor
-{
-    width: 160px;
+    width: 162px;
 }
 
 #form_agregar_monitor fieldset{
-	overflow: auto;
-}
-
-#form_agregar_monitor div p{
-    margin-left: 28px;
-}
-
-#form_agregar_monitor ul li input[id="nro_de_serie_m"]
-{
-    width: 146px;
-    text-align: center;
-}
-
-#form_agregar_monitor ul li text{ 
-    float: left;
-    width: 110px;
-    font-size: 17px;
-    font-weight: bold;
-    vertical-align: middle;
+    overflow: auto;
+    height: auto;
+    width: 370px;
 }
 
 /*-----------------------------------Termino agregar monitor------------------------------------*/
-
-/*-----------------------------------Agregar Disco--------------------------------------*/
-
-#form_agregar_disco
-{
-    /**/
-}
-
-#form_agregar_disco ul 
-{
-    list-style-type: none;
-    padding-left: 0px;
-}
-
-#form_agregar_disco ul li
-{
-    vertical-align: middle;
-    height: 40px;
-    line-height: 40px;
-}
-
-#form_agregar_disco div p{
-    margin-left: 28px;
-}
-
-#boton_crear_disco
-{
-    float:right;
-    margin-right: 135px;
-    margin-top: 10px;
-    font-size: 15px;
-}
-
-#select_marcas_discos 
-{
-    width: 160px;
-}
-
-#select_capacidades_discos
-{
-    text-align: right;
-    width: 80px;
-}
-
-#select_unidades_discos
-{
-    width: 80px;
-}
-
-#form_agregar_disco ul li input[id="cantidad"]
-{
-    width: 156px;
-    text-align: center;
-}
-
-#form_agregar_disco ul li text { 
-    float: left;
-    width: 110px;
-    font-size: 17px;
-    font-weight: bold;
-    vertical-align: middle;
-}
-
-/*-----------------------------------Termino agregar disco------------------------------------*/
-
-/*-----------------------------------Agregar Computadora--------------------------------------*/
-
-#form_agregar_computadora
-{
-    /**/
-}
-
-#form_agregar_computadora ul 
-{
-    list-style-type: none;
-    padding-left: 0px;
-}
-
-#form_agregar_computadora ul li
-{
-    vertical-align: middle;
-    height: 40px;
-    line-height: 40px;
-}
-
-#form_agregar_computadora div p{
-    margin-left: 28px;
-}
-
-#boton_crear_computadora
-{
-    float:right;
-    margin-right: 135px;
-    margin-top: 10px;
-    font-size: 15px;
-}
-
-#select_marcas_computadoras 
-{
-    width: 160px;
-}
-
-#select_modelos_Computadora
-{
-    width: 160px;
-}
-
-#select_clase
-{
-    width: 160px;
-}
-
-#form_agregar_computadora fieldset {
-	overflow: auto;
-}
-
-#form_agregar_computadora ul li input[id="nro_de_serie_c"]
-{
-    width: 146px;
-    text-align: center;
-}
-
-#form_agregar_computadora ul li text { 
-    float: left;
-    width: 110px;
-    font-size: 17px;
-    font-weight: bold;
-    vertical-align: middle;
-}
-
-/*-----------------------------------Termino agregar computadora------------------------------------*/
 
 /*-----------------------------------Agregar Memoria--------------------------------------*/
 
 #form_agregar_memoria
 {
-    /**/
+    margin-left: 130px;
+    text-align: left;
 }
 
-#form_agregar_memoria ul 
+#form_agregar_memoria div.controls select
 {
-    list-style-type: none;
-    padding-left: 0px;
-}
-
-#form_agregar_memoria ul li
-{
-    vertical-align: middle;
-    height: 40px;
-    line-height: 40px;
-}
-
-#form_agregar_memoria div p{
-    margin-left: 28px;
+    width: 162px;
 }
 
 #boton_crear_memoria
 {
     float:right;
-    margin-right: 135px;
-    margin-top: 10px;
+    margin-right: 0;
     font-size: 15px;
 }
 
-#select_marcas_memorias 
+#form_agregar_memoria div.controls #select_capacidades_memorias, #form_agregar_memoria div.controls #select_unidades_memorias
 {
-    width: 160px;
+    width: 81px;
 }
 
-#select_capacidades_memorias
+#form_agregar_memoria fieldset 
 {
-    text-align: right;
-    width: 80px;
-}
-
-#select_unidades_memorias
-{
-    width: 80px;
-}
-
-#select_tipos_memorias
-{
-    width: 160px;
-}
-
-#select_velocidades
-{
-    width: 160px;
-}
-
-#form_agregar_memoria fieldset {
-	overflow: auto;
-}
-
-#form_agregar_memoria ul li input[name="cant_veces"]
-{
-    width: 156px;
-    text-align: center;
-}
-
-#form_agregar_memoria ul li text { 
-    float: left;
-    width: 110px;
-    font-size: 17px;
-    font-weight: bold;
-    vertical-align: middle;
+    overflow: auto;
+    height: auto;
+    width: 370px;
 }
 
 /*-----------------------------------Termino agregar memoria------------------------------------*/
 
+/*-----------------------------------Agregar Computadora--------------------------------------*/
 
+#form_agregar_computadora
+{
+    margin-left: 130px;
+    text-align: left;
+}
+
+#form_agregar_computadora div.controls select
+{
+    width: 162px;
+}
+
+#boton_crear_computadora
+{
+    float:right;
+    margin-right: 0;
+    font-size: 15px;
+}
+
+#form_agregar_computadora fieldset 
+{
+    overflow: auto;
+    height: auto;
+    width: 370px;
+}
+
+/*-----------------------------------Termino agregar computadora------------------------------------*/
 
 /*-----------------------------------Agregar Impresora----------------------------------------*/
 
 #form_agregar_impresora
 {
-    /**/
-}
-
-#form_agregar_impresora ul 
-{
-    list-style-type: none;
-    padding-left: 0px;
-}
-
-#form_agregar_impresora ul li
-{
-    vertical-align: middle;
-    height: 40px;
-    line-height: 40px;
-}
-
-#form_agregar_impresora div p{
-    margin-left: 28px;
+    margin-left: 130px;
+    text-align: left;
 }
 
 #boton_crear_impresora
 {
     float:right;
-    margin-right: 135px;
-    margin-top: 10px;
+    margin-right: 0;
     font-size: 15px;
 }
 
-#form_agregar_impresora ul li input[id="ip"]
+#form_agregar_impresora div.controls select
 {
-    width: 146px;
-    text-align: center;
-}
-
-#form_agregar_impresora ul li input[id="nro_de_serie_i"]
-{
-    width: 146px;
-    text-align: center;
+    width: 162px;
 }
 
 #form_agregar_impresora fieldset {
-	overflow: auto;
+    overflow: auto;
+    height: auto;
+    width: 370px;
 }
 
+/*-----------------------------------Agregar Disco--------------------------------------*/
 
-#select_marcas_impresoras 
+#form_agregar_disco
 {
-    width: 160px;
+    margin-left: 130px;
+    text-align: left;
 }
 
-#select_modelos_Impresora 
+#boton_crear_disco
 {
-    width: 160px;
+    float:right;
+    margin-right: 0;
+    font-size: 15px;
 }
 
-#form_agregar_impresora ul li text { 
-    float: left;
-    width: 110px;
-    font-size: 17px;
-    font-weight: bold;
-    vertical-align: middle;
+#form_agregar_disco div.controls #select_marcas_discos 
+{
+    width: 162px;
 }
 
-/*-----------------------------------Termino agregar impresora----------------------------------*/
+#form_agregar_disco div.controls #select_capacidades_discos
+{
+    text-align: right;
+    width: 81px;
+}
+
+#form_agregar_disco div.controls #select_unidades_discos
+{
+    width: 81px;
+}
+
+#form_agregar_disco fieldset {
+    overflow: auto;
+    height: auto;
+    width: 370px;
+}
+
+/*-----------------------------------Termino agregar disco------------------------------------*/
 
 /*-----------------------------------Agregar Router y Switch----------------------------------------*/
 
-#form_agregar_router
+#form_agregar_router, #form_agregar_switch
 {
-    /**/
-}
-
-#form_agregar_router ul, #form_agregar_switch ul  
-{
-    list-style-type: none;
-    padding-left: 0px;
-}
-
-#form_agregar_router ul li, #form_agregar_switch ul li 
-{
-    vertical-align: middle;
-    height: 40px;
-    line-height: 40px;
-}
-
-#form_agregar_router div p, #form_agregar_switch div p
-{
-    margin-left: 28px;
+    margin-left: 130px;
+    text-align: left;
 }
 
 #boton_crear_router, #boton_crear_switch
 {
     float:right;
-    margin-right: 135px;
-    margin-top: 10px;
+    margin-right: 0;
     font-size: 15px;
-}
-
-#form_agregar_router ul li input[id="ip"], #form_agregar_switch ul li input[id="ip"]
-{
-    width: 146px;
-    text-align: center;
-}
-
-#form_agregar_router ul li input[id="nro_de_serie_r"], #form_agregar_switch ul li input[id="nro_de_serie_s"]
-{
-    width: 146px;
-    text-align: center;
 }
 
 #form_agregar_router fieldset, #form_agregar_switch fieldset
 {
     overflow: auto;
+    height: auto;
+    width: 370px;
 }
 
-
-#select_marcas_routers, #select_marcas_switchs 
+#form_agregar_router div.controls select, #form_agregar_switch div.controls select
 {
-    width: 160px;
-}
-
-#select_modelos_Router, #select_modelos_Switch  
-{
-    width: 160px;
-}
-
-#form_agregar_router ul li text, #form_agregar_switch ul li text  
-{ 
-    float: left;
-    width: 110px;
-    font-size: 17px;
-    font-weight: bold;
-    vertical-align: middle;
+    width: 162px;
 }
 
 /*-----------------------------------Termino agregar router y switch----------------------------------*/

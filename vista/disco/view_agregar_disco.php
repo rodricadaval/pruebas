@@ -1,15 +1,29 @@
 <form id="form_agregar_disco">
 <fieldset>
-<legend>Complete los Datos</legend>
-    <ul>
-        <li><text>Marca:</text>{select_marcas_discos}</li>
-        <li><text>Capacidad:</text>{select_capacidades}{select_unidades}</li>
-        <li><text>Cantidad:</text><input id="cantidad" name="cant_veces" placeholder="Ingrese cantidad"></li>
-        <li><input type="button" class="btn btn-success" id="boton_nueva_marca" value="Nueva Marca"><input class="btn btn-primary" id="boton_crear_disco" type="submit" name="crearDisco" value="Crear"></li>
-    </ul>
+<legend>Complete los Datos <small>(hay validaciones al crear)</small></legend>
+        <div class="control-group">
+            <label class="control-label" for="select_marcas_discos">Marca</label>
+            <div class="controls">
+                {select_marcas_discos}
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="capacidad">Capacidad</label>
+            <div class="controls">
+                {select_capacidades}{select_unidades}
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="cant_veces">Cantidad</label>
+            <div class="controls">
+                <input type="text" id="cantidad" class="input-xlarge" name="cant_veces" placeholder="Ingrese cantidad">
+            </div>
+        </div>
+        <div class="form-actions">
+            <input type="button" class="btn btn-success" id="boton_nueva_marca" value="Nueva Marca">
+            <input class="btn btn-primary" id="boton_crear_disco" type="submit" name="crearDisco" value="Crear">
+        </div>
     </fieldset>
-    <br>
-    <div><p class="error_ag_disc text-error"></p></div>
 </form>
 
 
@@ -20,8 +34,6 @@
     $('#select_unidades_discos option[value='+3+']').attr('selected', 'selected');
 
     $("#form_agregar_disco").validate({
-        errorLabelContainer : ".error_ag_disc" ,
-        wrapper : "li" ,
         onfocusout: false,
         onkeyup: false,
         onclick: false,
@@ -42,6 +54,13 @@
             	required: 'Debe ingresar una cantidad'
             }
         } ,
+        highlight: function(element) {
+             $(element).closest('.control-group').removeClass('success').addClass('error');
+         },
+        success: function(element) {
+            element.text('OK!').addClass('valid')
+            .closest('.control-group').removeClass('error').addClass('success');
+        },
         submitHandler : function (form) {
             console.log ("Formulario OK");
 

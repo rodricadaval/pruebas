@@ -41,9 +41,19 @@ include 'logueo/chequeo_login.php';
                      return this.optional(element) || value != param;
                     });
 
-                      $.validator.addMethod("sinCpu",function (value,element){
-                        return value!=1; 
-                      }, 'El usuario no tiene Cpu.');
+                    $.validator.addMethod("sinCpu",function (value,element){
+                     return value!=1; 
+                    }, 'El usuario no tiene Cpu.');
+
+                    $.validator.addMethod('IP4Checker', function(value) {
+                        var ip = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$";
+                        if(value == ""){
+                            return true;
+                        }
+                        else{
+                            return value.match(ip);
+                        }
+                    }, 'Invalid IP address');
 
 	                $("#logout").on('click',function(){
 		                $.ajax({

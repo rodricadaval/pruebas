@@ -1,21 +1,43 @@
 <form id="form_agregar_memoria">
 <fieldset>
-<legend>Complete los Datos</legend>
-<ul>
-    <li><text>Marca:</text>{select_marcas_memorias}</li>
-    <li><text>Tipo:</text>{select_tipos_memorias}</li> 
-    <li colspan="1"><text>Velocidad:</text>
-        <select id='select_velocidades' name='velocidad'>
+<legend>Complete los Datos <small>(hay validaciones al crear)</small></legend>
+    <div class="control-group">
+        <label class="control-label" for="select_marcas_memorias">Marca</label>
+        <div class="controls">
+            {select_marcas_memorias}
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="select_tipos_memorias">Tipo</label>
+        <div class="controls">
+            {select_tipos_memorias}
+        </div>
+    </div>
+     <div class="control-group">
+        <label class="control-label" for="select_velocidades">Velocidad</label>
+        <div class="controls">
+            <select id='select_velocidades' name='velocidad'>
             <option value=''>Seleccionar</option>
-        </select>
-    </li>
-    <li><text>Capacidad:</text>{select_capacidades}{select_unidades}</li>
-    <li><text>Cantidad:</text><input name="cant_veces" placeholder="Ingrese cantidad"></li>
-    <li><input type="button" class="btn btn-success" id="boton_nueva_marca" value="Nueva Marca"><input class="btn btn-primary" id="boton_crear_memoria" type="submit" name="crearMemoria" value="Crear"></li>
-</ul> 
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="">Capacidad</label>
+        <div class="controls">
+            {select_capacidades}{select_unidades}
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="cantidad">Cantidad</label>
+        <div class="controls">
+            <input type="text" id="cantidad" name="cant_veces" placeholder="Ingrese cantidad">
+        </div>
+    </div>
+     <div class="form-actions">
+        <input type="button" class="btn btn-success" id="boton_nueva_marca" value="Nueva Marca">
+        <input class="btn btn-primary" id="boton_crear_memoria" type="submit" name="crearMemoria" value="Crear">
+    </div>
 </fieldset>   
-    <br>
-    <div><p class="error_ag_mem text-error"></p></div>
 </form>
 
 <script type="text/javascript">
@@ -41,8 +63,6 @@
 	});
 
     $("#form_agregar_memoria").validate({
-        errorLabelContainer : ".error_ag_mem" ,
-        wrapper : "li" ,
         onfocusout: false,
         onkeyup: false,
         onclick: false,
@@ -75,6 +95,13 @@
                 required: 'Debe seleccionar una velocidad' 
             }
         } ,
+        highlight: function(element) {
+             $(element).closest('.control-group').removeClass('success').addClass('error');
+         },
+        success: function(element) {
+            element.text('OK!').addClass('valid')
+            .closest('.control-group').removeClass('error').addClass('success');
+        },
         submitHandler : function (form) {
             console.log ("Formulario OK");
 

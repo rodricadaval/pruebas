@@ -7,7 +7,7 @@ class Usuarios {
 	}
 
 	public function listarTodos() {
-		$armar_tabla = BDD::getInstance()->query("select * , '<a id=\"modificar_usuario\" class=\"pointer\"id_usuario=\"' || id_usuario || '\"><i title=\"Editar usuario\" class=\"circular inverted green small edit icon\"></i></a> <a id=\"ver_productos\" class=\"pointer\"usuario=\"' || nombre_apellido || '\"><i title=\"Ver productos\" class=\"circular inverted blue small tasks icon\"></i></a> <a id=\"generar_memorandum\" class=\"pointer\"id_usuario=\"' || id_usuario || '\"><i title=\"Generar Memorandum\" class=\"circular inverted orange file pdf outline small icon\"></i></a> <a id=\"eliminar_usuario\" class=\"pointer\"id_usuario=\"' || id_usuario || '\"><i title=\"Eliminar usuario\" class=\"circular inverted red small trash icon\"></i></a>' as m from system." . self::claseMinus() . " where estado = 1 AND id_usuario <> 1")->_fetchAll();
+		$armar_tabla = BDD::getInstance()->query("select * , '<a id=\"modificar_usuario\" class=\"pointer\"id_usuario=\"' || id_usuario || '\"><i title=\"Editar usuario\" class=\"circular inverted green small edit icon\"></i></a> <a id=\"ver_productos\" class=\"pointer\"usuario=\"' || nombre_apellido || '\"><i title=\"Ver productos\" class=\"circular inverted blue small tasks icon\"></i></a> <a id=\"generar_memorandum\" class=\"pointer\"id_usuario=\"' || id_usuario ||'\"usuario=\"' || nombre_apellido || '\"><i title=\"Generar Memorandum\" class=\"circular inverted orange file pdf outline small icon\"></i></a> <a id=\"eliminar_usuario\" class=\"pointer\"id_usuario=\"' || id_usuario || '\"><i title=\"Eliminar usuario\" class=\"circular inverted red small trash icon\"></i></a>' as m from system." . self::claseMinus() . " where estado = 1 AND id_usuario <> 1")->_fetchAll();
 		$i = 0;
 
 		foreach ($armar_tabla as $fila) {
@@ -261,7 +261,7 @@ class Usuarios {
 
 	public function dameListadoMemoDeUsuario($id){
 		
-		$lista = BDD::getInstance()->query("SELECT id_vinculo FROM system.vinculos WHERE id_usuario='$id' ")->_fetchAll();
+		$lista = BDD::getInstance()->query("SELECT id_vinculo FROM system.vinculos WHERE id_usuario='$id' AND estado=1 ")->_fetchAll();
 		$i = 0;
 		foreach ($lista as $campo) {
 			$lista_con_datos[$i] = Vinculos::getByID($campo['id_vinculo']);

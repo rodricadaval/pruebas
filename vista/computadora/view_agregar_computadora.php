@@ -1,18 +1,37 @@
 <form id="form_agregar_computadora">
 <fieldset>
-<legend>Complete los Datos</legend>
-<ul>
-    <li><text>Marca:</text>{select_marcas_computadoras}</li>
-    <li><text>Modelo:</text><select id='select_modelos_Computadora' name='modelo'>
-                        <option value=''>Seleccionar</option></select>
-    </li>
-    <li><text>Nro de Serie:</text><input id="nro_de_serie_c" type="text" name="num_serie_c"></li>
-    <li><text>Tipo :</text>{select_clases_Computadora}</li>
-    <li><input type="button" class="btn btn-success" id="boton_nueva_marca" value="Nueva Marca y Modelo"><input class="btn btn-primary" id="boton_crear_computadora" type="submit" name="crearComputadora" value="Crear"></li>
-</ul>
+<legend>Complete los Datos <small>(hay validaciones al crear)</small></legend>
+    <div class="control-group">
+        <label class="control-label" for="select_marcas_computadoras">Marca</label>
+        <div class="controls">
+            {select_marcas_computadoras}
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="select_modelos_Computadora">Modelo</label>
+        <div class="controls">
+            <select id='select_modelos_Computadora' name='modelo'>
+                        <option value=''>Seleccionar</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="nro_de_serie_c">Nro de Serie</label>
+        <div class="controls">
+            <input id="nro_de_serie_c" type="text" name="num_serie_c">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="select_clase">Tipo</label>
+        <div class="controls">
+            {select_clases_Computadora}
+        </div>
+    </div>
+    <div class="form-actions">
+            <input type="button" class="btn btn-success" id="boton_nueva_marca" value="Nueva Marca y Modelo">
+            <input class="btn btn-primary" id="boton_crear_computadora" type="submit" name="crearComputadora" value="Crear">
+    </div>
 </fieldset>
-    <br>
-    <div><p class="error_ag_comp text-error"></p></div>
 </form>
 
 <script type="text/javascript">
@@ -33,8 +52,6 @@
 	});
 
 	$("#form_agregar_computadora").validate({
-        errorLabelContainer : ".error_ag_comp" ,
-        wrapper : "li" ,
         onfocusout: false,
         onkeyup: false,
         onclick: false,
@@ -71,6 +88,13 @@
             	remote: 'Ya existe una CPU con ese numero de serie'
             }
         } ,
+        highlight: function(element) {
+             $(element).closest('.control-group').removeClass('success').addClass('error');
+         },
+        success: function(element) {
+            element.text('OK!').addClass('valid')
+            .closest('.control-group').removeClass('error').addClass('success');
+        },
         submitHandler : function (form) {
           console.log ("Formulario OK");
 

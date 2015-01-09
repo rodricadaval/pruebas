@@ -217,7 +217,7 @@ $("#contenedorPpal").on('click' , '#modificar_usuario_disco' , function(){
 												duration: 200
 												},
 												width : 600,
-												height : 600,
+												height : 630,
 												close : function(){
 													$(this).dialog("destroy").empty();
 													$("#dialogcontent_prod_usuario").remove();

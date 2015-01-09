@@ -1,23 +1,41 @@
 <form id="form_agregar_impresora">
 <fieldset>
-<legend>Complete los Datos</legend>
-    <ul>
-        <li><text>Marca:</text>{select_marcas_impresoras}</li>
-        <li><text>Modelo:</text>
-            <select id='select_modelos_Impresora' name='modelo'>
-                <option value=''>Seleccionar</option>
-            </select>
-        </li>
-        <li><text>Nro de Serie:</text><input id="nro_de_serie_i" type="text" name="num_serie_imp"></li>
-        <li><text>IP:</text><input id="ip" type="text" name="ip"></li>
-        <li><input type="button" class="btn btn-success" id="boton_nueva_marca" value="Nueva Marca y Modelo"><input class="btn btn-primary" id="boton_crear_impresora" type="submit" name="crearImpresora" value="Crear"></li>
-    </ul>
+<legend>Complete los Datos <small>(hay validaciones al crear)</small></legend>
+        <div class="control-group">
+            <label class="control-label" for="num_serie_i">Nro de Serie</label>
+            <div class="controls">
+                {select_marcas_impresoras}
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="modelo">Modelo</label>
+            <div class="controls">
+                <select id='select_modelos_Impresora' name='modelo'>
+                    <option value=''>Seleccionar</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="num_serie_i">Nro de Serie</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" name="num_serie_i" id="nro_de_serie_i">
+          </div>
+         </div>
+        <div class="control-group">
+          <label class="control-label" for="ip">IP</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" name="ip" id="ip">
+          </div>
+        </div>
+        <div class="form-actions">
+            <input type="button" class="btn btn-success" id="boton_nueva_marca" value="Nueva Marca y Modelo">
+            <input class="btn btn-primary" id="boton_crear_impresora" type="submit" name="crearImpresora" value="Crear">
+        </div>
 </fieldset>
-    <br>
-    <div><p class="error_ag_i text-error"></p></div>
 </form>
 
 <script type="text/javascript">
+
 
 	$("#select_marcas_impresoras").on('change',function(){
 
@@ -36,8 +54,6 @@
 
 
 	$("#form_agregar_impresora").validate({
-        errorLabelContainer : ".error_ag_i",
-        wrapper : "li",
         onfocusout: false,
         onkeyup: false,
         onclick: false,
@@ -59,9 +75,10 @@
                             return $("#ip").val();
                         }
                     }
-                }
+                },
+                IP4Checker : true
             },
-            num_serie_imp : {
+            num_serie_i : {
             	required : true,
             	remote      : {
                     url     : 'busquedas/busca_nro_serie_impresora.php' ,
@@ -81,7 +98,7 @@
             modelo : {
                 required : 'Debe seleccionar un modelo'
             },
-            num_serie_imp :{
+            num_serie_i :{
             	required: 'El numero de serie no puede ser nulo',
             	remote: 'Ya existe un impresora con ese numero de serie'
             },
@@ -90,6 +107,13 @@
                 remote: 'Ya existe un impresora con esa ip'
             },
         } ,
+        highlight: function(element) {
+             $(element).closest('.control-group').removeClass('success').addClass('error');
+         },
+        success: function(element) {
+            element.text('OK!').addClass('valid')
+            .closest('.control-group').removeClass('error').addClass('success');
+        },
         submitHandler : function (form) {
             console.log ("Formulario OK");
             console.log('Evento de click en crear');
@@ -162,7 +186,7 @@
                                                 duration: 200
                                                 },
                                                 width : 440,
-                                                height : 350,
+                                                height : 400,
                                                 close : function(){
                                                     $(this).dialog("destroy");
                                                     $("#dialogcontent_nueva_marca").remove();

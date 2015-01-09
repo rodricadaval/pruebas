@@ -2,20 +2,20 @@
     <div id="errores" class="error_dialog"></div>
     <table class="fixed_user">
         <tr>
-          <td class="required">Nombre</td>
-          <td><input type="text" name="nombre_apellido" id="nombre_apellido" value="{nombre_apellido}"></td>
+          <td>Permisos</td>
+          <td>{select_Permisos}</td>
           <td>Interno</td>
           <td><input type="text" name="interno" id="interno" value="{interno}"></td>
         </tr>
         <tr>
-          <td class="required">Usuario  </td>
-          <td><input type="text" name="usuario" id="usuario" value="{usuario}"></td>
+          <td class="required">Nombre</td>
+          <td><input type="text" name="nombre_apellido" id="nombre_apellido" value="{nombre_apellido}"></td>
           <td class="ID">ID</td>
           <td class="ID"><input style="background-color:#D3D3D3" type="text" name="id_usuario" id="id_usuario" value="{id_usuario}" readonly></td>
         </tr>
         <tr>
-          <td>Email</td>
-          <td><input type="text" name="email" id="email" value="{email}"></td>
+          <td class="required">Usuario  </td>
+          <td><input type="text" name="usuario" id="usuario" value="{usuario}"></td>
           <td class="f_password">Password Actual </td>
           <td class="f_password"><input type="password" name="password" id="password" value="" disabled></td>
         </tr>
@@ -23,14 +23,14 @@
            <td><input type="hidden" name="password_orig" id="password_orig" value="{password}"></td>
         </tr>
         <tr>
-          <td>Area</td>
-          <td>{select_Areas}</td>
+          <td>Email</td>
+          <td><input type="text" name="email" id="email" value="{email}"></td>
           <td class="f_nueva_password">Nueva Password </td>
           <td class="f_nueva_password"><input type="password" name="nueva_password" id="nueva_password" value="" disabled></td>
         </tr>
         <tr>
-          <td>Permisos</td>
-          <td>{select_Permisos}</td>
+          <td>Area</td>
+          <td>{select_Areas}</td>
           <td class="f_conf_password">Confirmar</td>
           <td class="f_conf_password"><input type="password" name="conf_password" id="conf_password" value="" disabled></td>
         </tr>
@@ -253,13 +253,15 @@ $(document).ready(function(){
           if($("#select_permisos option:selected").val() == 2){
               $(".f_nueva_password, .f_conf_password").hide();
               $("#nueva_password, #conf_password").attr("disabled","disabled");
+              $("#usuario").prop('readonly',true);
               if($("#nombre_apellido").val()!= ""){
                 $("#usuario").val($("#nombre_apellido").val().toLowerCase().split(" ").join(""));
               }
           }
           else{
               $(".f_nueva_password, .f_conf_password").show();
-              $("#nueva_password, #conf_password").removeAttr("disabled");    
+              $("#nueva_password, #conf_password").removeAttr("disabled");
+              $("#usuario").removeAttr("readonly");    
           } 
       }
     });

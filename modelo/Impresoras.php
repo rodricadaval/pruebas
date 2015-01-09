@@ -25,6 +25,7 @@ class Impresoras {
 			'<a id=\"modificar_sector_impresora\" class=\"pointer_mon\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"agregar_descripcion_impresora\" class=\"pointer_cpu\"id_impresora=\"' || id_impresora || '\">
 			<i class=\"circular inverted blue small book icon\" title=\"Ver o editar descripcion\"></i></a>
+			<a id=\"modificar_ip_impresora\" class=\"pointer_cpu\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted green small bullseye icon\" title=\"Editar IP\"></i></a>
 			<a id=\"eliminar_impresora\" class=\"pointer_mon\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>'
 			as m from system." . self::claseMinus() . " where estado = 1");
 
@@ -78,6 +79,7 @@ class Impresoras {
 			'<a id=\"modificar_sector_impresora\" class=\"pointer_mon\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"agregar_descripcion_impresora\" class=\"pointer_cpu\"id_impresora=\"' || id_impresora || '\">
 			<i class=\"circular inverted blue small book icon\" title=\"Ver o editar descripcion\"></i></a>
+			<a id=\"modificar_ip_impresora\" class=\"pointer_cpu\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted green small bullseye icon\" title=\"Editar IP\"></i></a>
 			<a id=\"eliminar_impresora\" class=\"pointer_mon\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>'
 			as m from system." . self::claseMinus() . " where estado = 1 AND id_vinculo IN (select id_vinculo from system.vinculos where id_sector=1 AND id_tipo_producto='$id_tipo_producto')");
 
@@ -230,6 +232,15 @@ class Impresoras {
 		$detalle = $datos['descripcion'];
 
 		if(!BDD::getInstance()->query("UPDATE system.impresoras SET descripcion = '$detalle' where id_impresora = '$id'")->get_error()){
+			return 1;
+		} else {var_dump(BDD::getInstance()); return 0;}
+	}
+
+	public function cambiarIp($datos) {
+		$id = $datos['id_impresora'];
+		$detalle = $datos['ip'];
+
+		if(!BDD::getInstance()->query("UPDATE system.impresoras SET ip = '$detalle' where id_impresora = '$id'")->get_error()){
 			return 1;
 		} else {var_dump(BDD::getInstance()); return 0;}
 	}

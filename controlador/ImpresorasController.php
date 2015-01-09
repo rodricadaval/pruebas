@@ -24,7 +24,11 @@ if (isset($_POST['action'])) {
 
 		case 'agregar_desc':
 			echo $inst_impresora->agregarDescripcion($_POST);
-			break;	
+			break;
+
+		case 'modif_ip':
+			echo $inst_impresora->cambiarIp($_POST);
+			break;		
 
 		case 'eliminar':
 			unset($_POST['action']);

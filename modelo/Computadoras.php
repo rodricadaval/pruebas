@@ -253,7 +253,7 @@ return $tabla;
 		$tipos = Tipo_productos::get_rel_campos();
 		$id_tipo_producto = array_search("Computadora", $tipos);
 
-		$lista = BDD::getInstance()->query("SELECT id_pk_producto FROM system.vinculos where id_tipo_producto='$id_tipo_producto' and id_usuario='$id_usuario' ")->_fetchAll();
+		$lista = BDD::getInstance()->query("SELECT id_pk_producto FROM system.vinculos where id_tipo_producto='$id_tipo_producto' and id_usuario='$id_usuario' AND estado=1 ")->_fetchAll();
 		$i = 0;
 		foreach ($lista as $campo) {
 			$lista_con_datos[$i] = self::getByID($campo['id_pk_producto']);

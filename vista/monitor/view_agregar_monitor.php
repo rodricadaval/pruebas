@@ -1,17 +1,31 @@
 <form id="form_agregar_monitor">
 <fieldset>
-<legend>Complete los Datos</legend>
-<ul>
-    <li><text>Marca:</text>{select_marcas_monitores}</li>
-    <li><text>Modelo:</text><select id='select_modelos_Monitor' name='modelo'>
-                        <option value=''>Seleccionar</option></select>
-    </li>
-    <li><text>Nro de Serie:</text><input id="nro_de_serie_m" type="text" name="num_serie_mon"></li>
-    <li><input type="button" class="btn btn-success" id="boton_nueva_marca" name="nueva_marca_monitor" value="Nueva Marca y Modelo"><input class="btn btn-primary" id="boton_crear_monitor" type="submit" name="crearMonitor" value="Crear"></li>
-</ul>
+<legend>Complete los Datos <small>(hay validaciones al crear)</small></legend>
+    <div class="control-group">
+        <label class="control-label" for="select_marcas_monitores">Marca</label>
+        <div class="controls">
+            {select_marcas_monitores}
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="select_modelos_Monitor">Modelo</label>
+        <div class="controls">
+            <select id='select_modelos_Monitor' name='modelo'>
+                    <option value=''>Seleccionar</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="nro_de_serie_m">Nro de Serie</label>
+        <div class="controls">
+            <input id="nro_de_serie_m" type="text" name="num_serie_mon">
+        </div>
+    </div>
+    <div class="form-actions">
+            <input type="button" class="btn btn-success" id="boton_nueva_marca" name="nueva_marca_monitor" value="Nueva Marca y Modelo">
+            <input class="btn btn-primary" id="boton_crear_monitor" type="submit" name="crearMonitor" value="Crear">
+        </div>
 </fieldset>
-    <br>
-    <div><p class="error_ag_monit text-error"></p></div>
 </form>
 
 <script type="text/javascript">
@@ -33,8 +47,6 @@
 
 
 	$("#form_agregar_monitor").validate({
-        errorLabelContainer : ".error_ag_monit" ,
-        wrapper : "li" ,
         onfocusout: false,
         onkeyup: false,
         onclick: false,
@@ -71,6 +83,13 @@
             	remote: 'Ya existe un monitor con ese numero de serie'
             }
         } ,
+        highlight: function(element) {
+             $(element).closest('.control-group').removeClass('success').addClass('error');
+         },
+        success: function(element) {
+            element.text('OK!').addClass('valid')
+            .closest('.control-group').removeClass('error').addClass('success');
+        },
         submitHandler : function (form) {
             console.log ("Formulario OK");
             console.log('Evento de click en crear');
