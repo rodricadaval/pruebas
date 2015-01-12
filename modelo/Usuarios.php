@@ -37,7 +37,7 @@ class Usuarios {
 	}
 
 	public function listarPorNombre($nombre) {
-
+		$nombre = HTML_ENTITIES_DECODE::normalizeChars($nombre);
 		$armar_tabla = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where usuario = '$nombre' ")->_fetchAll();
 		$i = 0;
 
@@ -52,11 +52,14 @@ class Usuarios {
 	}
 
 	public function obtenerUsuarioLogin($usuario, $pass) {
+		$usuario = HTML_ENTITIES_DECODE::normalizeChars($usuario);
+		$pass = HTML_ENTITIES_DECODE::normalizeChars($pass);
 		$pass = base64_encode(base64_encode(base64_encode($pass)));
 		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where usuario = '$usuario' and password = '$pass'");
 	}
 
 	public function chequeoExistenciaUsuarios($usuario) {
+		$usuario = HTML_ENTITIES_DECODE::normalizeChars($usuario);
 		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where usuario = '$usuario' ");
 	}
 
@@ -80,7 +83,11 @@ class Usuarios {
 		$firstTime = true;
 		foreach ($datos as $key => $value) {
 			if ($key == "password") {
+				$value = HTML_ENTITIES_DECODE::normalizeChars($value);
 				$value = base64_encode(base64_encode(base64_encode($value)));
+			}
+			if($key == "usuario"){
+				$value = HTML_ENTITIES_DECODE::normalizeChars($value);
 			}
 			if ($firstTime) {
 				$cadena .= "$key = '$value'";
@@ -149,7 +156,11 @@ class Usuarios {
 		foreach ($datos as $key => $value) {
 
 			if ($key == "password") {
+				$value = HTML_ENTITIES_DECODE::normalizeChars($value);
 				$value = base64_encode(base64_encode(base64_encode($value)));
+			}
+			if ($key == "usuario") {
+				$value = HTML_ENTITIES_DECODE::normalizeChars($value);
 			}
 			if ($firstTime) {
 				$cadena_valores .= "'$value'";
@@ -282,7 +293,7 @@ class Usuarios {
 
 		if(count($listado) == 0 ){
 			$html_view .= "<tr>";
-			$html_view .= "<td colspan='2'>No tiene productos</td>";
+			$html_view .= "<td colspan='3'>No tiene productos</td>";
 			$html_view .= "</tr>";
 		}
 
