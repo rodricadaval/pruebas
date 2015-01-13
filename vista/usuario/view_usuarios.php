@@ -5,6 +5,13 @@
 <script type="text/javascript">
 	$(document).ready(function(event){
 		var url;
+					
+					$.get('logueo/check_priority.php', function(permisos) {
+						if (permisos == 2) {
+							$("#crear_usuario").hide();
+						}
+					});
+
 					$.ajax({
 							url : 'metodos_ajax.php',
 							method: 'post',
@@ -76,12 +83,6 @@
 								});
 							}
 						});
-
-		$.get('logueo/check_priority.php', function(permisos) {
-				if (permisos == 2) {
-					$("#crear_usuario").hide();
-				}
-		});
 	});
 
 

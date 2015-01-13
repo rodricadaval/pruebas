@@ -6,6 +6,13 @@
 <script type="text/javascript">
 
 	$(document).ready(function(event){
+		
+		$.get('logueo/check_priority.php', function(permisos) {
+				if (permisos == 2) {
+					$("#crear_area").hide();
+				}
+		});
+
 		$.ajax({
 			url : 'metodos_ajax.php',
 			method: 'post',
@@ -38,13 +45,7 @@
  				});
 			}
 
-		});
-		
-		$.get('logueo/check_priority.php', function(permisos) {
-				if (permisos == 2) {
-					$("#crear_area").hide();
-				}
-		});
+		});		
 	});
 
 	$("#contenedorPpal").on('click' , '#modificar_area' , function(){
