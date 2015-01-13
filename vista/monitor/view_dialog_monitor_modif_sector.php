@@ -1,4 +1,4 @@
-<form id="form_monitor_mod_sector">
+<form id="form_monitor_mod_sector" autocomplete="off">
     <table class="t_monitor">
         <tr><p id="text_no_puede_cambiar">El Monitor no puede ser cambiado de Sector ya que tiene un usuario o cpu asignado/s. Debe clickear en "liberar monitor" si quiere modificar su sector. </p></tr>
         <tr type="hidden">

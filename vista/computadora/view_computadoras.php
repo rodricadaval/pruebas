@@ -11,30 +11,58 @@
 				   tipo: 'json'},
 			dataType: 'json',
 			success : function(data){
-				$("#dataTable").dataTable({
-   			 		"destroy" : true,   			 		
-					"aaData" : data,
-					"aoColumns" :[
-						//{ "sTitle" : "ID" , "mData" : "id_computadora"},
-						{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
-						{ "sTitle" : "Marca" , "mData" : "marca"},
-						{ "sTitle" : "Modelo" , "mData" : "modelo"},
-						{ "sTitle" : "Tipo" , "mData" : "clase"},
-						{ "sTitle" : "Slots Libres" , "mData" : "slots_libres"},
-						{ "sTitle" : "Sector" , "mData" : "sector"},
-						{ "sTitle" : "Usuario" ,"mDataProp": "nombre_apellido",
-              				"mRender": function ( data, type, row ) {
-  								return '<div id="ver_usuario" usuario="'+data+'"><a title="Ver productos de '+data+' "href="edit.php?usuario='+ data+'">'+data+'</a></div>';
-							}
-						},
-						{ "sTitle" : "Descripcion" , "mData" : "descripcion"},
-						{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
-										'<a class="ventana_area " href="">Modificar</a>'}
-						],
-						"aoColumnDefs": [
-				            { "sWidth": "20%", "aTargets": [ -1 ] }
-				        ]
-    			})
+				$.get('logueo/check_priority.php', function(permisos) {
+					if( permisos == 1 || permisos == 3) {
+							$("#dataTable").dataTable({
+			   			 		"destroy" : true,   			 		
+								"aaData" : data,
+								"aoColumns" :[
+									//{ "sTitle" : "ID" , "mData" : "id_computadora"},
+									{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
+									{ "sTitle" : "Marca" , "mData" : "marca"},
+									{ "sTitle" : "Modelo" , "mData" : "modelo"},
+									{ "sTitle" : "Tipo" , "mData" : "clase"},
+									{ "sTitle" : "Slots Libres" , "mData" : "slots_libres"},
+									{ "sTitle" : "Sector" , "mData" : "sector"},
+									{ "sTitle" : "Usuario" ,"mDataProp": "nombre_apellido",
+			              				"mRender": function ( data, type, row ) {
+			  								return '<div id="ver_usuario" usuario="'+data+'"><a title="Ver productos de '+data+' "href="edit.php?usuario='+ data+'">'+data+'</a></div>';
+										}
+									},
+									{ "sTitle" : "Descripcion" , "mData" : "descripcion"},
+									{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
+													'<a class="ventana_area " href="">Modificar</a>'}
+									],
+									"aoColumnDefs": [
+							            { "sWidth": "20%", "aTargets": [ -1 ] }
+							        ]
+			    			})
+						}
+						else if (permisos == 2) {
+							$("#dataTable").dataTable({
+			   			 		"destroy" : true,   			 		
+								"aaData" : data,
+								"aoColumns" :[
+									//{ "sTitle" : "ID" , "mData" : "id_computadora"},
+									{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
+									{ "sTitle" : "Marca" , "mData" : "marca"},
+									{ "sTitle" : "Modelo" , "mData" : "modelo"},
+									{ "sTitle" : "Tipo" , "mData" : "clase"},
+									{ "sTitle" : "Slots Libres" , "mData" : "slots_libres"},
+									{ "sTitle" : "Sector" , "mData" : "sector"},
+									{ "sTitle" : "Usuario" ,"mDataProp": "nombre_apellido",
+			              				"mRender": function ( data, type, row ) {
+			  								return '<div id="ver_usuario" usuario="'+data+'"><a title="Ver productos de '+data+' "href="edit.php?usuario='+ data+'">'+data+'</a></div>';
+										}
+									},
+									{ "sTitle" : "Descripcion" , "mData" : "descripcion"},
+									],
+									"aoColumnDefs": [
+							            { "sWidth": "20%", "aTargets": [ -1 ] }
+							        ]
+			    			})
+						}
+					});
 			}
 		});
 	});
@@ -279,12 +307,9 @@
 											},
 											buttons :
 						                    {
-						                        "Cancelar" : function () {
+						                        "Aceptar" : function () {
 						                            $(this).dialog("destroy").empty();
 						                            $("#dialogcontent_prod_usuario").remove();
-						                        },
-						                        "Enviar" : function(){
-						                        	$("#dialogcontent_prod_usuario").submit();
 						                        }
 						                    }
 				});

@@ -1,4 +1,4 @@
-<form id="form_agregar_disco">
+<form id="form_agregar_disco" autocomplete="off">
 <fieldset>
 <legend>Complete los Datos <small>(hay validaciones al crear)</small></legend>
         <div class="control-group">
@@ -121,7 +121,7 @@
                                                 duration: 200
                                                 },
                                                 width : 430,
-                                                height : 280,
+                                                height : 400,
                                                 close : function(){
                                                     $(this).dialog("destroy");
                                                     $("#dialogcontent_nueva_marca").remove();

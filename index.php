@@ -65,17 +65,75 @@ include 'logueo/chequeo_login.php';
                     var primeraVez = true;
                     $("div.tab-lateral li.test a").on('click',function(event){
 	                	event.preventDefault();
-                        if(primeraVez){    
-                             $("#contenedorPpal").load($(this).attr("href"));
-                             primeraVez = false;
+
+                        if($(this).attr("href") == "mis_productos"){
+                                console.log("Entro a ver los productos del usuario");
+                                
+
+                                $.get('logueo/check_user_id.php', function(id) {
+                                    console.log("usuario: "+id);
+                                    var usuario = id;
+
+                                    $("#contenedorPpal").remove();
+                                    jQuery('<div/>', {
+                                    id: 'contenedorPpal',
+                                    text: ''
+                                    }).appendTo('.realBody');
+
+                                    $.post( "vista/dialog_productos_usuario.php",
+                                        {
+                                            usuario : usuario,
+                                            action : "ver_productos"
+                                        }, function(data){
+                                            jQuery('<div/>', {
+                                                id: 'dialogcontent_prod_usuario',
+                                                text: ''
+                                            }).appendTo('#contenedorPpal');
+                                            $("#dialogcontent_prod_usuario").html(data);
+                                            $("#dialogcontent_prod_usuario").dialog({
+                                                                        title: "Mis Productos",
+                                                                        show: {
+                                                                        effect: "explode",
+                                                                        duration: 200,
+                                                                        modal:true
+                                                                        },
+                                                                        hide: {
+                                                                        effect: "explode",
+                                                                        duration: 200
+                                                                        },
+                                                                        width : 600,
+                                                                        height : 630,
+                                                                        close : function(){
+                                                                            $(this).dialog("destroy").empty();
+                                                                            $("#dialogcontent_prod_usuario").remove();
+                                                                        },
+                                                                        buttons :
+                                                                        {
+                                                                            "Aceptar" : function () {
+                                                                                $(this).dialog("destroy").empty();
+                                                                                $("#dialogcontent_prod_usuario").remove();
+                                                                            }
+                                                                        }
+                                            });
+                                        }
+                                    );
+
+                                });
                         }
-                        else{$("#contenedorPpal").remove();
-                            jQuery('<div/>', {
-                            id: 'contenedorPpal',
-                            text: 'Texto por defecto!'
-                            }).appendTo('.realBody');
-                            $("#contenedorPpal").load($(this).attr("href"));
-                        }
+                        else{
+                            if(primeraVez){    
+                                 $("#contenedorPpal").load($(this).attr("href"));
+                                 primeraVez = false;
+                            }
+                            else{
+                                $("#contenedorPpal").remove();
+                                jQuery('<div/>', {
+                                id: 'contenedorPpal',
+                                text: 'Texto por defecto!'
+                                }).appendTo('.realBody');
+                                $("#contenedorPpal").load($(this).attr("href"));
+                            }
+                        }                                            
                		});
 	            </script>
             </body>

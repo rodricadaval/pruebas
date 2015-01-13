@@ -1,4 +1,4 @@
-<form id="form_detalle_agregar_desc">
+<form id="form_detalle_agregar_desc" autocomplete="off">
     <table class="t_monitor">
         <tr>
             <tr type="hidden">

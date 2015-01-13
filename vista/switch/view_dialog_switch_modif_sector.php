@@ -1,4 +1,4 @@
-<form id="form_switch_mod_sector">
+<form id="form_switch_mod_sector" autocomplete="off">
     <table class="t_switch">
         <tr type="hidden">
            <td><input type="hidden" name="id_vinculo" id="id_vinculo" value="{id_vinculo}"></td>

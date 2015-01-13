@@ -76,7 +76,15 @@
 								});
 							}
 						});
+
+		$.get('logueo/check_priority.php', function(permisos) {
+				if (permisos == 2) {
+					$("#crear_usuario").hide();
+				}
+		});
 	});
+
+
 	
 	$("#contenedorPpal").on('click' , '#modificar_usuario' , function(){
 
@@ -286,12 +294,9 @@
 												},
 												buttons :
 							                    {
-							                        "Cancelar" : function () {
+							                        "Aceptar" : function () {
 							                            $(this).dialog("destroy");
 							                            $("#dialogcontent_prod_usuario").remove();
-							                        },
-							                        "Enviar" : function(){
-							                        	$("#dialogcontent_prod_usuario").submit();
 							                        }
 							                    }
 					});

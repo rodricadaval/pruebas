@@ -1,4 +1,4 @@
-<form id="form_agregar_impresora">
+<form id="form_agregar_impresora" autocomplete="off">
 <fieldset>
 <legend>Complete los Datos <small>(hay validaciones al crear)</small></legend>
         <div class="control-group">

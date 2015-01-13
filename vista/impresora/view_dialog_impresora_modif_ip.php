@@ -1,4 +1,4 @@
-<form id="form_impresora_mod_ip">
+<form id="form_impresora_mod_ip" autocomplete="off">
     <table class="t_impresora">
         <tr>
             <tr type="hidden">

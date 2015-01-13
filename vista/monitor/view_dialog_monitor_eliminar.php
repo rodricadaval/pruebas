@@ -1,4 +1,4 @@
-<form id="form_detalle_eliminar_monitor">
+<form id="form_detalle_eliminar_monitor" autocomplete="off">
     <table class="t_monitor">
         <tr>
             <tr type="hidden">

@@ -1,4 +1,4 @@
-<form id="liberar_disco">
+<form id="liberar_disco" autocomplete="off">
 	<p>¿Esta seguro que desea liberar el disco? El usuario y la computadora que tenía asignados se perderán.</p>
 	<input type="hidden" name="id_disco" id="id_disco" value="{id_disco}">
 </form>

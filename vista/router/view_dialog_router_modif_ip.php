@@ -1,4 +1,4 @@
-<form id="form_router_mod_ip">
+<form id="form_router_mod_ip" autocomplete="off">
     <table class="t_router">
         <tr>
             <tr type="hidden">

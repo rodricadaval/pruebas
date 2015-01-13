@@ -1,4 +1,4 @@
-<form id="form_detalle_eliminar_switch">
+<form id="form_detalle_eliminar_switch" autocomplete="off">
     <table class="t_switch">
         <tr>
             <tr type="hidden">

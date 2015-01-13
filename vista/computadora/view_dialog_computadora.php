@@ -1,4 +1,4 @@
-<form id="form_computadora">
+<form id="form_computadora" autocomplete="off">
     <table class="t_cpu">
         <tr>
         <tr type="hidden">

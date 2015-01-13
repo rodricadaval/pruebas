@@ -1,4 +1,4 @@
-<form id="form_memoria_mod_cpu">
+<form id="form_memoria_mod_cpu" autocomplete="off">
     <table class="t_memoria">
         <tr type="hidden">
            <td><input type="hidden" name="id_vinculo" id="id_vinculo" value="{id_vinculo}"><input type="hidden" name="id_memoria" id="id_memoria" value="{id_memoria}"></td>

@@ -1,4 +1,4 @@
-<form id="form">
+<form id="form" autocomplete="off">
     <div id="errores" class="error_dialog"></div>
     <table class="fixed_user">
         <tr>
@@ -79,7 +79,9 @@ $(document).ready(function(){
         $(".ID").hide();
     }
 
-    $("#form").validate({
+
+          
+ var validator =   $("#form").validate({
         errorLabelContainer : "#errores" ,
         wrapper : "li" ,
         rules : {
@@ -256,6 +258,7 @@ $(document).ready(function(){
               $("#usuario").prop('readonly',true);
               if($("#nombre_apellido").val()!= ""){
                 $("#usuario").val($("#nombre_apellido").val().toLowerCase().split(" ").join(""));
+                validator.element( "#usuario" );
               }
           }
           else{
@@ -269,6 +272,7 @@ $(document).ready(function(){
     $("#nombre_apellido").on('input',function(){
       if(estado == 1 && $("#select_permisos option:selected").val() == 2){
           $("#usuario").val($("#nombre_apellido").val().toLowerCase().split(" ").join(""));
+          validator.element( "#usuario" );
       }
     });
 

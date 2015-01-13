@@ -1,4 +1,4 @@
-<form id="form_cambiar_tipo_computadora">
+<form id="form_cambiar_tipo_computadora" autocomplete="off">
 	<table>
 		<tr>
 			<td><input type="hidden" name="id_computadora" id="id_computadora" value="{id_computadora}"></td>

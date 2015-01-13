@@ -414,6 +414,28 @@ div.control-group
 }
 
 /*-----------------------------------Termino agregar memoria------------------------------------*/
+/*-----------------------------------Agregar nueva Memoria--------------------------------------*/
+
+#form_nueva_marca_y_velocidad_memoria div.controls select
+{
+    width: 162px;
+}
+
+/*-----------------------------------Termino agregar nueva memoria------------------------------------*/
+
+/*-----------------------------------Agregar nueva Computadora--------------------------------------*/
+
+#form_nueva_marca_y_modelo_computadora div.controls select
+{
+    width: 162px;
+}
+
+#form_nueva_marca_y_modelo_computadora div.controls #select_unidades_computadoras, #form_nueva_marca_y_modelo_computadora div.controls #select_capacidades_computadoras
+{
+    width: 81px;
+}
+
+/*-----------------------------------Termino agregar nueva computadora------------------------------------*/
 
 /*-----------------------------------Agregar Computadora--------------------------------------*/
 

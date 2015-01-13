@@ -2,6 +2,9 @@
                     <ul class="nav nav-list">
                     <li class="nav-header">Bases de datos</li>
                             <li class="test"><a  href=
+                            "mis_productos" id=
+                            "link_mis_productos">Mis Productos</a></li>
+                            <li class="test"><a  href=
                             "controlador/ProductosController.php" id=
                             "link_agregar_producto">Agregar un Producto</a></li>
                             <li class="test"><a  href=
@@ -30,7 +33,15 @@
                             <li class="test"><a  href="controlador/RoutersController.php"
                             id="link_routers">ABM Routers</a></li>
                             <li class="test"><a  href="controlador/SwitchsController.php"
-                            id="link_routers">ABM Switchs</a></li>
+                            id="link_switchs">ABM Switchs</a></li>
                     </ul>
 </div>
+<script type="text/javascript">
+                $.get('logueo/check_priority.php', function(permisos) {
+                    if (permisos == 2) {
+                            $("#link_agregar_producto,#link_ver_stock,#link_permisos").hide();
+                    }
+                });
+</script>
+
 

@@ -1,4 +1,4 @@
-<form id="form_cambiar_usuario_computadora">
+<form id="form_cambiar_usuario_computadora" autocomplete="off">
     <table class="t_monitor">
         <tr>
             <tr type="hidden">

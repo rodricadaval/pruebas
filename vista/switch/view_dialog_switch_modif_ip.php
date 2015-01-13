@@ -1,4 +1,4 @@
-<form id="form_switch_mod_ip">
+<form id="form_switch_mod_ip" autocomplete="off">
     <table class="t_switch">
         <tr>
             <tr type="hidden">

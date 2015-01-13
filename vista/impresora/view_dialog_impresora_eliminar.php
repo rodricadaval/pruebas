@@ -1,4 +1,4 @@
-<form id="form_detalle_eliminar_impresora">
+<form id="form_detalle_eliminar_impresora" autocomplete="off">
     <table class="t_impresora">
         <tr>
             <tr type="hidden">

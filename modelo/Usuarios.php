@@ -60,7 +60,7 @@ class Usuarios {
 
 	public function chequeoExistenciaUsuarios($usuario) {
 		$usuario = HTML_ENTITIES_DECODE::normalizeChars($usuario);
-		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where usuario = '$usuario' ");
+		return BDD::getInstance()->query("select * from system." . self::claseMinus() . " where usuario = '$usuario' AND estado=1");
 	}
 
 	public function obtener($clave, $id) {
@@ -208,7 +208,7 @@ class Usuarios {
 
 	public function eliminarUsuario($id) {
 		if(!BDD::getInstance()->query("SELECT system.limpiar_productos_de_usuario('$id')")->get_error()){
-				if (!BDD::getInstance()->query("UPDATE system." . self::claseMinus() . " SET estado = 0 WHERE id_usuario = '$id' ")->get_error()) {
+				if (!BDD::getInstance()->query("DELETE FROM system." . self::claseMinus() . " WHERE id_usuario = '$id' ")->get_error()) {
 					if ($_SESSION['userid'] == $id) {
 						session_destroy();
 						return 2;

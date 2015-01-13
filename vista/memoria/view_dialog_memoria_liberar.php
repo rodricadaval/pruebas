@@ -1,4 +1,4 @@
-<form id="liberar_memoria">
+<form id="liberar_memoria" autocomplete="off">
 	<p>¿Esta seguro que desea liberar el memoria? El usuario y la computadora que tenía asignados se perderán.</p>
 	<!--<input type="hidden" name="boton" id="boton" value="enviar">-->
 	<input type="hidden" name="id_memoria" id="id_memoria" value="{id_memoria}">

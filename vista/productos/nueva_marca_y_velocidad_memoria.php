@@ -1,14 +1,25 @@
-<form id="form_nueva_marca_y_velocidad_memoria">
+<form id="form_nueva_marca_y_velocidad_memoria" autocomplete="off">
 <fieldset>
 <legend><text style="font-size:15px;">Escriba una marca nueva o elija una existente</text></legend>
-<ul>
-    <li><text>Marca</text><input name="marca" id="marcas" class="typeahead" type="text" placeholder="Ingrese Marca"></li>
-    <li><text>Tipo</text>{select_tipos}</li>
-    <li><text>Velocidad</text>{select_velocidades}</li>
-
-</ul>
+    <div class="control-group">
+        <label class="control-label" for="marcas">Marca</label>
+        <div class="controls">
+            <input name="marca" id="marcas" class="typeahead" type="text" placeholder="Ingrese Marca">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="select_tipos">Tipo</label>
+        <div class="controls">
+            {select_tipos}
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="select_velocidades_nueva_memoria">Velocidad</label>
+        <div class="controls">
+            {select_velocidades}
+        </div>
+    </div>
 </fieldset>
-    <div class="error_n_marc text-error"></div>
 </form>
 
 <script type="text/javascript">
@@ -62,6 +73,13 @@
             marca : {
                 required : 'El campo Marca no puede ser vacío'
             }
+        },
+        highlight: function(element) {
+             $(element).closest('.control-group').removeClass('success').addClass('error');
+         },
+        success: function(element) {
+            element.text('OK!').addClass('valid')
+            .closest('.control-group').removeClass('error').addClass('success');
         },
         submitHandler : function (form) {
             console.log ("Formulario OK");

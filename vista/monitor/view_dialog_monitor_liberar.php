@@ -1,4 +1,4 @@
-<form id="liberar_monitor">
+<form id="liberar_monitor" autocomplete="off">
 	<p>¿Esta seguro que desea liberar el monitor? El usuario y la computadora que tenía asignados se perderán.</p>
 	<!--<input type="hidden" name="boton" id="boton" value="enviar">-->
 	<input type="hidden" name="id_monitor" id="id_monitor" value="{id_monitor}">

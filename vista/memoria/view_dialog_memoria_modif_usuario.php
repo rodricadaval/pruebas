@@ -1,4 +1,4 @@
-<form id="form_memoria_mod_usuario">
+<form id="form_memoria_mod_usuario" autocomplete="off">
     <table class="t_monitor">
         <tr>
             <td><input type="hidden" name="id_vinculo" id="id_vinculo" value="{id_vinculo}"></td>
@@ -121,7 +121,6 @@ $(document).ready(function(){
                       }
                     }
                 },
-                notEqual: id_cpu_orig,
                 sinCpu: true
             },
             nombre_usuario: {

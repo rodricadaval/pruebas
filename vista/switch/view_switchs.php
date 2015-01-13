@@ -12,23 +12,44 @@
 				   tipo: 'json'},
 			dataType: 'json',
 			success : function(data){
-				var dataTable = $("#dataTable").dataTable({
-   			 		"destroy" : true,
-					"aaData" : data,
-					"aoColumns" :[
-						{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
-						{ "sTitle" : "IP" , "mData" : "ip"},
-						{ "sTitle" : "Marca" , "mData" : "marca"},
-						{ "sTitle" : "Modelo" , "mData" : "modelo"},
-						{ "sTitle" : "Sector" , "mData" : "sector"},
-						{ "sTitle" : "Descripcion" , "mData" : "descripcion"},
-						{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
-										'<a class="ventana_area " href="">Modificar</a>'}
-						],
-					"aoColumnDefs": [
-			            { "sWidth": "20%", "aTargets": [ -1 ] }
-			        ]
-    			})
+				$.get('logueo/check_priority.php', function(permisos) {
+					if( permisos == 1 || permisos == 3) {
+							var dataTable = $("#dataTable").dataTable({
+			   			 		"destroy" : true,
+								"aaData" : data,
+								"aoColumns" :[
+									{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
+									{ "sTitle" : "IP" , "mData" : "ip"},
+									{ "sTitle" : "Marca" , "mData" : "marca"},
+									{ "sTitle" : "Modelo" , "mData" : "modelo"},
+									{ "sTitle" : "Sector" , "mData" : "sector"},
+									{ "sTitle" : "Descripcion" , "mData" : "descripcion"},
+									{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
+													'<a class="ventana_area " href="">Modificar</a>'}
+									],
+								"aoColumnDefs": [
+						            { "sWidth": "20%", "aTargets": [ -1 ] }
+						        ]
+			    			})
+						}
+						else if (permisos == 2) {
+							var dataTable = $("#dataTable").dataTable({
+			   			 		"destroy" : true,
+								"aaData" : data,
+								"aoColumns" :[
+									{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
+									{ "sTitle" : "IP" , "mData" : "ip"},
+									{ "sTitle" : "Marca" , "mData" : "marca"},
+									{ "sTitle" : "Modelo" , "mData" : "modelo"},
+									{ "sTitle" : "Sector" , "mData" : "sector"},
+									{ "sTitle" : "Descripcion" , "mData" : "descripcion"},									
+									],
+								"aoColumnDefs": [
+						            { "sWidth": "20%", "aTargets": [ -1 ] }
+						        ]
+			    			})
+						}
+					});				
 			}
 		});
 	});

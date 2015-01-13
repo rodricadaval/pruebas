@@ -1,4 +1,4 @@
-<form id="form_area">
+<form id="form_area" autocomplete="off">
     <div id="errores_area" class="error_dialog"></div>
     <table class="mytable">
         <tr>
@@ -29,7 +29,7 @@ $(document).ready(function(){
             nombre : {
               required : true,
               minlength : 3,
-              maxlength : 30,
+              maxlength : 60,
               remote: {
                 url: "checkDisponibilidad.php",
                 type: "post",

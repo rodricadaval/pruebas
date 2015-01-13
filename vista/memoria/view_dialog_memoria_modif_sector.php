@@ -1,4 +1,4 @@
-<form id="form_memoria_mod_sector">
+<form id="form_memoria_mod_sector" autocomplete="off">
     <table class="t_memoria">
         <tr><p id="text_no_puede_cambiar">La Memoria no puede ser cambiada de Sector ya que tiene un usuario o cpu asignado/s. Debe clickear en "liberar memoria" si quiere modificar su sector. </p></tr>
         <tr type="hidden">

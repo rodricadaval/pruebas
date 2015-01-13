@@ -1,4 +1,4 @@
-<form id="form_computadora_mod_sector">
+<form id="form_computadora_mod_sector" autocomplete="off">
     <table class="t_monitor">
         <tr><p id="text_no_puede_cambiar">La computadora no puede ser cambiada de Sector ya que tiene un usuario asignado. Debe clickear en "liberar computadora" si quiere modificar su sector o, si desea que conserve el mismo usuario, dicho usuario debe cambiar su sector.</p></tr>
         <tr type="hidden">

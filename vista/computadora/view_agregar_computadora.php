@@ -1,4 +1,4 @@
-<form id="form_agregar_computadora">
+<form id="form_agregar_computadora" autocomplete="off">
 <fieldset>
 <legend>Complete los Datos <small>(hay validaciones al crear)</small></legend>
     <div class="control-group">
@@ -170,7 +170,7 @@
                                                 duration: 200
                                                 },
                                                 width : 440,
-                                                height : 450,
+                                                height : 520,
                                                 close : function(){
                                                     $(this).dialog("destroy");
                                                     $("#dialogcontent_nueva_marca").remove();

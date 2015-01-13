@@ -1,4 +1,4 @@
-<form id="form_disco_mod_cpu">
+<form id="form_disco_mod_cpu" autocomplete="off">
     <table class="t_disco">
         <tr type="hidden">
            <td><input type="hidden" name="id_vinculo" id="id_vinculo" value="{id_vinculo}"></td>

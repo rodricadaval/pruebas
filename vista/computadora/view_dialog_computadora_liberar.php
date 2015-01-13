@@ -1,4 +1,4 @@
-<form id="form_computadora_liberar">
+<form id="form_computadora_liberar" autocomplete="off">
     <table class="t_comp">
         <tr type="hidden">
            <td><input type="hidden" name="id_vinculo" id="id_vinculo" value="{id_vinculo}"></td>

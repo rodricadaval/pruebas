@@ -1,12 +1,19 @@
-<form id="form_nueva_marca_y_modelo">
+<form id="form_nueva_marca_y_modelo" autocomplete="off">
 <fieldset>
 <legend><text style="font-size:15px;">Escriba una marca nueva o elija una existente</text></legend>
-<ul>
-    <li><text>Marca</text><input name="marca" id="marcas" class="typeahead" type="text" placeholder="Ingrese Marca"></li>
-    <li><text>Modelo</text><input name="modelo" id="modelo" type="text" name="nuevo_modelo" placeholder="Ingrese Modelo"></li>
-</ul>
+    <div class="control-group">
+        <label class="control-label" for="marcas">Marca</label>
+        <div class="controls">
+            <input name="marca" id="marcas" class="typeahead" type="text" placeholder="Ingrese Marca">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="modelo">Modelo</label>
+        <div class="controls">
+            <input name="modelo" id="modelo" type="text" name="nuevo_modelo" placeholder="Ingrese Modelo">
+        </div>
+    </div>
 </fieldset>
-    <div><p class="error_n_marc text-error"></p></div>
 </form>
 
 <script type="text/javascript">
@@ -29,8 +36,6 @@
     });
 
     $("#form_nueva_marca_y_modelo").validate({
-        errorLabelContainer : ".error_n_marc",
-        wrapper : "li",
         onfocusout: false,
         onkeyup: false,
         onclick: false,
@@ -51,6 +56,13 @@
                 required : 'El campo Modelo no puede ser vacío'
             }
         } ,
+        highlight: function(element) {
+             $(element).closest('.control-group').removeClass('success').addClass('error');
+         },
+        success: function(element) {
+            element.text('OK!').addClass('valid')
+            .closest('.control-group').removeClass('error').addClass('success');
+        },
         submitHandler : function (form) {
             console.log ("Formulario OK");
 

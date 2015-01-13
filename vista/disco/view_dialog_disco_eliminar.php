@@ -1,4 +1,4 @@
-<form id="form_detalle_eliminar_disco">
+<form id="form_detalle_eliminar_disco" autocomplete="off">
     <table class="t_disco">
         <tr>
             <tr type="hidden">

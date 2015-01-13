@@ -1,4 +1,4 @@
-<form id="form_detalle_eliminar_memoria">
+<form id="form_detalle_eliminar_memoria" autocomplete="off">
     <table class="t_memoria">
         <tr>
             <tr type="hidden">

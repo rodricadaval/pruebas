@@ -1,4 +1,4 @@
-<form id="form_disco_mod_usuario">
+<form id="form_disco_mod_usuario" autocomplete="off">
     <table class="t_disco">
         <tr>
             <tr type="hidden">

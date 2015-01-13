@@ -1,4 +1,4 @@
-<form id="form_detalle_eliminar_router">
+<form id="form_detalle_eliminar_router" autocomplete="off">
     <table class="t_router">
         <tr>
             <tr type="hidden">

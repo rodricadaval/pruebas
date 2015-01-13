@@ -12,26 +12,50 @@
 				   tipo: 'json'},
 			dataType: 'json',
 			success : function(data){
-				var dataTable = $("#dataTable").dataTable({
-   			 		"destroy" : true,
-   			 		"aaData" : data,
-					"aoColumns" :[
-						{ "sTitle" : "Marca" , "mData" : "marca"},
-						{ "sTitle" : "Capacidad" , "mData" : "capacidad"},
-						{ "sTitle" : "Sector" , "mData" : "sector"},
-						{ "sTitle" : "Usuario" ,"mDataProp": "nombre_apellido",
-              				"mRender": function ( data, type, row ) {
-  								return '<div id="ver_usuario" usuario="'+data+'"><a title="Ver productos de '+data+' "href="edit.php?usuario='+ data+'">'+data+'</a></div>';
-							}
-						},
-						{ "sTitle" : "Cpu" , "mData" : "cpu_serie"},
-						{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
-										'<a class="ventana_area " href="">Modificar</a>'}
-						],
-					"aoColumnDefs": [
-			            { "sWidth": "30%", "aTargets": [ -1 ] }
-			        ]
-    			})
+				$.get('logueo/check_priority.php', function(permisos) {
+					if( permisos == 1 || permisos == 3) {
+							var dataTable = $("#dataTable").dataTable({
+		   			 		"destroy" : true,
+		   			 		"aaData" : data,
+							"aoColumns" :[
+								{ "sTitle" : "Marca" , "mData" : "marca"},
+								{ "sTitle" : "Capacidad" , "mData" : "capacidad"},
+								{ "sTitle" : "Sector" , "mData" : "sector"},
+								{ "sTitle" : "Usuario" ,"mDataProp": "nombre_apellido",
+		              				"mRender": function ( data, type, row ) {
+		  								return '<div id="ver_usuario" usuario="'+data+'"><a title="Ver productos de '+data+' "href="edit.php?usuario='+ data+'">'+data+'</a></div>';
+									}
+								},
+								{ "sTitle" : "Cpu" , "mData" : "cpu_serie"},
+								{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
+												'<a class="ventana_area " href="">Modificar</a>'}
+								],
+							"aoColumnDefs": [
+					            { "sWidth": "30%", "aTargets": [ -1 ] }
+					        ]
+		    			})
+						}
+						else if (permisos == 2) {
+							var dataTable = $("#dataTable").dataTable({
+		   			 		"destroy" : true,
+		   			 		"aaData" : data,
+							"aoColumns" :[
+								{ "sTitle" : "Marca" , "mData" : "marca"},
+								{ "sTitle" : "Capacidad" , "mData" : "capacidad"},
+								{ "sTitle" : "Sector" , "mData" : "sector"},
+								{ "sTitle" : "Usuario" ,"mDataProp": "nombre_apellido",
+		              				"mRender": function ( data, type, row ) {
+		  								return '<div id="ver_usuario" usuario="'+data+'"><a title="Ver productos de '+data+' "href="edit.php?usuario='+ data+'">'+data+'</a></div>';
+									}
+								},
+								{ "sTitle" : "Cpu" , "mData" : "cpu_serie"},
+								],
+							"aoColumnDefs": [
+					            { "sWidth": "30%", "aTargets": [ -1 ] }
+					        ]
+		    				})
+						}
+					});					
 			}
 		});
 	});
@@ -224,12 +248,9 @@ $("#contenedorPpal").on('click' , '#modificar_usuario_disco' , function(){
 												},
 												buttons :
 							                    {
-							                        "Cancelar" : function () {
+							                        "Aceptar" : function () {
 							                            $(this).dialog("destroy").empty();
 							                            $("#dialogcontent_prod_usuario").remove();
-							                        },
-							                        "Enviar" : function(){
-							                        	$("#dialogcontent_prod_usuario").submit();
 							                        }
 							                    }
 					});

@@ -1,4 +1,4 @@
-<form id="form_disco_mod_sector">
+<form id="form_disco_mod_sector" autocomplete="off">
     <table class="t_disco">
         <tr><p id="text_no_puede_cambiar">El Disco no puede ser cambiado de Sector ya que tiene un usuario o cpu asignado/s. Debe clickear en "liberar disco" si quiere modificar su sector. </p></tr>
         <tr type="hidden">
