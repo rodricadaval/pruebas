@@ -21,6 +21,8 @@ class Monitores {
 
 	public function listarCorrecto($datos_extra = "") {
 
+		$data = null;
+
 		$inst_table = BDD::getInstance()->query("select * ,
 			'<a id=\"modificar_sector_monitor\" class=\"pointer_mon\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"modificar_cpu_monitor\" class=\"pointer_mon\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted blue small laptop icon\" title=\"Asignar una Computadora\"></i></a>
@@ -73,6 +75,8 @@ class Monitores {
 	}
 
 	public function listarEnStock($datos_extra = "") {
+
+		$data = null;
 
 		$inst_table = BDD::getInstance()->query("select * ,
 			'<a id=\"modificar_sector_monitor\" class=\"pointer_mon\"id_monitor=\"' || id_monitor || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
@@ -132,7 +136,7 @@ class Monitores {
 
 		$html_view = "<p>Rellene los campos deseados</p>";
 
-		$table = BDD::getInstance()->query("select * from system." . self::claseMinus());
+		$table = BDD::getInstance()->query("select * from system." . self::claseMinus(). " where estado=1");
 
 		$html_view .= "<select id='select_monitor' name='monitor'>";
 		$first = true;
@@ -165,7 +169,9 @@ class Monitores {
 	}
 
 	public function dameListaDeUsuario($id_usuario){
-		
+			
+		$lista_con_datos = null;
+
 		$tipos = Tipo_productos::get_rel_campos();
 		$id_tipo_producto = array_search("Monitor", $tipos);
 
@@ -175,6 +181,7 @@ class Monitores {
 			$lista_con_datos[$i] = self::getByID($campo['id_pk_producto']);
 			$i++;
 		}
+
 		return self::generarListadoDeUsuario($lista_con_datos);	
 	}
 
@@ -192,27 +199,93 @@ class Monitores {
 					   <th>Serie Cpu</th>";
 		$html_view .= "</tr>";
 
-		if(count($listado) == 0 ){
+		if($listado == null ){
 			$html_view .= "<tr>";
 			$html_view .= "<td colspan='5'>No tiene monitores</td>";
 			$html_view .= "</tr>";
 		}
+		else{
 
-		foreach ($listado as $fila => $contenido) {
+			foreach ($listado as $lista => $contenido) {
+				$html_view .= "<tr>";
+
+				$html_view .= "<td>".$contenido['num_serie']."</td>";
+
+				$datos_desc = Monitor_desc::dameDatos($contenido['id_monitor_desc']);
+				
+				if($datos_desc['pulgadas'] == ""){$datos_desc['pulgadas'] = "-";}
+				
+				$html_view .= "<td>".$datos_desc['marca']."</td>";
+				$html_view .= "<td>".$datos_desc['modelo']."</td>";
+				$html_view .= "<td>".$datos_desc['pulgadas']."</td>";
+				$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
+		
+				$html_view .= "</tr>";				
+			}
+		}
+
+		
+
+		$html_view .= "</table>";
+		$html_view .= "</fieldset>";
+		return $html_view;
+	}
+
+	public function dameListaDeCpu($id_cpu){
+
+		$lista_con_datos = null;
+
+		$tipos = Tipo_productos::get_rel_campos();
+		$id_tipo_producto = array_search("Monitor", $tipos);
+
+		$lista = BDD::getInstance()->query("SELECT id_pk_producto FROM system.vinculos where id_tipo_producto='$id_tipo_producto' AND id_cpu='$id_cpu' AND estado=1 ")->_fetchAll();
+		$i = 0;
+		foreach ($lista as $campo) {
+			$lista_con_datos[$i] = self::getByID($campo['id_pk_producto']);
+			$i++;
+		}
+
+		return self::generarListadoDeCpu($lista_con_datos);	
+	}
+
+	public function generarListadoDeCpu($listado){
+
+		$html_view = "";
+		$html_view .= "<fieldset>";
+		$html_view .= "<h4>Monitor</h4>";
+		$html_view .= "<table class='table table-condensed' id='tabla_productos_cpu'>";
+		$html_view .= "<tr>";
+		$html_view .= "<th>Serie</th>
+					   <th>Marca</th>
+					   <th>Modelo</th>
+					   <th>Pulgadas</th>";
+		$html_view .= "</tr>";
+
+		if($listado == null ){
 			$html_view .= "<tr>";
-
-			$html_view .= "<td>".$contenido['num_serie']."</td>";
-
-			$datos_desc = Monitor_desc::dameDatos($contenido['id_monitor_desc']);
-			if($datos_desc['pulgadas'] == ""){$datos_desc['pulgadas'] = "-";}
-			
-			$html_view .= "<td>".$datos_desc['marca']."</td>";
-			$html_view .= "<td>".$datos_desc['modelo']."</td>";
-			$html_view .= "<td>".$datos_desc['pulgadas']."</td>";
-			$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
-	
+			$html_view .= "<td colspan='4'>No tiene monitores</td>";
 			$html_view .= "</tr>";
 		}
+		else{
+
+			foreach ($listado as $lista => $contenido) {
+				$html_view .= "<tr>";
+
+				$html_view .= "<td>".$contenido['num_serie']."</td>";
+
+				$datos_desc = Monitor_desc::dameDatos($contenido['id_monitor_desc']);
+				
+				if($datos_desc['pulgadas'] == ""){$datos_desc['pulgadas'] = "-";}
+				
+				$html_view .= "<td>".$datos_desc['marca']."</td>";
+				$html_view .= "<td>".$datos_desc['modelo']."</td>";
+				$html_view .= "<td>".$datos_desc['pulgadas']."</td>";
+				
+				$html_view .= "</tr>";				
+			}
+		}
+
+		
 
 		$html_view .= "</table>";
 		$html_view .= "</fieldset>";

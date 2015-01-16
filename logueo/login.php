@@ -56,7 +56,7 @@ $(document).ready(function(){
 <p>Ingresa usuario y contraseña.</p>
 
 <br/>
-<form>
+<form autocomplete="off">
 <table class="mytable">
 <tr>
 	<td colspan="2"><h3 class="as_login_heading">Ingresar</h3></td>

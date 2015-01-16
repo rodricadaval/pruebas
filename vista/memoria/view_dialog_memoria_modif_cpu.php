@@ -56,7 +56,8 @@ $(document).ready(function(){
                         return "chequear_slots";
                       }
                     }
-                }
+                },
+                sinCpu: true
             },
             id_memoria: {
                 remote: {
@@ -78,7 +79,8 @@ $(document).ready(function(){
         } ,
         messages : {
             id_computadora : {
-                remote: 'La CPU del usuario tiene los slots llenos. No puede asignarle mas memorias'
+                remote: 'La CPU del usuario tiene los slots llenos. No puede asignarle mas memorias',
+                sinCpu: 'No se puede asignar a Sin Cpu'
             },
             id_memoria : {
                 remote: 'No se puede asignar esta memoria en la computadora. No alcanza el espacio'

@@ -210,7 +210,7 @@
 			});
 	});
 
-	$("#contenedorPpal").on('click' , '#generar_memorandum' , function(){
+	$("#contenedorPpal").on('click' , '#generar_memorandum' , function(event){
 		event.preventDefault();
 		
 		console.log("Entro a seleccionar los productos para el memorandum del usuario");

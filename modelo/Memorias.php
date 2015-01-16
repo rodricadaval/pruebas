@@ -21,6 +21,8 @@ class Memorias {
 
 	public function listarCorrecto($datos_extra = "") {
 
+		$data = null;
+
 		$inst_table = BDD::getInstance()->query("select * ,
 			'<a id=\"modificar_sector_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"modificar_cpu_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted blue small laptop icon\" title=\"Asignar una Computadora\"></i></a>
@@ -91,6 +93,8 @@ class Memorias {
 	}
 
 	public function listarEnStock($datos_extra = "") {
+
+		$data = null;
 
 		$tipos = Tipo_productos::get_rel_campos();
 		$id_tipo_producto = array_search("Memoria", $tipos);
@@ -213,6 +217,8 @@ class Memorias {
 
 	public function dameListaDeUsuario($id_usuario){
 		
+		$lista_con_datos = null;
+
 		$tipos = Tipo_productos::get_rel_campos();
 		$id_tipo_producto = array_search("Memoria", $tipos);
 
@@ -226,7 +232,7 @@ class Memorias {
 	}
 
 	public function generarListadoDeUsuario($listado){
-		
+
 		$html_view = "";
 		$html_view .= "<fieldset>";
 		$html_view .= "<h4>Memorias</h4>";
@@ -239,29 +245,94 @@ class Memorias {
 					   <th>Serie Cpu</th>";
 		$html_view .= "</tr>";
 
-		if(count($listado) == 0 ){
+		if($listado == null){
 			$html_view .= "<tr>";
 			$html_view .= "<td colspan='5'>No tiene memorias</td>";
 			$html_view .= "</tr>";
 		}
+		else{
 
-		foreach ($listado as $fila => $contenido) {
+			foreach ($listado as $fila => $contenido) {
+				$html_view .= "<tr>";
+
+				$datos_desc = Memoria_desc::dameDatos($contenido['id_memoria_desc']);
+				
+				$html_view .= "<td>".$datos_desc['marca']."</td>";
+				$html_view .= "<td>".$datos_desc['tipo']."</td>";
+				$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
+				$html_view .= "<td>".$datos_desc['velocidad']."</td>";
+				$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
+		
+				$html_view .= "</tr>";
+			}
+			$html_view .= "<tr id='total'>";
+			$html_view .= "<td colspan='3'>Total</td>";
+			$html_view .= "<td colspan='2'>".count($listado)."</td>";
+			$html_view .= "</tr>";
+
+		}
+		
+		$html_view .= "</table>";
+		$html_view .= "</fieldset>";
+		return $html_view;
+	}
+
+	public function dameListaDeCpu($id_cpu){
+
+		$lista_con_datos = null;
+
+		$tipos = Tipo_productos::get_rel_campos();
+		$id_tipo_producto = array_search("Memoria", $tipos);
+
+		$lista = BDD::getInstance()->query("SELECT id_pk_producto FROM system.vinculos where id_tipo_producto='$id_tipo_producto' AND id_cpu='$id_cpu' AND estado=1 ")->_fetchAll();
+		$i = 0;
+		foreach ($lista as $campo) {
+			$lista_con_datos[$i] = self::getByID($campo['id_pk_producto']);
+			$i++;
+		}
+
+		return self::generarListadoDeCpu($lista_con_datos);	
+	}
+
+	public function generarListadoDeCpu($listado){
+
+		$html_view = "";
+		$html_view .= "<fieldset>";
+		$html_view .= "<h4>Memorias</h4>";
+		$html_view .= "<table class='table table-condensed' id='tabla_productos_cpu'>";
+		$html_view .= "<tr>";
+		$html_view .= "<th>Marca</th>
+					   <th>Tipo</th>
+					   <th>Capacidad</th>
+					   <th>Velocidad (Mhz)</th>";
+		$html_view .= "</tr>";
+
+		if($listado == null){
 			$html_view .= "<tr>";
-
-			$datos_desc = Memoria_desc::dameDatos($contenido['id_memoria_desc']);
-			
-			$html_view .= "<td>".$datos_desc['marca']."</td>";
-			$html_view .= "<td>".$datos_desc['tipo']."</td>";
-			$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
-			$html_view .= "<td>".$datos_desc['velocidad']."</td>";
-			$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
-	
+			$html_view .= "<td colspan='4'>No tiene memorias</td>";
 			$html_view .= "</tr>";
 		}
-		$html_view .= "<tr id='total'>";
-		$html_view .= "<td colspan='3'>Total</td>";
-		$html_view .= "<td colspan='2'>".count($listado)."</td>";
-		$html_view .= "</tr>";
+		else{
+
+			foreach ($listado as $fila => $contenido) {
+				$html_view .= "<tr>";
+
+				$datos_desc = Memoria_desc::dameDatos($contenido['id_memoria_desc']);
+				
+				$html_view .= "<td>".$datos_desc['marca']."</td>";
+				$html_view .= "<td>".$datos_desc['tipo']."</td>";
+				$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
+				$html_view .= "<td>".$datos_desc['velocidad']."</td>";
+		
+				$html_view .= "</tr>";
+			}
+			$html_view .= "<tr id='total'>";
+			$html_view .= "<td colspan='2'>Total</td>";
+			$html_view .= "<td colspan='2'>".count($listado)."</td>";
+			$html_view .= "</tr>";
+
+		}
+		
 		$html_view .= "</table>";
 		$html_view .= "</fieldset>";
 		return $html_view;

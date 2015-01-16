@@ -28,7 +28,11 @@
 $(document).ready(function(){
 
 
-    $('#select_computadoras_disco').attr('style', 'display:none');     
+    $('#select_computadoras_disco').attr('style', 'display:none');
+
+    $("#nombre_usuario").on('focus', function(){
+         this.select();
+     })     
 
    	 $("#nombre_usuario").typeahead({
         source : function (query , process) {

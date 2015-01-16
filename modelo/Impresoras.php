@@ -21,6 +21,8 @@ class Impresoras {
 
 	public function listarCorrecto($datos_extra = "") {
 
+		$data = null;
+
 		$inst_table = BDD::getInstance()->query("select * ,
 			'<a id=\"modificar_sector_impresora\" class=\"pointer_mon\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"agregar_descripcion_impresora\" class=\"pointer_cpu\"id_impresora=\"' || id_impresora || '\">
@@ -71,6 +73,8 @@ class Impresoras {
 	}
 
 	public function listarEnStock($datos_extra = "") {
+
+		$data = null;
 
 		$tipos = Tipo_productos::get_rel_campos();
 		$id_tipo_producto = array_search("Impresora", $tipos);
@@ -128,7 +132,7 @@ class Impresoras {
 
 		$html_view = "<p>Rellene los campos deseados</p>";
 
-		$table = BDD::getInstance()->query("select * from system." . self::claseMinus());
+		$table = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where estado=1");
 
 		$html_view .= "<select id='select_impresora' name='impresora'>";
 		$first = true;
@@ -203,7 +207,8 @@ class Impresoras {
 	}
 
 	public function modificarImpresora($datos) {
-		return Vinculos::modificarDatos($datos);
+		$inst_vinc = new Vinculos();
+		return $inst_vinc->modificarDatos($datos);
 	}
 
 	public function eliminarImpresora($id) {

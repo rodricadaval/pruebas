@@ -1,5 +1,12 @@
 <?php
+
 class Vinculos {
+
+	public $session_id;
+
+	public function __construct() {
+        $this->session_id = $_SESSION['userid'];
+    }
 
 	public function crearVinculo($datos = "", $tipo = "") {
 
@@ -24,6 +31,7 @@ class Vinculos {
 
 		$values = $datos['id_usuario'] . "," . $datos['id_deposito'] . "," . $datos['id_cpu'] . "," . $datos['id_tipo_producto'] . ",1";
 
+		BDD::getInstance()->query("INSERT INTO system.historial_acciones (id,accion) VALUES ($this->session_id,'SESSION-USER::INSERT->system.vinculos') ");
 		if (!BDD::getInstance()->query("INSERT INTO system.vinculos (id_usuario,id_sector,id_cpu,id_tipo_producto,id_pk_producto) VALUES ($values) ")->get_error()) {
 
 			$valor_seq_actual = BDD::getInstance()->query("select nextval('system.vinculos_id_vinculo_seq'::regclass)")->_fetchRow()['nextval'];
@@ -64,11 +72,12 @@ class Vinculos {
 			}
 
 			if ($id == 0) {
+				BDD::getInstance()->query("INSERT INTO system.historial_acciones (id,accion) VALUES ($this->session_id,'SESSION-USER::DELETE->system.vinculos') ");
 				BDD::getInstance()->query("DELETE FROM system.vinculos WHERE id_vinculo='$valor_seq_actual' ")->get_error();
 				$valor_seq_actual--;
 				BDD::getInstance()->query("select setval('system.vinculos_id_vinculo_seq'::regclass,'$valor_seq_actual')");
 			} else {
-
+				BDD::getInstance()->query("INSERT INTO system.historial_acciones (id,accion) VALUES ($this->session_id,'SESSION-USER::UPDATE->system.vinculos') ");
 				if (BDD::getInstance()->query("UPDATE system.vinculos SET id_pk_producto=$id WHERE id_vinculo='$valor_seq_actual' ")->get_error()) {
 					var_dump(BDD::getInstance());
 					return "false";
@@ -187,7 +196,8 @@ class Vinculos {
 		$id_cpu = self::getIdCpuDeLaPc($datos['id_vinculo']);
 		$extra = "id_sector=" . $datos['id_sector'];
 
-		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_usuario = 1 AND id_cpu = '$id_cpu' ")->get_error()) {
+		BDD::getInstance()->query("INSERT INTO system.historial_acciones (id,accion) VALUES ($this->session_id,'SESSION-USER::UPDATE->system.vinculos') ");
+		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_usuario = 1 AND id_cpu = '$id_cpu' and estado=1")->get_error()) {
 			var_dump(BDD::getInstance());
 			return 0;
 		}
@@ -200,7 +210,8 @@ class Vinculos {
 		$id_cpu = $datos['id_cpu'];
 		$extra = "id_sector=" . $datos['id_sector'].","."id_usuario=".$datos['id_usuario'];
 
-		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_cpu = '$id_cpu' ")->get_error()) {
+		BDD::getInstance()->query("INSERT INTO system.historial_acciones (id,accion) VALUES ($this->session_id,'SESSION-USER::UPDATE->system.vinculos') ");
+		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_cpu = '$id_cpu' and estado=1")->get_error()) {
 			var_dump(BDD::getInstance());
 			return 0;
 		}
@@ -213,7 +224,8 @@ class Vinculos {
 		$id_cpu = self::getIdCpuDeLaPc($datos['id_vinculo']);
 		$extra = "id_cpu=1";
 
-		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_cpu = '$id_cpu' ")->get_error()) {
+		BDD::getInstance()->query("INSERT INTO system.historial_acciones (id,accion) VALUES ($this->session_id,'SESSION-USER::UPDATE->system.vinculos') ");
+		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_cpu = '$id_cpu' and estado=1")->get_error()) {
 			var_dump(BDD::getInstance());
 			return 0;
 		}
@@ -225,7 +237,8 @@ class Vinculos {
 
 		$extra = "id_usuario=1";
 
-		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_cpu = '$id_cpu' ")->get_error()) {
+		BDD::getInstance()->query("INSERT INTO system.historial_acciones (id,accion) VALUES ($this->session_id,'SESSION-USER::UPDATE->system.vinculos') ");
+		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_cpu = '$id_cpu' and estado=1")->get_error()) {
 			var_dump(BDD::getInstance());
 			return 0;
 		}
@@ -236,46 +249,61 @@ class Vinculos {
 	public function modificarDatos($datos) {
 
 		$id_vinculo = $datos['id_vinculo'];
+		$session_user = $SESION['userid'];
+
 		$extra = "id_sector=" . $datos['area'] . ", id_usuario=" . $datos['id_usuario'] . ", id_cpu=" . $datos['id_cpu'];
+		BDD::getInstance()->query("INSERT INTO system.historial_acciones (id,accion) VALUES ($this->session_id,'SESSION-USER::UPDATE->system.vinculos') ");
 		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_vinculo = '$id_vinculo' ")->get_error()) {
 			var_dump(BDD::getInstance());
 			return 0;
 		}
-		var_dump(BDD::getInstance());
-		return 1;
+		else{
+			var_dump(BDD::getInstance());
+			return 1;
+		}		
 	}
 
 	public function cambiarCpu($datos){
 		$id_vinculo = $datos['id_vinculo'];
 		$extra = "id_cpu=".$datos['id_cpu'];
+		BDD::getInstance()->query("INSERT INTO system.historial_acciones (id,accion) VALUES ($this->session_id,'SESSION-USER::UPDATE->system.vinculos') ");
 		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_vinculo = '$id_vinculo' ")->get_error()) {
 			var_dump(BDD::getInstance());
 			return 0;
 		}
-		var_dump(BDD::getInstance());
-		return 1;
+		else{
+			var_dump(BDD::getInstance());
+			return 1;
+		}		
 	}
 
 	public function cambiarSector($datos){
 		$id_vinculo = $datos['id_vinculo'];
 		$extra = "id_sector=".$datos['id_sector'];
+
+	    BDD::getInstance()->query("INSERT INTO system.historial_acciones (id,accion) VALUES ($this->session_id,'SESSION-USER::UPDATE->system.vinculos') ");
 		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_vinculo = '$id_vinculo' ")->get_error()) {
 			var_dump(BDD::getInstance());
 			return 0;
 		}
-		var_dump(BDD::getInstance());
-		return 1;
+		else{
+			var_dump(BDD::getInstance());
+			return 1;
+		}			
 	}
 
 	public function cambiarUsuarioYSector($datos){
 		$id_vinculo = $datos['id_vinculo'];
 		$extra = "id_usuario=".$datos['id_usuario'].","."id_sector=".$datos['id_sector'];
+		BDD::getInstance()->query("INSERT INTO system.historial_acciones (id,accion) VALUES ($this->session_id,'SESSION-USER::UPDATE->system.vinculos') ");
 		if (BDD::getInstance()->query("UPDATE system.vinculos SET $extra where id_vinculo = '$id_vinculo' ")->get_error()) {
 			var_dump(BDD::getInstance());
 			return 0;
 		}
-		var_dump(BDD::getInstance());
-		return 1;
+		else{
+			var_dump(BDD::getInstance());
+			return 1;
+		}		
 	}
 
 	public function estaLibre($id){
@@ -287,6 +315,7 @@ class Vinculos {
 	}
 
 	public function liberar($id){
+		BDD::getInstance()->query("INSERT INTO system.historial_acciones (id,accion) VALUES ($this->session_id,'SESSION-USER::UPDATE->system.vinculos') ");
 		if(BDD::getInstance()->query("UPDATE system.vinculos SET id_usuario=1,id_cpu=1 where id_vinculo = '$id' ")->get_error()){
 			var_dump(BDD::getInstance());
 			echo "false";

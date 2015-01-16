@@ -98,7 +98,7 @@ $("#contenedorPpal").on('click' , '#modificar_usuario_monitor' , function(){
 											duration: 200
 											},
 											width : 350,
-											height : 330,
+											height : 350,
 											close : function(){
 												$(this).dialog("destroy");
 												$("#dialogcontent_monitor").remove();

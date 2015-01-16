@@ -23,6 +23,7 @@
 									{ "sTitle" : "Modelo" , "mData" : "modelo"},
 									{ "sTitle" : "Tipo" , "mData" : "clase"},
 									{ "sTitle" : "Slots Libres" , "mData" : "slots_libres"},
+									{ "sTitle" : "Max(GB)" , "mData" : "mem_max"},
 									{ "sTitle" : "Sector" , "mData" : "sector"},
 									{ "sTitle" : "Usuario" ,"mDataProp": "nombre_apellido",
 			              				"mRender": function ( data, type, row ) {
@@ -34,7 +35,7 @@
 													'<a class="ventana_area " href="">Modificar</a>'}
 									],
 									"aoColumnDefs": [
-							            { "sWidth": "20%", "aTargets": [ -1 ] }
+							            { "sWidth": "24%", "aTargets": [ -1 ] }
 							        ]
 			    			})
 						}
@@ -83,7 +84,7 @@
 				}, function(data){
 					jQuery('<div/>', {
 					    id: 'dialogcontent_cpu',
-					    text: 'Texto por defecto!'
+					    text: ''
 					}).appendTo('#contenedorPpal');
 					$("#dialogcontent_cpu").html(data);
 					$("#dialogcontent_cpu").dialog({
@@ -134,7 +135,7 @@
 						}, function(data){
 							jQuery('<div/>', {
 							    id: 'dialogcontent_cpu',
-							    text: 'Texto por defecto!'
+							    text: ''
 							}).appendTo('#contenedorPpal');
 							$("#dialogcontent_cpu").html(data);
 							$("#dialogcontent_cpu").dialog({
@@ -149,7 +150,7 @@
 														duration: 150
 														},
 														width : 400,
-														height: 420,
+														height: 440,
 														close : function(){
 															$(this).dialog("destroy").empty();
 															$("#dialogcontent_cpu").remove();
@@ -185,7 +186,7 @@
 					}, function(data){
 						jQuery('<div/>', {
 					    id: 'dialogcontent_cpu',
-					    text: 'Texto por defecto!'
+					    text: ''
 					}).appendTo('#contenedorPpal');
 						$("#dialogcontent_cpu").html(data);
 						$("#dialogcontent_cpu").dialog({
@@ -236,7 +237,7 @@
 			}, function(data){
 				jQuery('<div/>', {
 			    id: 'dialogcontent_cpu',
-			    text: 'Texto por defecto!'
+			    text: ''
 			}).appendTo('#contenedorPpal');
 				$("#dialogcontent_cpu").html(data);
 				$("#dialogcontent_cpu").dialog({
@@ -285,7 +286,7 @@
 			}, function(data){
 				jQuery('<div/>', {
 				    id: 'dialogcontent_prod_usuario',
-				    text: 'Texto por defecto!'
+				    text: ''
 				}).appendTo('#contenedorPpal');
 				$("#dialogcontent_prod_usuario").html(data);
 				$("#dialogcontent_prod_usuario").dialog({
@@ -315,7 +316,54 @@
 				});
 			}
 		);
-})
+	})
+
+	$("#contenedorPpal").on('click','#ver_productos',function(event){
+		event.preventDefault();
+		console.log("Entro a ver los productos de la computadora");
+		console.log("id_computadora: "+$(this).attr("id_computadora"));
+		console.log("num_serie: "+$(this).attr("num_serie"));
+		var id_computadora = $(this).attr("id_computadora");
+		var num_serie = $(this).attr("num_serie");
+
+		$.post( "vista/dialog_productos_cpu.php",
+				{
+					id_computadora : id_computadora,
+					action : "ver_productos"
+				}, function(data){
+					jQuery('<div/>', {
+					    id: 'dialogcontent_cpu',
+					    text: ''
+					}).appendTo('#contenedorPpal');
+					$("#dialogcontent_cpu").html(data);
+					$("#dialogcontent_cpu").dialog({
+												title: "Productos de la pc: "+num_serie,
+												show: {
+												effect: "explode",
+												duration: 200,
+												modal:true
+												},
+												hide: {
+												effect: "explode",
+												duration: 200
+												},
+												width : 600,
+												height : 630,
+												close : function(){
+													$(this).dialog("destroy");
+													$("#dialogcontent_cpu").remove();
+												},
+												buttons :
+							                    {
+							                        "Aceptar" : function () {
+							                            $(this).dialog("destroy");
+							                            $("#dialogcontent_cpu").remove();
+							                        }
+							                    }
+					});
+				}
+			);
+	})
 
 	$("#contenedorPpal").on('click' , '#agregar_descripcion_computadora' , function(){
 

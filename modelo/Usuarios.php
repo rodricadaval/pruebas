@@ -38,7 +38,7 @@ class Usuarios {
 
 	public function listarPorNombre($nombre) {
 		$nombre = HTML_ENTITIES_DECODE::normalizeChars($nombre);
-		$armar_tabla = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where usuario = '$nombre' ")->_fetchAll();
+		$armar_tabla = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where usuario = '$nombre' and estado=1")->_fetchAll();
 		$i = 0;
 
 		foreach ($armar_tabla as $fila) {
@@ -252,7 +252,7 @@ class Usuarios {
 	}
 
 	public function dameSelect($id = "", $sos = "") {
-		$table = BDD::getInstance()->query("select usuario, id_usuario, nombre_apellido from system." . self::claseMinus() . " where id_usuario <> 1 order by nombre_apellido,usuario asc");
+		$table = BDD::getInstance()->query("select usuario, id_usuario, nombre_apellido from system." . self::claseMinus() . " where id_usuario <> 1 and estado=1 order by nombre_apellido,usuario asc");
 		$html_view = "<select id=" . 'select_usuarios' . '_' . $sos . " name='usuario'>";
 		$html_view .= "<option selected='selected' value=''>Seleccionar</option>";
 		$html_view .= "<option value=1>Ninguno</option>";
@@ -271,6 +271,8 @@ class Usuarios {
 	}
 
 	public function dameListadoMemoDeUsuario($id){
+
+		$lista_con_datos = null;
 		
 		$lista = BDD::getInstance()->query("SELECT id_vinculo FROM system.vinculos WHERE id_usuario='$id' AND estado=1 ")->_fetchAll();
 		$i = 0;
@@ -282,6 +284,9 @@ class Usuarios {
 	}
 
 	public function generarListadoMemorandum($listado){
+
+		$fila = null;
+		$contenido = null;
 
 		$html_view = "";
 		$html_view .= "<table class='table table-condensed' id='tabla_listado_memorandum_user'>";
@@ -296,39 +301,41 @@ class Usuarios {
 			$html_view .= "<td colspan='3'>No tiene productos</td>";
 			$html_view .= "</tr>";
 		}
+		else{
 
-		foreach ($listado as $fila => $contenido) {
-			$html_view .= "<tr>";
-			$vinculo = $contenido['id_vinculo'];
-			
-			$html_view .= "<td><input type='checkbox' id='productos_seleccionados' value='$vinculo'></td>";
-			$html_view .= "<td>".$contenido['producto']."</td>";
-			switch ($contenido['producto']) {
-				case "Computadora":
-					$tipos = Tipos_Computadoras::get_rel_campos();
-					$clase = $contenido['clase'];
-					$tipo_producto = array_search($clase, $tipos);
-
-					$html_view .= "<td>".$tipo_producto.": ".$contenido['marca'].",".$contenido['modelo'].",".$contenido['num_serie']."</td>";
-					break;
-
-				case 'Monitor':
-					$html_view .= "<td>".$contenido['marca'].",".$contenido['modelo'].",".$contenido['num_serie']."</td>";
-					break;
+			foreach ($listado as $fila => $contenido) {
+				$html_view .= "<tr>";
+				$vinculo = $contenido['id_vinculo'];
 				
-				case 'Memoria':
-					$html_view .= "<td>".$contenido['marca'].",".$contenido['capacidad']." ".$contenido['unidad'].",".$contenido['tipo']." ".$contenido['velocidad']."</td>";
-					break;
+				$html_view .= "<td><input type='checkbox' id='productos_seleccionados' value='$vinculo'></td>";
+				$html_view .= "<td>".$contenido['producto']."</td>";
+				switch ($contenido['producto']) {
+					case "Computadora":
+						$tipos = Tipos_Computadoras::get_rel_campos();
+						$clase = $contenido['clase'];
+						$tipo_producto = array_search($clase, $tipos);
 
-				case 'Disco':
-						$html_view .= "<td>".$contenido['marca']." ".$contenido['capacidad'].$contenido['unidad']."</td>";	
-						break;	
-				default:
-					$html_view .= "<td>".$contenido['marca']."</td>";
-					break;
+						$html_view .= "<td>".$tipo_producto.": ".$contenido['marca'].",".$contenido['modelo'].",".$contenido['num_serie']."</td>";
+						break;
+
+					case 'Monitor':
+						$html_view .= "<td>".$contenido['marca'].",".$contenido['modelo'].",".$contenido['num_serie']."</td>";
+						break;
+					
+					case 'Memoria':
+						$html_view .= "<td>".$contenido['marca'].",".$contenido['capacidad']." ".$contenido['unidad'].",".$contenido['tipo']." ".$contenido['velocidad']."</td>";
+						break;
+
+					case 'Disco':
+							$html_view .= "<td>".$contenido['marca']." ".$contenido['capacidad'].$contenido['unidad']."</td>";	
+							break;	
+					default:
+						$html_view .= "<td>".$contenido['marca']."</td>";
+						break;
+				}
+		
+				$html_view .= "</tr>";
 			}
-	
-			$html_view .= "</tr>";
 		}
 
 		$html_view .= "</table>";

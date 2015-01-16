@@ -66,11 +66,15 @@ foreach ($_POST as $key => $value) {
 						if(isset($_POST['action']) && $_POST['action'] == "modif_cpu"){
 							$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
 							$metodo .= "DeUsuario";
-							$sos .= "_modif_cpu";
+							$sos .= "_".$_POST['action'];
 							if($id == 1 || $id == ""){
 								$id = $datos_tabla['id_vinculo'];
 								$sos = "dialog_mod_cpu_sin_usr";
 							}
+						}
+						else if(isset($_POST['action']) && $_POST['action'] == "modif_usuario"){
+							$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
+							$metodo .= "DeUsuario";
 						}
 						else{
 							$id = $clasePpal->getIdCpu($datos_tabla['id_vinculo']);
@@ -120,11 +124,15 @@ foreach ($_POST as $key => $value) {
 						if(isset($_POST['action']) && $_POST['action'] == "modif_cpu"){
 							$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
 							$metodo .= "DeUsuario";
-							$sos .= "_modif_cpu";
+							$sos .= "_".$_POST['action'];
 							if($id == 1 || $id == ""){
 								$id = $datos_tabla['id_vinculo'];
 								$sos = "dialog_mod_cpu_sin_usr";
 							}
+						}
+						else if(isset($_POST['action']) && $_POST['action'] == "modif_usuario"){
+							$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
+							$metodo .= "DeUsuario";
 						}
 						else{
 							$id = $clasePpal->getIdCpu($datos_tabla['id_vinculo']);

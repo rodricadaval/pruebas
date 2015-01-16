@@ -14,6 +14,10 @@
 
 $(document).ready(function(){
 
+    $("#ip").on('focus', function(){
+         this.select();
+     })
+
     $("#form_impresora_mod_ip").on('submit',function(event){
         event.preventDefault();
 

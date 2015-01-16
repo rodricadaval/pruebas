@@ -1,4 +1,4 @@
-body{font-family: ubuntu;}
+body{font-family: Arial, Helvetica, sans-serif;}
 
 .a{
 	color:#0033FF;
@@ -36,21 +36,24 @@ h1{
 	font-size: 8px;
 }
 
-#tabla_productos_user td, #tabla_listado_memorandum_user td{
+#tabla_productos_user td, #tabla_listado_memorandum_user td, #tabla_productos_cpu td{
     text-align: center;
     font-family:courier;
 }
 
 
-.dialogo_productos_usuario h4, .dialogo_listado_memorandum_usuario h4{
+.dialogo_productos_usuario h4, .dialogo_listado_memorandum_usuario h4, .dialogo_productos_cpu h4
+{
     color: #474747;
 }
 
-#tabla_productos_user tr#total{
+#tabla_productos_user tr#total, #tabla_productos_cpu tr#total
+{
     text-transform:uppercase;
 }
 
-#tabla_productos_user th, #tabla_listado_memorandum_user th{
+#tabla_productos_user th, #tabla_listado_memorandum_user th, #tabla_productos_cpu th
+{
     text-align: center;
     color: #8C8C8C;
 }
@@ -341,7 +344,7 @@ div.form-actions input{
 
 div.controls input
 {
-    width: 150px;
+    width: 190px;
     text-align: center;
 }
 
@@ -370,13 +373,17 @@ div.control-group
 
 #form_agregar_monitor div.controls select
 {
-    width: 162px;
+    width: 202px;
 }
 
 #form_agregar_monitor fieldset{
     overflow: auto;
     height: auto;
-    width: 370px;
+    width: 410px;
+}
+
+#form_agregar_monitor input[id="nro_de_serie_m"]{
+    text-transform:uppercase;
 }
 
 /*-----------------------------------Termino agregar monitor------------------------------------*/
@@ -391,7 +398,7 @@ div.control-group
 
 #form_agregar_memoria div.controls select
 {
-    width: 162px;
+    width: 202px;
 }
 
 #boton_crear_memoria
@@ -403,14 +410,14 @@ div.control-group
 
 #form_agregar_memoria div.controls #select_capacidades_memorias, #form_agregar_memoria div.controls #select_unidades_memorias
 {
-    width: 81px;
+    width: 101px;
 }
 
 #form_agregar_memoria fieldset 
 {
     overflow: auto;
     height: auto;
-    width: 370px;
+    width: 410px;
 }
 
 /*-----------------------------------Termino agregar memoria------------------------------------*/
@@ -418,7 +425,7 @@ div.control-group
 
 #form_nueva_marca_y_velocidad_memoria div.controls select
 {
-    width: 162px;
+    width: 202px;
 }
 
 /*-----------------------------------Termino agregar nueva memoria------------------------------------*/
@@ -447,7 +454,7 @@ div.control-group
 
 #form_agregar_computadora div.controls select
 {
-    width: 162px;
+    width: 202px;
 }
 
 #boton_crear_computadora
@@ -461,7 +468,11 @@ div.control-group
 {
     overflow: auto;
     height: auto;
-    width: 370px;
+    width: 410px;
+}
+
+#form_agregar_computadora input[id="nro_de_serie_c"]{
+    text-transform:uppercase;
 }
 
 /*-----------------------------------Termino agregar computadora------------------------------------*/
@@ -483,13 +494,17 @@ div.control-group
 
 #form_agregar_impresora div.controls select
 {
-    width: 162px;
+    width: 202px;
 }
 
 #form_agregar_impresora fieldset {
     overflow: auto;
     height: auto;
-    width: 370px;
+    width: 410px;
+}
+
+#form_agregar_impresora input[id="nro_de_serie_i"]{
+    text-transform:uppercase;
 }
 
 /*-----------------------------------Agregar Disco--------------------------------------*/
@@ -509,24 +524,24 @@ div.control-group
 
 #form_agregar_disco div.controls #select_marcas_discos 
 {
-    width: 162px;
+    width: 202px;
 }
 
 #form_agregar_disco div.controls #select_capacidades_discos
 {
     text-align: right;
-    width: 81px;
+    width: 101px;
 }
 
 #form_agregar_disco div.controls #select_unidades_discos
 {
-    width: 81px;
+    width: 101px;
 }
 
 #form_agregar_disco fieldset {
     overflow: auto;
     height: auto;
-    width: 370px;
+    width: 410px;
 }
 
 /*-----------------------------------Termino agregar disco------------------------------------*/
@@ -550,12 +565,17 @@ div.control-group
 {
     overflow: auto;
     height: auto;
-    width: 370px;
+    width: 410px;
 }
 
 #form_agregar_router div.controls select, #form_agregar_switch div.controls select
 {
-    width: 162px;
+    width: 202px;
+}
+
+#form_agregar_router input[id="nro_de_serie_r"], #form_agregar_switch input[id="nro_de_serie_s"]
+{
+    text-transform:uppercase;
 }
 
 /*-----------------------------------Termino agregar router y switch----------------------------------*/

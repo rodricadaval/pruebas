@@ -15,10 +15,10 @@
            <td>{select_Areas}</td>
         </tr>
         <tr>
+            <td id="cpu_field">CPU:</td>
             <td>{select_Computadoras}</td>
-            <td><input name="id_memoria" id="id_memoria" type="hidden" value="{id_memoria}"></td>
-        
         </tr>
+        <tr><td></td><td><td><input name="id_memoria" id="id_memoria" type="hidden" value="{id_memoria}"></td></td></tr>
         <tr><td colspan="2"><div class="error text-error"></div></td></tr>
   </table>
 </form>
@@ -28,12 +28,20 @@
 
 $(document).ready(function(){
 
-     $('#select_computadoras_memoria').hide();
+     if($("#nombre_usuario").val() == "Sin usuario"){
+        $('#cpu_field').hide();   
+        $('#select_computadoras_memoria').hide();   
+     }
+      
      console.log("El id de la memoria es "+{id_memoria});
 
      console.log("Dialogo de asignacion de una Memoria de: "+{capacidad}+" "+ "{unidad}");
      var id_memoria = {id_memoria};
      var id_cpu_orig = $("#select_computadoras_memoria option:selected").val();
+
+     $("#nombre_usuario").on('focus', function(){
+         this.select();
+     })
 
      $("#nombre_usuario").typeahead({
         source : function (query , process) {
@@ -86,14 +94,20 @@ $(document).ready(function(){
                                             else{
                                                 $("#id_memoria").val({id_memoria});
                                             }
-                                            $('#select_computadoras_memoria').hide();
-
+                                        $('#cpu_field').show();   
+                                        $('#select_computadoras_memoria').show();                                                                                    
                                     });
 
 
 
                                 }
-                                else{console.log("No entro");}
+                                else{
+                                        if(obj == "Sin usuario"){
+                                            $('#cpu_field').hide();   
+                                            $('#select_computadoras_memoria').hide();  
+                                        }
+                                        console.log("No entro");
+                                }
 
                                 return obj; }
 

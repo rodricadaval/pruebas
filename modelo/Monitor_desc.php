@@ -21,6 +21,7 @@ class Monitor_desc {
 
 	public function dameDatos($id) {
 		$fila = BDD::getInstance()->query("select * from system." . self::claseMinus() . " where id_monitor_desc = '$id' ")->_fetchRow();
+
 		foreach ($fila as $campo => $valor) {
 			if ($campo == "id_marca") {
 				$fila['marca'] = Marcas::getNombre($valor);

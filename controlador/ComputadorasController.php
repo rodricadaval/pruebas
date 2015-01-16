@@ -6,6 +6,7 @@ $parametros = array();
 if (isset($_POST['action'])) {
 
 	$inst_computadoras = new Computadoras();
+	$inst_vinc = new Vinculos();
 	$action = $_POST['action'];
 	unset($_POST['action']);
 
@@ -78,7 +79,7 @@ if (isset($_POST['action'])) {
 		case 'buscar_area':
 			if (isset($_POST['num_serie'])) {
 				$id_vinc = $inst_computadoras->getIdVinculoBySerie($_POST['num_serie']);
-				echo Vinculos::getIdSector($id_vinc);
+				echo $inst_vinc->getIdSector($id_vinc);
 			}
 			break;
 

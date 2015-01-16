@@ -3,6 +3,7 @@ require_once "../ini.php";
 
 if (isset($_POST['action'])) {
 	$inst_impresora = new Impresoras();
+	$inst_vinc = new Vinculos();
 
 	switch ($_POST['action']) {
 		case 'modificar':
@@ -12,13 +13,13 @@ if (isset($_POST['action'])) {
 				unset($_POST['asing_sector']);
 				$_POST['id_sector'] = $_POST['area'];
 				unset($_POST['area']);
-				echo Vinculos::cambiarSector($_POST);
+				echo $inst_vinc->cambiarSector($_POST);
 			}
 			else{
 				$_POST['id_cpu'] = Computadoras::getIdBySerie($_POST['cpu_serie']);
 				unset($_POST['cpu_serie']);
 			    unset($_POST['nombre_usuario']);
-				echo Vinculos::modificarDatos($_POST);
+				echo $inst_vinc->modificarDatos($_POST);
 			}
 			break;
 

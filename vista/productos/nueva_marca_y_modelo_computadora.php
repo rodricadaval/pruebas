@@ -52,7 +52,6 @@
 
 
     $("#form_nueva_marca_y_modelo_computadora").validate({
-        wrapper : "li",
         onfocusout: false,
         onkeyup: false,
         onclick: false,
@@ -85,7 +84,7 @@
              $(element).closest('.control-group').removeClass('success').addClass('error');
          },
         success: function(element) {
-            element.text('OK!').addClass('valid')
+            element.text('').addClass('valid')
             .closest('.control-group').removeClass('error').addClass('success');
         },
         submitHandler : function (form) {

@@ -8,6 +8,8 @@ class Switchs {
 
 	public function listarCorrecto($datos_extra = "") {
 
+		$data = null;
+
 		$inst_table = BDD::getInstance()->query("select * ,
 			'<a id=\"modificar_sector_switch\" class=\"pointer_mon\"id_switch=\"' || id_switch || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"agregar_descripcion_switch\" class=\"pointer_cpu\"id_switch=\"' || id_switch || '\">
@@ -58,6 +60,8 @@ class Switchs {
 	}
 
 	public function listarEnStock($datos_extra = "") {
+
+		$data = null;
 
 		$tipos = Tipo_productos::get_rel_campos();
 		$id_tipo_producto = array_search("Switch", $tipos);
@@ -115,7 +119,7 @@ class Switchs {
 
 		$html_view = "<p>Rellene los campos deseados</p>";
 
-		$table = BDD::getInstance()->query("select * from system." . self::claseMinus());
+		$table = BDD::getInstance()->query("select * from system." . self::claseMinus(). " where estado=1");
 
 		$html_view .= "<select id='select_switch' name='switch'>";
 		$first = true;
@@ -173,7 +177,7 @@ class Switchs {
 
 	public function no_existe($nro) {
 
-		if (BDD::getInstance()->query("select num_serie from system." . self::claseMinus() . " where num_serie = '$nro' ")->get_count()) {
+		if (BDD::getInstance()->query("select num_serie from system." . self::claseMinus() . " where num_serie = '$nro' and estado=1 ")->get_count()) {
 			return 0;
 		} else {
 			return 1;
@@ -196,7 +200,9 @@ class Switchs {
 	}
 
 	public function modificarSwitch($datos) {
-		return Vinculos::modificarDatos($datos);
+		$inst_vinc = new Vinculos();
+
+		return $inst_vinc->modificarDatos($datos);
 	}
 
 	public function eliminarSwitch($id) {

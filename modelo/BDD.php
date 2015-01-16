@@ -10,7 +10,7 @@ class BDD {
 
 	public function __construct() {
 		try {
-			$this->_pdo = new PDO('pgsql:host=localhost;dbname=stock;user=postgres;password=123456789!');
+			$this->_pdo = new PDO("pgsql:host=localhost;dbname=stock;user=postgres;password=123456789!");
 			//$this->_pdo->exec(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
 		} catch (PDOException $e) {
 			die($e->getMessage());

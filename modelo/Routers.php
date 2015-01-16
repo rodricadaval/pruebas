@@ -8,6 +8,8 @@ class Routers {
 
 	public function listarCorrecto($datos_extra = "") {
 
+		$data = null;
+
 		$inst_table = BDD::getInstance()->query("select * ,
 			'<a id=\"modificar_sector_router\" class=\"pointer_mon\"id_router=\"' || id_router || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"agregar_descripcion_router\" class=\"pointer_cpu\"id_router=\"' || id_router || '\">
@@ -59,6 +61,8 @@ class Routers {
 	}
 
 	public function listarEnStock($datos_extra = "") {
+
+		$data = null;
 
 		$tipos = Tipo_productos::get_rel_campos();
 		$id_tipo_producto = array_search("Router", $tipos);
@@ -116,7 +120,7 @@ class Routers {
 
 		$html_view = "<p>Rellene los campos deseados</p>";
 
-		$table = BDD::getInstance()->query("select * from system." . self::claseMinus());
+		$table = BDD::getInstance()->query("select * from system." . self::claseMinus(). " where estado=1");
 
 		$html_view .= "<select id='select_router' name='router'>";
 		$first = true;
@@ -177,7 +181,7 @@ class Routers {
 
 	public function no_existe($nro) {
 
-		if (BDD::getInstance()->query("select num_serie from system." . self::claseMinus() . " where num_serie = '$nro' ")->get_count()) {
+		if (BDD::getInstance()->query("select num_serie from system." . self::claseMinus() . " where num_serie = '$nro' and estado=1")->get_count()) {
 			return 0;
 		} else {
 			return 1;
@@ -200,7 +204,9 @@ class Routers {
 	}
 
 	public function modificarRouter($datos) {
-		return Vinculos::modificarDatos($datos);
+		$inst_vinc = new Vinculos();
+
+		return $inst_vinc->modificarDatos($datos);
 	}
 
 	public function eliminarRouter($id) {

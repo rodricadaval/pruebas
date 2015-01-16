@@ -21,6 +21,8 @@ class Discos {
 
 	public function listarCorrecto($datos_extra = "") {
 
+		$data = null;
+
 		$inst_table = BDD::getInstance()->query("select * ,
 			'<a id=\"modificar_sector_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"modificar_cpu_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted blue small laptop icon\" title=\"Asignar una Computadora\"></i></a>
@@ -87,6 +89,8 @@ class Discos {
 	}
 
 	public function listarEnStock($datos_extra = "") {
+
+		$data = null;
 
 		$tipos = Tipo_productos::get_rel_campos();
 		$id_tipo_producto = array_search("Disco", $tipos);
@@ -209,6 +213,8 @@ class Discos {
 	}
 
 	public function dameListaDeUsuario($id_usuario){
+
+		$lista_con_datos = null;
 		
 		$tipos = Tipo_productos::get_rel_campos();
 		$id_tipo_producto = array_search("Disco", $tipos);
@@ -234,20 +240,72 @@ class Discos {
 					   <th>Serie Cpu</th>";
 		$html_view .= "</tr>";
 
-		if(count($listado) == 0 ){
+		if($listado == null){
 			$html_view .= "<tr>";
 			$html_view .= "<td colspan='3'>No tiene discos</td>";
 			$html_view .= "</tr>";
 		}
+		else{
 
-		foreach ($listado as $fila => $contenido) {
+			foreach ($listado as $fila => $contenido) {
+				$html_view .= "<tr>";
+
+				$html_view .= "<td>".$contenido['marca']."</td>";
+				$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
+				$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
+		
+				$html_view .= "</tr>";
+			}
+		}
+		
+		$html_view .= "</table>";
+		$html_view .= "</fieldset>";
+		return $html_view;
+	}
+
+	public function dameListaDeCpu($id_cpu){
+
+		$lista_con_datos = null;
+
+		$tipos = Tipo_productos::get_rel_campos();
+		$id_tipo_producto = array_search("Disco", $tipos);
+
+		$lista = BDD::getInstance()->query("SELECT id_pk_producto FROM system.vinculos where id_tipo_producto='$id_tipo_producto' AND id_cpu='$id_cpu' AND estado=1 ")->_fetchAll();
+		$i = 0;
+		foreach ($lista as $campo) {
+			$lista_con_datos[$i] = self::getByID($campo['id_pk_producto']);
+			$i++;
+		}
+
+		return self::generarListadoDeCpu($lista_con_datos);	
+	}
+
+	public function generarListadoDeCpu($listado){
+
+		$html_view = "";
+		$html_view .= "<fieldset>";
+		$html_view .= "<h4>Discos</h4>";
+		$html_view .= "<table class='table table-condensed' id='tabla_productos_cpu'>";
+		$html_view .= "<tr>";
+		$html_view .= "<th>Marca</th>
+					   <th>Capacidad</th>";
+		$html_view .= "</tr>";
+
+		if($listado == null){
 			$html_view .= "<tr>";
-
-			$html_view .= "<td>".$contenido['marca']."</td>";
-			$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
-			$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
-	
+			$html_view .= "<td colspan='2'>No tiene discos</td>";
 			$html_view .= "</tr>";
+		}
+		else{
+
+			foreach ($listado as $fila => $contenido) {
+				$html_view .= "<tr>";
+
+				$html_view .= "<td>".$contenido['marca']."</td>";
+				$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
+		
+				$html_view .= "</tr>";
+			}
 		}
 
 		$html_view .= "</table>";

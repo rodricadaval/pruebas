@@ -2,6 +2,8 @@
 require '../ini.php';
 
 if (isset($_POST['tipo'])) {
+	$inst_vinc = new Vinculos();
+
 	foreach ($_POST as $campo => $valor) {
 		$datos[$campo] = $valor;
 	}
@@ -19,7 +21,7 @@ if (isset($_POST['tipo'])) {
 		if(isset($_POST['cant_veces']) && $_POST['cant_veces'] > 1){
 			while ($i < $_POST['cant_veces']) 
 			{ 
-				if(Vinculos::crearVinculo($datos, $_POST['tipo']) == "true")
+				if($inst_vinc->crearVinculo($datos, $_POST['tipo']) == "true")
 					{
 						$i++;
 					}
@@ -30,7 +32,7 @@ if (isset($_POST['tipo'])) {
 			}
 			unset($_POST['cant_veces']);
 		}
-		return Vinculos::crearVinculo($datos, $_POST['tipo']);
+		return $inst_vinc->crearVinculo($datos, $_POST['tipo']);
 	}
 }
 else if($_POST['action'] == "nueva_marca"){

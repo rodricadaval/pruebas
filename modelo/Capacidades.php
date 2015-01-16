@@ -44,7 +44,7 @@ class Capacidades {
 		public function dameSelect($valor = "",$sos = "") {
 
 
-		$array_posta = BDD::getInstance()->query("SELECT id_capacidad, capacidad from system." . self::claseMinus())->_fetchAll();
+		$array_posta = BDD::getInstance()->query("SELECT id_capacidad, capacidad from system." . self::claseMinus() . " order by capacidad")->_fetchAll();
 
 		$html_view = "<select id='select_capacidades" . $sos ."'  name='capacidad'>";
 		if(count($array_posta) == 0){

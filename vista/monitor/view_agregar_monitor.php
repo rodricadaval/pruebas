@@ -87,7 +87,7 @@
              $(element).closest('.control-group').removeClass('success').addClass('error');
          },
         success: function(element) {
-            element.text('OK!').addClass('valid')
+            element.text('').addClass('valid')
             .closest('.control-group').removeClass('error').addClass('success');
         },
         submitHandler : function (form) {
@@ -147,7 +147,7 @@
                                                 effect: "explode",
                                                 duration: 200
                                                 },
-                                                width : 440,
+                                                width : 430,
                                                 height : 420,
                                                 close : function(){
                                                     $(this).dialog("destroy");

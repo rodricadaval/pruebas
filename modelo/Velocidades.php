@@ -70,7 +70,7 @@ class Velocidades {
 			for ($i = 0; $i < count($array_de_velocidades); $i++) {
 
 				if ($array_de_velocidades[$i] != "-") {
-					if ($array_de_velocidades[$i] == $clase) {
+					if ($array_de_velocidades[$i] == 1600) {
 						$html_view .= "<option selected='selected' value=" . $array_de_velocidades[$i] . ">" . $array_de_velocidades[$i] . " Mhz</option>";
 					} else {
 						$html_view .= "<option value=" . $array_de_velocidades[$i] . ">" . $array_de_velocidades[$i] . " Mhz</option>";
