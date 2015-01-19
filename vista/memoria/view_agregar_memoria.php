@@ -36,6 +36,8 @@
      <div class="form-actions">
         <input type="button" class="btn btn-success" id="boton_nueva_marca" value="Nueva Marca">
         <input class="btn btn-primary" id="boton_crear_memoria" type="submit" name="crearMemoria" value="Crear">
+        <br><br>
+        <input type="button" class="btn btn-danger" id="boton_borrar_marca_sola" value="Borrar una Marca">
     </div>
 </fieldset>   
 </form>
@@ -174,6 +176,50 @@
                                                     },
                                                     "Aceptar" : function(){
                                                         $("#form_nueva_marca_y_velocidad_memoria").submit();  
+                                                    }
+                                                }
+                    });
+                }
+        );
+    });
+
+    $("#form_agregar_memoria").on('click',"#boton_borrar_marca_sola",function(){
+     
+        $.post( "controlador/CreacionController.php",
+                {
+                    tablaPpal : "Memorias",
+                    action : "borrar_marca"
+                }, function(data){
+                    jQuery('<div/>', {
+                        id: 'dialogcontent_borrar_marca',
+                        text: ''
+                    }).appendTo('#contenedorPpal');
+                    $("#dialogcontent_borrar_marca").html(data);
+                    $("#dialogcontent_borrar_marca").dialog({
+                                                title : 'Marca a borrar',
+                                                show: {
+                                                effect: "explode",
+                                                duration: 200,
+                                                modal:true
+                                                },
+                                                hide: {
+                                                effect: "explode",
+                                                duration: 200
+                                                },
+                                                width : 460,
+                                                height : 360,
+                                                close : function(){
+                                                    $(this).dialog("destroy");
+                                                    $("#dialogcontent_borrar_marca").remove();
+                                                },
+                                                buttons :
+                                                {
+                                                    "Cancelar" : function () {
+                                                        $(this).dialog("destroy");
+                                                        $("#dialogcontent_borrar_marca").remove();
+                                                    },
+                                                    "Aceptar" : function(){
+                                                        $("#form_borrar_marca").submit();  
                                                     }
                                                 }
                     });

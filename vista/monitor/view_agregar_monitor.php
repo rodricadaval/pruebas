@@ -24,6 +24,7 @@
     <div class="form-actions">
             <input type="button" class="btn btn-success" id="boton_nueva_marca" name="nueva_marca_monitor" value="Nueva Marca y Modelo">
             <input class="btn btn-primary" id="boton_crear_monitor" type="submit" name="crearMonitor" value="Crear">
+            <input type="button" class="btn btn-danger" id="boton_borrar_marca" value="Borrar una Marca y Modelo">
         </div>
 </fieldset>
 </form>
@@ -94,8 +95,10 @@
             console.log ("Formulario OK");
             console.log('Evento de click en crear');
             console.log($("#form_agregar_monitor").serialize());
+            
+            var modelo = $("#select_modelos_Monitor").val().replace(/\./g, ' ');
 
-            var dataUrl = "marca="+$('#select_marcas_monitores option:selected').val()+"&modelo="+$("#select_modelos_Monitor").val()+"&num_serie="+$("#nro_de_serie_m").val()+"&tipo=Monitor";
+            var dataUrl = "marca="+$('#select_marcas_monitores option:selected').val()+"&modelo="+modelo+"&num_serie="+$("#nro_de_serie_m").val()+"&tipo=Monitor";
 
             $.ajax({
                             url: 'controlador/CreacionController.php',
@@ -134,7 +137,7 @@
                 }, function(data){
                     jQuery('<div/>', {
                         id: 'dialogcontent_nueva_marca',
-                        text: 'Texto por defecto!'
+                        text: ''
                     }).appendTo('#contenedorPpal');
                     $("#dialogcontent_nueva_marca").html(data);
                     $("#dialogcontent_nueva_marca").dialog({
@@ -161,6 +164,50 @@
                                                     },
                                                     "Aceptar" : function(){
                                                         $("#form_nueva_marca_y_modelo").submit();
+                                                    }
+                                                }
+                    });
+                }
+        );
+    });
+
+    $("#form_agregar_monitor").on('click',"#boton_borrar_marca",function(){
+     
+        $.post( "controlador/CreacionController.php",
+                {
+                    tablaPpal : "Monitores",
+                    action : "borrar_marca"
+                }, function(data){
+                    jQuery('<div/>', {
+                        id: 'dialogcontent_borrar_marca',
+                        text: ''
+                    }).appendTo('#contenedorPpal');
+                    $("#dialogcontent_borrar_marca").html(data);
+                    $("#dialogcontent_borrar_marca").dialog({
+                                                title : 'Marca y Modelo a borrar',
+                                                show: {
+                                                effect: "explode",
+                                                duration: 200,
+                                                modal:true
+                                                },
+                                                hide: {
+                                                effect: "explode",
+                                                duration: 200
+                                                },
+                                                width : 460,
+                                                height : 420,
+                                                close : function(){
+                                                    $(this).dialog("destroy");
+                                                    $("#dialogcontent_borrar_marca").remove();
+                                                },
+                                                buttons :
+                                                {
+                                                    "Cancelar" : function () {
+                                                        $(this).dialog("destroy");
+                                                        $("#dialogcontent_borrar_marca").remove();
+                                                    },
+                                                    "Aceptar" : function(){
+                                                        $("#form_borrar_marca_y_modelo").submit();  
                                                     }
                                                 }
                     });

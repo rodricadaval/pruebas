@@ -73,5 +73,97 @@ else if($_POST['action'] == "nueva_marca"){
 	}
 
 }
+else if($_POST['action'] == "borrar_marca"){
+
+	unset($_POST['action']);
+
+	$inst_marcas = new Marcas();
+
+	switch ($_POST['tablaPpal']) {
+		
+		case ($_POST['tablaPpal'] == 'Computadoras'):
+			if(!isset($_POST['cuestion'])){
+				$url = array("vista/productos/borrar_marca_y_modelo.php");
+				$select_marcas = $inst_marcas->dameSelectABorrar("computadoras");
+				$parametros = array("Producto" => $_POST['tablaPpal'],"select_marcas" => $select_marcas);
+				echo Disenio::HTML($url, $parametros);
+			}
+			else if($_POST['cuestion'] == "sel_modelos"){
+				$inst_prod = new Computadora_desc();
+				echo $inst_prod->dameSelectABorrar($_POST['value']);
+			}				
+		break;
+
+		case ($_POST['tablaPpal'] == 'Monitores'):
+			if(!isset($_POST['cuestion'])){
+				$url = array("vista/productos/borrar_marca_y_modelo.php");
+				$select_marcas = $inst_marcas->dameSelectABorrar("monitores");
+				$parametros = array("Producto" => $_POST['tablaPpal'],"select_marcas" => $select_marcas);
+				echo Disenio::HTML($url, $parametros);
+			}
+			else if($_POST['cuestion'] == "sel_modelos"){
+				$inst_prod = new Monitor_desc();
+				echo $inst_prod->dameSelectABorrar($_POST['value']);
+			}				
+		break;
+
+		case ($_POST['tablaPpal'] == 'Impresoras'):
+			if(!isset($_POST['cuestion'])){
+				$url = array("vista/productos/borrar_marca_y_modelo.php");
+				$select_marcas = $inst_marcas->dameSelectABorrar("impresoras");
+				$parametros = array("Producto" => $_POST['tablaPpal'],"select_marcas" => $select_marcas);
+				echo Disenio::HTML($url, $parametros);
+			}
+			else if($_POST['cuestion'] == "sel_modelos"){
+				$inst_prod = new Impresora_desc();
+				echo $inst_prod->dameSelectABorrar($_POST['value']);
+			}				
+		break;
+
+		case ($_POST['tablaPpal'] == 'Routers'):
+			if(!isset($_POST['cuestion'])){
+				$url = array("vista/productos/borrar_marca_y_modelo.php");
+				$select_marcas = $inst_marcas->dameSelectABorrar("routers");
+				$parametros = array("Producto" => $_POST['tablaPpal'],"select_marcas" => $select_marcas);
+				echo Disenio::HTML($url, $parametros);
+			}
+			else if($_POST['cuestion'] == "sel_modelos"){
+				$inst_prod = new Router_desc();
+				echo $inst_prod->dameSelectABorrar($_POST['value']);
+			}				
+		break;
+
+		case ($_POST['tablaPpal'] == 'Switchs'):
+			if(!isset($_POST['cuestion'])){
+				$url = array("vista/productos/borrar_marca_y_modelo.php");
+				$select_marcas = $inst_marcas->dameSelectABorrar("switchs");
+				$parametros = array("Producto" => $_POST['tablaPpal'],"select_marcas" => $select_marcas);
+				echo Disenio::HTML($url, $parametros);
+			}
+			else if($_POST['cuestion'] == "sel_modelos"){
+				$inst_prod = new Switch_desc();
+				echo $inst_prod->dameSelectABorrar($_POST['value']);
+			}				
+		break;
+
+		case ($_POST['tablaPpal'] == 'Memorias'):
+			$url = array("vista/productos/borrar_marca.php");
+			$select_marcas = $inst_marcas->dameSelectABorrar("memorias");
+			$parametros = array("Producto" => $_POST['tablaPpal'],"select_marcas" => $select_marcas);
+			echo Disenio::HTML($url, $parametros);	
+		break;
+
+		case ($_POST['tablaPpal'] == 'Discos'):
+			$url = array("vista/productos/borrar_marca.php");
+			$select_marcas = $inst_marcas->dameSelectABorrar("discos");
+			$parametros = array("Producto" => $_POST['tablaPpal'],"select_marcas" => $select_marcas);
+			echo Disenio::HTML($url, $parametros);
+		break;
+		
+		default:
+			# code...
+		break;
+	}
+}
 
 ?>

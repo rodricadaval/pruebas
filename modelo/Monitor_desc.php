@@ -49,12 +49,37 @@ class Monitor_desc {
 
 		while ($fila = $table->_fetchRow()) {
 
-			$html_view = $html_view . "<option value=" . $fila['modelo'] . ">" . $fila['modelo'] . "</option>";
+			$modeloReal = str_replace(' ', '.', $fila['modelo']);
+
+			$html_view = $html_view . "<option value=" . $modeloReal . ">" . $fila['modelo'] . "</option>";
 		}
 
 		$html_view = $html_view . "</select>";
 		return $html_view;
 
+	}
+
+	public function dameSelectABorrar($valor = "") {
+		if (!isset($valor)) {
+			$table = BDD::getInstance()->query("select modelo from system." . self::claseMinus() . " where estado = 1");
+		} else {
+			$table = BDD::getInstance()->query("select modelo from system." . self::claseMinus() . " where id_marca = '$valor' AND estado = 1");
+		}
+		$html_view = "<select id='select_modelos_a_borrar' name='modelo'>";
+
+		if (BDD::getInstance()->get_count() == 0) {
+			$html_view = $html_view . "<option value=''>No hay modelos</option>";
+		}
+
+		while ($fila = $table->_fetchRow()) {
+
+			$modeloReal = str_replace(' ', '.', $fila['modelo']);
+
+			$html_view = $html_view . "<option value=" . $modeloReal . ">" . $fila['modelo'] . "</option>";
+		}
+
+		$html_view = $html_view . "</select>";
+		return $html_view;
 	}
 
 	public function buscar_id_por_marca_modelo($id_marca, $modelo) {
@@ -69,6 +94,19 @@ class Monitor_desc {
 				return '"estaba"';
 		}
 		else if(BDD::getInstance()->query("INSERT INTO system." . self::claseMinus() . " (id_marca,modelo) VALUES('$id_marca','$modelo') ")->get_error()){
+				var_dump(BDD::getInstance());
+				return "false";
+		}
+		else{
+				return "true";
+		}
+	}
+
+	public function borrar_marca_y_modelo($datos){
+		$id_marca = $datos['marca'];
+		$modelo = $datos['modelo'];
+
+		if(BDD::getInstance()->query("DELETE FROM system." . self::claseMinus() . " where id_marca = '$id_marca' AND modelo = '$modelo' ")->get_error()){
 				var_dump(BDD::getInstance());
 				return "false";
 		}

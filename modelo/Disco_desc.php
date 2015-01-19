@@ -91,5 +91,17 @@ class Disco_desc {
 				return "true";
 		}
 	}
+
+	public function borrar_marca($datos){
+		$id_marca = $datos['marca'];
+
+		if(BDD::getInstance()->query("DELETE FROM system." . self::claseMinus() . " where id_marca = '$id_marca'")->get_error()){
+				var_dump(BDD::getInstance());
+				return "false";
+		}
+		else{
+				return "true";
+		}
+	}
 }
 ?>

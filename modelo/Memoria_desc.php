@@ -75,5 +75,17 @@ class Memoria_desc {
 	public function buscar_id_por_marca_y_tipo($id_marca, $tipo) {
 		return BDD::getInstance()->query("SELECT id_memoria_desc FROM system.memoria_desc where id_marca ='$id_marca' AND tipo='$tipo' ")->_fetchRow()['id_memoria_desc'];
 	}
+
+	public function borrar_marca($datos){
+		$id_marca = $datos['marca'];
+
+		if(BDD::getInstance()->query("DELETE FROM system." . self::claseMinus() . " where id_marca = '$id_marca'")->get_error()){
+				var_dump(BDD::getInstance());
+				return "false";
+		}
+		else{
+				return "true";
+		}
+	}
 }
 ?>

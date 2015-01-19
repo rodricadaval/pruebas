@@ -273,42 +273,19 @@ table.fixed_user td{
     float:left;
 }
 
-/*#form_nueva_marca_y_modelo ul, #form_nueva_marca_y_modelo_computadora ul, #form_nueva_marca_y_velocidad_memoria ul, #form_nueva_marca ul
+#boton_borrar_marca
 {
-    list-style-type: none;
-    padding-left: 0px;
+    float:left;
+    display: inline-block;
+    margin-top: 20px;
 }
 
-#form_nueva_marca_y_modelo ul li, #form_nueva_marca_y_modelo_computadora ul li, #form_nueva_marca_y_velocidad_memoria ul li, #form_nueva_marca ul li
+#boton_borrar_marca_sola
 {
-    vertical-align: middle;
-    height: 40px;
-    line-height: 40px;
+    float:left;
+    display: inline-block;
+    margin-top: 5px;
 }
-
-#form_nueva_marca_y_modelo ul li input[name="marca"],#form_nueva_marca_y_modelo_computadora ul li input[name="marca"],#form_nueva_marca_y_velocidad_memoria ul li input[name="marca"],#form_nueva_marca ul li input[name="marca"]
-{
-    text-transform: uppercase;
-}
-
-#form_nueva_marca_y_modelo fieldset, #form_nueva_marca_y_modelo_computadora fieldset, #form_nueva_marca_y_velocidad_memoria fieldset, #form_nueva_marca fieldset
-{
-    overflow: auto;
-}
-
-#form_nueva_marca_y_modelo_computadora div p, #form_nueva_marca_y_velocidad_memoria div p, #form_nueva_marca_y_modelo div p, #form_nueva_marca div p{
-    margin-left: 27px;
-}
-
-#form_nueva_marca_y_modelo ul li text, #form_nueva_marca_y_modelo_computadora ul li text, #form_nueva_marca_y_velocidad_memoria ul li text, #form_nueva_marca ul li text 
-{ 
-    float: left;
-    width: 110px;
-    font-size: 17px;
-    font-weight: bold;
-    vertical-align: middle;
-}*/
-
 
 /*-----------------------------------Validation con bootstrap----------------------------------------*/
 

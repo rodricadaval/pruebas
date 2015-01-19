@@ -30,6 +30,7 @@
     <div class="form-actions">
             <input type="button" class="btn btn-success" id="boton_nueva_marca" value="Nueva Marca y Modelo">
             <input class="btn btn-primary" id="boton_crear_computadora" type="submit" name="crearComputadora" value="Crear">
+            <input type="button" class="btn btn-danger" id="boton_borrar_marca" value="Borrar una Marca y Modelo">
     </div>
 </fieldset>
 </form>
@@ -98,27 +99,14 @@
         submitHandler : function (form) {
           console.log ("Formulario OK");
 
-            var primparte = "";
-            var sdaparte = "";
             var dataUrl
             console.log('Evento de click en crear');
             console.log($("#form_agregar_computadora").serialize());
 
             dataUrl = "marca="+$('#select_marcas_computadoras option:selected').val()+"&num_serie="+$("#nro_de_serie_c").val()+"&clase="+$("#select_clase").val()+"&tipo=Computadora";
 
-            if($("#select_modelos_Computadora").val().indexOf("-") >= 0){
-                var data = $("#select_modelos_Computadora").val().split('-');
-                primparte = data[0];
-                sdaparte = data[1];
-                console.log(primparte);
-                console.log(sdaparte);
-                dataUrl += "&modelo="+primparte+' '+sdaparte;
-            }
-            else{
-                primparte = $("#select_modelos_Computadora").val();
-                sdaparte = "";
-                dataUrl += "&modelo="+primparte;
-            }
+            var data = $("#select_modelos_Computadora").val().replace(/\./g, ' ');
+            dataUrl += "&modelo="+data;
 
             console.log(dataUrl);
 
@@ -189,4 +177,49 @@
                 }
         );
     });
+
+    $("#form_agregar_computadora").on('click',"#boton_borrar_marca",function(){
+     
+        $.post( "controlador/CreacionController.php",
+                {
+                    tablaPpal : "Computadoras",
+                    action : "borrar_marca"
+                }, function(data){
+                    jQuery('<div/>', {
+                        id: 'dialogcontent_borrar_marca',
+                        text: 'Texto por defecto!'
+                    }).appendTo('#contenedorPpal');
+                    $("#dialogcontent_borrar_marca").html(data);
+                    $("#dialogcontent_borrar_marca").dialog({
+                                                title : 'Marca y Modelo a borrar',
+                                                show: {
+                                                effect: "explode",
+                                                duration: 200,
+                                                modal:true
+                                                },
+                                                hide: {
+                                                effect: "explode",
+                                                duration: 200
+                                                },
+                                                width : 460,
+                                                height : 420,
+                                                close : function(){
+                                                    $(this).dialog("destroy");
+                                                    $("#dialogcontent_borrar_marca").remove();
+                                                },
+                                                buttons :
+                                                {
+                                                    "Cancelar" : function () {
+                                                        $(this).dialog("destroy");
+                                                        $("#dialogcontent_borrar_marca").remove();
+                                                    },
+                                                    "Aceptar" : function(){
+                                                        $("#form_borrar_marca_y_modelo").submit();  
+                                                    }
+                                                }
+                    });
+                }
+        );
+    });
+
 </script>

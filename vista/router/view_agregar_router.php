@@ -30,6 +30,7 @@
         <div class="form-actions">
             <input type="button" class="btn btn-success" id="boton_nueva_marca" value="Nueva Marca y Modelo">
             <input class="btn btn-primary" id="boton_crear_router" type="submit" name="crearRouter" value="Crear">
+            <input type="button" class="btn btn-danger" id="boton_borrar_marca" value="Borrar una Marca y Modelo">
         </div>
 </fieldset>
 </form>
@@ -118,18 +119,7 @@
             console.log($("#form_agregar_router").serialize());
             var todo = "";
 
-             if($("#select_modelos_Router").val().indexOf("-") >= 0 && $("#select_modelos_Router").text() != $("#select_modelos_Router").val()){
-                var data = $("#select_modelos_Router").val().split('-');
-                primparte = data[0];
-                sdaparte = data[1];
-                todo = primparte +' '+ sdaparte;
-                console.log(primparte);
-                console.log(sdaparte);
-                console.log(todo);
-            }
-            else{
-                todo = $("#select_modelos_Router").val();
-            }
+            todo = $("#select_modelos_Router").val().replace(/\./g, ' ');
 
             var dataUrl = "marca="+$('#select_marcas_routers option:selected').val()+"&modelo="+todo+"&num_serie="+$("#nro_de_serie_r").val()+"&ip="+$("#ip").val()+"&tipo=Router";
 
@@ -183,8 +173,8 @@
                                                 effect: "explode",
                                                 duration: 200
                                                 },
-                                                width : 430,
-                                                height : 400,
+                                                width : 440,
+                                                height : 410,
                                                 close : function(){
                                                     $(this).dialog("destroy");
                                                     $("#dialogcontent_nueva_marca").remove();
@@ -197,6 +187,50 @@
                                                     },
                                                     "Aceptar" : function(){
                                                         $("#form_nueva_marca_y_modelo").submit();
+                                                    }
+                                                }
+                    });
+                }
+        );
+    });
+
+    $("#form_agregar_router").on('click',"#boton_borrar_marca",function(){
+     
+        $.post( "controlador/CreacionController.php",
+                {
+                    tablaPpal : "Routers",
+                    action : "borrar_marca"
+                }, function(data){
+                    jQuery('<div/>', {
+                        id: 'dialogcontent_borrar_marca',
+                        text: 'Texto por defecto!'
+                    }).appendTo('#contenedorPpal');
+                    $("#dialogcontent_borrar_marca").html(data);
+                    $("#dialogcontent_borrar_marca").dialog({
+                                                title : 'Marca y Modelo a borrar',
+                                                show: {
+                                                effect: "explode",
+                                                duration: 200,
+                                                modal:true
+                                                },
+                                                hide: {
+                                                effect: "explode",
+                                                duration: 200
+                                                },
+                                                width : 460,
+                                                height : 420,
+                                                close : function(){
+                                                    $(this).dialog("destroy");
+                                                    $("#dialogcontent_borrar_marca").remove();
+                                                },
+                                                buttons :
+                                                {
+                                                    "Cancelar" : function () {
+                                                        $(this).dialog("destroy");
+                                                        $("#dialogcontent_borrar_marca").remove();
+                                                    },
+                                                    "Aceptar" : function(){
+                                                        $("#form_borrar_marca_y_modelo").submit();  
                                                     }
                                                 }
                     });

@@ -190,6 +190,55 @@ class Marcas {
 		}
 	}
 
+	public function borrar_de_producto($datos){
+		if(isset($datos['tipo'])){
+			
+			switch ($datos['tipo']) {
+			 	case 'Monitores':
+			 			unset($datos['tipo']);			 			
+			 			echo Monitor_desc::borrar_marca_y_modelo($datos);		
+			 		
+			 		break;
+
+			 	case 'Impresoras':
+			 			unset($datos['tipo']);			 		
+			 			echo Impresora_desc::borrar_marca_y_modelo($datos);		
+			 		
+			 		break;
+
+			 	case 'Computadoras':
+			 			unset($datos['tipo']);			 			
+			 			echo Computadora_desc::borrar_marca_y_modelo($datos);		
+			 		
+			 		break;
+
+			 	case 'Memorias':
+			 			unset($datos['tipo']);			 			
+			 			echo Memoria_desc::borrar_marca($datos);		
+			 		
+			 		break;
+
+			 	case 'Discos':
+			 			unset($datos['tipo']);			 			
+			 			echo Disco_desc::borrar_marca($datos);		
+			 		
+			 		break;
+
+			 	case 'Routers':
+			 			unset($datos['tipo']);			 			
+			 			echo Router_desc::borrar_marca_y_modelo($datos);		
+			 		
+			 		break;
+
+				case 'Switchs':
+			 			unset($datos['tipo']);			 			
+			 			echo Switch_desc::borrar_marca_y_modelo($datos);		
+			 		
+			 		break;				
+			 } 
+		}
+	}
+
 	public function existe($marca){
 		if(BDD::getInstance()->query("select * from system." . self::claseMinus() . " where lower(nombre) = lower('$marca') ")->get_count() > 0){
 			return true;
@@ -220,7 +269,6 @@ class Marcas {
 					break;
 
 				case 'discos':
-					/*$table = array(array("id_marca" => 1),array("id_marca" => 8),array("id_marca" => 9),array("id_marca" => 10),array("id_marca" => 11),array("id_marca" => 12),array("id_marca" => 3));*/
 					
 					$table = BDD::getInstance()->query("select distinct id_marca from system.disco_desc where estado = 1")->_fetchAll();
 					$add_id = "_discos";
@@ -248,6 +296,60 @@ class Marcas {
 		}
 
 		$html_view = "<select id='select_marcas" . $add_id . "' name='marca'>
+					  <option value=''>Seleccione Marca</option>";
+
+		$fila = $table;
+
+		foreach ($fila as $array => $campo) {
+
+			$nombre = self::getNombre($campo['id_marca']);
+			$html_view .= "<option value=" . $campo['id_marca'] . ">" . $nombre . "</option>";
+		 } 
+
+		$html_view .= "</select>";
+		return $html_view;
+	}
+
+	public function dameSelectABorrar($sos = "") {
+
+		if(isset($sos)){
+
+			switch ($sos) {
+				case 'computadoras':
+					$table = BDD::getInstance()->query("select distinct id_marca from system.computadora_desc where estado = 1")->_fetchAll();
+					break;
+				
+				case 'monitores':
+					$table = BDD::getInstance()->query("select distinct id_marca from system.monitor_desc where estado = 1")->_fetchAll();
+					break;
+
+				case 'memorias':
+					$table = BDD::getInstance()->query("select distinct id_marca from system.memoria_desc where estado = 1")->_fetchAll();
+					break;
+
+				case 'discos':				
+					$table = BDD::getInstance()->query("select distinct id_marca from system.disco_desc where estado = 1")->_fetchAll();
+					break;
+
+				case 'impresoras':
+					$table = BDD::getInstance()->query("select distinct id_marca from system.impresora_desc where estado = 1")->_fetchAll();					
+					break;
+
+				case 'routers':
+					$table = BDD::getInstance()->query("select distinct id_marca from system.router_desc where estado = 1")->_fetchAll();					
+					break;
+
+				case 'switchs':
+					$table = BDD::getInstance()->query("select distinct id_marca from system.switch_desc where estado = 1")->_fetchAll();					
+					break;
+
+				default:
+					# code...
+					break;
+			}
+		}
+
+		$html_view = "<select id='select_marcas_a_borrar' name='marca'>
 					  <option value=''>Seleccione Marca</option>";
 
 		$fila = $table;

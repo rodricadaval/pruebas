@@ -88,7 +88,7 @@
                                 else if("{Producto}" == "Impresora"){
                                     $("#tabs5").load("controlador/ProductosController.php",{action:"agregar_impresora"});
                                 }
-                                 else if("{Producto}" == "Router"){
+                                else if("{Producto}" == "Router"){
                                     $("#tabs6").load("controlador/ProductosController.php",{action:"agregar_router"});
                                 }
                                  else if("{Producto}" == "Switch"){
