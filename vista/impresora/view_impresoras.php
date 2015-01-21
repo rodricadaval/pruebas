@@ -1,5 +1,5 @@
 <h2>{TABLA}</h2>
-<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
 
 <script type="text/javascript">
 
@@ -17,6 +17,7 @@
 							var dataTable = $("#dataTable").dataTable({
 			   			 		"destroy" : true,
 								"aaData" : data,
+								"iDisplayLength": 25,
 								"aoColumns" :[
 									{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
 									{ "sTitle" : "IP" , "mData" : "ip"},

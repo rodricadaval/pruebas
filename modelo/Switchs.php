@@ -154,7 +154,7 @@ class Switchs {
 	public function agregar($datos) {
 
 		$id_switch_desc = Switch_desc::buscar_id_por_marca_modelo($datos['marca'],$datos['modelo']);
-		$nro_serie = $datos['num_serie'];
+		$nro_serie = strtoupper($datos['num_serie']);
 		$values = $datos['id_vinculo'] . "," . $id_switch_desc;
 
 		if(isset($datos['ip'])){

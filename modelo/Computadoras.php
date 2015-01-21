@@ -184,7 +184,7 @@ return $tabla;
 	public function agregar_computadora($datos) {
 
 		$id_computadora_desc = Computadora_desc::buscar_id_por_marca_modelo($datos['marca'], $datos['modelo']);
-		$nro_serie = $datos['num_serie'];
+		$nro_serie = strtoupper($datos['num_serie']);
 		$clase = $datos['clase'];
 		$values = $datos['id_vinculo'] . "," . $id_computadora_desc;
 
@@ -264,11 +264,15 @@ return $tabla;
 		
 		$tipos = Tipo_productos::get_rel_campos();
 		$id_tipo_producto = array_search("Computadora", $tipos);
+	    $usuario = "";
+	    $usuario = Usuarios::getNombreDePila($id_usuario);
+
 
 		$lista = BDD::getInstance()->query("SELECT id_pk_producto FROM system.vinculos where id_tipo_producto='$id_tipo_producto' and id_usuario='$id_usuario' AND estado=1 ")->_fetchAll();
 		$i = 0;
 		foreach ($lista as $campo) {
 			$lista_con_datos[$i] = self::getByID($campo['id_pk_producto']);
+			$lista_con_datos[$i]['usuario'] = $usuario;
 			$i++;
 		}
 		return self::generarListadoDeUsuario($lista_con_datos);	
@@ -281,8 +285,13 @@ return $tabla;
 		$html_view .= "<h4>Computadora</h4>";
 		$html_view .= "<table class='table table-condensed' id='tabla_productos_user'>";
 		$html_view .= "<tr>";
-		$html_view .= "<th>Serie</th>
-					   <th>Marca</th>
+		$html_view .= "<th>Serie</th>";
+
+		if($listado[0]['usuario'] == "Sala Servidores"){
+			$html_view .= "<th>Nombre</th>";
+		}
+		
+		$html_view .= "<th>Marca</th>
 					   <th>Modelo</th>
 					   <th>Slots Libres</th>
 					   <th>Tipo</th>";
@@ -301,6 +310,9 @@ return $tabla;
 				$datos_desc = Computadora_desc::dameDatos($contenido['id_computadora_desc']);
 				
 				$html_view .= "<td>".$contenido['num_serie']."</td>";
+				if($contenido['usuario'] == "Sala Servidores"){
+					$html_view .= "<td>".$contenido['descripcion']."</td>";
+				}
 				$html_view .= "<td>".$datos_desc['marca']."</td>";
 				$html_view .= "<td>".$datos_desc['modelo']."</td>";
 				$tipos = Tipos_Computadoras::get_rel_campos();

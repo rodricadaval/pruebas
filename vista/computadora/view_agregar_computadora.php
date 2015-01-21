@@ -1,7 +1,7 @@
 <form id="form_agregar_computadora" autocomplete="off">
 <fieldset>
 <legend>Complete los Datos <small>(hay validaciones al crear)</small></legend>
-    <div class="control-group">
+     <div class="control-group">
         <label class="control-label" for="select_marcas_computadoras">Marca</label>
         <div class="controls">
             {select_marcas_computadoras}

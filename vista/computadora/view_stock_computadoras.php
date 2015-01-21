@@ -14,6 +14,7 @@
 				$("#dataTable").dataTable({
    			 		"destroy" : true,   			 		
 					"aaData" : data,
+					"iDisplayLength": 25,
 					"aoColumns" :[
 						//{ "sTitle" : "ID" , "mData" : "id_computadora"},
 						{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},

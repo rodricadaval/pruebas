@@ -295,7 +295,7 @@ class Monitores {
 	public function agregar_monitor($datos) {
 
 		$id_monitor_desc = Monitor_desc::buscar_id_por_marca_modelo($datos['marca'], $datos['modelo']);
-		$nro_serie = $datos['num_serie'];
+		$nro_serie = strtoupper($datos['num_serie']);
 		$values = $datos['id_vinculo'] . "," . $id_monitor_desc;
 
 		if (!BDD::getInstance()->query("INSERT INTO system.monitores (num_serie,id_vinculo,id_monitor_desc) VALUES ('$nro_serie',$values)")->get_error()) {

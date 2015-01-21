@@ -1,5 +1,5 @@
 <h2>{TABLA}</h2>
-<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
+<table  cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
 <script type="text/javascript">
 
 	$(document).ready(function(event){
@@ -16,12 +16,14 @@
 							$("#dataTable").dataTable({
 			   			 		"destroy" : true,   			 		
 								"aaData" : data,
+								"bAutoWidth": false,
+								"iDisplayLength": 25,
 								"aoColumns" :[
 									//{ "sTitle" : "ID" , "mData" : "id_computadora"},
 									{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
 									{ "sTitle" : "Marca" , "mData" : "marca"},
 									{ "sTitle" : "Modelo" , "mData" : "modelo"},
-									{ "sTitle" : "Tipo" , "mData" : "clase"},
+									{ "sTitle" : "Tipo" ,"sWidth": "10px","mData" : "clase"},
 									{ "sTitle" : "Slots Libres" , "mData" : "slots_libres"},
 									{ "sTitle" : "Max(GB)" , "mData" : "mem_max"},
 									{ "sTitle" : "Sector" , "mData" : "sector"},
@@ -31,12 +33,14 @@
 										}
 									},
 									{ "sTitle" : "Descripcion" , "mData" : "descripcion"},
-									{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
+									{ "sTitle": "Action", "mData" : "m","sWidth": "220px","sDefaultContent":
 													'<a class="ventana_area " href="">Modificar</a>'}
-									],
+									]
+									
+									/*,
 									"aoColumnDefs": [
 							            { "sWidth": "24%", "aTargets": [ -1 ] }
-							        ]
+							        ]*/
 			    			})
 						}
 						else if (permisos == 2) {

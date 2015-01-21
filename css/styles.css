@@ -36,6 +36,11 @@ h1{
 	font-size: 8px;
 }
 
+#dataTable{
+    text-align:center; 
+    width:1200px;
+}
+
 #tabla_productos_user td, #tabla_listado_memorandum_user td, #tabla_productos_cpu td{
     text-align: center;
     font-family:courier;

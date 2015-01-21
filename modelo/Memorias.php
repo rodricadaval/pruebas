@@ -314,6 +314,9 @@ class Memorias {
 		}
 		else{
 
+		$capacidadUsada = 0;
+		$capacidadActual = 0;
+
 			foreach ($listado as $fila => $contenido) {
 				$html_view .= "<tr>";
 
@@ -322,13 +325,22 @@ class Memorias {
 				$html_view .= "<td>".$datos_desc['marca']."</td>";
 				$html_view .= "<td>".$datos_desc['tipo']."</td>";
 				$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
+					$capacidadActual = self::getCapacidadEnMegas($contenido['id_memoria']);
+					$capacidadUsada += $capacidadActual;
 				$html_view .= "<td>".$datos_desc['velocidad']."</td>";
 		
 				$html_view .= "</tr>";
 			}
 			$html_view .= "<tr id='total'>";
-			$html_view .= "<td colspan='2'>Total</td>";
-			$html_view .= "<td colspan='2'>".count($listado)."</td>";
+			$html_view .= "<td colspan='1'>Total</td>";
+			$html_view .= "<td colspan='1'>".count($listado)."</td>";
+			if(($capacidadUsada / 1024) < 1){
+				$html_view .= "<td colspan='2'>Usados  ".($capacidadUsada)." MB</td>";
+			}
+			else{
+				$html_view .= "<td colspan='2'>Usados  ".($capacidadUsada / 1024)." GB</td>";		
+			}
+		
 			$html_view .= "</tr>";
 
 		}

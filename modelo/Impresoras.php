@@ -167,7 +167,7 @@ class Impresoras {
 	public function agregar($datos) {
 
 		$id_impresora_desc = Impresora_desc::buscar_id_por_marca_modelo($datos['marca'], $datos['modelo']);
-		$nro_serie = $datos['num_serie'];
+		$nro_serie = strtoupper($datos['num_serie']);
 		$ip = $datos['ip'];
 		$values = $datos['id_vinculo'] . "," . $id_impresora_desc;
 

@@ -24,6 +24,7 @@
 										$("#dataTable_usuario").dataTable({
 											"destroy" : true,
 											"aaData" : data,
+											"iDisplayLength": 25,
 											"rowHeight": 'auto',
 											"aoColumns" :[
 												{ "sTitle" : "ID" , "mData" : "id_usuario"},
@@ -63,6 +64,7 @@
 										$("#dataTable_usuario").dataTable({
 											"destroy" : true,											
 											"aaData" : data,
+											"iDisplayLength": 25,
 											"aoColumns" :[
 												{ "sTitle" : "ID" , "mData" : "id_usuario"},
 												{ "sTitle" : "Usuario" , "mData" : "usuario"},

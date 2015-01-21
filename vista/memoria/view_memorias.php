@@ -17,6 +17,7 @@
 							var dataTable = $("#dataTable").dataTable({
 		   			 		"destroy" : true,
 							"aaData" : data,
+							"iDisplayLength": 25,
 							"aoColumns" :[
 								{ "sTitle" : "Marca" , "mData" : "marca"},
 								{ "sTitle" : "Tipo" , "mData" : "tipo"},
