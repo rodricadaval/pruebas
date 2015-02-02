@@ -51,8 +51,7 @@
         onfocusout: false,
         onkeyup: false,
         onclick: false,
-        onsubmit: true,
-        rules : {
+        onsubmit: true,        rules : {
             marca : {
                 required : true
             },
@@ -95,7 +94,7 @@
             console.log ("Formulario OK");
             console.log('Evento de click en crear');
             console.log($("#form_agregar_monitor").serialize());
-            
+
             var modelo = $("#select_modelos_Monitor").val().replace(/\./g, ' ');
 
             var dataUrl = "marca="+$('#select_marcas_monitores option:selected').val()+"&modelo="+modelo+"&num_serie="+$("#nro_de_serie_m").val()+"&tipo=Monitor";
@@ -129,7 +128,7 @@
     });
 
     $("#form_agregar_monitor").on('click',"#boton_nueva_marca",function(){
-     
+
         $.post( "controlador/CreacionController.php",
                 {
                     tablaPpal : "Monitor",
@@ -172,7 +171,7 @@
     });
 
     $("#form_agregar_monitor").on('click',"#boton_borrar_marca",function(){
-     
+
         $.post( "controlador/CreacionController.php",
                 {
                     tablaPpal : "Monitores",
@@ -207,7 +206,7 @@
                                                         $("#dialogcontent_borrar_marca").remove();
                                                     },
                                                     "Aceptar" : function(){
-                                                        $("#form_borrar_marca_y_modelo").submit();  
+                                                        $("#form_borrar_marca_y_modelo").submit();
                                                     }
                                                 }
                     });

@@ -14,6 +14,7 @@ include 'logueo/chequeo_login.php';
         <script src="lib/jquery.validate.js" type="text/javascript"></script>
         <script src="lib/semantic.js" type="text/javascript"></script>
         <script src="lib/bootstrap.js" type="text/javascript"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.66.0-2013.10.09/jquery.blockUI.min.js"></script>
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css" rel=
         "stylesheet" type="text/css">
@@ -31,7 +32,7 @@ include 'logueo/chequeo_login.php';
                     "logout" id="logout">Desconectarse</span></h1>
                 </div>
                 <div class="realBody">
-<?php require_once TEMPLATES . '/panel_izq.html';?>
+<?php require_once TEMPLATES.'/panel_izq.html';?>
                 <br>
                 <div id="contenedorPpal"></div>
             	</div>
@@ -42,7 +43,7 @@ include 'logueo/chequeo_login.php';
                     });
 
                     $.validator.addMethod("sinCpu",function (value,element){
-                     return value!=1; 
+                     return value!=1;
                     }, 'El usuario no tiene Cpu.');
 
                     $.validator.addMethod('IP4Checker', function(value) {
@@ -68,7 +69,7 @@ include 'logueo/chequeo_login.php';
 
                         if($(this).attr("href") == "mis_productos"){
                                 console.log("Entro a ver los productos del usuario");
-                                
+
 
                                 $.get('logueo/check_user_id.php', function(id) {
                                     console.log("usuario: "+id);
@@ -121,7 +122,7 @@ include 'logueo/chequeo_login.php';
                                 });
                         }
                         else{
-                            if(primeraVez){    
+                            if(primeraVez){
                                  $("#contenedorPpal").load($(this).attr("href"));
                                  primeraVez = false;
                             }
@@ -133,7 +134,7 @@ include 'logueo/chequeo_login.php';
                                 }).appendTo('.realBody');
                                 $("#contenedorPpal").load($(this).attr("href"));
                             }
-                        }                                            
+                        }
                		});
 	            </script>
             </body>

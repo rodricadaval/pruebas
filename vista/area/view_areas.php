@@ -6,7 +6,17 @@
 <script type="text/javascript">
 
 	$(document).ready(function(event){
-		
+
+		$.blockUI({ css: {
+						border: 'none',
+						padding: '15px',
+						backgroundColor: '#000',
+						'-webkit-border-radius': '10px',
+						'-moz-border-radius': '10px',
+						opacity: .5,
+						color: '#fff'
+					} });
+
 		$.get('logueo/check_priority.php', function(permisos) {
 				if (permisos == 2) {
 					$("#crear_area").hide();
@@ -20,6 +30,9 @@
 					metodo: 'listarTodos'},
 			dataType: 'json',
 			success : function(data){
+
+				$.unblockUI();
+
 				$.get("logueo/check_priority.php", function(answer){
      					if(answer == 1 || answer == 3){
 							$("#dataTable").dataTable({
@@ -45,7 +58,7 @@
  				});
 			}
 
-		});		
+		});
 	});
 
 	$("#contenedorPpal").on('click' , '#modificar_area' , function(){

@@ -73,14 +73,14 @@ $(document).ready(function(){
 
     if(estado == 1)
     {
-        $(".f_nueva_password, .f_conf_password").show(); 
-        $("#nueva_password, #conf_password").removeAttr("disabled"); 
+        $(".f_nueva_password, .f_conf_password").show();
+        $("#nueva_password, #conf_password").removeAttr("disabled");
         $("#vista_pass").hide();
         $(".ID").hide();
     }
 
 
-          
+
  var validator =   $("#form").validate({
         errorLabelContainer : "#errores" ,
         wrapper : "li" ,
@@ -170,15 +170,15 @@ $(document).ready(function(){
         },
         submitHandler : function (form) {
           console.log ("Formulario OK");
-  
+
             console.log("Aca empieza el envio de datos de usuario");
             $("#password_orig").attr("disabled","disabled");
 
-            var UrlToPass; 
+            var UrlToPass;
 
             if(estado == 1 && $("#select_permisos option:selected").val() == 2){
-              $("#conf_password").val($("#usuario").val()); 
-              $("#nueva_password").val($("#usuario").val()); 
+              $("#conf_password").val($("#usuario").val());
+              $("#nueva_password").val($("#usuario").val());
             }
 
             if($("#email").val() == ""){
@@ -235,21 +235,21 @@ $(document).ready(function(){
           console.log(validator);
         }
     });
- 
+
      $("#cambiar_pass").on('click',function(){
-           
+
             if ($("#cambiar_pass").val() == "Cambiar Contraseña") {
               $("#cambiar_pass").val("No cambiar");
-              $(".f_password, .f_nueva_password, .f_conf_password").show(); 
+              $(".f_password, .f_nueva_password, .f_conf_password").show();
               $("#password,#nueva_password,#conf_password").removeAttr("disabled");
             }
             else if ($("#cambiar_pass").val() == "No cambiar") {
               $("#cambiar_pass").val("Cambiar Contraseña");
-              $(".f_password, .f_nueva_password, .f_conf_password").hide();              
+              $(".f_password, .f_nueva_password, .f_conf_password").hide();
               $("#password,#nueva_password,#conf_password").attr("disabled","disabled");
-            }            
+            }
     });
-    
+
     $("#select_permisos").on('change',function(){
       if(estado == 1){
           if($("#select_permisos option:selected").val() == 2){
@@ -264,8 +264,8 @@ $(document).ready(function(){
           else{
               $(".f_nueva_password, .f_conf_password").show();
               $("#nueva_password, #conf_password").removeAttr("disabled");
-              $("#usuario").removeAttr("readonly");    
-          } 
+              $("#usuario").removeAttr("readonly");
+          }
       }
     });
 

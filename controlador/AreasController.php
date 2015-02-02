@@ -3,25 +3,29 @@ require_once "../ini.php";
 
 $parametros = array();
 
-if (isset($_POST['action'])) {
+if (isset($_POST['action']))
+{
 
 	$inst_areas = new Areas();
-	$action = $_POST['action'];
+	$action     = $_POST['action'];
 	unset($_POST['action']);
 
-	switch ($action) {
+	switch ($action)
+	{
 		case 'crear':
 
-			foreach ($_POST as $clave => $valor) {
-					$parametros[$clave] = $valor;
-				}
-				echo $inst_areas->crearArea($parametros);	
+			foreach ($_POST as $clave => $valor)
+		{
+				$parametros[$clave] = $valor;
+			}
+			echo $inst_areas->crearArea($parametros);
 
 			break;
 
 		case 'modificar':
 
-			foreach ($_POST as $clave => $valor) {
+			foreach ($_POST as $clave => $valor)
+		{
 				$parametros[$clave] = $valor;
 			}
 
@@ -36,11 +40,13 @@ if (isset($_POST['action'])) {
 
 		default:
 			# code...
-			break;
+						break;
 	}
-} else {
+}
+else
+{
 
-	$archivos = array("vista/area/view_areas.php");
+	$archivos   = array("vista/area/view_areas.php");
 	$parametros = array("TABLA" => "Areas", "");
 	echo Disenio::HTML($archivos, $parametros);
 }

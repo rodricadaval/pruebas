@@ -1,17 +1,20 @@
 <?php
 require_once "../ini.php";
 
-if (isset($_POST['action'])) {
+if (isset($_POST['action']))
+{
 
 	$inst_marcas = new Marcas();
 	$action = $_POST['action'];
 	unset($_POST['action']);
 
-	switch ($action) {
+	switch ($action)
+	{
 
 		case 'modificar':
 
-			foreach ($_POST as $clave => $valor) {
+			foreach ($_POST as $clave => $valor)
+		{
 				$parametros[$clave] = $valor;
 			}
 
@@ -26,10 +29,11 @@ if (isset($_POST['action'])) {
 
 		default:
 			# code...
-			break;
+						break;
 	}
 }
-else{
+else
+{
 	$archivos   = array("vista/marca/view_marcas.php");
 	$parametros = array("TABLA" => "Marcas", "");
 	echo Disenio::HTML($archivos, $parametros);

@@ -59,7 +59,7 @@ $(document).ready(function(){
         } ,
         submitHandler : function (form_area) {
            console.log ("Formulario OK");
-            
+
             console.log("Aca empieza el envio de datos de area");
 
             var UrlToPass;
@@ -96,7 +96,7 @@ $(document).ready(function(){
                         }).appendTo('.realBody');
                         $("#contenedorPpal").load("controlador/AreasController.php");
                     }
-              });       
+              });
         } ,
         invalidHandler : function (event , validator) {
           console.log(validator);

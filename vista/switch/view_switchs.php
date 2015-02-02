@@ -4,6 +4,17 @@
 <script type="text/javascript">
 
 	$(document).ready(function(event){
+
+		$.blockUI({ css: {
+						border: 'none',
+						padding: '15px',
+						backgroundColor: '#000',
+						'-webkit-border-radius': '10px',
+						'-moz-border-radius': '10px',
+						opacity: .5,
+						color: '#fff'
+					} });
+
 		$.ajax({
 			url : 'metodos_ajax.php',
 			method: 'post',
@@ -13,6 +24,9 @@
 			dataType: 'json',
 			success : function(data){
 				$.get('logueo/check_priority.php', function(permisos) {
+
+					$.unblockUI();
+
 					if( permisos == 1 || permisos == 3) {
 							var dataTable = $("#dataTable").dataTable({
 			   			 		"destroy" : true,
@@ -43,14 +57,14 @@
 									{ "sTitle" : "Marca" , "mData" : "marca"},
 									{ "sTitle" : "Modelo" , "mData" : "modelo"},
 									{ "sTitle" : "Sector" , "mData" : "sector"},
-									{ "sTitle" : "Descripcion" , "mData" : "descripcion"},									
+									{ "sTitle" : "Descripcion" , "mData" : "descripcion"},
 									],
 								"aoColumnDefs": [
 						            { "sWidth": "20%", "aTargets": [ -1 ] }
 						        ]
 			    			})
 						}
-					});				
+					});
 			}
 		});
 	});

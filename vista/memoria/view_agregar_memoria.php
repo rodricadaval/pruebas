@@ -46,21 +46,21 @@
 
     console.log("{select_tipos_memorias}");
 
-    $('#select_unidades_memorias option[value='+2+']').attr('selected', 'selected');
+    $('#form_agregar_memoria #select_unidades_memorias option[value='+2+']').attr('selected', 'selected');
 
-	$("#select_marcas_memorias,#select_tipos_memorias").on('change',function(){
+	$("#form_agregar_memoria #select_marcas_memorias,#form_agregar_memoria #select_tipos_memorias").on('change',function(){
 
 		console.log("Evento de seleccion de tipos");
 
 		$.post('controlador/ProductosController.php',
 			{
-				value_marca : $('#select_marcas_memorias option:selected').val(),
-                value_tipo : $('#select_tipos_memorias option:selected').val(),
+				value_marca : $('#form_agregar_memoria #select_marcas_memorias option:selected').val(),
+                value_tipo : $('#form_agregar_memoria #select_tipos_memorias option:selected').val(),
 				tipo : "sel_velocidades",
 				action : "agregar_memoria"
 
 			}, function(data) {
-			$("#select_velocidades").replaceWith(data);
+			$("#form_agregar_memoria #select_velocidades").replaceWith(data);
 			});
 	});
 

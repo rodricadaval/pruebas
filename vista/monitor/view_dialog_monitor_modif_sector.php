@@ -31,11 +31,11 @@ $(document).ready(function(){
         event.preventDefault();
 
         if("{libre}" == 1){
-        
+
         	console.log($("#form_monitor_mod_sector").serialize());
-    
+
         	var datosUrl =    $("#form_monitor_mod_sector").serialize();
-            
+
             datosUrl += "&action=modificar&asing_sector=yes";
 
             console.log(datosUrl);

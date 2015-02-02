@@ -1,25 +1,32 @@
 <?php
 require_once "../ini.php";
 
-if (!isset($_POST['action'])) {
+if ( ! isset($_POST['action']))
+{
 	$url = array("vista/productos/view_agregar_producto.php");
 	$parametros = array("TABLA" => "Agregar Producto", "TITULO" => "Agregar");
 	echo Disenio::HTML($url, $parametros);
-} else {
+}
+else
+{
 
 	$inst_marcas = new Marcas();
 
-	switch ($_POST['action']) {
+	switch ($_POST['action'])
+	{
 		case 'agregar_monitor':
-			if (!isset($_POST['tipo'])) {
+			if ( ! isset($_POST['tipo']))
+		{
 
-				$url = array("vista/monitor/view_agregar_monitor.php");
+				$url           = array("vista/monitor/view_agregar_monitor.php");
 				$select_marcas = $inst_marcas->dameSelect("monitores");
-				$titulo = "Menu para agregar un Monitor";
-				$parametros = array("Producto" => "Monitor", "select_marcas_monitores" => $select_marcas, "titulo" => $titulo);
+				$titulo        = "Menu para agregar un Monitor";
+				$parametros    = array("Producto"    => "Monitor", "select_marcas_monitores"    => $select_marcas, "titulo"    => $titulo);
 				echo Disenio::HTML($url, $parametros);
 
-			} else if ($_POST['tipo'] == "sel_modelos") {
+			}
+		elseif ($_POST['tipo'] == "sel_modelos")
+		{
 
 				$inst_mon_desc = new Monitor_desc();
 				echo $inst_mon_desc->dameSelect($_POST['value'], "_Monitor");
@@ -28,16 +35,19 @@ if (!isset($_POST['action'])) {
 			break;
 
 		case 'agregar_computadora':
-			if (!isset($_POST['tipo'])) {
+			if ( ! isset($_POST['tipo']))
+		{
 
-				$url = array("vista/computadora/view_agregar_computadora.php");
+				$url           = array("vista/computadora/view_agregar_computadora.php");
 				$select_marcas = $inst_marcas->dameSelect("computadoras");
 				$select_clases = Tipos_Computadoras::dameSelect_clase();
-				$titulo = "Menu para agregar una Computadora";
-				$parametros = array("Producto" => "Computadora", "select_marcas_computadoras" => $select_marcas, "select_clases_Computadora" => $select_clases, "titulo" => $titulo);
+				$titulo        = "Menu para agregar una Computadora";
+				$parametros    = array("Producto"    => "Computadora", "select_marcas_computadoras"    => $select_marcas, "select_clases_Computadora"    => $select_clases, "titulo"    => $titulo);
 				echo Disenio::HTML($url, $parametros);
 
-			} else if ($_POST['tipo'] == "sel_modelos") {
+			}
+		elseif ($_POST['tipo'] == "sel_modelos")
+		{
 
 				$inst_comp_desc = new Computadora_desc();
 				echo $inst_comp_desc->dameSelect($_POST['value'], "_Computadora");
@@ -45,101 +55,161 @@ if (!isset($_POST['action'])) {
 			break;
 
 		case 'agregar_memoria':
-			if (!isset($_POST['tipo'])) {
+			if ( ! isset($_POST['tipo']))
+		{
 
-				$url = array("vista/memoria/view_agregar_memoria.php");
-				$select_marcas = $inst_marcas->dameSelect("memorias");
-				$select_tipos = Memoria_desc::dameSelect("_memorias");
-				$select_capacidades = Capacidades::dameSelect("","_memorias");
-				$select_unidades = Unidades::dameSelect("","_memorias");
-				$titulo = "Menu para agregar una Memoria Ram";
-				$parametros = array("Producto" => "Memoria", "select_marcas_memorias" => $select_marcas, "select_tipos_memorias" => $select_tipos,"select_capacidades" => $select_capacidades,"select_unidades" => $select_unidades , "titulo" => $titulo);
+				$url                = array("vista/memoria/view_agregar_memoria.php");
+				$select_marcas      = $inst_marcas->dameSelect("memorias");
+				$select_tipos       = Memoria_desc::dameSelect("_memorias");
+				$select_capacidades = Capacidades::dameSelect("", "_memorias");
+				$select_unidades    = Unidades::dameSelect("", "_memorias");
+				$titulo             = "Menu para agregar una Memoria Ram";
+				$parametros         = array("Producto"         => "Memoria", "select_marcas_memorias"         => $select_marcas, "select_tipos_memorias"         => $select_tipos, "select_capacidades"         => $select_capacidades, "select_unidades"         => $select_unidades, "titulo"         => $titulo);
 				echo Disenio::HTML($url, $parametros);
 
-			} else if ($_POST['tipo'] == "sel_velocidades") {
+			}
+		elseif ($_POST['tipo'] == "sel_velocidades")
+		{
 
 				$inst_vel = new Velocidades();
-				echo $inst_vel->dameSelect($_POST['value_marca'],$_POST['value_tipo']);
-				
-			} else if ($_POST['tipo'] == "sel_velocidades_nueva_marca"){
+				echo $inst_vel->dameSelect($_POST['value_marca'], $_POST['value_tipo']);
+
+			}
+		elseif ($_POST['tipo'] == "sel_velocidades_nueva_marca")
+		{
 				$inst_vel = new Velocidades();
 				echo $inst_vel->dameSelectVelocidadesPosiblesParaTipo($_POST['value_tipo']);
 			}
 			break;
 
-		case 'agregar_disco':
-				
-				$url = array("vista/disco/view_agregar_disco.php");
-				$select_marcas = $inst_marcas->dameSelect("discos");
-				$select_capacidades = Capacidades::dameSelect("","_discos");
-				$select_unidades = Unidades::dameSelect("","_discos");
-				$titulo = "Menu para agregar un Disco";
-				$parametros = array("Producto" => "Disco", "select_marcas_discos" => $select_marcas,"select_capacidades" => $select_capacidades,"select_unidades" => $select_unidades , "titulo" => $titulo);
+		case 'agregar_memoria_a_computadora':
+			if ( ! isset($_POST['tipo']))
+		{
+
+				$url                = array("vista/memoria/view_agregar_memoria_a_computadora.php");
+				$select_marcas      = $inst_marcas->dameSelect("memorias");
+				$select_tipos       = Memoria_desc::dameSelect("_memorias");
+				$select_capacidades = Capacidades::dameSelect("", "_memorias");
+				$select_unidades    = Unidades::dameSelect("", "_memorias");
+				$titulo             = "Menu para agregar una Memoria Ram";
+				$parametros         = array("Producto"         => "Memoria", "select_marcas_memorias"         => $select_marcas, "select_tipos_memorias"         => $select_tipos, "select_capacidades"         => $select_capacidades, "select_unidades"         => $select_unidades, "titulo"         => $titulo);
 				echo Disenio::HTML($url, $parametros);
 
-				break;
+			}
+		elseif ($_POST['tipo'] == "sel_velocidades")
+		{
+
+				$inst_vel = new Velocidades();
+				echo $inst_vel->dameSelect($_POST['value_marca'], $_POST['value_tipo']);
+
+			}
+		elseif ($_POST['tipo'] == "sel_velocidades_nueva_marca")
+		{
+				$inst_vel = new Velocidades();
+				echo $inst_vel->dameSelectVelocidadesPosiblesParaTipo($_POST['value_tipo']);
+			}
+			break;
+
+		case 'agregar_productos_a_computadora':
+			$url        = array("vista/productos/view_agregar_productos_a_computadora.php");
+			$id_cpu     = $_POST['id_cpu'];
+			$parametros = array("id_cpu" => $id_cpu);
+			echo Disenio::HTML($url, $parametros);
+			break;
+
+		case 'agregar_disco':
+
+			$url                = array("vista/disco/view_agregar_disco.php");
+			$select_marcas      = $inst_marcas->dameSelect("discos");
+			$select_capacidades = Capacidades::dameSelect("", "_discos");
+			$select_unidades    = Unidades::dameSelect("", "_discos");
+			$titulo             = "Menu para agregar un Disco";
+			$parametros         = array("Producto"         => "Disco", "select_marcas_discos"         => $select_marcas, "select_capacidades"         => $select_capacidades, "select_unidades"         => $select_unidades, "titulo"         => $titulo);
+			echo Disenio::HTML($url, $parametros);
+
+			break;
+
+		case 'agregar_disco_a_computadora':
+
+			$url                = array("vista/disco/view_agregar_disco_a_computadora.php");
+			$select_marcas      = $inst_marcas->dameSelect("discos");
+			$select_capacidades = Capacidades::dameSelect("", "_discos");
+			$select_unidades    = Unidades::dameSelect("", "_discos");
+			$titulo             = "Menu para agregar un Disco";
+			$parametros         = array("Producto"         => "Disco", "select_marcas_discos"         => $select_marcas, "select_capacidades"         => $select_capacidades, "select_unidades"         => $select_unidades, "titulo"         => $titulo);
+			echo Disenio::HTML($url, $parametros);
+
+			break;
 
 		case 'agregar_impresora':
-				
-				if (!isset($_POST['tipo'])) {
 
-				$url = array("vista/impresora/view_agregar_impresora.php");
+			if ( ! isset($_POST['tipo']))
+		{
+
+				$url           = array("vista/impresora/view_agregar_impresora.php");
 				$select_marcas = $inst_marcas->dameSelect("impresoras");
-				$titulo = "Menu para agregar una Impresora";
-				$parametros = array("Producto" => "Impresora", "select_marcas_impresoras" => $select_marcas, "titulo" => $titulo);
+				$titulo        = "Menu para agregar una Impresora";
+				$parametros    = array("Producto"    => "Impresora", "select_marcas_impresoras"    => $select_marcas, "titulo"    => $titulo);
 				echo Disenio::HTML($url, $parametros);
 
-				} else if ($_POST['tipo'] == "sel_modelos") {
+			}
+		elseif ($_POST['tipo'] == "sel_modelos")
+		{
 
 				$inst_imp_desc = new Impresora_desc();
 				echo $inst_imp_desc->dameSelect($_POST['value'], "_Impresora");
 
-				}
+			}
 
-				break;
+			break;
 
 		case 'agregar_router':
-				
-				if (!isset($_POST['tipo'])) {
 
-				$url = array("vista/router/view_agregar_router.php");
+			if ( ! isset($_POST['tipo']))
+		{
+
+				$url           = array("vista/router/view_agregar_router.php");
 				$select_marcas = $inst_marcas->dameSelect("routers");
-				$titulo = "Menu para agregar un Router";
-				$parametros = array("Producto" => "Router", "select_marcas_routers" => $select_marcas, "titulo" => $titulo);
+				$titulo        = "Menu para agregar un Router";
+				$parametros    = array("Producto"    => "Router", "select_marcas_routers"    => $select_marcas, "titulo"    => $titulo);
 				echo Disenio::HTML($url, $parametros);
 
-				} else if ($_POST['tipo'] == "sel_modelos") {
+			}
+		elseif ($_POST['tipo'] == "sel_modelos")
+		{
 
 				$inst_rout_desc = new Router_desc();
 				echo $inst_rout_desc->dameSelect($_POST['value'], "_Router");
 
-				}
+			}
 
-				break;
+			break;
 
 		case 'agregar_switch':
-				
-				if (!isset($_POST['tipo'])) {
 
-				$url = array("vista/switch/view_agregar_switch.php");
+			if ( ! isset($_POST['tipo']))
+		{
+
+				$url           = array("vista/switch/view_agregar_switch.php");
 				$select_marcas = $inst_marcas->dameSelect("switchs");
-				$titulo = "Menu para agregar un Switch";
-				$parametros = array("Producto" => "Switch", "select_marcas_switchs" => $select_marcas, "titulo" => $titulo);
+				$titulo        = "Menu para agregar un Switch";
+				$parametros    = array("Producto"    => "Switch", "select_marcas_switchs"    => $select_marcas, "titulo"    => $titulo);
 				echo Disenio::HTML($url, $parametros);
 
-				} else if ($_POST['tipo'] == "sel_modelos") {
+			}
+		elseif ($_POST['tipo'] == "sel_modelos")
+		{
 
 				$inst_swi_desc = new Switch_desc();
 				echo $inst_swi_desc->dameSelect($_POST['value'], "_Switch");
 
-				}
+			}
 
-				break;			
+			break;
 
 		default:
 			# code...
-		break;
+						break;
 
 	}
 }
-?>

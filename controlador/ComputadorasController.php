@@ -3,61 +3,70 @@ require_once "../ini.php";
 
 $parametros = array();
 
-if (isset($_POST['action'])) {
+if (isset($_POST['action']))
+{
 
 	$inst_computadoras = new Computadoras();
 	$inst_vinc = new Vinculos();
-	$action = $_POST['action'];
+	$action    = $_POST['action'];
 	unset($_POST['action']);
 
-	switch ($action) {
+	switch ($action)
+	{
 		case 'crear':
 
 			break;
 
 		case 'modificar':
 
-			if(isset($_POST['cuestion'])){
-				switch ($_POST['cuestion']) {
-					case 'tipo':
+			if (isset($_POST['cuestion']))
+		{
+				switch ($_POST['cuestion'])
+			{
+				case 'tipo':
 						unset($_POST['cuestion']);
 						echo $inst_computadoras->cambiarTipo($_POST);
 						break;
 
-					case 'sector':
+				case 'sector':
 						unset($_POST['cuestion']);
 						$_POST['id_sector'] = $_POST['area'];
 						unset($_POST['area']);
-							if($_POST['en_conjunto'] == "SI"){
-								unset($_POST['en_conjunto']);
-								echo $inst_computadoras->modificarSectorConAsignados($_POST);
-							}
-							else if($_POST['en_conjunto'] == "NO"){
-								unset($_POST['en_conjunto']);
-								echo $inst_computadoras->modificarSectorSinAsignados($_POST);	
-							}
+						if ($_POST['en_conjunto'] == "SI")
+				{
+							unset($_POST['en_conjunto']);
+							echo $inst_computadoras->modificarSectorConAsignados($_POST);
+						}
+				else if ($_POST['en_conjunto'] == "NO")
+				{
+							unset($_POST['en_conjunto']);
+							echo $inst_computadoras->modificarSectorSinAsignados($_POST);
+						}
 						break;
 
-					case 'usuario':
+				case 'usuario':
 						unset($_POST['cuestion']);
 						$_POST['id_sector'] = $_POST['area'];
 						unset($_POST['area']);
 						$_POST['id_usuario'] = Usuarios::getIdByNombre($_POST['nombre_usuario']);
 						unset($_POST['nombre_usuario']);
-						if($_POST['en_conjunto'] == "SI"){
+						if ($_POST['en_conjunto'] == "SI")
+				{
 							unset($_POST['en_conjunto']);
 							echo $inst_computadoras->modificarUsuarioConAsignados($_POST);
-							}
-						else if($_POST['en_conjunto'] == "NO"){
+						}
+				else if ($_POST['en_conjunto'] == "NO")
+				{
 							unset($_POST['en_conjunto']);
-							echo $inst_computadoras->modificarUsuarioSinAsignados($_POST);	
-						}	
+							echo $inst_computadoras->modificarUsuarioSinAsignados($_POST);
+						}
 
 						break;
-					
-					default:
+
+				default:
 						unset($_POST['cuestion']);
-						foreach ($_POST as $clave => $valor) {
+						foreach ($_POST as $clave => $valor)
+				{
 							$parametros[$clave] = $valor;
 						}
 						echo $inst_computadoras->modificar($parametros);
@@ -72,50 +81,54 @@ if (isset($_POST['action'])) {
 			break;
 
 		case 'agregar_desc':
-		
+
 			echo $inst_computadoras->agregarDescripcion($_POST);
-			break;	
+			break;
 
 		case 'buscar_area':
-			if (isset($_POST['num_serie'])) {
+			if (isset($_POST['num_serie']))
+		{
 				$id_vinc = $inst_computadoras->getIdVinculoBySerie($_POST['num_serie']);
 				echo $inst_vinc->getIdSector($id_vinc);
 			}
 			break;
 
-		case 'cpus_del_usuario': 
-				$id_usuario = Usuarios::getIdByNombre($_POST['nombre_usuario']);
-				echo $inst_computadoras->dameSelectDeUsuario($id_usuario,$_POST['extra_id_select']); 
-			
+		case 'cpus_del_usuario':
+			$id_usuario = Usuarios::getIdByNombre($_POST['nombre_usuario']);
+			echo $inst_computadoras->dameSelectDeUsuario($id_usuario, $_POST['extra_id_select']);
+
 			break;
 
 		case 'chequear_slots':
-				echo $inst_computadoras->tieneSlotsLibres($_POST['id_cpu']);
+			echo $inst_computadoras->tieneSlotsLibres($_POST['id_cpu']);
 			break;
 
 		case 'chequear_espacio_mem':
-				echo $inst_computadoras->tieneEspacioMemLibre($_POST);
+			echo $inst_computadoras->tieneEspacioMemLibre($_POST);
 			break;
 
 		case 'liberar':
-				if($_POST['en_conjunto'] == "SI"){
-					unset($_POST['en_conjunto']);
-					echo $inst_computadoras->quitarUsuarioConAsignados($_POST);
-				}
-				else if($_POST['en_conjunto'] == "NO"){
-					unset($_POST['en_conjunto']);
-					echo $inst_computadoras->quitarUsuarioSinAsignados($_POST);	
-				}
+			if ($_POST['en_conjunto'] == "SI")
+		{
+				unset($_POST['en_conjunto']);
+				echo $inst_computadoras->quitarUsuarioConAsignados($_POST);
+			}
+		else if ($_POST['en_conjunto'] == "NO")
+		{
+				unset($_POST['en_conjunto']);
+				echo $inst_computadoras->quitarUsuarioSinAsignados($_POST);
+			}
 			break;
-
 
 		default:
 			# code...
-		break;
+						break;
 	}
-} else {
+}
+else
+{
 
-	$archivos = array("vista/computadora/view_computadoras.php");
+	$archivos   = array("vista/computadora/view_computadoras.php");
 	$parametros = array("TABLA" => "Computadoras", "");
 	echo Disenio::HTML($archivos, $parametros);
 }

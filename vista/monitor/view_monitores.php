@@ -4,6 +4,18 @@
 <script type="text/javascript">
 
 	$(document).ready(function(event){
+
+		$.blockUI({ css: {
+						border: 'none',
+						padding: '15px',
+						backgroundColor: '#000',
+						'-webkit-border-radius': '10px',
+						'-moz-border-radius': '10px',
+						opacity: .5,
+						color: '#fff'
+					} });
+
+
 		$.ajax({
 			url : 'metodos_ajax.php',
 			method: 'post',
@@ -13,6 +25,9 @@
 			dataType: 'json',
 			success : function(data){
 				$.get('logueo/check_priority.php', function(permisos) {
+
+					$.unblockUI();
+
 					if( permisos == 1 || permisos == 3) {
 							var dataTable = $("#dataTable").dataTable({
 			   			 		"destroy" : true,
@@ -62,7 +77,7 @@
 							        ]
 			    			})
 						}
-					});				
+					});
 			}
 		});
 	});
@@ -270,7 +285,7 @@ $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
 			console.log("Entro a desasignar todo del monitor");
 			console.log("id_monitor: "+$(this).attr("id_monitor"));
 			var id_monitor = $(this).attr("id_monitor");
-	
+
 			$.post( "vista/dialog_content.php",
 				{
 					TablaPpal : "Monitores",
@@ -365,7 +380,7 @@ $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
 					});
 				}
 			);
-		
+
 
 	});
 

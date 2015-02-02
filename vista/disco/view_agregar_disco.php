@@ -33,7 +33,7 @@
 
     console.log("{select_tipos_discos}");
 
-    $('#select_unidades_discos option[value='+3+']').attr('selected', 'selected');
+    $('#form_agregar_disco #select_unidades_discos option[value='+3+']').attr('selected', 'selected');
 
     $("#form_agregar_disco").validate({
         onfocusout: false,

@@ -5,7 +5,18 @@
 <script type="text/javascript">
 	$(document).ready(function(event){
 		var url;
-					
+
+		$.blockUI({ css: {
+						border: 'none',
+						padding: '15px',
+						backgroundColor: '#000',
+						'-webkit-border-radius': '10px',
+						'-moz-border-radius': '10px',
+						opacity: .5,
+						color: '#fff'
+					} });
+
+
 					$.get('logueo/check_priority.php', function(permisos) {
 						if (permisos == 2) {
 							$("#crear_usuario").hide();
@@ -20,6 +31,9 @@
 							dataType: 'json',
 							success : function(data){
 								$.get('logueo/check_priority.php', function(permisos) {
+
+								$.unblockUI();
+
 								if( permisos == 1) {
 										$("#dataTable_usuario").dataTable({
 											"destroy" : true,
@@ -45,7 +59,7 @@
 									}
 									else if (permisos == 2) {
 										$("#dataTable_usuario").dataTable({
-											"destroy" : true,											
+											"destroy" : true,
 											"aaData" : data,
 											"aoColumns" :[
 												{ "sTitle" : "Usuario" , "mData" : "usuario"},
@@ -62,7 +76,7 @@
 									}
 									else if( permisos == 3) {
 										$("#dataTable_usuario").dataTable({
-											"destroy" : true,											
+											"destroy" : true,
 											"aaData" : data,
 											"iDisplayLength": 25,
 											"aoColumns" :[
@@ -88,7 +102,7 @@
 	});
 
 
-	
+
 	$("#contenedorPpal").on('click' , '#modificar_usuario' , function(){
 
 		console.log($(this).attr("id_usuario"));
@@ -214,7 +228,7 @@
 
 	$("#contenedorPpal").on('click' , '#generar_memorandum' , function(event){
 		event.preventDefault();
-		
+
 		console.log("Entro a seleccionar los productos para el memorandum del usuario");
 		console.log("id_usuario: "+$(this).attr("id_usuario"));
 		var id_usuario = $(this).attr("id_usuario");

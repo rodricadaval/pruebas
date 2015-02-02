@@ -4,6 +4,17 @@
 <script type="text/javascript">
 
 	$(document).ready(function(event){
+
+		$.blockUI({ css: {
+						border: 'none',
+						padding: '15px',
+						backgroundColor: '#000',
+						'-webkit-border-radius': '10px',
+						'-moz-border-radius': '10px',
+						opacity: .5,
+						color: '#fff'
+					} });
+
 		$.ajax({
 			url : 'metodos_ajax.php',
 			method: 'post',
@@ -12,6 +23,9 @@
 				   tipo: 'json'},
 			dataType: 'json',
 			success : function(data){
+
+				$.unblockUI();
+
 				$("#dataTable").dataTable({
    			 		"destroy" : true,
 					"aaData" : data,
@@ -237,7 +251,7 @@ $("#contenedorPpal").on('click' , '#modificar_cpu_monitor' , function(){
 					});
 				}
 			);
-		
+
 
 	});
 

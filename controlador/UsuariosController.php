@@ -3,16 +3,19 @@ require_once "../ini.php";
 
 $parametros = array();
 
-if (isset($_POST['action'])) {
+if (isset($_POST['action']))
+{
 
 	$inst_usuarios = new Usuarios();
 	$action = $_POST['action'];
 	unset($_POST['action']);
 
-	switch ($action) {
+	switch ($action)
+	{
 		case 'modificar':
-			
-			foreach ($_POST as $clave => $valor) {
+
+			foreach ($_POST as $clave => $valor)
+		{
 				$parametros[$clave] = $valor;
 			}
 			echo $inst_usuarios->modificarDatos($parametros);
@@ -20,27 +23,30 @@ if (isset($_POST['action'])) {
 
 		case 'crear':
 
-				unset($_POST['con_productos']);
+			unset($_POST['con_productos']);
 
-				foreach ($_POST as $clave => $valor) {
-					$parametros[$clave] = $valor;
-				}
-				echo $inst_usuarios->crearUsuario($parametros);	
-					
+			foreach ($_POST as $clave => $valor)
+		{
+				$parametros[$clave] = $valor;
+			}
+			echo $inst_usuarios->crearUsuario($parametros);
+
 			break;
-		
+
 		case 'eliminar':
 
-			if ($_POST['id_usuario'] != "") {
+			if ($_POST['id_usuario'] != "")
+		{
 				echo $inst_usuarios->eliminarUsuario($_POST['id_usuario']);
 			}
 			break;
 
 		case 'buscar_area':
 
-			if (isset($_POST['nombre_usuario'])) {
+			if (isset($_POST['nombre_usuario']))
+		{
 				$inst_usuarios = new Usuarios();
-				$id_usuario = $inst_usuarios->getIdByNombre($_POST['nombre_usuario']);
+				$id_usuario    = $inst_usuarios->getIdByNombre($_POST['nombre_usuario']);
 				echo $inst_usuarios->dame_id_area($id_usuario);
 			}
 			break;
@@ -48,8 +54,10 @@ if (isset($_POST['action'])) {
 			break;
 
 	}
-} else {
-	$archivos = array("vista/usuario/view_usuarios.php");
+}
+else
+{
+	$archivos   = array("vista/usuario/view_usuarios.php");
 	$parametros = array("TABLA" => "Usuarios", "");
 	echo Disenio::HTML($archivos, $parametros);
 }

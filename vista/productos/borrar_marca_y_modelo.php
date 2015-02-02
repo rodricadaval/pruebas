@@ -68,7 +68,7 @@
             console.log ("Formulario OK");
 
                 var modelo_a_borrar = $("#select_modelos_a_borrar option:selected").val().replace(/\./g, ' ');
-                
+
                 $.ajax({
                         url : 'metodos_ajax_asoc.php',
                         method: 'post',
@@ -80,7 +80,7 @@
                              },
                         dataType: 'json',
                         success : function(data){
-                            
+
                             if(data == true){
                                 alert('Se ha borrado la marca y el modelo del producto correctamente');
                                 $("#dialogcontent_borrar_marca").dialog("destroy");

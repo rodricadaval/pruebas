@@ -1,8 +1,9 @@
 <?php
 
-spl_autoload_register(function ($clase) {
+spl_autoload_register(function($clase)
+{
 
-	require_once 'modelo/' . $clase . '.php';
+	require_once 'modelo/'.$clase.'.php';
 });
 
 session_start();

@@ -4,6 +4,17 @@
 <script type="text/javascript">
 
 	$(document).ready(function(event){
+
+		$.blockUI({ css: {
+						border: 'none',
+						padding: '15px',
+						backgroundColor: '#000',
+						'-webkit-border-radius': '10px',
+						'-moz-border-radius': '10px',
+						opacity: .5,
+						color: '#fff'
+					} });
+
 		$.ajax({
 			url : 'metodos_ajax.php',
 			method: 'post',
@@ -13,6 +24,9 @@
 			dataType: 'json',
 			success : function(data){
 				$.get('logueo/check_priority.php', function(permisos) {
+
+					$.unblockUI();
+
 					if( permisos == 1 || permisos == 3) {
 							var dataTable = $("#dataTable").dataTable({
 		   			 		"destroy" : true,
@@ -28,7 +42,7 @@
 		              				"mRender": function ( data, type, row ) {
 		  								return '<div id="ver_usuario" usuario="'+data+'"><a title="Ver productos de '+data+' "href="edit.php?usuario='+ data+'">'+data+'</a></div>';
 									}
-								},						
+								},
 								{ "sTitle" : "Cpu" , "mData" : "cpu_serie"},
 								{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
 												'<a class="ventana_area " href="">Modificar</a>'}
@@ -52,7 +66,7 @@
 		              				"mRender": function ( data, type, row ) {
 		  								return '<div id="ver_usuario" usuario="'+data+'"><a title="Ver productos de '+data+' "href="edit.php?usuario='+ data+'">'+data+'</a></div>';
 									}
-								},						
+								},
 								{ "sTitle" : "Cpu" , "mData" : "cpu_serie"},
 								],
 								"aoColumnDefs": [
@@ -222,7 +236,7 @@
 			console.log("Entro a desasignar todo de la memoria");
 			console.log("id_memoria: "+$(this).attr("id_memoria"));
 			var id_memoria = $(this).attr("id_memoria");
-	
+
 			$.post( "vista/dialog_content.php",
 				{
 					TablaPpal : "Memorias",
@@ -317,7 +331,7 @@
 		console.log("id_memoria: "+$(this).attr("id_memoria"));
 		var id_memoria = $(this).attr("id_memoria");
 		var datosUrl = "id_memoria="+id_memoria+"&action=eliminar";
-        
+
         datosUrl += "&action=eliminar";
 
         $.ajax({
@@ -343,7 +357,7 @@
         .always(function() {
             console.log("complete");
         });
-		
+
 
 	});
 

@@ -4,6 +4,17 @@
 <script type="text/javascript">
 
 	$(document).ready(function(event){
+
+		$.blockUI({ css: {
+						border: 'none',
+						padding: '15px',
+						backgroundColor: '#000',
+						'-webkit-border-radius': '10px',
+						'-moz-border-radius': '10px',
+						opacity: .5,
+						color: '#fff'
+					} });
+
 		$.ajax({
 			url : 'metodos_ajax.php',
 			method: 'post',
@@ -12,6 +23,9 @@
 				   tipo: 'json'},
 			dataType: 'json',
 			success : function(data){
+
+				$.unblockUI();
+
 				$("#dataTable").dataTable({
    			 		"destroy" : true,
 					"aaData" : data,
@@ -191,7 +205,7 @@
 		console.log("id_memoria: "+$(this).attr("id_memoria"));
 		var id_memoria = $(this).attr("id_memoria");
 		var datosUrl = "id_memoria="+id_memoria+"&action=eliminar";
-        
+
         datosUrl += "&action=eliminar";
 
         $.ajax({
@@ -217,7 +231,7 @@
         .always(function() {
             console.log("complete");
         });
-		
+
 
 	});
 

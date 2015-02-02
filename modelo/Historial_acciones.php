@@ -1,14 +1,16 @@
-<?php 
-	
-	class Historial_acciones {
+<?php
 
-		public static function claseMinus() {
-			return strtolower(get_class());
-		}
+class Historial_acciones {
 
-		public function registrarMovimientos($datos){
+	public static function claseMinus()
+	{
+		return strtolower(get_class());
+	}
 
-			BDD::getInstance()->query("INSERT INTO system.". self::claseMinus() . " ");
-		}
+	public function registrarMovimientos($datos)
+	{
 
-} ?>
+		BDD::getInstance()->query("INSERT INTO system.". self::claseMinus()." ");
+	}
+
+}?>

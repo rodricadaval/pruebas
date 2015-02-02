@@ -8,7 +8,7 @@ $sql = "
 		system.computadoras
 	where
 		estado = 1 and
-			lower(num_serie) like lower('%" . $_POST['term'] . "%')
+			lower(num_serie) like lower('%".$_POST['term']."%')
 		";
 
 $arrayCompleto = BDD::getInstance()->query($sql)->get_listado();

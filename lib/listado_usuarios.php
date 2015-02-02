@@ -9,9 +9,9 @@ $sql = "
 	where
 		estado = 1 and
 		(
-			lower(nombre_apellido) like lower('%" . $_POST['term'] . "%')
+			lower(nombre_apellido) like lower('%".$_POST['term']."%')
 			OR
-			lower(usuario) like lower('%" . $_POST['term'] . "%')
+			lower(usuario) like lower('%".$_POST['term']."%')
 		)";
 //$sql .= $_POST['id_deposito'] != 1 ? " and area = " . $_POST['id_deposito'] : '';
 

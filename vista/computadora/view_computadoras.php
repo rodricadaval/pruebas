@@ -3,6 +3,17 @@
 <script type="text/javascript">
 
 	$(document).ready(function(event){
+
+		$.blockUI({ css: {
+						border: 'none',
+						padding: '15px',
+						backgroundColor: '#000',
+						'-webkit-border-radius': '10px',
+						'-moz-border-radius': '10px',
+						opacity: .5,
+						color: '#fff'
+					} });
+
 		$.ajax({
 			url : 'metodos_ajax.php',
 			method: 'post',
@@ -12,9 +23,12 @@
 			dataType: 'json',
 			success : function(data){
 				$.get('logueo/check_priority.php', function(permisos) {
+
+					$.unblockUI();
+
 					if( permisos == 1 || permisos == 3) {
 							$("#dataTable").dataTable({
-			   			 		"destroy" : true,   			 		
+			   			 		"destroy" : true,
 								"aaData" : data,
 								"bAutoWidth": false,
 								"iDisplayLength": 25,
@@ -36,7 +50,7 @@
 									{ "sTitle": "Action", "mData" : "m","sWidth": "220px","sDefaultContent":
 													'<a class="ventana_area " href="">Modificar</a>'}
 									]
-									
+
 									/*,
 									"aoColumnDefs": [
 							            { "sWidth": "24%", "aTargets": [ -1 ] }
@@ -45,7 +59,7 @@
 						}
 						else if (permisos == 2) {
 							$("#dataTable").dataTable({
-			   			 		"destroy" : true,   			 		
+			   			 		"destroy" : true,
 								"aaData" : data,
 								"aoColumns" :[
 									//{ "sTitle" : "ID" , "mData" : "id_computadora"},
@@ -426,7 +440,7 @@
 			console.log("Entro a desasignar usuario de la computadora");
 			console.log("id_computadora: "+$(this).attr("id_computadoras"));
 			var id_computadora = $(this).attr("id_computadora");
-			
+
 			$.post( "vista/dialog_content.php",
 				{
 					TablaPpal : "Computadoras",
@@ -468,7 +482,7 @@
 							                    }
 					});
 				}
-			);		
+			);
 
 		});
 

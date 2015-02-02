@@ -1,9 +1,12 @@
 <?php
 session_start();
 
-if (empty($_SESSION['priority'])) {
+if (empty($_SESSION['priority']))
+{
 	print_r("Error");
-} else {
+}
+else
+{
 	print $_SESSION['priority'];
 }
 

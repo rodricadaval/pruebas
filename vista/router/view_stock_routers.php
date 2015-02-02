@@ -4,6 +4,17 @@
 <script type="text/javascript">
 
 	$(document).ready(function(event){
+
+		$.blockUI({ css: {
+						border: 'none',
+						padding: '15px',
+						backgroundColor: '#000',
+						'-webkit-border-radius': '10px',
+						'-moz-border-radius': '10px',
+						opacity: .5,
+						color: '#fff'
+					} });
+
 		$.ajax({
 			url : 'metodos_ajax.php',
 			method: 'post',
@@ -12,6 +23,9 @@
 				   tipo: 'json'},
 			dataType: 'json',
 			success : function(data){
+
+				$.unblockUI();
+
 				var dataTable = $("#dataTable").dataTable({
    			 		"destroy" : true,
 					"aaData" : data,
@@ -68,13 +82,13 @@
 												height : 230,
 												close : function(){
 													$(this).dialog("destroy").empty();
-													$("#dialogcontent_router").remove();			     							        
+													$("#dialogcontent_router").remove();
 												},
 												buttons :
 							                    {
 							                        "Cancelar" : function () {
 							                            $(this).dialog("destroy").empty();
-							                            $("#dialogcontent_router").remove();							                            
+							                            $("#dialogcontent_router").remove();
 							                        },
 							                        "Aceptar" : function(){
 							                        	$("#form_router_mod_sector").submit();
@@ -124,7 +138,7 @@
 							                    {
 							                        "Cancelar" : function () {
 							                            $(this).dialog("destroy");
-							                            $("#dialogcontent_router").remove();							                           
+							                            $("#dialogcontent_router").remove();
 							                        },
 							                        "Aceptar" : function(){
 							                        	$("#form_router_mod_ip").submit();
@@ -170,13 +184,13 @@
 												height : 280,
 												close : function(){
 													$(this).dialog("destroy").empty();
-													$("#dialogcontent_router").remove();													
+													$("#dialogcontent_router").remove();
 												},
 												buttons :
 							                    {
 							                        "Cancelar" : function () {
 							                            $(this).dialog("destroy").empty();
-							                            $("#dialogcontent_router").remove();							                            
+							                            $("#dialogcontent_router").remove();
 							                        },
 							                        "Aceptar" : function(){
 							                        		$("#form_detalle_eliminar_router").submit();
@@ -221,13 +235,13 @@
 											height: 290,
 											close : function(){
 												$(this).dialog("destroy").empty();
-												$("#dialogcontent_router").remove();												
+												$("#dialogcontent_router").remove();
 											},
 											buttons :
 						                    {
 						                        "Cancelar" : function () {
 						                            $(this).dialog("destroy").empty();
-						                       		$("#dialogcontent_router").remove();						                       		
+						                       		$("#dialogcontent_router").remove();
 						                        },
 						                        "Guardar" : function(){
 						                        	$("#form_detalle_agregar_desc").submit();
