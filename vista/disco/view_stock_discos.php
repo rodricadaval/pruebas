@@ -1,19 +1,11 @@
 <h2>Discos en Stock</h2>
-<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
+<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable-stock"></table>
 
 <script type="text/javascript">
 
 	$(document).ready(function(event){
 
-		$.blockUI({ css: {
-						border: 'none',
-						padding: '15px',
-						backgroundColor: '#000',
-						'-webkit-border-radius': '10px',
-						'-moz-border-radius': '10px',
-						opacity: .5,
-						color: '#fff'
-					} });
+		cargando ();
 
 		$.ajax({
 			url : 'metodos_ajax.php',
@@ -24,23 +16,45 @@
 			dataType: 'json',
 			success : function(data){
 
-				$.unblockUI();
+				$.get('logueo/check_priority.php', function(permisos) {
 
-				var dataTable = $("#dataTable").dataTable({
-   			 		"destroy" : true,
-   			 		"aaData" : data,
-   			 		"iDisplayLength": 25,
-					"aoColumns" :[
-						{ "sTitle" : "Marca" , "mData" : "marca"},
-						{ "sTitle" : "Capacidad" , "mData" : "capacidad"},
-						{ "sTitle" : "Sector" , "mData" : "sector"},
-						{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
-										'<a class="ventana_area " href="">Modificar</a>'}
-						],
-					"aoColumnDefs": [
-			            { "sWidth": "20%", "aTargets": [ -1 ] }
-			        ]
-    			})
+					quitar_cargando ();
+
+					if( permisos == 1 || permisos == 3) {
+
+							var dataTable = $("#dataTable-stock").dataTable({
+			   			 		"destroy" : true,
+			   			 		"aaData" : data,
+			   			 		"iDisplayLength": 25,
+								"aoColumns" :[
+									{ "sTitle" : "Marca" , "mData" : "marca"},
+									{ "sTitle" : "Capacidad" , "mData" : "capacidad"},
+									{ "sTitle" : "Sector" , "mData" : "sector"},
+									{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
+													'<a class="ventana_area " href="">Modificar</a>'}
+									],
+								"aoColumnDefs": [
+						            { "sWidth": "20%", "aTargets": [ -1 ] }
+						        ]
+			    			});
+					}
+					else if( permisos == 2 ){
+							var dataTable = $("#dataTable-stock").dataTable({
+			   			 		"destroy" : true,
+			   			 		"aaData" : data,
+			   			 		"iDisplayLength": 25,
+								"aoColumns" :[
+									{ "sTitle" : "Marca" , "mData" : "marca"},
+									{ "sTitle" : "Capacidad" , "mData" : "capacidad"},
+									{ "sTitle" : "Sector" , "mData" : "sector"}
+									],
+								"aoColumnDefs": [
+						            { "sWidth": "20%", "aTargets": [ -1 ] }
+						        ]
+			    			});
+					}
+					else { window.location.href = "logueo/login.php";}
+				});
 			}
 		});
 	});

@@ -214,7 +214,12 @@ $(document).ready(function(){
                         }
                         else if(responseText == 1){
                           console.log("Los datos han sido actualizados correctamente!");
-                          alert("Los datos han sido actualizados correctamente!");
+                          if(estado == 0){
+                            alert("Los datos han sido actualizados correctamente! Si cambio los permisos del usuario vuelva a loguearse.");
+                          }
+                          else{
+                            alert("Se ha creado el usuario correctamente!");
+                          }
                         }
                         else{
                           console.log(responseText);

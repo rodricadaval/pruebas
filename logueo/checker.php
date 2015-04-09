@@ -13,9 +13,9 @@ function decrypt($string)
 
 if (isset($_POST['action']) && $_POST['action'] == 'login')
 {
-// Check the action `login`
+	                                              // Check the action `login`
 	$username = htmlentities($_POST['username']); // Get the username
-	//$password 		= htmlentities(decrypt($_POST['password'])); // Get the password and decrypt it
+	                                              //$password 		= htmlentities(decrypt($_POST['password'])); // Get the password and decrypt it
 	$password = htmlentities($_POST['password']);
 	$inst_usuario = new Usuarios();
 	$inst_bdd     = $inst_usuario->obtenerUsuarioLogin($username, $password);
@@ -31,6 +31,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'login')
 		// NOTE : We have already started the session in the ini.php
 		$_SESSION['userid'] = $user[0]['id_usuario'];
 		$_SESSION['username'] = $user[0]['usuario'];
+		$_SESSION['userRealName'] = $user[0]['nombre_apellido'];
 		$_SESSION['priority'] = $user[0]['permisos'];
 		echo 1;
 	}

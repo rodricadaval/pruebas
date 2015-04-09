@@ -1,7 +1,7 @@
 <?php
 if (( ! isset($_SESSION['userid']) || $_SESSION['userid'] == '') &&  ! isset($_POST['id_usuario']))
 {
-	echo '<script type="text/javascript">window.location = "logueo/login.php"; </script>';
+	echo '<script type="text/javascript">window.location.href = "logueo/login.php"; </script>';
 }
 if (isset($_SESSION['userid']) && isset($_POST['id_usuario']))
 {

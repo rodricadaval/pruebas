@@ -1,27 +1,26 @@
-<h2>{TABLA}</h2>
-<div id="nueva_area">
-	<input type="button" class="btn btn-success" id="crear_area" value="Nueva Area">
+<div class="ui one column grid">
+	<div class="column">
+		<div class="ui raised segment">
+			<a class="ui teal ribbon label">{TABLA}</a>
+			<div id="nueva_area">
+				<input style="display:none;" type="button" class="btn btn-success" id="crear_area" value="Nueva Area">
+			</div>
+			<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
+		</div>
+	</div>
 </div>
-<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
+
 <script type="text/javascript">
+
+	$.get('logueo/check_priority.php', function(permisos) {
+				if ( permisos == 1 || permisos == 3 ) {
+					$("#crear_area").show();
+				}
+		});
 
 	$(document).ready(function(event){
 
-		$.blockUI({ css: {
-						border: 'none',
-						padding: '15px',
-						backgroundColor: '#000',
-						'-webkit-border-radius': '10px',
-						'-moz-border-radius': '10px',
-						opacity: .5,
-						color: '#fff'
-					} });
-
-		$.get('logueo/check_priority.php', function(permisos) {
-				if (permisos == 2) {
-					$("#crear_area").hide();
-				}
-		});
+		cargando ();		
 
 		$.ajax({
 			url : 'metodos_ajax.php',
@@ -31,10 +30,29 @@
 			dataType: 'json',
 			success : function(data){
 
-				$.unblockUI();
+				quitar_cargando ();
 
 				$.get("logueo/check_priority.php", function(answer){
-     					if(answer == 1 || answer == 3){
+     					if(answer == 1){
+							$("#dataTable").dataTable({
+			   			 		"destroy" : true,
+								"aaData" : data,
+								"aoColumns" :[									
+									{ "sTitle" : "Area" , "mData" : "nombre"},
+									{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
+										'Modificar'}]
+				   			})
+						}
+						else if(answer == 2){
+							$("#dataTable").dataTable({
+			   			 		"destroy" : true,			   			 		
+								"aaData" : data,
+								"aoColumns" :[
+									{ "sTitle" : "Area" , "mData" : "nombre"}
+									]
+				   			})
+						}
+						else if(answer == 3){
 							$("#dataTable").dataTable({
 			   			 		"destroy" : true,
 								"aaData" : data,
@@ -43,16 +61,6 @@
 									{ "sTitle" : "Area" , "mData" : "nombre"},
 									{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
 										'Modificar'}]
-				   			})
-						}
-						else if(answer == 2){
-							$("#dataTable").dataTable({
-			   			 		"destroy" : true,
-			   			 		//"bJQueryUI" : true,
-								"aaData" : data,
-								"aoColumns" :[
-									{ "sTitle" : "Area" , "mData" : "nombre"}
-									]
 				   			})
 						}
  				});

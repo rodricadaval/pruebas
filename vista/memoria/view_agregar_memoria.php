@@ -13,11 +13,20 @@
             {select_tipos_memorias}
         </div>
     </div>
-     <div class="control-group">
+    <div class="control-group">
         <label class="control-label" for="select_velocidades">Velocidad</label>
         <div class="controls">
             <select id='select_velocidades' name='velocidad'>
             <option value=''>Seleccionar</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="tipo_dimm">Tipo Dimm</label>
+        <div class="controls">
+            <select id='tipo_dimm' name='tipo_dimm'>
+            <option value='DIMM'>DIMM</option>
+            <option value='SO-DIMM'>SO-DIMM</option>
             </select>
         </div>
     </div>
@@ -39,7 +48,7 @@
         <br><br>
         <input type="button" class="btn btn-danger" id="boton_borrar_marca_sola" value="Borrar una Marca">
     </div>
-</fieldset>   
+</fieldset>
 </form>
 
 <script type="text/javascript">
@@ -94,7 +103,7 @@
             	required: 'Debe ingresar una cantidad'
             },
             velocidad : {
-                required: 'Debe seleccionar una velocidad' 
+                required: 'Debe seleccionar una velocidad'
             }
         } ,
         highlight: function(element) {
@@ -111,7 +120,7 @@
             console.log($("#form_agregar_memoria").serialize());
             var dataUrl = $("#form_agregar_memoria").serialize() + "&tipo=Memoria";
 
-            
+
             console.log(dataUrl);
 
             $.ajax({
@@ -141,7 +150,7 @@
     });
 
     $("#form_agregar_memoria").on('click',"#boton_nueva_marca",function(){
-     
+
         $.post( "controlador/CreacionController.php",
                 {
                     tablaPpal : "Memoria",
@@ -175,7 +184,7 @@
                                                         $("#dialogcontent_nueva_marca").remove();
                                                     },
                                                     "Aceptar" : function(){
-                                                        $("#form_nueva_marca_y_velocidad_memoria").submit();  
+                                                        $("#form_nueva_marca_y_velocidad_memoria").submit();
                                                     }
                                                 }
                     });
@@ -184,7 +193,7 @@
     });
 
     $("#form_agregar_memoria").on('click',"#boton_borrar_marca_sola",function(){
-     
+
         $.post( "controlador/CreacionController.php",
                 {
                     tablaPpal : "Memorias",
@@ -219,7 +228,7 @@
                                                         $("#dialogcontent_borrar_marca").remove();
                                                     },
                                                     "Aceptar" : function(){
-                                                        $("#form_borrar_marca").submit();  
+                                                        $("#form_borrar_marca").submit();
                                                     }
                                                 }
                     });

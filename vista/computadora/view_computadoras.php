@@ -1,18 +1,17 @@
-<h2>{TABLA}</h2>
-<table  cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
+<div class="ui one column grid">
+	<div class="column">
+		<div class="ui raised segment">
+			<a class="ui teal ribbon label">{TABLA}</a>
+			<table  cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
+		</div>
+	</div>
+</div>
+
 <script type="text/javascript">
 
 	$(document).ready(function(event){
 
-		$.blockUI({ css: {
-						border: 'none',
-						padding: '15px',
-						backgroundColor: '#000',
-						'-webkit-border-radius': '10px',
-						'-moz-border-radius': '10px',
-						opacity: .5,
-						color: '#fff'
-					} });
+		cargando ();
 
 		$.ajax({
 			url : 'metodos_ajax.php',
@@ -24,7 +23,7 @@
 			success : function(data){
 				$.get('logueo/check_priority.php', function(permisos) {
 
-					$.unblockUI();
+					quitar_cargando ();
 
 					if( permisos == 1 || permisos == 3) {
 							$("#dataTable").dataTable({
@@ -37,17 +36,17 @@
 									{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
 									{ "sTitle" : "Marca" , "mData" : "marca"},
 									{ "sTitle" : "Modelo" , "mData" : "modelo"},
-									{ "sTitle" : "Tipo" ,"sWidth": "10px","mData" : "clase"},
-									{ "sTitle" : "Slots Libres" , "mData" : "slots_libres"},
-									{ "sTitle" : "Max(GB)" , "mData" : "mem_max"},
+									{ "sTitle" : "Tipo","mData" : "clase"},
+									{ "sTitle" : "Slots Lib.", "mData" : "slots_libres"},
+									{ "sTitle" : "M(GB)" , "mData" : "mem_max"},
 									{ "sTitle" : "Sector" , "mData" : "sector"},
-									{ "sTitle" : "Usuario" ,"mDataProp": "nombre_apellido",
+									{ "sTitle" : "Usuario" ,"sWidth": "21%", "mDataProp": "nombre_apellido",
 			              				"mRender": function ( data, type, row ) {
 			  								return '<div id="ver_usuario" usuario="'+data+'"><a title="Ver productos de '+data+' "href="edit.php?usuario='+ data+'">'+data+'</a></div>';
 										}
 									},
 									{ "sTitle" : "Descripcion" , "mData" : "descripcion"},
-									{ "sTitle": "Action", "mData" : "m","sWidth": "220px","sDefaultContent":
+									{ "sTitle": "Action", "mData" : "m","sWidth": "26%","sDefaultContent":
 													'<a class="ventana_area " href="">Modificar</a>'}
 									]
 
@@ -68,19 +67,20 @@
 									{ "sTitle" : "Modelo" , "mData" : "modelo"},
 									{ "sTitle" : "Tipo" , "mData" : "clase"},
 									{ "sTitle" : "Slots Libres" , "mData" : "slots_libres"},
+									{ "sTitle" : "Max(GB)" , "mData" : "mem_max"},
 									{ "sTitle" : "Sector" , "mData" : "sector"},
 									{ "sTitle" : "Usuario" ,"mDataProp": "nombre_apellido",
 			              				"mRender": function ( data, type, row ) {
 			  								return '<div id="ver_usuario" usuario="'+data+'"><a title="Ver productos de '+data+' "href="edit.php?usuario='+ data+'">'+data+'</a></div>';
 										}
-									},
-									{ "sTitle" : "Descripcion" , "mData" : "descripcion"},
+									}
 									],
 									"aoColumnDefs": [
 							            { "sWidth": "20%", "aTargets": [ -1 ] }
 							        ]
 			    			})
 						}
+						else { window.location.href = "logueo/login.php";}
 					});
 			}
 		});
@@ -239,6 +239,55 @@
 				);
 			});
 
+	$("#contenedorPpal").on('click' , '#generar_memorandum' , function(event){
+		event.preventDefault();
+
+		console.log("Entro a seleccionar los productos para el memorandum de la computadora");
+		console.log("id_computadora: "+$(this).attr("id_computadora"));
+		var id_computadora = $(this).attr("id_computadora");
+
+		$.post( "vista/dialog_listado_memorandum_cpu.php",
+				{
+					id_computadora : id_computadora,
+					action : "ver_listado_para_memorandum"
+				}, function(data){
+					jQuery('<div/>', {
+					    id: 'dialogcontent_memorandum_cpu',
+					    text: ''
+					}).appendTo('#contenedorPpal');
+					$("#dialogcontent_memorandum_cpu").html(data);
+					$("#dialogcontent_memorandum_cpu").dialog({
+												title: "Generar Memorandum",
+												show: {
+												effect: "explode",
+												duration: 200,
+												modal:true
+												},
+												hide: {
+												effect: "explode",
+												duration: 200
+												},
+												width : 600,
+												height : 450,
+												close : function(){
+													$(this).dialog("destroy");
+													$("#dialogcontent_memorandum_cpu").remove();
+												},
+												buttons :
+							                    {
+							                        "Cancelar" : function () {
+							                            $(this).dialog("destroy");
+							                            $("#dialogcontent_memorandum_cpu").remove();
+							                        },
+							                        "Generar Memorandum" : function(){
+							                        	$("#form_listado_memorandum_cpu").submit();
+							                        }
+							                    }
+					});
+				}
+			);
+	});
+
 	$("#contenedorPpal").on('click' , '#eliminar_computadora' , function(){
 
 		console.log("Entro a eliminar");
@@ -319,7 +368,7 @@
 											duration: 200
 											},
 											width : 600,
-											height : 630,
+											height : 640,
 											close : function(){
 												$(this).dialog("destroy").empty();
 												$("#dialogcontent_prod_usuario").remove();

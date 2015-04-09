@@ -1,5 +1,11 @@
-<h2>{TABLA}</h2>
-<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
+<div class="ui one column grid">
+	<div class="column">
+		<div class="ui raised segment">
+			<a class="ui teal ribbon label">{TABLA}</a>
+			<table  cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
+		</div>
+	</div>
+</div>
 
 <script type="text/javascript">
 
@@ -12,7 +18,19 @@
 			dataType: 'json',
 			success : function(data){
 				$.get("logueo/check.php", function(answer){
-     					if(answer == 1 || answer == 3){
+     					if(answer == 1){
+							$("#dataTable").dataTable({
+			   			 		"destroy" : true,
+								"aaData" : data,
+								"aoColumns" :[
+									{ "sTitle" : "Marca" , "mData" : "nombre"},
+									{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
+										'<a class="ventana_area " href="">Modificar</a>'}
+			  					]
+			    			})
+						}
+						else if( answer == 3){
+
 							$("#dataTable").dataTable({
 			   			 		"destroy" : true,
 								"aaData" : data,
@@ -33,6 +51,7 @@
 			  					]
 			    			})
 						}
+						else { window.location.href = "logueo/login.php";}
  				});
 			}
 

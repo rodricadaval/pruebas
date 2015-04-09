@@ -53,7 +53,7 @@ if (isset($_POST['action']))
 
 		default:
 			# code...
-						break;
+			break;
 	}
 }
 else

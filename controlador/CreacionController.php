@@ -76,7 +76,7 @@ else if ($_POST['action'] == "nueva_marca")
 
 		default:
 			# code...
-						break;
+			break;
 	}
 
 }
@@ -181,7 +181,7 @@ else if ($_POST['action'] == "borrar_marca")
 
 		default:
 			# code...
-						break;
+			break;
 	}
 }
 

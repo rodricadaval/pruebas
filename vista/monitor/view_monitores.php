@@ -1,19 +1,17 @@
-<h2>{TABLA}</h2>
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
+<div class="ui one column grid">
+	<div class="column">
+		<div class="ui raised segment">
+			<a class="ui teal ribbon label">{TABLA}</a>
+			<table  cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
+		</div>
+	</div>
+</div>
 
 <script type="text/javascript">
 
 	$(document).ready(function(event){
 
-		$.blockUI({ css: {
-						border: 'none',
-						padding: '15px',
-						backgroundColor: '#000',
-						'-webkit-border-radius': '10px',
-						'-moz-border-radius': '10px',
-						opacity: .5,
-						color: '#fff'
-					} });
+		cargando ();
 
 
 		$.ajax({
@@ -26,7 +24,7 @@
 			success : function(data){
 				$.get('logueo/check_priority.php', function(permisos) {
 
-					$.unblockUI();
+					quitar_cargando ();
 
 					if( permisos == 1 || permisos == 3) {
 							var dataTable = $("#dataTable").dataTable({
@@ -77,6 +75,7 @@
 							        ]
 			    			})
 						}
+						else { window.location.href = "logueo/login.php";}
 					});
 			}
 		});

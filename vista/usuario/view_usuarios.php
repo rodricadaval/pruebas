@@ -1,27 +1,35 @@
-<h2>{TABLA}</h2>
-<input type="button" class="btn btn-success" id="crear_usuario" value="Crear Usuario">
-<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable_usuario"></table>
+<div class="ui one column grid">
+	<div class="column">
+		<div class="ui raised segment">
+			<a class="ui black ribbon label">{TABLA}</a>
+			<input style="display:none;" type="button" class="btn btn-success" id="crear_usuario" value="Crear Usuario">
+			<table  cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable_usuario"></table>
+		</div>
+	</div>
 </div>
+
 <script type="text/javascript">
+
+	$.get('logueo/check_priority.php', function(permisos) {
+						if ( permisos == 1 || permisos == 3 ) {
+							$("#crear_usuario").show();
+						}
+					});
+
 	$(document).ready(function(event){
 		var url;
 
-		$.blockUI({ css: {
-						border: 'none',
-						padding: '15px',
-						backgroundColor: '#000',
-						'-webkit-border-radius': '10px',
-						'-moz-border-radius': '10px',
-						opacity: .5,
-						color: '#fff'
-					} });
-
-
-					$.get('logueo/check_priority.php', function(permisos) {
-						if (permisos == 2) {
-							$("#crear_usuario").hide();
-						}
-					});
+		$.blockUI({
+			message: '<h2>Cargando...</h2>',
+			css: {
+					border: 'none',
+					padding: '15px',
+					backgroundColor: '#000',
+					'-webkit-border-radius': '10px',
+					'-moz-border-radius': '10px',
+					opacity: .5,
+					color: '#fff'
+				} });
 
 					$.ajax({
 							url : 'metodos_ajax.php',
@@ -32,29 +40,25 @@
 							success : function(data){
 								$.get('logueo/check_priority.php', function(permisos) {
 
-								$.unblockUI();
+								quitar_cargando ();
 
 								if( permisos == 1) {
 										$("#dataTable_usuario").dataTable({
 											"destroy" : true,
 											"aaData" : data,
+											"bAutoWidth": false,
 											"iDisplayLength": 25,
 											"rowHeight": 'auto',
 											"aoColumns" :[
-												{ "sTitle" : "ID" , "mData" : "id_usuario"},
 												{ "sTitle" : "Usuario" , "mData" : "usuario"},
 												{ "sTitle" : "Permisos" , "mData" : "permisos"},
 												{ "sTitle" : "Nombre" , "mData" : "nombre_apellido"},
 												{ "sTitle" : "Area" , "mData" : "area"},
 												{ "sTitle" : "Email" , "mData" : "email"},
-												{ "sTitle" : "Interno" , "mData" : "interno"},
-												{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
-												'<a class="ventana_usuario " href="">Accion</a>'}
+												{ "sTitle" : "Int." , "mData" : "interno"},
+												{ "sTitle": "Action", "mData" : "m","sWidth": "25%","sDefaultContent":
+													'<a class="ventana_usuario" href="">Modificar</a>'}
 												],
-										  "aoColumnDefs": [
-									            { "sWidth": "20%", "aTargets": [ -1 ] }
-									        ]
-
 										})
 									}
 									else if (permisos == 2) {
@@ -75,9 +79,11 @@
 									})
 									}
 									else if( permisos == 3) {
+
 										$("#dataTable_usuario").dataTable({
 											"destroy" : true,
 											"aaData" : data,
+											"bAutoWidth": false,
 											"iDisplayLength": 25,
 											"aoColumns" :[
 												{ "sTitle" : "ID" , "mData" : "id_usuario"},
@@ -87,15 +93,13 @@
 												{ "sTitle" : "Pass" , "mData" : "password"},
 												{ "sTitle" : "Area" , "mData" : "area"},
 												{ "sTitle" : "Email" , "mData" : "email"},
-												{ "sTitle" : "Interno" , "mData" : "interno"},
-												{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
-												'Accion'}
-												],
-										    "aoColumnDefs": [
-									            { "sWidth": "20%", "aTargets": [ -1 ] }
-									        ]
+												{ "sTitle" : "Int." , "mData" : "interno"},
+												{ "sTitle": "Action", "mData" : "m","sWidth": "25%","sDefaultContent":
+													'<a class="ventana_usuario" href="">Modificar</a>'}
+												]
 									})
 									}
+									else { window.location.href = "logueo/login.php";}
 								});
 							}
 						});

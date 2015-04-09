@@ -12,5 +12,7 @@ defined("TEMPLATES") or define("TEMPLATES", realpath(dirname(__FILE__).'/templat
 Error reporting.
 */
 ini_set("error_reporting", "true");
+ini_set("session.cookie_lifetime","180");
+
 error_reporting(E_ALL|E_STRCT);
 ?>

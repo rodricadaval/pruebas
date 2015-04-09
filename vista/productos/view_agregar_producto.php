@@ -6,7 +6,7 @@
   <li><a data-toggle="tab" data-target="#tabs5" href="controlador/ProductosController.php" vista="agregar_impresora">Impresora</a></li>
   <li><a data-toggle="tab" data-target="#tabs6" href="controlador/ProductosController.php" vista="agregar_router">Router</a></li>
   <li><a data-toggle="tab" data-target="#tabs7" href="controlador/ProductosController.php" vista="agregar_switch">Switch</a></li>
-  
+
 </ul>
 
 <div class="tab-content">

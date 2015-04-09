@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-if (empty($_SESSION['priority']))
+if ( ! isset($_SESSION['priority']))
 {
-	print_r("Error");
+	echo "<script type='text/javascript'>  window.location.reload(true);  </script>";
 }
 else
 {

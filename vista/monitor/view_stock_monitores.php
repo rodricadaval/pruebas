@@ -1,19 +1,11 @@
 <h2>Monitores en Stock</h2>
-<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
+<table style="text-align:center" cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable-stock"></table>
 
 <script type="text/javascript">
 
 	$(document).ready(function(event){
 
-		$.blockUI({ css: {
-						border: 'none',
-						padding: '15px',
-						backgroundColor: '#000',
-						'-webkit-border-radius': '10px',
-						'-moz-border-radius': '10px',
-						opacity: .5,
-						color: '#fff'
-					} });
+		cargando ();
 
 		$.ajax({
 			url : 'metodos_ajax.php',
@@ -23,27 +15,48 @@
 				   tipo: 'json'},
 			dataType: 'json',
 			success : function(data){
+				$.get('logueo/check_priority.php', function(permisos) {
 
-				$.unblockUI();
+					quitar_cargando ();
 
-				$("#dataTable").dataTable({
-   			 		"destroy" : true,
-					"aaData" : data,
-					"iDisplayLength": 25,
-					"aoColumns" :[
-						//{ "sTitle" : "ID" , "mData" : "id_monitor"},
-						{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
-						{ "sTitle" : "Marca" , "mData" : "marca"},
-						{ "sTitle" : "Modelo" , "mData" : "modelo"},
-						{ "sTitle" : "Pulgadas" , "mData" : "pulgadas"},
-						{ "sTitle" : "Sector" , "mData" : "sector"},
-						{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
-										'<a class="ventana_area " href="">Modificar</a>'}
-						],
-					"aoColumnDefs": [
-			            { "sWidth": "30%", "aTargets": [ -1 ] }
-			        ]
-    			})
+					if( permisos == 1 || permisos == 3) {
+						$("#dataTable-stock").dataTable({
+		   			 		"destroy" : true,
+							"aaData" : data,
+							"iDisplayLength": 25,
+							"aoColumns" :[
+								//{ "sTitle" : "ID" , "mData" : "id_monitor"},
+								{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
+								{ "sTitle" : "Marca" , "mData" : "marca"},
+								{ "sTitle" : "Modelo" , "mData" : "modelo"},
+								{ "sTitle" : "Sector" , "mData" : "sector"},
+								{ "sTitle": "Action", "mData" : "m" , "sDefaultContent":
+												'<a class="ventana_area " href="">Modificar</a>'}
+								],
+							"aoColumnDefs": [
+					            { "sWidth": "30%", "aTargets": [ -1 ] }
+					        ]
+		    			})
+					}
+					else if (permisos == 2) {
+						$("#dataTable-stock").dataTable({
+		   			 		"destroy" : true,
+							"aaData" : data,
+							"iDisplayLength": 25,
+							"aoColumns" :[
+								//{ "sTitle" : "ID" , "mData" : "id_monitor"},
+								{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
+								{ "sTitle" : "Marca" , "mData" : "marca"},
+								{ "sTitle" : "Modelo" , "mData" : "modelo"},
+								{ "sTitle" : "Sector" , "mData" : "sector"}
+								],
+							"aoColumnDefs": [
+					            { "sWidth": "30%", "aTargets": [ -1 ] }
+					        ]
+		    			})
+					}
+					else { window.location.href = "logueo/login.php";}
+				});
 			}
 		});
 	});

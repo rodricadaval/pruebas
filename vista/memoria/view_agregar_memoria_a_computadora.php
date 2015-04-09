@@ -24,6 +24,15 @@
         </div>
     </div>
     <div class="control-group">
+        <label class="control-label" for="tipo_dimm">Tipo Dimm</label>
+        <div class="controls">
+            <select id='tipo_dimm' name='tipo_dimm'>
+            <option value='DIMM'>DIMM</option>
+            <option value='SO-DIMM'>SO-DIMM</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
         <label class="control-label" for="">Capacidad</label>
         <div class="controls">
             {select_capacidades}{select_unidades}
@@ -38,7 +47,7 @@
      <div class="form-actions">
         <input class="btn btn-primary" id="boton_crear_memoria" type="submit" name="crearMemoria" value="Crear">
     </div>
-</fieldset>   
+</fieldset>
 </form>
 </div>
 
@@ -94,7 +103,7 @@
             	required: 'Debe ingresar una cantidad'
             },
             velocidad : {
-                required: 'Debe seleccionar una velocidad' 
+                required: 'Debe seleccionar una velocidad'
             }
         } ,
         highlight: function(element) {
@@ -111,7 +120,7 @@
             console.log($("#form_agregar_memoria_a_compu").serialize());
             var dataUrl = $("#form_agregar_memoria_a_compu").serialize() + "&tipo=Memoria&id_cpu="+$("#tab_memorias_y_discos").attr("id_cpu");
 
-            
+
             console.log(dataUrl);
 
             $.ajax({
@@ -124,7 +133,7 @@
                                 alert('Se ha agregado el producto correctamente');
                                 $("#tabs3").empty();
                                 $( "#agregar_memorias_computadora" ).trigger( "click" );
-                                
+
                             }
             })
             .fail(function() {

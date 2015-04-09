@@ -64,14 +64,14 @@ foreach ($_GET as $key => $value)
 
 		default:
 			# code...
-						break;
+			break;
 	}
 	$y += 5;
 }
 $y += 5;
 $pdf->SetY($y);
 $pdf->SetX(35);
-$pdf->Cell(0, 0, "Total: ". count($_GET), 0, 1);
+$pdf->Cell(0, 0, "Total: ".count($_GET), 0, 1);
 $y += 10;
 $pdf->SetY($y);
 $pdf->SetX(35);

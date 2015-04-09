@@ -6,7 +6,7 @@ include 'ini.php'; // include the library for database connection
 
 if (isset($_POST['action']) && $_POST['action'] == 'chequeo')
 {
-// Check the action
+	                                      // Check the action
 	$dato = htmlentities($_POST['dato']); // Get the data
 	$tabla = $_POST['tabla'];
 	$inst_tabla = new $tabla();
