@@ -10,7 +10,7 @@ class Impresoras {
 	public function listarTodos()
 	{
 
-		$inst_table = BDD::getInstance()->query("select * , '<a id=\"modificar_usuario_impresora\" class=\"pointer\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted blue small user icon\" title=\"Asignar/Cambiar usuario\"></i></a><a id=\"modificar_cpu_impresora\" class=\"pointer\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted black small laptop icon\" title=\"Asignar/Cambiar Computadora\"></i></a><a id=\"modificar_impresora\" class=\"pointer\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted green small sitemap icon\" title=\"Editar sólo Sector\"></i></a> <a id=\"eliminar_impresora\" class=\"pointer\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>' as m from system.". self::claseMinus()." where estado = 1");
+		$inst_table = BDD::getInstance()->query("select * , '<a id=\"modificar_usuario_impresora\" class=\"pointer\"id_impresora=\"' || id_impresora || '\"><i class=\"blue large user icon\" title=\"Asignar/Cambiar usuario\"></i></a><a id=\"modificar_cpu_impresora\" class=\"pointer\"id_impresora=\"' || id_impresora || '\"><i class=\"black large laptop icon\" title=\"Asignar/Cambiar Computadora\"></i></a><a id=\"modificar_impresora\" class=\"pointer\"id_impresora=\"' || id_impresora || '\"><i class=\"green large sitemap icon\" title=\"Editar sólo Sector\"></i></a> <a id=\"eliminar_impresora\" class=\"pointer\"id_impresora=\"' || id_impresora || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>' as m from system.". self::claseMinus()." where estado = 1");
 		$i = 0;
 		while ($fila = $inst_table->_fetchRow())
 		{
@@ -29,11 +29,14 @@ class Impresoras {
 		$data = null;
 
 		$inst_table = BDD::getInstance()->query("select * ,
-			'<a id=\"modificar_sector_impresora\" class=\"pointer_mon\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
+			'<a id=\"modificar_sector_impresora\" class=\"pointer_mon\"id_impresora=\"' || id_impresora || '\">
+			<i class=\"black large sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"agregar_descripcion_impresora\" class=\"pointer_cpu\"id_impresora=\"' || id_impresora || '\">
-			<i class=\"circular inverted blue small book icon\" title=\"Ver o editar descripcion\"></i></a>
-			<a id=\"modificar_ip_impresora\" class=\"pointer_cpu\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted green small bullseye icon\" title=\"Editar IP\"></i></a>
-			<a id=\"eliminar_impresora\" class=\"pointer_mon\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>'
+			<i class=\"blue large book icon\" title=\"Ver o editar descripcion\"></i></a>
+			<a id=\"modificar_ip_impresora\" class=\"pointer_cpu\"id_impresora=\"' || id_impresora || '\">
+			<i class=\"green large bullseye icon\" title=\"Editar IP\"></i></a>
+			<a id=\"eliminar_impresora\" class=\"pointer_mon\"id_impresora=\"' || id_impresora || '\">
+			<i class=\"red large trash icon\" title=\"Eliminar\"></i></a>'
 			as m from system.". self::claseMinus()." where estado = 1");
 
 		$todo  = $inst_table->_fetchAll();
@@ -94,11 +97,11 @@ class Impresoras {
 		$id_tipo_producto = array_search("Impresora", $tipos);
 
 		$inst_table = BDD::getInstance()->query("select * ,
-			'<a id=\"modificar_sector_impresora\" class=\"pointer_mon\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
+			'<a id=\"modificar_sector_impresora\" class=\"pointer_mon\"id_impresora=\"' || id_impresora || '\"><i class=\"black large sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"agregar_descripcion_impresora\" class=\"pointer_cpu\"id_impresora=\"' || id_impresora || '\">
-			<i class=\"circular inverted blue small book icon\" title=\"Ver o editar descripcion\"></i></a>
-			<a id=\"modificar_ip_impresora\" class=\"pointer_cpu\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted green small bullseye icon\" title=\"Editar IP\"></i></a>
-			<a id=\"eliminar_impresora\" class=\"pointer_mon\"id_impresora=\"' || id_impresora || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>'
+			<i class=\"blue large book icon\" title=\"Ver o editar descripcion\"></i></a>
+			<a id=\"modificar_ip_impresora\" class=\"pointer_cpu\"id_impresora=\"' || id_impresora || '\"><i class=\"green large bullseye icon\" title=\"Editar IP\"></i></a>
+			<a id=\"eliminar_impresora\" class=\"pointer_mon\"id_impresora=\"' || id_impresora || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>'
 			as m from system.". self::claseMinus()." where estado = 1 AND id_vinculo IN (select id_vinculo from system.vinculos where id_sector=1 AND id_tipo_producto='$id_tipo_producto')");
 
 		$todo  = $inst_table->_fetchAll();

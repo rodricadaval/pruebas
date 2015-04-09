@@ -10,7 +10,7 @@ class Memorias {
 	public function listarTodos()
 	{
 
-		$inst_table = BDD::getInstance()->query("select * , '<a id=\"modificar_usuario_memoria\" class=\"pointer\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted blue small user icon\" title=\"Asignar/Cambiar usuario\"></i></a><a id=\"modificar_cpu_memoria\" class=\"pointer\"$id_memoria=\"' || $id_memoria || '\"><i class=\"circular inverted black small laptop icon\" title=\"Asignar/Cambiar Computadora\"></i></a><a id=\"modificar_memoria\" class=\"pointer\"$id_memoria=\"' || $id_memoria || '\"><i class=\"circular inverted green small sitemap icon\" title=\"Editar sólo Sector\"></i></a> <a id=\"eliminar_memoria\" class=\"pointer\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>' as m from system.". self::claseMinus()." where estado = 1");
+		$inst_table = BDD::getInstance()->query("select * , '<a id=\"modificar_usuario_memoria\" class=\"pointer\"id_memoria=\"' || id_memoria || '\"><i class=\"blue large user icon\" title=\"Asignar/Cambiar usuario\"></i></a><a id=\"modificar_cpu_memoria\" class=\"pointer\"$id_memoria=\"' || $id_memoria || '\"><i class=\"black large laptop icon\" title=\"Asignar/Cambiar Computadora\"></i></a><a id=\"modificar_memoria\" class=\"pointer\"$id_memoria=\"' || $id_memoria || '\"><i class=\"green large sitemap icon\" title=\"Editar sólo Sector\"></i></a> <a id=\"eliminar_memoria\" class=\"pointer\"id_memoria=\"' || id_memoria || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>' as m from system.".self::claseMinus()." where estado = 1");
 		$i = 0;
 		while ($fila = $inst_table->_fetchRow())
 		{
@@ -29,12 +29,12 @@ class Memorias {
 		$data = null;
 
 		$inst_table = BDD::getInstance()->query("select * ,
-			'<a id=\"modificar_sector_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
-			<a id=\"modificar_cpu_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted blue small laptop icon\" title=\"Asignar una Computadora\"></i></a>
-			<a id=\"modificar_usuario_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted purple small user icon\" title=\"Asignar un Usuario\"></i></a>
-			<a id=\"desasignar_todo_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular green small minus outline icon\" title=\"Liberar memoria (Quita el usuario y el cpu asignados) \"></i></a>
-			<a id=\"eliminar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>'
-			as m from system.". self::claseMinus()." where estado = 1");
+			'<a id=\"modificar_sector_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"black large sitemap icon\" title=\"Cambiar Sector \"></i></a>
+			<a id=\"modificar_cpu_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"blue large laptop icon\" title=\"Asignar una Computadora\"></i></a>
+			<a id=\"modificar_usuario_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"purple large user icon\" title=\"Asignar un Usuario\"></i></a>
+			<a id=\"desasignar_todo_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"green large minus outline icon\" title=\"Liberar memoria (Quita el usuario y el cpu asignados) \"></i></a>
+			<a id=\"eliminar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>'
+			as m from system.".self::claseMinus()." where estado = 1");
 
 		$todo  = $inst_table->_fetchAll();
 		$total = $inst_table->get_count();
@@ -87,7 +87,7 @@ class Memorias {
 
 					default:
 						# code...
-												break;
+						break;
 				}
 			}
 			$data[$i]['capacidad'] .= " ".$data[$i]['unidad'];
@@ -117,11 +117,11 @@ class Memorias {
 		$id_tipo_producto = array_search("Memoria", $tipos);
 
 		$inst_table = BDD::getInstance()->query("select * ,
-			'<a id=\"modificar_sector_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
-			<a id=\"modificar_cpu_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted blue small laptop icon\" title=\"Asignar una Computadora\"></i></a>
-			<a id=\"modificar_usuario_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted purple small user icon\" title=\"Asignar un Usuario\"></i></a>
-			<a id=\"eliminar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>'
-			as m from system.". self::claseMinus()." where estado = 1 AND id_vinculo IN (select id_vinculo from system.vinculos where id_usuario=1 AND id_cpu=1 AND id_tipo_producto='$id_tipo_producto')");
+			'<a id=\"modificar_sector_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"black large sitemap icon\" title=\"Cambiar Sector \"></i></a>
+			<a id=\"modificar_cpu_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"blue large laptop icon\" title=\"Asignar una Computadora\"></i></a>
+			<a id=\"modificar_usuario_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"purple large user icon\" title=\"Asignar un Usuario\"></i></a>
+			<a id=\"eliminar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>'
+			as m from system.".self::claseMinus()." where estado = 1 AND id_vinculo IN (select id_vinculo from system.vinculos where id_usuario=1 AND id_cpu=1 AND id_tipo_producto='$id_tipo_producto')");
 
 		$todo  = $inst_table->_fetchAll();
 		$total = $inst_table->get_count();
@@ -174,7 +174,7 @@ class Memorias {
 
 					default:
 						# code...
-												break;
+						break;
 				}
 			}
 			$data[$i]['capacidad'] .= " ".$data[$i]['unidad'];
@@ -196,7 +196,7 @@ class Memorias {
 
 	public function dameDatos($id)
 	{
-		$fila = BDD::getInstance()->query("select * from system.". self::claseMinus()." where $id_memoria = '$id' ")->_fetchRow();
+		$fila = BDD::getInstance()->query("select * from system.".self::claseMinus()." where $id_memoria = '$id' ")->_fetchRow();
 		foreach ($fila as $campo => $valor)
 		{
 			if ($campo == "marca")
@@ -214,11 +214,13 @@ class Memorias {
 	public function agregar($datos)
 	{
 
-		$id_memoria_desc = Memoria_desc::buscar_id_por_marca_y_tipo($datos['marca'], $datos['tipo_mem']);
+		$id_memoria_desc = Memoria_desc::buscar_id_por_marca_tipo_y_velocidad($datos['marca'], $datos['tipo_mem'], $datos['velocidad']);
 
-		$values = $datos['id_vinculo'].",".$datos['capacidad'].",".$datos['unidad'].",".$id_memoria_desc;
+		$tipo_dimm = "'".$datos['tipo_dimm']."'";
 
-		if ( ! BDD::getInstance()->query("INSERT INTO system.memorias (id_vinculo,id_capacidad,id_unidad,id_memoria_desc) VALUES ($values)")->get_error())
+		$values = $datos['id_vinculo'].",".$datos['capacidad'].",".$datos['unidad'].",".$id_memoria_desc.",".$tipo_dimm;
+
+		if ( ! BDD::getInstance()->query("INSERT INTO system.memorias (id_vinculo,id_capacidad,id_unidad,id_memoria_desc,tipo_dimm) VALUES ($values)")->get_error())
 		{
 			$valor_seq_actual_memorias = BDD::getInstance()->query("select nextval('system.memorias_id_memoria_seq1'::regclass)")->_fetchRow()['nextval'];
 			$valor_seq_actual_memorias--;
@@ -234,7 +236,7 @@ class Memorias {
 
 	public function getByID($id)
 	{
-		$datos = BDD::getInstance()->query("select * from system.". self::claseMinus()." where id_memoria = '$id' ")->_fetchRow();
+		$datos = BDD::getInstance()->query("select * from system.".self::claseMinus()." where id_memoria = '$id' ")->_fetchRow();
 		foreach ($datos as $key => $value)
 		{
 			if ($key == "id_vinculo")
@@ -315,7 +317,7 @@ class Memorias {
 			}
 			$html_view .= "<tr id='total'>";
 			$html_view .= "<td colspan='3'>Total</td>";
-			$html_view .= "<td colspan='2'>". count($listado)."</td>";
+			$html_view .= "<td colspan='2'>".count($listado)."</td>";
 			$html_view .= "</tr>";
 
 		}
@@ -387,7 +389,7 @@ class Memorias {
 			}
 			$html_view .= "<tr id='total'>";
 			$html_view .= "<td colspan='1'>Total</td>";
-			$html_view .= "<td colspan='1'>". count($listado)."</td>";
+			$html_view .= "<td colspan='1'>".count($listado)."</td>";
 			if (($capacidadUsada / 1024) < 1)
 			{
 				$html_view .= "<td colspan='2'>Usados  ".($capacidadUsada)." MB</td>";
@@ -413,7 +415,7 @@ class Memorias {
 		$slots    = $datos['slots'];
 		$mem_max  = $datos['mem_max'];
 
-		if (BDD::getInstance()->query("INSERT INTO system.". self::claseMinus()." (id_marca,modelo,slots,mem_max) VALUES('$id_marca','$modelo','$slots','$mem_max') ")->get_error())
+		if (BDD::getInstance()->query("INSERT INTO system.".self::claseMinus()." (id_marca,modelo,slots,mem_max) VALUES('$id_marca','$modelo','$slots','$mem_max') ")->get_error())
 		{
 			var_dump(BDD::getInstance());
 			return "false";

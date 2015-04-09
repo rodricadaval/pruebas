@@ -10,7 +10,7 @@ class Memoria_desc {
 	public function listarTodos()
 	{
 
-		$inst_table = BDD::getInstance()->query("select * from system.". self::claseMinus());
+		$inst_table = BDD::getInstance()->query("select * from system.".self::claseMinus());
 		$i = 0;
 		while ($fila = $inst_table->_fetchRow())
 		{
@@ -25,7 +25,7 @@ class Memoria_desc {
 
 	public function dameDatos($id)
 	{
-		$fila = BDD::getInstance()->query("select * from system.". self::claseMinus()." where id_memoria_desc = '$id' ")->_fetchRow();
+		$fila = BDD::getInstance()->query("select * from system.".self::claseMinus()." where id_memoria_desc = '$id' ")->_fetchRow();
 		foreach ($fila as $campo => $valor)
 		{
 			if ($campo == "id_marca")
@@ -46,11 +46,11 @@ class Memoria_desc {
 		$velocidad = $datos['velocidad'];
 		$tipo = $datos['tecnologia'];
 
-		if (BDD::getInstance()->query("SELECT * FROM system.". self::claseMinus()." where id_marca = '$id_marca' AND velocidad = '$velocidad' AND tipo = '$tipo' ")->get_count() > 0)
+		if (BDD::getInstance()->query("SELECT * FROM system.".self::claseMinus()." where id_marca = '$id_marca' AND velocidad = '$velocidad' AND tipo = '$tipo' ")->get_count() > 0)
 		{
 			return '"estaba"';
 		}
-		else if (BDD::getInstance()->query("INSERT INTO system.". self::claseMinus()." (id_marca,velocidad,tipo) VALUES('$id_marca','$velocidad','$tipo') ")->get_error())
+		else if (BDD::getInstance()->query("INSERT INTO system.".self::claseMinus()." (id_marca,velocidad,tipo) VALUES('$id_marca','$velocidad','$tipo') ")->get_error())
 		{
 			var_dump(BDD::getInstance());
 			return "false";
@@ -65,11 +65,11 @@ class Memoria_desc {
 	{
 		if ($valor == "")
 		{
-			$table = BDD::getInstance()->query("select distinct tipo from system.". self::claseMinus()." where estado = 1");
+			$table = BDD::getInstance()->query("select distinct tipo from system.".self::claseMinus()." where estado = 1");
 		}
 		else
 		{
-			$table = BDD::getInstance()->query("select distinct tipo from system.". self::claseMinus()." where id_marca = '$valor' AND estado = 1");
+			$table = BDD::getInstance()->query("select distinct tipo from system.".self::claseMinus()." where id_marca = '$valor' AND estado = 1");
 		}
 
 		if ($sos != "")
@@ -93,16 +93,16 @@ class Memoria_desc {
 
 	}
 
-	public function buscar_id_por_marca_y_tipo($id_marca, $tipo)
+	public function buscar_id_por_marca_tipo_y_velocidad($id_marca, $tipo, $velocidad)
 	{
-		return BDD::getInstance()->query("SELECT id_memoria_desc FROM system.memoria_desc where id_marca ='$id_marca' AND tipo='$tipo' ")->_fetchRow()['id_memoria_desc'];
+		return BDD::getInstance()->query("SELECT id_memoria_desc FROM system.memoria_desc where id_marca ='$id_marca' AND tipo='$tipo' AND velocidad='$velocidad' ")->_fetchRow()['id_memoria_desc'];
 	}
 
 	public function borrar_marca($datos)
 	{
 		$id_marca = $datos['marca'];
 
-		if (BDD::getInstance()->query("DELETE FROM system.". self::claseMinus()." where id_marca = '$id_marca'")->get_error())
+		if (BDD::getInstance()->query("DELETE FROM system.".self::claseMinus()." where id_marca = '$id_marca'")->get_error())
 		{
 			var_dump(BDD::getInstance());
 			return "false";

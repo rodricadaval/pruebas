@@ -9,7 +9,7 @@ class Areas {
 	public function listarTodos()
 	{
 
-		$areas = BDD::getInstance()->query("select * , '<a id=\"modificar_area\" class=\"pointer\"id_area=\"' || id_area || '\"><i class=\"circular inverted green small edit icon\"></i></a> <a id=\"eliminar_area\" class=\"pointer\"id_area=\"' || id_area || '\"><i class=\"circular inverted red small trash icon\"></i></a>' as m from system.". self::claseMinus()." where estado = 1");
+		$areas = BDD::getInstance()->query("select * , '<a id=\"modificar_area\" class=\"pointer\"id_area=\"' || id_area || '\"><i class=\"green large edit icon\"></i></a> <a id=\"eliminar_area\" class=\"pointer\"id_area=\"' || id_area || '\"><i class=\"red large trash icon\"></i></a>' as m from system.". self::claseMinus()." where estado = 1");
 		$i = 0;
 		while ($fila_area = $areas->_fetchRow())
 		{

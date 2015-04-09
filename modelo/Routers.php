@@ -13,12 +13,12 @@ class Routers {
 		$data = null;
 
 		$inst_table = BDD::getInstance()->query("select * ,
-			'<a id=\"modificar_sector_router\" class=\"pointer_mon\"id_router=\"' || id_router || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
+			'<a id=\"modificar_sector_router\" class=\"pointer_mon\"id_router=\"' || id_router || '\"><i class=\"black large sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"agregar_descripcion_router\" class=\"pointer_cpu\"id_router=\"' || id_router || '\">
-			<i class=\"circular inverted blue small book icon\" title=\"Ver o editar descripcion\"></i>
+			<i class=\"blue large book icon\" title=\"Ver o editar descripcion\"></i>
 			</a>
-			<a id=\"modificar_ip_router\" class=\"pointer_cpu\"id_router=\"' || id_router || '\"><i class=\"circular inverted green small bullseye icon\" title=\"Editar IP\"></i></a>
-			<a id=\"eliminar_router\" class=\"pointer_mon\"id_router=\"' || id_router || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>'
+			<a id=\"modificar_ip_router\" class=\"pointer_cpu\"id_router=\"' || id_router || '\"><i class=\"green large bullseye icon\" title=\"Editar IP\"></i></a>
+			<a id=\"eliminar_router\" class=\"pointer_mon\"id_router=\"' || id_router || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>'
 			as m from system.". self::claseMinus()." where estado = 1");
 
 		$todo  = $inst_table->_fetchAll();
@@ -79,11 +79,11 @@ class Routers {
 		$id_tipo_producto = array_search("Router", $tipos);
 
 		$inst_table = BDD::getInstance()->query("select * ,
-			'<a id=\"modificar_sector_router\" class=\"pointer_mon\"id_router=\"' || id_router || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
+			'<a id=\"modificar_sector_router\" class=\"pointer_mon\"id_router=\"' || id_router || '\"><i class=\"black large sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"agregar_descripcion_router\" class=\"pointer_cpu\"id_router=\"' || id_router || '\">
-			<i class=\"circular inverted blue small book icon\" title=\"Ver o editar descripcion\"></i></a>
-			<a id=\"modificar_ip_router\" class=\"pointer_cpu\"id_router=\"' || id_router || '\"><i class=\"circular inverted green small bullseye icon\" title=\"Editar IP\"></i></a>
-			<a id=\"eliminar_router\" class=\"pointer_mon\"id_router=\"' || id_router || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>'
+			<i class=\"blue large book icon\" title=\"Ver o editar descripcion\"></i></a>
+			<a id=\"modificar_ip_router\" class=\"pointer_cpu\"id_router=\"' || id_router || '\"><i class=\"green large bullseye icon\" title=\"Editar IP\"></i></a>
+			<a id=\"eliminar_router\" class=\"pointer_mon\"id_router=\"' || id_router || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>'
 			as m from system.". self::claseMinus()." where estado = 1 AND id_vinculo IN (select id_vinculo from system.vinculos where id_sector=1 AND id_tipo_producto='$id_tipo_producto')");
 
 		$todo  = $inst_table->_fetchAll();

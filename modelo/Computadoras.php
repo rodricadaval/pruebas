@@ -15,27 +15,30 @@ class Computadoras {
 		$inst_table = BDD::getInstance()->query("
 			select * ,
 			'<a id=\"modificar_sector_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
-			<i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i>
+			<i class=\"black large sitemap icon\" title=\"Cambiar Sector \"></i>
 			</a>
 			<a id=\"modificar_tipo_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
-			<i class=\"circular inverted green small edit icon\" title=\"Cambiar Tipo\"></i>
+			<i class=\"green large edit icon\" title=\"Cambiar Tipo\"></i>
 			</a>
 			<a id=\"modificar_usuario_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
-			<i class=\"circular inverted purple small user icon\" title=\"Asignar un Usuario\"></i>
+			<i class=\"purple large user icon\" title=\"Asignar un Usuario\"></i>
 			</a>
 			<a id=\"ver_productos\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora ||'\"num_serie=\"' || num_serie || '\">
-			<i class=\"circular inverted orange small browser icon\" title=\"Ver sus componentes\"></i>
+			<i class=\"orange large browser icon\" title=\"Ver sus componentes\"></i>
 			</a>
 			<a id=\"agregar_descripcion_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
-			<i class=\"circular inverted blue small book icon\" title=\"Ver o editar descripcion\"></i>
+			<i class=\"blue large book icon\" title=\"Ver o editar descripcion\"></i>
 			</a>
 			<a id=\"desasignar_usuario_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
-			<i class=\"circular green small minus outline icon\" title=\"Liberar Computadora\"></i>
+			<i class=\"large minus outline icon\" title=\"Liberar Computadora\"></i>
+			</a>
+			<a id=\"generar_memorandum\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
+			<i title=\"Generar Memorandum\" class=\"orange file pdf outline large icon\"></i>
 			</a>
 			<a id=\"eliminar_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
-			<i class=\"circular inverted red small trash icon\" title=\"Dar de baja\"></i>
+			<i class=\"red large trash icon\" title=\"Dar de baja\"></i>
 			</a>'
-			as m from system.". self::claseMinus()."
+			as m from system.".self::claseMinus()."
 			where estado = 1 and id_computadora <> 1");
 
 		$todo  = $inst_table->_fetchAll();
@@ -76,7 +79,7 @@ class Computadoras {
 
 					default:
 						# code...
-												break;
+						break;
 				}
 			}
 			$data[$i]["slots_libres"] = self::getSlotsLibres($slotsTotales, $id_cpu);
@@ -107,22 +110,25 @@ class Computadoras {
 		$inst_table = BDD::getInstance()->query("
 			select * ,
 			'<a id=\"modificar_sector_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
-			<i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i>
+			<i class=\"black large sitemap icon\" title=\"Cambiar Sector \"></i>
 			</a>
 			<a id=\"modificar_tipo_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
-			<i class=\"circular inverted green small edit icon\" title=\"Cambiar Tipo\"></i>
+			<i class=\"green large edit icon\" title=\"Cambiar Tipo\"></i>
 			</a>
 			<a id=\"modificar_usuario_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
-			<i class=\"circular inverted purple small user icon\" title=\"Asignar un Usuario\"></i>
+			<i class=\"purple large user icon\" title=\"Asignar un Usuario\"></i>
 			</a>
 			<a id=\"ver_productos\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora ||'\"num_serie=\"' || num_serie || '\">
-			<i class=\"circular inverted orange small browser icon\" title=\"Ver sus componentes\"></i>
+			<i class=\"orange large browser icon\" title=\"Ver sus componentes\"></i>
 			</a>
 			<a id=\"agregar_descripcion_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
-			<i class=\"circular inverted blue small book icon\" title=\"Ver o editar descripcion\"></i>
+			<i class=\"blue large book icon\" title=\"Ver o editar descripcion\"></i>
 			</a>
-			<a id=\"eliminar_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\"><i class=\"circular inverted red small trash icon\" title=\"Dar de baja\"></i></a>' as m
-			from system.". self::claseMinus()."
+			<a id=\"generar_memorandum\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
+			<i title=\"Generar Memorandum\" class=\"orange file pdf outline large icon\"></i>
+			</a>
+			<a id=\"eliminar_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\"><i class=\"red large trash icon\" title=\"Dar de baja\"></i></a>' as m
+			from system.".self::claseMinus()."
 			where estado = 1 and id_computadora <> 1 AND id_vinculo IN (select id_vinculo from system.vinculos where id_usuario=1 AND id_cpu=1 AND id_tipo_producto='$id_tipo_producto')");
 
 		$todo  = $inst_table->_fetchAll();
@@ -166,7 +172,7 @@ class Computadoras {
 
 					default:
 						# code...
-												break;
+						break;
 				}
 			}
 			$data[$i]["slots_libres"] = self::getSlotsLibres($slotsTotales, $id_cpu);
@@ -271,7 +277,7 @@ return $tabla;
 
 	public function dameSelect($id = "", $sos = "")
 	{
-		$table = BDD::getInstance()->query("select num_serie, id_computadora from system.". self::claseMinus()." where estado = 1");
+		$table = BDD::getInstance()->query("select num_serie, id_computadora from system.".self::claseMinus()." where estado = 1");
 		if ($id != "")
 		{
 			$html_view = "<select id=".'select_computadoras'.'_'.$sos." name='id_computadora'>";
@@ -367,7 +373,7 @@ return $tabla;
 				$html_view .= "<td>".$datos_desc['modelo']."</td>";
 				$tipos = Tipos_Computadoras::get_rel_campos();
 				$tipo  = array_search($contenido['clase'], $tipos);
-				$html_view .= "<td>". self::getSlotsLibres($datos_desc['slots'], $contenido['id_computadora'])."</td>";
+				$html_view .= "<td>".self::getSlotsLibres($datos_desc['slots'], $contenido['id_computadora'])."</td>";
 				$html_view .= "<td>".$tipo."</td>";
 
 				$html_view .= "</tr>";
@@ -379,14 +385,107 @@ return $tabla;
 		return $html_view;
 	}
 
+	public function dameListadoMemoDeCpu($id)
+	{
+
+		$lista_con_datos = null;
+
+		$tipos = Tipo_productos::get_rel_campos();
+		$id_tipo_producto = array_search("Computadora", $tipos);
+
+		$i = 0;
+
+		$lista2 = BDD::getInstance()->query("SELECT id_vinculo FROM system.vinculos WHERE id_pk_producto='$id' AND id_tipo_producto='$id_tipo_producto' AND estado=1 ")->_fetchAll();
+
+		$lista_con_datos[0] = Vinculos::getByID($lista2[0]['id_vinculo']);
+
+		$lista = BDD::getInstance()->query("SELECT id_vinculo FROM system.vinculos WHERE id_cpu='$id' AND estado=1 ")->_fetchAll();
+
+		$i++;
+
+		foreach ($lista as $campo)
+		{
+			$lista_con_datos[$i] = Vinculos::getByID($campo['id_vinculo']);
+			$i++;
+		}
+
+		return self::generarListadoMemorandum($lista_con_datos);
+	}
+
+	public function generarListadoMemorandum($listado)
+	{
+
+		$fila = null;
+		$contenido = null;
+
+		$html_view = "";
+		$html_view .= "<table class='table table-condensed' id='tabla_listado_memorandum_cpu'>";
+		$html_view .= "<tr>";
+		$html_view .= "<th></th>";
+		$html_view .= "<th>Producto</th>
+					   <th>Detalle</th>";
+		$html_view .= "</tr>";
+
+		if (count($listado) == 0)
+		{
+			$html_view .= "<tr>";
+			$html_view .= "<td colspan='3'>No tiene productos</td>";
+			$html_view .= "</tr>";
+		}
+		else
+		{
+
+			foreach ($listado as $fila => $contenido)
+			{
+				$html_view .= "<tr>";
+				$vinculo = $contenido['id_vinculo'];
+
+				$html_view .= "<td><input type='checkbox' id='productos_seleccionados' value='$vinculo'></td>";
+				$html_view .= "<td>".$contenido['producto']."</td>";
+				switch ($contenido['producto'])
+				{
+					case "Computadora":
+						$tipos = Tipos_Computadoras::get_rel_campos();
+						$clase = $contenido['clase'];
+						$tipo_producto = array_search($clase, $tipos);
+
+						$html_view .= "<td>".$tipo_producto.": ".$contenido['marca'].",".$contenido['modelo'].",".$contenido['num_serie']."</td>";
+						break;
+
+					case 'Monitor':
+						$html_view .= "<td>".$contenido['marca'].",".$contenido['modelo'].",".$contenido['num_serie']."</td>";
+						break;
+
+					case 'Memoria':
+						$html_view .= "<td>".$contenido['marca'].",".$contenido['capacidad']." ".$contenido['unidad'].",".$contenido['tipo']." ".$contenido['velocidad']."</td>";
+						break;
+
+					case 'Disco':
+						$html_view .= "<td>".$contenido['marca']." ".$contenido['capacidad'].$contenido['unidad']."</td>";
+						break;
+
+					default:
+						$html_view .= "<td>".$contenido['marca']."</td>";
+						break;
+				}
+
+				$html_view .= "</tr>";
+			}
+		}
+
+		$html_view .= "</table>";
+		return $html_view;
+
+	}
+
 	public function tieneSlotsLibres($id)
 	{
 		$id_desc          = 0;
-		$id_desc          = BDD::getInstance()->query("select id_computadora_desc from system.computadoras where id_computadora                            = '$id' ")->_fetchRow()['id_computadora_desc'];
+		$id_desc          = BDD::getInstance()->query("select id_computadora_desc from system.computadoras where id_computadora                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        = '$id' ")->_fetchRow()['id_computadora_desc'];
 		$slotsTotales     = Computadora_desc::getSlots($id_desc);
 		$tipos            = Tipo_productos::get_rel_campos();
 		$id_tipo_producto = array_search("Memoria", $tipos);
-		$cantidadUsada    = BDD::getInstance()->query("select count(*) as cantidad from system.vinculos where id_cpu          = '$id' AND id_tipo_producto          = '$id_tipo_producto' and estado=1")->_fetchRow()['cantidad'];
+		$cantidadUsada    = BDD::getInstance()->query("select count(*) as cantidad from system.vinculos where id_cpu                                                                                                                                                                                                                                                                                                                                                                                                                                              = '$id' AND id_tipo_producto                                                                                                                                                                                                                                                                                                                                                                                                                                              = '$id_tipo_producto' and estado=1")->_fetchRow()['cantidad'];
 
 		if ($cantidadUsada < $slotsTotales)
 		{
@@ -412,14 +511,14 @@ return $tabla;
 		$id               = $datos['id_cpu'];
 		$id_desc          = 0;
 		$capacidadEnUso   = 0;
-		$id_desc          = BDD::getInstance()->query("select id_computadora_desc from system.computadoras where id_computadora                            = '$id' ")->_fetchRow()['id_computadora_desc'];
+		$id_desc          = BDD::getInstance()->query("select id_computadora_desc from system.computadoras where id_computadora                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        = '$id' ")->_fetchRow()['id_computadora_desc'];
 		$memMax           = Computadora_desc::getMemMax($id_desc);
 		$array_potencias  = Unidades::get_rel_potencia();
 		$exponente        = array_search("GB", $array_potencias);
 		$memMax           = $memMax * pow(1024, $exponente);
 		$tipos            = Tipo_productos::get_rel_campos();
 		$id_tipo_producto = array_search("Memoria", $tipos);
-		$tabla_mem        = BDD::getInstance()->query("select id_pk_producto as id_memoria from system.vinculos where id_cpu                      = '$id' AND id_tipo_producto                      = '$id_tipo_producto' and estado=1")->_fetchAll();
+		$tabla_mem        = BDD::getInstance()->query("select id_pk_producto as id_memoria from system.vinculos where id_cpu                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          = '$id' AND id_tipo_producto                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          = '$id_tipo_producto' and estado=1")->_fetchAll();
 
 		foreach ($tabla_mem as $fila_mem)
 		{
@@ -447,7 +546,7 @@ return $tabla;
 
 		if ($sos == "dialog_mod_cpu_sin_usr")
 		{
-			$datos     = BDD::getInstance()->query("select id_sector,id_cpu from system.vinculos where id_vinculo             = '$id' ")->_fetchRow();
+			$datos     = BDD::getInstance()->query("select id_sector,id_cpu from system.vinculos where id_vinculo                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             = '$id' ")->_fetchRow();
 			$id_sector = $datos['id_sector'];
 			$id_compu_que_tenia = $datos['id_cpu'];
 			$tableVinc = BDD::getInstance()->query("select distinct id_pk_producto from system.vinculos where id_usuario = 1 AND id_sector = '$id_sector' AND id_tipo_producto = 4 AND estado=1");
@@ -718,11 +817,20 @@ echo "false";
 
 	public function getByID($id)
 	{
-		$datos_compu = BDD::getInstance()->query("select * from system.". self::claseMinus()." where id_computadora = '$id' ")->_fetchRow();
+		$datos_compu = BDD::getInstance()->query("select * from system.".self::claseMinus()." where id_computadora = '$id' ")->_fetchRow();
 
 		$id_usuario = Vinculos::getIdUsuario($datos_compu['id_vinculo']);
 
 		$datos_compu['nombre_apellido'] = Usuarios::getNombreDePila($id_usuario);
+
+		return $datos_compu;
+	}
+
+	public function getConSectorById($id)
+	{
+		$datos_compu = BDD::getInstance()->query("select * from system.".self::claseMinus()." where id_computadora = '$id' ")->_fetchRow();
+
+		$datos_compu['id_sector'] = Vinculos::getIdSector($datos_compu['id_vinculo']);
 
 		return $datos_compu;
 	}

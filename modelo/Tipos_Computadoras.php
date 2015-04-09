@@ -5,7 +5,7 @@ class Tipos_Computadoras {
 	public function dameSelect_clase($clase = "", $sos = "")
 	{
 
-		$array_de_tipos = array("Escritorio" => "E", "Notebook" => "N", "All in One" => "A", "Servidor" => "S");
+		$array_de_tipos = array("Escritorio" => "E", "Notebook" => "N", "All in One" => "A", "Servidor" => "S", "UltraBook" => "U");
 
 		$html_view = "<select id='select_clase".$sos."' name='clase'>";
 
@@ -30,13 +30,13 @@ class Tipos_Computadoras {
 
 	public function get_rel_campos()
 	{
-		return array("Escritorio" => "E", "Notebook" => "N", "All in One" => "A", "Servidor" => "S");
+		return array("Escritorio" => "E", "Notebook" => "N", "All in One" => "A", "Servidor" => "S", "UltraBook" => "U");
 	}
 
 	public function dameSelect_button_radio_clase($clase = "", $sos = "")
 	{
 
-		$array_de_tipos = array("E", "N", "A", "S");
+		$array_de_tipos = array("E", "N", "A", "S", "U");
 
 		$html_view = "<td id='boton_radio'><label>";
 
@@ -88,9 +88,21 @@ class Tipos_Computadoras {
 					}
 					$html_view .= "<br>";
 					break;
+
+				case 'U':
+					if ($key == $clase)
+				{
+						$html_view .= "<input type='radio' name='clase' value=".$key." checked>UltraBook";
+					}
+				else
+				{
+						$html_view .= "<input type='radio' name='clase' value=".$key.">UltraBook";
+					}
+					$html_view .= "<br>";
+					break;
 				default:
 					# code...
-										break;
+					break;
 			}
 		}
 

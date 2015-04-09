@@ -10,7 +10,7 @@ class Marcas {
 	public function listarTodos()
 	{
 
-		$inst_table = BDD::getInstance()->query("select *, '<a id=\"modificar_marca\" class=\"pointer\"id_marca=\"' || id_marca || '\"><i class=\"circular inverted green small edit icon\" title=\"Modificar Marca \"></i></a>' as m from system.". self::claseMinus()." where estado = 1");
+		$inst_table = BDD::getInstance()->query("select *, '<a id=\"modificar_marca\" class=\"pointer\"id_marca=\"' || id_marca || '\"><i class=\"green large edit icon\" title=\"Modificar Marca \"></i></a>' as m from system.". self::claseMinus()." where estado = 1");
 		$i = 0;
 		while ($fila = $inst_table->_fetchRow())
 		{

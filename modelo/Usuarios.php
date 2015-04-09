@@ -9,7 +9,7 @@ class Usuarios {
 
 	public function listarTodos()
 	{
-		$armar_tabla = BDD::getInstance()->query("select * , '<a id=\"modificar_usuario\" class=\"pointer\"id_usuario=\"' || id_usuario || '\"><i title=\"Editar usuario\" class=\"circular inverted green small edit icon\"></i></a> <a id=\"ver_productos\" class=\"pointer\"usuario=\"' || nombre_apellido || '\"><i title=\"Ver productos\" class=\"circular inverted blue small tasks icon\"></i></a> <a id=\"generar_memorandum\" class=\"pointer\"id_usuario=\"' || id_usuario ||'\"usuario=\"' || nombre_apellido || '\"><i title=\"Generar Memorandum\" class=\"circular inverted orange file pdf outline small icon\"></i></a> <a id=\"eliminar_usuario\" class=\"pointer\"id_usuario=\"' || id_usuario || '\"><i title=\"Eliminar usuario\" class=\"circular inverted red small trash icon\"></i></a>' as m from system.". self::claseMinus()." where estado = 1 AND id_usuario <> 1")->_fetchAll();
+		$armar_tabla = BDD::getInstance()->query("select * , '<a id=\"modificar_usuario\" class=\"pointer\"id_usuario=\"' || id_usuario || '\"><i title=\"Editar usuario\" class=\"green large edit icon\"></i></a> <a id=\"ver_productos\" class=\"pointer\"usuario=\"' || nombre_apellido || '\"><i title=\"Ver productos\" class=\"blue large tasks icon\"></i></a> <a id=\"generar_memorandum\" class=\"pointer\"id_usuario=\"' || id_usuario ||'\"usuario=\"' || nombre_apellido || '\"><i title=\"Generar Memorandum\" class=\"orange file pdf outline large icon\"></i></a> <a id=\"eliminar_usuario\" class=\"pointer\"id_usuario=\"' || id_usuario || '\"><i title=\"Eliminar usuario\" class=\"red large trash icon\"></i></a>' as m from system.".self::claseMinus()." where estado = 1 AND id_usuario <> 1")->_fetchAll();
 		$i = 0;
 
 		foreach ($armar_tabla as $fila)
@@ -39,7 +39,7 @@ class Usuarios {
 
 	public function getById($id)
 	{
-		$fila = BDD::getInstance()->query("select * from system.". self::claseMinus()." where id_usuario = '$id' AND estado=1 ")->_fetchRow();
+		$fila = BDD::getInstance()->query("select * from system.".self::claseMinus()." where id_usuario = '$id' AND estado=1 ")->_fetchRow();
 		$fila['password'] = base64_decode(base64_decode(base64_decode($fila['password'])));
 		return $fila;
 	}
@@ -47,7 +47,7 @@ class Usuarios {
 	public function listarPorNombre($nombre)
 	{
 		$nombre = HTML_ENTITIES_DECODE::normalizeChars($nombre);
-		$armar_tabla = BDD::getInstance()->query("select * from system.". self::claseMinus()." where usuario = '$nombre' and estado=1")->_fetchAll();
+		$armar_tabla = BDD::getInstance()->query("select * from system.".self::claseMinus()." where usuario = '$nombre' and estado=1")->_fetchAll();
 		$i      = 0;
 
 		foreach ($armar_tabla as $fila)
@@ -67,13 +67,13 @@ class Usuarios {
 		$usuario = HTML_ENTITIES_DECODE::normalizeChars($usuario);
 		$pass    = HTML_ENTITIES_DECODE::normalizeChars($pass);
 		$pass    = base64_encode(base64_encode(base64_encode($pass)));
-		return BDD::getInstance()->query("select * from system.". self::claseMinus()." where usuario = '$usuario' and password = '$pass'");
+		return BDD::getInstance()->query("select * from system.".self::claseMinus()." where usuario = '$usuario' and password = '$pass'");
 	}
 
 	public function chequeoExistenciaUsuarios($usuario)
 	{
 		$usuario = HTML_ENTITIES_DECODE::normalizeChars($usuario);
-		return BDD::getInstance()->query("select * from system.". self::claseMinus()." where usuario = '$usuario' AND estado=1");
+		return BDD::getInstance()->query("select * from system.".self::claseMinus()." where usuario = '$usuario' AND estado=1");
 	}
 
 	public function obtener($clave, $id)
@@ -121,12 +121,12 @@ class Usuarios {
 		switch ($con_productos)
 		{
 			case 'SI':
-				$id_area_vieja = BDD::getInstance()->query("SELECT area from system.". self::claseMinus()." WHERE id_usuario = '$id' ")->_fetchRow()['area'];
+				$id_area_vieja = BDD::getInstance()->query("SELECT area from system.".self::claseMinus()." WHERE id_usuario = '$id' ")->_fetchRow()['area'];
 				if ($id_area != $id_area_vieja)
 			{
 					if ( ! BDD::getInstance()->query("SELECT system.modificar_area_productos_de_usuario('$id','$id_area')")->get_error())
 				{
-						if ( ! BDD::getInstance()->query("UPDATE system.". self::claseMinus()." SET $cadena WHERE id_usuario = '$id' ")->get_error())
+						if ( ! BDD::getInstance()->query("UPDATE system.".self::claseMinus()." SET $cadena WHERE id_usuario = '$id' ")->get_error())
 					{
 							return 1;
 						}
@@ -144,7 +144,7 @@ class Usuarios {
 				}
 			else
 			{
-					if ( ! BDD::getInstance()->query("UPDATE system.". self::claseMinus()." SET $cadena WHERE id_usuario = '$id' ")->get_error())
+					if ( ! BDD::getInstance()->query("UPDATE system.".self::claseMinus()." SET $cadena WHERE id_usuario = '$id' ")->get_error())
 				{
 						return 1;
 					}
@@ -159,7 +159,7 @@ class Usuarios {
 			case 'NO':
 				if ( ! BDD::getInstance()->query("SELECT system.limpiar_productos_de_usuario('$id')")->get_error())
 			{
-					if ( ! BDD::getInstance()->query("UPDATE system.". self::claseMinus()." SET $cadena WHERE id_usuario = '$id' ")->get_error())
+					if ( ! BDD::getInstance()->query("UPDATE system.".self::claseMinus()." SET $cadena WHERE id_usuario = '$id' ")->get_error())
 				{
 						return 1;
 					}
@@ -213,7 +213,7 @@ class Usuarios {
 			}
 		}
 
-		if ( ! BDD::getInstance()->query("INSERT INTO system.". self::claseMinus()."($cadena_columnas) VALUES ($cadena_valores) ")->get_error())
+		if ( ! BDD::getInstance()->query("INSERT INTO system.".self::claseMinus()."($cadena_columnas) VALUES ($cadena_valores) ")->get_error())
 		{
 			return 1;}
 		else
@@ -223,12 +223,12 @@ class Usuarios {
 
 	public function getNombre($id)
 	{
-		return $inst_table = BDD::getInstance()->query("select usuario from system.". self::claseMinus()." where id_usuario = '$id' ")->_fetchRow()['usuario'];
+		return $inst_table = BDD::getInstance()->query("select usuario from system.".self::claseMinus()." where id_usuario = '$id' ")->_fetchRow()['usuario'];
 	}
 
 	public function getNombreDePila($id)
 	{
-		return $inst_table = BDD::getInstance()->query("select nombre_apellido from system.". self::claseMinus()." where id_usuario = '$id' ")->_fetchRow()['nombre_apellido'];
+		return $inst_table = BDD::getInstance()->query("select nombre_apellido from system.".self::claseMinus()." where id_usuario = '$id' ")->_fetchRow()['nombre_apellido'];
 	}
 
 	public function getIdByNombre($nombre)
@@ -239,7 +239,7 @@ class Usuarios {
 	public function getCampos()
 	{
 
-		$fila = BDD::getInstance()->query("select * from system.". self::claseMinus())->_fetchRow();
+		$fila = BDD::getInstance()->query("select * from system.".self::claseMinus())->_fetchRow();
 
 		foreach ($fila as $key => $value)
 		{
@@ -250,19 +250,19 @@ class Usuarios {
 
 	public function dameUsuarios()
 	{
-		return BDD::getInstance()->query("select usuario from system.". self::claseMinus()." where estado = 1")->_fetchAll();
+		return BDD::getInstance()->query("select usuario from system.".self::claseMinus()." where estado = 1")->_fetchAll();
 	}
 
 	public function dameNombres()
 	{
-		return BDD::getInstance()->query("select nombre_apellido from system.". self::claseMinus()." where estado = 1")->_fetchAll();
+		return BDD::getInstance()->query("select nombre_apellido from system.".self::claseMinus()." where estado = 1")->_fetchAll();
 	}
 
 	public function eliminarUsuario($id)
 	{
 		if ( ! BDD::getInstance()->query("SELECT system.limpiar_productos_de_usuario('$id')")->get_error())
 		{
-			if ( ! BDD::getInstance()->query("DELETE FROM system.". self::claseMinus()." WHERE id_usuario = '$id' ")->get_error())
+			if ( ! BDD::getInstance()->query("DELETE FROM system.".self::claseMinus()." WHERE id_usuario = '$id' ")->get_error())
 			{
 				if ($_SESSION['userid'] == $id)
 				{
@@ -292,7 +292,7 @@ class Usuarios {
 
 		if ( ! BDD::getInstance()->query("SELECT system.limpiar_productos_de_usuario('$id')")->get_error())
 		{
-			if ( ! BDD::getInstance()->query("DELETE FROM system.". self::claseMinus()." WHERE id_usuario = '$id' ")->get_error())
+			if ( ! BDD::getInstance()->query("DELETE FROM system.".self::claseMinus()." WHERE id_usuario = '$id' ")->get_error())
 			{
 				if ($_SESSION['userid'] == $id)
 				{
@@ -319,12 +319,12 @@ class Usuarios {
 
 	public function dame_id_area($id)
 	{
-		return BDD::getInstance()->query("select area FROM system.". self::claseMinus()." WHERE id_usuario = '$id' ")->_fetchRow()['area'];
+		return BDD::getInstance()->query("select area FROM system.".self::claseMinus()." WHERE id_usuario = '$id' ")->_fetchRow()['area'];
 	}
 
 	public function dameSelect($id = "", $sos = "")
 	{
-		$table     = BDD::getInstance()->query("select usuario, id_usuario, nombre_apellido from system.". self::claseMinus()." where id_usuario <> 1 and estado=1 order by nombre_apellido,usuario asc");
+		$table     = BDD::getInstance()->query("select usuario, id_usuario, nombre_apellido from system.".self::claseMinus()." where id_usuario <> 1 and estado=1 order by nombre_apellido,usuario asc");
 		$html_view = "<select id=".'select_usuarios'.'_'.$sos." name='usuario'>";
 		$html_view .= "<option selected='selected' value=''>Seleccionar</option>";
 		$html_view .= "<option value=1>Ninguno</option>";
@@ -426,37 +426,5 @@ class Usuarios {
 
 	}
 
-	/*public function generarListadoDeUsuario($listado){
-	$html_view = "";
-	$html_view .= "<fieldset>";
-	$html_view .= "<h4>Productos</h4>";
-	$html_view .= "<table class='table table-condensed' id='tabla_listado_memorandum_user'>";
-	$html_view .= "<tr>";
-	$html_view .= "<th>Producto</th>
-	<th>Marca</th>";
-	<th>Modelo</th>
-	<th>Pulgadas</th>
-	<th>Serie Cpu</th>";
-	$html_view .= "</tr>";
-	if(count($listado) == 0 ){
-	$html_view .= "<tr>";
-	$html_view .= "<td colspan='5'>No tiene productos</td>";
-	$html_view .= "</tr>";
-	}
-	foreach ($listado as $fila => $contenido) {
-	$html_view .= "<tr>";
-	$html_view .= "<td>".$contenido['num_serie']."</td>";
-	$datos_desc = Monitor_desc::dameDatos($contenido['id_monitor_desc']);
-	if($datos_desc['pulgadas'] == ""){$datos_desc['pulgadas'] = "-";}
-	$html_view .= "<td>".$datos_desc['marca']."</td>";
-	$html_view .= "<td>".$datos_desc['modelo']."</td>";
-	$html_view .= "<td>".$datos_desc['pulgadas']."</td>";
-	$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
-	$html_view .= "</tr>";
-	}
-	$html_view .= "</table>";
-	$html_view .= "</fieldset>";
-	return $html_view;
-	}*/
 }
 ?>

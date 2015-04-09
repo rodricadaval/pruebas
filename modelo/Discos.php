@@ -10,7 +10,7 @@ class Discos {
 	public function listarTodos()
 	{
 
-		$inst_table = BDD::getInstance()->query("select * , '<a id=\"modificar_usuario_disco\" class=\"pointer\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted blue small user icon\" title=\"Asignar/Cambiar usuario\"></i></a><a id=\"modificar_cpu_disco\" class=\"pointer\"$id_disco=\"' || $id_disco || '\"><i class=\"circular inverted black small laptop icon\" title=\"Asignar/Cambiar Computadora\"></i></a><a id=\"modificar_disco\" class=\"pointer\"$id_disco=\"' || $id_disco || '\"><i class=\"circular inverted green small sitemap icon\" title=\"Editar sólo Sector\"></i></a> <a id=\"eliminar_disco\" class=\"pointer\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>' as m from system.". self::claseMinus()." where estado = 1");
+		$inst_table = BDD::getInstance()->query("select * , '<a id=\"modificar_usuario_disco\" class=\"pointer\"id_disco=\"' || id_disco || '\"><i class=\"blue large user icon\" title=\"Asignar/Cambiar usuario\"></i></a><a id=\"modificar_cpu_disco\" class=\"pointer\"$id_disco=\"' || $id_disco || '\"><i class=\"black large laptop icon\" title=\"Asignar/Cambiar Computadora\"></i></a><a id=\"modificar_disco\" class=\"pointer\"$id_disco=\"' || $id_disco || '\"><i class=\"green large sitemap icon\" title=\"Editar sólo Sector\"></i></a> <a id=\"eliminar_disco\" class=\"pointer\"id_disco=\"' || id_disco || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>' as m from system.". self::claseMinus()." where estado = 1");
 		$i = 0;
 		while ($fila = $inst_table->_fetchRow())
 		{
@@ -29,11 +29,11 @@ class Discos {
 		$data = null;
 
 		$inst_table = BDD::getInstance()->query("select * ,
-			'<a id=\"modificar_sector_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
-			<a id=\"modificar_cpu_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted blue small laptop icon\" title=\"Asignar una Computadora\"></i></a>
-			<a id=\"modificar_usuario_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted purple small user icon\" title=\"Asignar un Usuario\"></i></a>
-			<a id=\"desasignar_todo_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular green small minus outline icon\" title=\"Liberar disco (Quita el usuario y el cpu asignados) \"></i></a>
-			<a id=\"eliminar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>'
+			'<a id=\"modificar_sector_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"black large sitemap icon\" title=\"Cambiar Sector \"></i></a>
+			<a id=\"modificar_cpu_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"blue large laptop icon\" title=\"Asignar una Computadora\"></i></a>
+			<a id=\"modificar_usuario_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"purple large user icon\" title=\"Asignar un Usuario\"></i></a>
+			<a id=\"desasignar_todo_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"green large minus outline icon\" title=\"Liberar disco (Quita el usuario y el cpu asignados) \"></i></a>
+			<a id=\"eliminar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>'
 			as m from system.". self::claseMinus()." where estado = 1");
 
 		$todo  = $inst_table->_fetchAll();
@@ -112,10 +112,10 @@ class Discos {
 		$id_tipo_producto = array_search("Disco", $tipos);
 
 		$inst_table = BDD::getInstance()->query("select * ,
-			'<a id=\"modificar_sector_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted black small sitemap icon\" title=\"Cambiar Sector \"></i></a>
-			<a id=\"modificar_cpu_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted blue small laptop icon\" title=\"Asignar una Computadora\"></i></a>
-			<a id=\"modificar_usuario_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted purple small user icon\" title=\"Asignar un Usuario\"></i></a>
-			<a id=\"eliminar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"circular inverted red small trash icon\" title=\"Eliminar\"></i></a>'
+			'<a id=\"modificar_sector_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"black large sitemap icon\" title=\"Cambiar Sector \"></i></a>
+			<a id=\"modificar_cpu_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"blue large laptop icon\" title=\"Asignar una Computadora\"></i></a>
+			<a id=\"modificar_usuario_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"purple large user icon\" title=\"Asignar un Usuario\"></i></a>
+			<a id=\"eliminar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>'
 			as m from system.". self::claseMinus()." where estado = 1 AND id_vinculo IN (select id_vinculo from system.vinculos where id_usuario=1 AND id_cpu=1 AND id_tipo_producto='$id_tipo_producto')");
 
 		$todo  = $inst_table->_fetchAll();
