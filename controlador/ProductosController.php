@@ -207,6 +207,26 @@ else
 
 			break;
 
+		/*case 'asignar_disco_a_computadora':
+			$url                = array("vista/disco/view_asignar_disco_a_computadora.php"	);
+			$select_marcas      = $inst_marcas->dameSelect("discos");
+			$select_capacidades = Capacidades::dameSelect("", "_discos");
+			$select_unidades    = Unidades::dameSelect("", "_discos");
+			$titulo             = "Menu para agregar un Disco";
+			$parametros         = array("Producto"         => "Disco", 	select_marcas_discos"         => $select_marcas, "select_capacidades	         => $select_capacidades, "select_unidades"         => 	select_unidades, "titulo"         => $titulo);
+			echo Disenio::HTML($url, $parametros);
+			break;*/
+
+		case 'asignar_memoria_a_computadora':
+		var_dump($_POST['id_cpu']);
+			$id_cpu     = $_POST['id_cpu'];
+			$url = array("vista/memoria/view_asignar_memoria_a_computadora.php");
+			$html_view = Memoria::listarDisponiblesPara($id_cpu);
+			$parametros = array("Memorias" => $html_view,"computadora" => $id_cpu);
+			echo Disenio::HTML($url, $parametros);
+			break;
+		
+	
 		default:
 			# code...
 						break;

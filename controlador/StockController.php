@@ -8,7 +8,7 @@ if ( ! isset($_POST['action']))
 	{
 		$parametros = array("TABLA" => "Productos en Stock", "TITULO" => "Stock", "vista" => $_POST['vista']);
 	}
-	else
+	else 
 	{
 		$parametros = array("TABLA" => "Productos en Stock", "TITULO" => "Stock", "vista" => "nada");
 	}

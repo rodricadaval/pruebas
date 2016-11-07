@@ -225,7 +225,8 @@ class Discos {
 
 	public function getByID($id)
 	{
-		$datos = BDD::getInstance()->query("select * from system.". self::claseMinus()." where id_disco = '$id' ")->_fetchRow();
+		$datos = BDD::getInstance()->query("select *,'<a id=\"agregar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"green large plus outline icon\" title=\"Agregar disco\"></i></a><a id=\"desasignar_todo_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"green large minus outline icon\" title=\"Liberar Monitor (Quita el usuario y el cpu asignados) \"></i></a>
+			<a id=\"eliminar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>' as action  from system.". self::claseMinus()." where id_disco = '$id' ")->_fetchRow();
 		foreach ($datos as $key => $value)
 		{
 			if ($key == "id_vinculo")
@@ -281,7 +282,8 @@ class Discos {
 		$html_view .= "<tr>";
 		$html_view .= "<th>Marca</th>
 					   <th>Capacidad</th>
-					   <th>Serie Cpu</th>";
+					   <th>Serie Cpu</th>
+					   <th>Action</th>";
 		$html_view .= "</tr>";
 
 		if ($listado == null)
@@ -300,6 +302,7 @@ class Discos {
 				$html_view .= "<td>".$contenido['marca']."</td>";
 				$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
 				$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
+				$html_view .= "<td>".$contenido['action']."</td>";
 
 				$html_view .= "</tr>";
 			}

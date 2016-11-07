@@ -236,7 +236,8 @@ class Memorias {
 
 	public function getByID($id)
 	{
-		$datos = BDD::getInstance()->query("select * from system.".self::claseMinus()." where id_memoria = '$id' ")->_fetchRow();
+		$datos = BDD::getInstance()->query("select *, '<a id=\"agregar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"green large plus outline icon\" title=\"Agregar memoria (Aperecen las memorias disponibles en stock) \"></i></a><a id=\"desasignar_todo_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"green large minus outline icon\" title=\"Liberar memoria (Quita el usuario y el cpu asignados) \"></i></a>
+			<a id=\"eliminar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>' as action from system.".self::claseMinus()." where id_memoria = '$id' ")->_fetchRow();
 		foreach ($datos as $key => $value)
 		{
 			if ($key == "id_vinculo")
@@ -272,6 +273,7 @@ class Memorias {
 		foreach ($lista as $campo)
 		{
 			$lista_con_datos[$i] = self::getByID($campo['id_pk_producto']);
+			//return var_dump($lista_con_datos);
 			$i++;
 		}
 		return self::generarListadoDeUsuario($lista_con_datos);
@@ -289,7 +291,8 @@ class Memorias {
 					   <th>Tipo</th>
 					   <th>Capacidad</th>
 					   <th>Velocidad (Mhz)</th>
-					   <th>Serie Cpu</th>";
+					   <th>Serie Cpu</th>
+					   <th>Action</th>";
 		$html_view .= "</tr>";
 
 		if ($listado == null)
@@ -304,14 +307,17 @@ class Memorias {
 			foreach ($listado as $fila => $contenido)
 			{
 				$html_view .= "<tr>";
-
+				foreach ($contenido as $campo => $valor) {
+					# code...
+				}
 				$datos_desc = Memoria_desc::dameDatos($contenido['id_memoria_desc']);
 
-				$html_view .= "<td>".$datos_desc['marca']."</td>";
+				$html_view .= "<td>".$valor."</td>";
 				$html_view .= "<td>".$datos_desc['tipo']."</td>";
 				$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
 				$html_view .= "<td>".$datos_desc['velocidad']."</td>";
 				$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
+				$html_view .= "<td>".$contenido['action']."</td>";
 
 				$html_view .= "</tr>";
 			}
@@ -467,5 +473,29 @@ class Memorias {
 			var_dump(BDD::getInstance());return 0;}
 
 	}
+
+	/*
+	Quizas hay codigo de arriba que pueda reutilizar, preguntar a rodri
+	*/
+		public function listarDisponiblesPara($computadora)			
+	{			
+		$cantQuePuedoAgregar = Computadoras::cantidadMemoriaLibre($computadora);
+		var_dump($cantQuePuedoAgregar);
+		if(Computadoras::tieneSlotsLibres($computadora) && $cantQuePuedoAgregar > 0){
+
+			$capacidad = Capacidades::getMegasEnCapacidad($cantQuePuedoAgregar);
+
+
+			//Consigo las memorias que hay en stock que tengan menos o igual memoria de la que puedo agregar
+			$datos = BDD::getInstance()->query("SELECT *,'<a id=\"agregar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"green large plus outline icon\" title=\"Agregar memoria (Aperecen las memorias disponibles en stock) \"></i></a>' as action FROM system.memorias WHERE
+ 			EXISTS (SELECT id_pk_producto FROM system.vinculos WHERE id_tipo_producto =2) AND estado = '1' AND id_capacidad <= $capacidad")->_fetchAll();
+			var_dump($datos);
+			return self::generarListadoDeCpu($datos);
+		}		
+	}
+	
+	
+
+	
 }
 ?>
