@@ -80,10 +80,10 @@ class Capacidades {
 		return $html_view;
 	}
 
-	/*
+	
 	public function getMegasEnCapacidad($cant){
-		$fila = BDD::getInstance()->query("SELECT id_capacidad FROM system.c WHERE capacidad = $cant")->_fetchRow();
-		return $fila['capacidad'];
+		$fila = BDD::getInstance()->query("SELECT id_capacidad FROM system.capacidades WHERE capacidad = '$cant'")->_fetchRow();
+		return $fila['id_capacidad'];
 	}
-	*/
+	
 }

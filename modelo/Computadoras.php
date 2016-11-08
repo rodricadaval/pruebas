@@ -481,11 +481,11 @@ return $tabla;
 	public function tieneSlotsLibres($id)
 	{
 		$id_desc          = 0;
-		$id_desc          = BDD::getInstance()->query("select id_computadora_desc from system.computadoras where id_computadora                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        = '$id' ")->_fetchRow()['id_computadora_desc'];
+		$id_desc          = BDD::getInstance()->query("select id_computadora_desc from system.computadoras where id_computadora = '$id' ")->_fetchRow()['id_computadora_desc'];
 		$slotsTotales     = Computadora_desc::getSlots($id_desc);
 		$tipos            = Tipo_productos::get_rel_campos();
 		$id_tipo_producto = array_search("Memoria", $tipos);
-		$cantidadUsada    = BDD::getInstance()->query("select count(*) as cantidad from system.vinculos where id_cpu                                                                                                                                                                                                                                                                                                                                                                                                                                              = '$id' AND id_tipo_producto                                                                                                                                                                                                                                                                                                                                                                                                                                              = '$id_tipo_producto' and estado=1")->_fetchRow()['cantidad'];
+		$cantidadUsada    = BDD::getInstance()->query("select count(*) as cantidad from system.vinculos where id_cpu = '$id' AND id_tipo_producto = '$id_tipo_producto' and estado=1")->_fetchRow()['cantidad'];
 
 		if ($cantidadUsada < $slotsTotales)
 		{
@@ -537,7 +537,6 @@ return $tabla;
 		}
 	}
 
-	/*
 	public function cantidadMemoriaLibre($datos)
 	{
 		$id               = $datos['id_cpu'];
@@ -558,7 +557,6 @@ return $tabla;
 
 		return $memMax - $capacidadEnUso;
 	}
-	*/
 
 	public function dameSelectDeUsuario($id = "", $sos = "")
 	{

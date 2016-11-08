@@ -82,7 +82,7 @@ else
 			}
 			break;
 
-		case 'agregar_memoria_a_computadora':
+		case 'agregar_memoria_a_computadora':			
 			if ( ! isset($_POST['tipo']))
 		{
 
@@ -113,6 +113,7 @@ else
 		case 'agregar_productos_a_computadora':
 			$url        = array("vista/productos/view_agregar_productos_a_computadora.php");
 			$id_cpu     = $_POST['id_cpu'];
+			//die("<pre>". json_encode($id_cpu,JSON_PRETTY_PRINT) . "</pre>");
 			$parametros = array("id_cpu" => $id_cpu);
 			echo Disenio::HTML($url, $parametros);
 			break;
@@ -218,11 +219,15 @@ else
 			break;*/
 
 		case 'asignar_memoria_a_computadora':
-		var_dump($_POST['id_cpu']);
-			$id_cpu     = $_POST['id_cpu'];
+			//Tengo el el post el id, se me dificultaba conseguirlo desde este php porque
+			//no tengo acceso al TAB de memorias y disco de la view
+		
+			$id_cpu = array("id_cpu" => $_POST['id_cpu']);
+
+			$html_view = Memorias::listarDisponiblesPara($id_cpu);
+			die("<pre>". json_encode($html_view,JSON_PRETTY_PRINT) . "</pre>");
 			$url = array("vista/memoria/view_asignar_memoria_a_computadora.php");
-			$html_view = Memoria::listarDisponiblesPara($id_cpu);
-			$parametros = array("Memorias" => $html_view,"computadora" => $id_cpu);
+			$parametros = array("Memorias" => $html_view);
 			echo Disenio::HTML($url, $parametros);
 			break;
 		

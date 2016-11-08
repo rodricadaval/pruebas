@@ -1,11 +1,69 @@
 <div class="dialogo_productos_usuario">
-{computadora}
+{computadoras}
 {memorias}
 {monitores}
 {discos}
 </div>
 
 <script type="text/javascript">
+$("#contenedorPpal").on('click' , '#agregar_memoria' , function(){
+
+			console.log("Entro a agregar memoria");
+			console.log("id_memoria: "+$(this).attr("id_memoria"));
+			var id_memoria = $(this).attr("id_memoria");
+
+			$.post("controlador/ProductosController.php",
+			{
+			    action: "agregar_productos_a_computadora"
+            }, function(data){
+					jQuery('<div/>',
+                    {
+                        id: 'agregar_productos_a_computadora',
+                        text: ''
+                    }).appendTo('#contenedorPpal');
+                 	$("#agregar_productos_a_computadora").html(data);
+                 	$("#agregar_productos_a_computadora").dialog(
+                    {
+                        title: "Agregar Memorias o Discos",
+                        show:
+                        {
+                                effect: "explode",
+                                duration: 200,
+                                modal: true
+                        },
+                        hide:
+                        {
+                                effect: "explode",
+                                duration: 200
+                        },
+                        width: 510,
+                        height: 680,
+                        close: function()
+                        {
+                                $(this).dialog("destroy");
+                                $("#agregar_productos_a_computadora").remove();
+                                $("#tabs2").load("controlador/ProductosController.php",
+                                {
+                                        action: "agregar_computadora"
+                                });
+                        },
+                        buttons:
+                        {
+                                "Terminar": function()
+                                {
+                                        $(this).dialog("destroy");
+                                        $("#agregar_productos_a_computadora").remove();
+                                        $("#tabs2").load("controlador/ProductosController.php",
+                                        {
+                                                action: "agregar_computadora"
+                                        });
+                                }
+                        }
+                    });
+				}
+			);
+		});
+
 $("#contenedorPpal").on('click' , '#desasignar_todo_memoria' , function(){
 
 			console.log("Entro a desasignar todo de la memoria");
@@ -90,6 +148,64 @@ $("#contenedorPpal").on('click' , '#eliminar_memoria' , function(){
 
 
 	});
+
+/*$("#contenedorPpal").on('click' , '#agregar_monitor' , function(){
+
+			console.log("Entro a agregar monitor");
+			console.log("id_monitor: "+$(this).attr("id_monitor"));
+			var id_monitor = $(this).attr("id_monitor");
+
+			$.post("controlador/ProductosController.php",
+			{
+			    action: "agregar_productos_a_computadora"
+            }, function(data){
+					jQuery('<div/>',
+                    {
+                        id: 'agregar_productos_a_computadora',
+                        text: ''
+                    }).appendTo('#contenedorPpal');
+                 	$("#agregar_productos_a_computadora").html(data);
+                 	$("#agregar_productos_a_computadora").dialog(
+                    {
+                        title: "Agregar Memorias o Discos",
+                        show:
+                        {
+                                effect: "explode",
+                                duration: 200,
+                                modal: true
+                        },
+                        hide:
+                        {
+                                effect: "explode",
+                                duration: 200
+                        },
+                        width: 510,
+                        height: 680,
+                        close: function()
+                        {
+                                $(this).dialog("destroy");
+                                $("#agregar_productos_a_computadora").remove();
+                                $("#tabs2").load("controlador/ProductosController.php",
+                                {
+                                        action: "agregar_computadora"
+                                });
+                        },
+                        buttons:
+                        {
+                                "Terminar": function()
+                                {
+                                        $(this).dialog("destroy");
+                                        $("#agregar_productos_a_computadora").remove();
+                                        $("#tabs2").load("controlador/ProductosController.php",
+                                        {
+                                                action: "agregar_computadora"
+                                        });
+                                }
+                        }
+                    });
+				}
+			);
+		});*/
 
 $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
 
@@ -194,6 +310,65 @@ $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
 
 
 	});
+
+
+/*$("#contenedorPpal").on('click' , '#agregar_disco' , function(){
+
+			console.log("Entro a agregar disco");
+			console.log("id_disco: "+$(this).attr("id_disco"));
+			var id_monitor = $(this).attr("id_disco");
+
+			$.post("controlador/ProductosController.php",
+			{
+			    action: "agregar_productos_a_computadora"
+            }, function(data){
+					jQuery('<div/>',
+                    {
+                        id: 'agregar_productos_a_computadora',
+                        text: ''
+                    }).appendTo('#contenedorPpal');
+                 	$("#agregar_productos_a_computadora").html(data);
+                 	$("#agregar_productos_a_computadora").dialog(
+                    {
+                        title: "Agregar Memorias o Discos",
+                        show:
+                        {
+                                effect: "explode",
+                                duration: 200,
+                                modal: true
+                        },
+                        hide:
+                        {
+                                effect: "explode",
+                                duration: 200
+                        },
+                        width: 510,
+                        height: 680,
+                        close: function()
+                        {
+                                $(this).dialog("destroy");
+                                $("#agregar_productos_a_computadora").remove();
+                                $("#tabs2").load("controlador/ProductosController.php",
+                                {
+                                        action: "agregar_computadora"
+                                });
+                        },
+                        buttons:
+                        {
+                                "Terminar": function()
+                                {
+                                        $(this).dialog("destroy");
+                                        $("#agregar_productos_a_computadora").remove();
+                                        $("#tabs2").load("controlador/ProductosController.php",
+                                        {
+                                                action: "agregar_computadora"
+                                        });
+                                }
+                        }
+                    });
+				}
+			);
+		});*/
 
 	$("#contenedorPpal").on('click' , '#desasignar_todo_disco' , function(){
 

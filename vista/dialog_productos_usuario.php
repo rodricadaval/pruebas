@@ -19,7 +19,7 @@ if(isset($_POST['action']) && $_POST['action'] == "ver_productos"){
 
 	$url = array("vista/usuario/view_dialog_productos_de_usuario.php");
 
-	$parametros = array("Monitor" => "Monitor", "monitores" => $monitores, "memorias" => $memorias, "computadora" => $computadoras, "discos" => $discos);
+	$parametros = array("Monitor" => "Monitor", "monitores" => $monitores, "memorias" => $memorias, "computadoras" => $computadoras, "discos" => $discos);
 
 	echo Disenio::HTML($url, $parametros);
 }

@@ -316,6 +316,7 @@ class Memorias {
 				$html_view .= "<td>".$datos_desc['tipo']."</td>";
 				$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
 				$html_view .= "<td>".$datos_desc['velocidad']."</td>";
+				//Tengo que ver la forma de agregarle un id para poder sacar de aca el numero del cpu para saber a cual agregar en la view
 				$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
 				$html_view .= "<td>".$contenido['action']."</td>";
 
@@ -478,19 +479,21 @@ class Memorias {
 	Quizas hay codigo de arriba que pueda reutilizar, preguntar a rodri
 	*/
 		public function listarDisponiblesPara($computadora)			
-	{			
+	{		
+		
 		$cantQuePuedoAgregar = Computadoras::cantidadMemoriaLibre($computadora);
-		var_dump($cantQuePuedoAgregar);
-		if(Computadoras::tieneSlotsLibres($computadora) && $cantQuePuedoAgregar > 0){
+		$cantQuePuedoAgregar /= 1024;
+		if(Computadoras::tieneSlotsLibres($computadora['id_cpu']) && $cantQuePuedoAgregar > 0){
 
 			$capacidad = Capacidades::getMegasEnCapacidad($cantQuePuedoAgregar);
 
 
 			//Consigo las memorias que hay en stock que tengan menos o igual memoria de la que puedo agregar
 			$datos = BDD::getInstance()->query("SELECT *,'<a id=\"agregar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"green large plus outline icon\" title=\"Agregar memoria (Aperecen las memorias disponibles en stock) \"></i></a>' as action FROM system.memorias WHERE
- 			EXISTS (SELECT id_pk_producto FROM system.vinculos WHERE id_tipo_producto =2) AND estado = '1' AND id_capacidad <= $capacidad")->_fetchAll();
-			var_dump($datos);
-			return self::generarListadoDeCpu($datos);
+ 			EXISTS (SELECT id_pk_producto FROM system.vinculos WHERE id_tipo_producto =2) AND estado = '1' AND id_capacidad <= '$capacidad'")->_fetchAll();
+
+			//return self::generarListadoDeCpu($datos);
+			return $datos;
 		}		
 	}
 	

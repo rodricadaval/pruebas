@@ -41,7 +41,7 @@
 
 		//$("#tab_memorias_y_discos").hide();
 
-		$("#agregar_productos_a_compu").on('click',"#agregar_memorias_computadora",function(){
+		/*$("#agregar_productos_a_compu").on('click',"#agregar_memorias_computadora",function(){
 
 			if(primeraVez){
 				$("#tab_memorias_y_discos").show();
@@ -138,7 +138,7 @@
 	                        $("#asignar_productos_a_compu").html(data);
 	                    }
 	            );
-	    });
+	    });*/
 
 		$("#tab_memorias_y_discos").on('click',"#agregar_memorias_computadora",function(){
 
@@ -186,7 +186,8 @@
 
 	            $.post( "controlador/ProductosController.php",
 	                    {
-	                        action : "asignar_memoria_a_computadora"
+	                        action : "asignar_memoria_a_computadora",
+	                        id_cpu : $("#tab_memorias_y_discos").attr("id_cpu")
 	                    }, function(data){
 	                    	console.log("En asignar me llega esta data");
 	                    	console.log(data);
