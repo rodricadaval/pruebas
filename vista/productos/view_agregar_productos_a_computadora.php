@@ -189,8 +189,6 @@
 	                        action : "asignar_memoria_a_computadora",
 	                        id_cpu : $("#tab_memorias_y_discos").attr("id_cpu")
 	                    }, function(data){
-	                    	console.log("En asignar me llega esta data");
-	                    	console.log(data);
 	                        $("#agregar_productos_a_compu").remove();
 
 	                        jQuery('<div/>', {
@@ -205,20 +203,45 @@
 	    });
 
 	    $("#tab_memorias_y_discos").on('click',"#asignar_discos_computadora",function(){
+
+	    		console.log("asignar_discos_computadora");
 	        
 	            $.post( "controlador/ProductosController.php",
 	                    {
-	                        action : "asignar_disco_a_computadora"
+	                        action : "asignar_disco_a_computadora",
+	                        id_cpu : $("#tab_memorias_y_discos").attr("id_cpu")
 	                    }, function(data){
 
-	                        $("#asignar_productos_a_compu").remove();
+	                        $("#agregar_productos_a_compu").remove();
 
 	                        jQuery('<div/>', {
 	                            id: 'agregar_productos_a_compu',
 	                            text: ''
-	                        }).appendTo('#asignar_productos_a_computadora');
+	                        }).appendTo('#agregar_productos_a_computadora');
 
-	                        $("#asignar_productos_a_compu").html(data);
+	                        $("#agregar_productos_a_compu").html(data);
+	                    }
+	            );
+	    });
+
+	    $("#tab_memorias_y_discos").on('click',"#asignar_monitores_computadora",function(){
+
+	    		console.log("asignar_monitores_computadora");
+	        
+	            $.post( "controlador/ProductosController.php",
+	                    {
+	                        action : "asignar_monitor_a_computadora",
+	                        id_cpu : $("#tab_memorias_y_discos").attr("id_cpu")
+	                    }, function(data){
+
+	                        $("#agregar_productos_a_compu").remove();
+
+	                        jQuery('<div/>', {
+	                            id: 'agregar_productos_a_compu',
+	                            text: ''
+	                        }).appendTo('#agregar_productos_a_computadora');
+
+	                        $("#agregar_productos_a_compu").html(data);
 	                    }
 	            );
 	    });

@@ -8,13 +8,14 @@
 <script type="text/javascript">
 $("#contenedorPpal").on('click' , '#agregar_memoria' , function(){
 
+			console.log($(this));
 			console.log("Entro a agregar memoria");
 			console.log("id_memoria: "+$(this).attr("id_memoria"));
 			var id_memoria = $(this).attr("id_memoria");
-
+		
 			$.post("controlador/ProductosController.php",
-			{
-			    action: "agregar_productos_a_computadora"
+			{	
+			    action: "agregar_productos_a_computadora",
             }, function(data){
 					jQuery('<div/>',
                     {
@@ -149,7 +150,7 @@ $("#contenedorPpal").on('click' , '#eliminar_memoria' , function(){
 
 	});
 
-/*$("#contenedorPpal").on('click' , '#agregar_monitor' , function(){
+$("#contenedorPpal").on('click' , '#agregar_monitor' , function(){
 
 			console.log("Entro a agregar monitor");
 			console.log("id_monitor: "+$(this).attr("id_monitor"));
@@ -205,7 +206,7 @@ $("#contenedorPpal").on('click' , '#eliminar_memoria' , function(){
                     });
 				}
 			);
-		});*/
+		});
 
 $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
 
@@ -312,7 +313,7 @@ $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
 	});
 
 
-/*$("#contenedorPpal").on('click' , '#agregar_disco' , function(){
+$("#contenedorPpal").on('click' , '#agregar_disco' , function(){
 
 			console.log("Entro a agregar disco");
 			console.log("id_disco: "+$(this).attr("id_disco"));
@@ -368,7 +369,7 @@ $("#contenedorPpal").on('click' , '#desasignar_todo_monitor' , function(){
                     });
 				}
 			);
-		});*/
+		});
 
 	$("#contenedorPpal").on('click' , '#desasignar_todo_disco' , function(){
 

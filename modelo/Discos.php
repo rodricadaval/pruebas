@@ -254,6 +254,16 @@ class Discos {
 		return array_merge($datos, $datos_extra);
 	}
 
+	/*
+		Es equivalente a obtener Stock pero usando una view que cree en discos
+	*/
+	public function disponibles()
+	{
+		$datos = BDD::getInstance()->query("SELECT *,'<a id=\"asignar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"green large plus outline icon\" title=\"Asignar disco\"></i></a>' as action FROM discos_completos")->_fetchAll();
+
+		return $datos;
+	}
+
 	public function dameListaDeUsuario($id_usuario)
 	{
 

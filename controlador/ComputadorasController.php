@@ -107,6 +107,10 @@ if (isset($_POST['action']))
 			echo $inst_computadoras->tieneEspacioMemLibre($_POST);
 			break;
 
+		case 'buscarIdPorNumSerie':
+		echo $inst_computadoras->getIdBySerie($_POST['num_serie']);
+		break;
+
 		case 'liberar':
 			if ($_POST['en_conjunto'] == "SI")
 		{

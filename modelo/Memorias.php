@@ -236,7 +236,7 @@ class Memorias {
 
 	public function getByID($id)
 	{
-		$datos = BDD::getInstance()->query("select *, '<a id=\"agregar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"green large plus outline icon\" title=\"Agregar memoria (Aperecen las memorias disponibles en stock) \"></i></a><a id=\"desasignar_todo_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"green large minus outline icon\" title=\"Liberar memoria (Quita el usuario y el cpu asignados) \"></i></a>
+		$datos = BDD::getInstance()->query("select *,'<a id=\"agregar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"green large plus outline icon\" title=\"Agregar memoria (Aperecen las memorias disponibles en stock) \"></i></a><a id=\"desasignar_todo_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"green large minus outline icon\" title=\"Liberar memoria (Quita el usuario y el cpu asignados) \"></i></a>
 			<a id=\"eliminar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>' as action from system.".self::claseMinus()." where id_memoria = '$id' ")->_fetchRow();
 		foreach ($datos as $key => $value)
 		{
@@ -245,6 +245,7 @@ class Memorias {
 				$id_usuario  = Vinculos::getIdUsuario($value);
 				$datos_extra = Usuarios::getByID($id_usuario);
 				$id_cpu      = Vinculos::getIdCpu($value);
+				$datos_extra['id_cpu'] = $id_cpu;
 				$datos_extra['num_serie_cpu'] = Computadoras::getSerie($id_cpu);
 				$datos_extra['nombre_area'] = Areas::getNombre($datos_extra['area']);
 			}
@@ -317,7 +318,7 @@ class Memorias {
 				$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
 				$html_view .= "<td>".$datos_desc['velocidad']."</td>";
 				//Tengo que ver la forma de agregarle un id para poder sacar de aca el numero del cpu para saber a cual agregar en la view
-				$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
+				$html_view .= "<td id ='id_cpu'>".$contenido['num_serie_cpu']."</td>";
 				$html_view .= "<td>".$contenido['action']."</td>";
 
 				$html_view .= "</tr>";
@@ -475,9 +476,6 @@ class Memorias {
 
 	}
 
-	/*
-	Quizas hay codigo de arriba que pueda reutilizar, preguntar a rodri
-	*/
 		public function listarDisponiblesPara($computadora)			
 	{		
 		
