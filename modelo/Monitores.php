@@ -88,6 +88,15 @@ class Monitores {
 		}
 	}
 
+	/*
+		Probablemente es equivalente a listarEnStock pero tiene todos los datos en una view
+	*/
+	public function disponibles()
+	{
+		$datos = BDD::getInstance()->query("SELECT *,'<a id=\"asignar_monitor\" class=\"pointer_mon\"id_monitor=\"' || id_monitor || '\"><i class=\"green large plus outline icon\" title=\"Asignar monitor\"></i></a>' as action FROM monitores_completos")->_fetchAll();
+		return $datos;
+	}
+
 	public function listarEnStock($datos_extra = "")
 	{
 
