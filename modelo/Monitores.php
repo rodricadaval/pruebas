@@ -93,8 +93,45 @@ class Monitores {
 	*/
 	public function disponibles()
 	{
-		$datos = BDD::getInstance()->query("SELECT *,'<a id=\"asignar_monitor\" class=\"pointer_mon\"id_monitor=\"' || id_monitor || '\"><i class=\"green large plus outline icon\" title=\"Asignar monitor\"></i></a>' as action FROM monitores_completos")->_fetchAll();
-		return $datos;
+		$datos = BDD::getInstance()->query("SELECT *,'<a id=\"asignar_monitor\" class=\"pointer_mon\"id_monitor=\"' || id_monitor || '\"><i class=\"green large edit outline icon\" title=\"Asignar monitor\"></i></a>' as action FROM monitores_completos")->_fetchAll();
+
+		$html_view = "";
+		$html_view .= "<fieldset>";
+		$html_view .= "<h4>Monitores</h4>";
+		$html_view .= "<table class='table table-condensed' id='tabla_monitores_disponibles'>";
+		$html_view .= "<tr>";
+		$html_view .= "<th>Marca</th>
+					   <th>Num Serie</th>
+					   <th>Sector</th>
+					   <th>Action</th>";
+		$html_view .= "</tr>";
+
+		if ($datos == null)
+		{
+			$html_view .= "<tr>";
+			$html_view .= "<td colspan='3'>No hay monitores disponibles</td>";
+			$html_view .= "</tr>";
+		}
+		else
+		{
+
+			foreach ($datos as $fila => $contenido)
+			{
+				$html_view .= "<tr>";
+
+				$html_view .= "<td>".$contenido['Marca']."</td>";
+				$html_view .= "<td>".$contenido['num_serie']."</td>";
+				$html_view .= "<td>".$contenido['Sector']."</td>";
+				$html_view .= "<td>".$contenido['action']."</td>";
+
+				$html_view .= "</tr>";
+			}
+		}
+
+		$html_view .= "</table>";
+		$html_view .= "</fieldset>";
+		return $html_view;
+		//return $datos;
 	}
 
 	public function listarEnStock($datos_extra = "")

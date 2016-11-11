@@ -487,11 +487,55 @@ class Memorias {
 
 
 			//Consigo las memorias que hay en stock que tengan menos o igual memoria de la que puedo agregar
-			$datos = BDD::getInstance()->query("SELECT *,'<a id=\"agregar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"green large plus outline icon\" title=\"Agregar memoria (Aperecen las memorias disponibles en stock) \"></i></a>' as action FROM system.memorias WHERE
- 			EXISTS (SELECT id_pk_producto FROM system.vinculos WHERE id_tipo_producto =2) AND estado = '1' AND id_capacidad <= '$capacidad'")->_fetchAll();
-
-			//return self::generarListadoDeCpu($datos);
-			return $datos;
+			$datos = BDD::getInstance()->query("SELECT MA.nombre as \"marca\",DE.tipo,CONCAT(C.capacidad,U.unidad) as \"capacidad\",DE.velocidad,A.nombre as \"sector\",'<a id=\"asignar_memoria\" class=\"pointer_mon\"id_memoria=\"' || M.id_memoria || '\"><i class=\"green large edit outline icon\" title=\"Asignar memoria\"></i></a>' as action FROM system.memorias M
+				INNER JOIN system.capacidades C ON M.id_capacidad = C.id_capacidad AND M.estado = '1'
+				INNER JOIN system.unidades U ON U.id_unidad = M.id_unidad
+				INNER JOIN system.memoria_desc DE ON DE.id_memoria_desc = M.id_memoria_desc AND DE.estado = '1'
+				INNER JOIN system.marcas MA ON MA.id_marca = DE.id_marca AND MA.estado = '1'
+				INNER JOIN system.vinculos V ON V.id_vinculo = M.id_vinculo AND V.estado = '1'
+				INNER JOIN system.areas A ON A.id_area = V.id_Sector AND A.estado = '1' WHERE
+ 			EXISTS (SELECT id_pk_producto FROM system.vinculos WHERE id_tipo_producto = 2) AND M.id_capacidad <= '$capacidad'")->_fetchAll();
+			
+			$html_view = "";
+			$html_view .= "<fieldset>";
+			$html_view .= "<h4>Memorias disponibles</h4>";
+			$html_view .= "<table class='table table-condensed' id='tabla_discos_disponibles'>";
+			$html_view .= "<tr>";
+			$html_view .= "<th>Marca</th>
+						   <th>Tipo</th>
+						   <th>Capacidad</th>
+						   <th>Velocidad (Mhz)</th>
+						   <th>Sector</th>
+						   <th>Action</th>";
+			$html_view .= "</tr>";
+	
+			if ($datos == null)
+			{
+				$html_view .= "<tr>";
+				$html_view .= "<td colspan='3'>No hay memorias disponibles</td>";
+				$html_view .= "</tr>";
+			}
+			else
+			{
+	
+				foreach ($datos as $fila => $contenido)
+				{
+					$html_view .= "<tr>";
+	
+					$html_view .= "<td>".$contenido['marca']."</td>";
+					$html_view .= "<td>".$contenido['tipo']."</td>";
+					$html_view .= "<td>".$contenido['capacidad']."</td>";
+					$html_view .= "<td>".$contenido['velocidad']."</td>";
+					$html_view .= "<td>".$contenido['sector']."</td>";
+					$html_view .= "<td>".$contenido['action']."</td>";
+	
+					$html_view .= "</tr>";
+				}
+			}
+	
+			$html_view .= "</table>";
+			$html_view .= "</fieldset>";
+			return $html_view;
 		}		
 	}
 	

@@ -259,9 +259,44 @@ class Discos {
 	*/
 	public function disponibles()
 	{
-		$datos = BDD::getInstance()->query("SELECT *,'<a id=\"asignar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"green large plus outline icon\" title=\"Asignar disco\"></i></a>' as action FROM discos_completos")->_fetchAll();
+		$datos = BDD::getInstance()->query("SELECT *,'<a id=\"asignar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"green large edit outline icon\" title=\"Asignar disco\"></i></a>' as action FROM discos_completos")->_fetchAll();
 
-		return $datos;
+		$html_view = "";
+		$html_view .= "<fieldset>";
+		$html_view .= "<h4>Discos disponibles</h4>";
+		$html_view .= "<table class='table table-condensed' id='tabla_discos_disponibles'>";
+		$html_view .= "<tr>";
+		$html_view .= "<th>Marca</th>
+					   <th>Capacidad</th>
+					   <th>Sector</th>
+					   <th>Action</th>";
+		$html_view .= "</tr>";
+
+		if ($datos == null)
+		{
+			$html_view .= "<tr>";
+			$html_view .= "<td colspan='3'>No hay discos disponibles</td>";
+			$html_view .= "</tr>";
+		}
+		else
+		{
+
+			foreach ($datos as $fila => $contenido)
+			{
+				$html_view .= "<tr>";
+
+				$html_view .= "<td>".$contenido['Marca']."</td>";
+				$html_view .= "<td>".$contenido['Capacidad']."</td>";
+				$html_view .= "<td>".$contenido['Sector']."</td>";
+				$html_view .= "<td>".$contenido['action']."</td>";
+
+				$html_view .= "</tr>";
+			}
+		}
+
+		$html_view .= "</table>";
+		$html_view .= "</fieldset>";
+		return $html_view;
 	}
 
 	public function dameListaDeUsuario($id_usuario)

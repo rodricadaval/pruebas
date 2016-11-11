@@ -217,7 +217,7 @@ else
 
 			$id_cpu = array("id_cpu" => $_POST['id_cpu']);
 			$html_view = Discos::disponibles();
-			die("<pre>". json_encode($html_view,JSON_PRETTY_PRINT) . "</pre>");
+			//die("<pre>". json_encode($html_view,JSON_PRETTY_PRINT) . "</pre>");
 			$url = array("vista/disco/view_asignar_disco_a_computadora.php");
 			$parametros = array("Discos" => $html_view,"id_cpu" => $id_cpu);
 			echo Disenio::HTML($url, $parametros);
@@ -230,7 +230,7 @@ else
 			$id_cpu = array("id_cpu" => $_POST['id_cpu']);
 
 			$html_view = Memorias::listarDisponiblesPara($id_cpu);
-			die("<pre>". json_encode($html_view,JSON_PRETTY_PRINT) . "</pre>");
+			//die("<pre>". json_encode($html_view,JSON_PRETTY_PRINT) . "</pre>");
 			$url = array("vista/memoria/view_asignar_memoria_a_computadora.php");
 			$parametros = array("Memorias" => $html_view,"id_cpu" => $id_cpu);
 			echo Disenio::HTML($url, $parametros);
@@ -239,7 +239,7 @@ else
 		case 'asignar_monitor_a_computadora':
 			$id_cpu = array("id_cpu" => $_POST['id_cpu']);
 			$html_view = Monitores::disponibles();
-			die("<pre>". json_encode($html_view,JSON_PRETTY_PRINT) . "</pre>");
+			//die("<pre>". json_encode($html_view,JSON_PRETTY_PRINT) . "</pre>");
 			$url = array("vista/monitor/view_asignar_monitor_a_computadora.php");
 			$parametros = array("Monitores" => $html_view,"id_cpu" => $id_cpu);
 			echo Disenio::HTML($url, $parametros);
