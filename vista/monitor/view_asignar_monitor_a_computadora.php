@@ -1,28 +1,23 @@
-<div id="asignar_productos_a_compu">
-<div id="asignar_productos">
-{Monitores}
-</div>
+<div id="asignar_productos_a_compu" id_cpu="{id_cpu}">
+    {Monitores}
 </div>
 
 <script type="text/javascript">
+    $("#agregar_productos_a_compu").on('click',"#asignar_monitor",function(){
 
-    console.log("{select_tipos_memorias}");
-
-    $('#form_asignar_monitor_a_compu #select_unidades_memorias option[value='+2+']').attr('selected', 'selected');
-
-	$("#form_asignar_monitor_a_compu #select_marcas_memorias,#form_asignar_monitor_a_compu #select_tipos_memorias").on('change',function(){
-
-		console.log("Evento de seleccion de tipos");
-
-		$.post('controlador/ProductosController.php',
-			{
-				value_marca : $('#form_asignar_monitor_a_compu #select_marcas_memorias option:selected').val(),
-                value_tipo : $('#form_asignar_monitor_a_compu #select_tipos_memorias option:selected').val(),
-				tipo : "sel_velocidades",
-				action : "agregar_monitor"
-
-			}, function(data) {
-			$("#form_asignar_monitor_a_compu #select_velocidades").replaceWith(data);
-			});
-	});
+        var id_monitor = $(this).attr("id_monitor");
+        var id_cpu = $("#tab_memorias_y_discos").attr("id_cpu");	    	
+        $.post( "controlador/MonitoresController.php",
+        {
+            action : "asignar",
+            id_computadora: id_cpu,
+            id_monitor: id_monitor
+        }, function(data){
+            console.log("Se asigno el monitor con id:"+id_monitor+" al cpu con id:"+id_cpu);
+            $("#boton_terminar").trigger("click");
+            alert("Los datos han sido actualizados correctamente");
+            $("#link_mis_productos").trigger("click");
+        }
+        );
+    });
 </script>

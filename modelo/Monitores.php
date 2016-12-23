@@ -97,7 +97,7 @@ class Monitores {
 
 		$html_view = "";
 		$html_view .= "<fieldset>";
-		$html_view .= "<h4>Monitores</h4>";
+		$html_view .= "<h4>Monitores disponibles</h4>";
 		$html_view .= "<table class='table table-condensed' id='tabla_monitores_disponibles'>";
 		$html_view .= "<tr>";
 		$html_view .= "<th>Marca</th>
@@ -119,9 +119,9 @@ class Monitores {
 			{
 				$html_view .= "<tr>";
 
-				$html_view .= "<td>".$contenido['Marca']."</td>";
+				$html_view .= "<td>".$contenido['marca']."</td>";
 				$html_view .= "<td>".$contenido['num_serie']."</td>";
-				$html_view .= "<td>".$contenido['Sector']."</td>";
+				$html_view .= "<td>".$contenido['sector']."</td>";
 				$html_view .= "<td>".$contenido['action']."</td>";
 
 				$html_view .= "</tr>";
@@ -423,21 +423,24 @@ class Monitores {
 
 	public function getByID($id)
 	{
-		$datos = BDD::getInstance()->query("select *,'<a id=\"agregar_monitor\" class=\"pointer_mon\"id_monitor=\"' || id_monitor || '\"><i class=\"green large plus outline icon\" title=\"Agregar monitor\"></i></a><a id=\"desasignar_todo_monitor\" class=\"pointer_mon\"id_monitor=\"' || id_monitor || '\"><i class=\"green large minus outline icon\" title=\"Liberar Monitor (Quita el usuario y el cpu asignados) \"></i></a>
-			<a id=\"eliminar_monitor\" class=\"pointer_mon\"id_monitor=\"' || id_monitor || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>' as action from system.". self::claseMinus()." where id_monitor = '$id' ")->_fetchRow();
-		foreach ($datos as $key => $value)
-		{
-			if ($key == "id_vinculo")
-			{
-				$id_usuario    = Vinculos::getIdUsuario($value);
-				$datos_usuario = Usuarios::getByID($id_usuario);
-				$id_cpu        = Vinculos::getIdCpu($value);
-				$datos_usuario['num_serie_cpu'] = Computadoras::getSerie($id_cpu);
-				$datos_usuario['nombre_area'] = Areas::getNombre($datos_usuario['area']);
-			}
-		}
-		return array_merge($datos, $datos_usuario);
+		$datos = BDD::getInstance()->query("select * from system.". self::claseMinus().
+			" where id_monitor = '$id' ")->_fetchRow();
 
+		$id_usuario    = Vinculos::getIdUsuario($datos['id_vinculo']);
+		$datos_usuario = Usuarios::getByID($id_usuario);
+		$id_cpu        = Vinculos::getIdCpu($datos['id_vinculo']);
+		$datos_usuario['num_serie_cpu'] = Computadoras::getSerie($id_cpu);
+		$datos_usuario['nombre_area'] = Areas::getNombre($datos_usuario['area']);
+		//Iconos
+		$datos['action'] = "<a id=\"agregar_monitor\" class=\"pointer_mon\"id_monitor=\"".
+			$datos['id_monitor']."\"id_cpu=\"".
+			$id_cpu."\"><i class=\"green large plus outline icon\" title=\"Agregar monitor\"></i></a><a id=\"desasignar_todo_monitor\" class=\"pointer_mon\"id_monitor=\"".
+			$datos['id_monitor']."\"><i class=\"green large minus outline icon\" title=\"Liberar Monitor (Quita el usuario y el cpu asignados) \"></i></a>
+			<a id=\"eliminar_monitor\" class=\"pointer_mon\"id_monitor=\"".
+			$datos['id_monitor']."\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>";
+
+
+		return array_merge($datos, $datos_usuario);
 	}
 
 	public function modificarMonitor($datos)

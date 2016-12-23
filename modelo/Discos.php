@@ -187,8 +187,9 @@ class Discos {
 
 	public function dameDatos($id)
 	{
-		$fila = BDD::getInstance()->query("select * from system.". self::claseMinus()." where id_disco = '$id' ")->_fetchRow();
-		foreach ($fila as $campo => $valor)
+		$fila = BDD::getInstance()->query("select D.*,M.nombre as \"marca\" from system.". self::claseMinus()." D INNER JOIN system.disco_desc DE ON D.id_disco_desc = DE.id_disco_desc INNER JOIN system.marcas M ON M.id_marca = DE.id_marca where id_disco = '$id' ")->_fetchRow();
+		
+		/*foreach ($fila as $campo => $valor)
 		{
 			if ($campo == "id_disco_desc")
 			{
@@ -198,7 +199,7 @@ class Discos {
 			{
 				$fila[$campo] = $valor;
 			}
-		}
+		}*/
 		return $fila;
 	}
 
@@ -225,32 +226,20 @@ class Discos {
 
 	public function getByID($id)
 	{
-		$datos = BDD::getInstance()->query("select *,'<a id=\"agregar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"green large plus outline icon\" title=\"Agregar disco\"></i></a><a id=\"desasignar_todo_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"green large minus outline icon\" title=\"Liberar Monitor (Quita el usuario y el cpu asignados) \"></i></a>
-			<a id=\"eliminar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>' as action  from system.". self::claseMinus()." where id_disco = '$id' ")->_fetchRow();
-		foreach ($datos as $key => $value)
-		{
-			if ($key == "id_vinculo")
-			{
-				$id_usuario  = Vinculos::getIdUsuario($value);
-				$datos_extra = Usuarios::getByID($id_usuario);
-				$id_cpu      = Vinculos::getIdCpu($value);
-				$datos_extra['num_serie_cpu'] = Computadoras::getSerie($id_cpu);
-				$datos_extra['nombre_area'] = Areas::getNombre($datos_extra['area']);
-			}
-			if ($key == "id_capacidad")
-			{
-				$datos['capacidad'] = Capacidades::getNombre($value);
-			}
-			if ($key == "id_unidad")
-			{
-				$datos['unidad'] = Unidades::getNombre($value);
-			}
-			if ($key == "id_disco_desc")
-			{
-				$datos['marca'] = Disco_desc::dameMarca($value);
-			}
-		}
-		//var_dump($datos);
+		$datos = BDD::getInstance()->query("SELECT * from system.". self::claseMinus()." where id_disco = '$id' ")->_fetchRow();
+
+		$datos['capacidad'] = Capacidades::getNombre($datos['id_capacidad']);
+		$datos['unidad'] = Unidades::getNombre($datos['id_unidad']);
+		$datos['marca'] = Disco_desc::dameMarca($datos['id_disco_desc']);
+		$id_usuario  = Vinculos::getIdUsuario($datos['id_vinculo']);
+		$datos_extra = Usuarios::getByID($id_usuario);
+		$id_cpu      = Vinculos::getIdCpu($datos['id_vinculo']);
+		$datos['num_serie_cpu'] = Computadoras::getSerie($id_cpu);
+		$datos['nombre_area'] = Areas::getNombre($datos_extra['area']);
+
+		//iconos
+		$datos_extra['action'] = "<a id=\"agregar_disco\" class=\"pointer_mon\"id_disco=\"".$datos['id_disco']."\"id_cpu=\"".$id_cpu."\"><i class=\"green large plus outline icon\" title=\"Agregar disco\"></i></a><a id=\"desasignar_todo_disco\" class=\"pointer_mon\"id_disco=\"".$datos['id_disco']."\"><i class=\"green large minus outline icon\" title=\"Liberar Monitor (Quita el usuario y el cpu asignados) \"></i></a>
+			<a id=\"eliminar_disco\" class=\"pointer_mon\"id_disco=\"".$datos['id_disco']."\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>";
 		return array_merge($datos, $datos_extra);
 	}
 
@@ -259,7 +248,7 @@ class Discos {
 	*/
 	public function disponibles()
 	{
-		$datos = BDD::getInstance()->query("SELECT *,'<a id=\"asignar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"green large edit outline icon\" title=\"Asignar disco\"></i></a>' as action FROM discos_completos")->_fetchAll();
+		$datos = BDD::getInstance()->query("SELECT *,'<a id=\"asignar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"green large edit outline icon\" title=\"Asignar disco\"></i></a>' as action FROM discos_completos ORDER BY \"unidad\" DESC")->_fetchAll();
 
 		$html_view = "";
 		$html_view .= "<fieldset>";
@@ -285,9 +274,9 @@ class Discos {
 			{
 				$html_view .= "<tr>";
 
-				$html_view .= "<td>".$contenido['Marca']."</td>";
-				$html_view .= "<td>".$contenido['Capacidad']."</td>";
-				$html_view .= "<td>".$contenido['Sector']."</td>";
+				$html_view .= "<td>".$contenido['marca']."</td>";
+				$html_view .= "<td>".$contenido['capacidad'].$contenido['unidad']."</td>";
+				$html_view .= "<td>".$contenido['sector']."</td>";
 				$html_view .= "<td>".$contenido['action']."</td>";
 
 				$html_view .= "</tr>";

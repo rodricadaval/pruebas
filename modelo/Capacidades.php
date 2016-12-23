@@ -82,7 +82,7 @@ class Capacidades {
 
 	
 	public function getMegasEnCapacidad($cant){
-		$fila = BDD::getInstance()->query("SELECT id_capacidad FROM system.capacidades WHERE capacidad = '$cant'")->_fetchRow();
+		$fila = BDD::getInstance()->query("SELECT id_capacidad FROM system.capacidades WHERE capacidad <= '$cant' ORDER BY id_capacidad DESC LIMIT 1")->_fetchRow();
 		return $fila['id_capacidad'];
 	}
 	

@@ -12,20 +12,20 @@ if (isset($_POST['viene']))
 	$datos_tabla['viene'] = $_POST['viene'];
 }
 
-if ($_POST['queSos'] == "nuevo")
-{
+if (isset($_POST['queSos'])) {
+	if($_POST['queSos'] == "nombre"){
 
-	$_POST['queSos'] = strtolower(substr($_POST['TablaPpal'], 0, -1));
+		$_POST['queSos'] = strtolower(substr($_POST['TablaPpal'], 0, -1));
 
-	$datos_tabla = $inst_tabla->getCampos();
+		$datos_tabla = $inst_tabla->getCampos();
 
-	$datos_tabla['nuevo'] = 1;
-}
-else if (isset($_POST['queSos']))
-{
+		$datos_tabla['nuevo'] = 1;	
+	}else{
 
-	$datos_tabla = $inst_tabla->getById($_POST['ID']);
-	$datos_tabla['nuevo'] = 0;
+		$datos_tabla = $inst_tabla->getById($_POST['ID']);
+
+		$datos_tabla['nuevo'] = 0;
+	}
 }
 
 $vista_folder = $_POST['queSos'];
@@ -43,162 +43,162 @@ foreach ($_POST as $key => $value)
 		{
 
 			case 'usuario':
-				$tipo = strtolower(substr($value, 0, -1));
-				if ($tipo == "permiso")
+			$tipo = strtolower(substr($value, 0, -1));
+			if ($tipo == "permiso")
 			{
-					$tipo = $tipo."s";
-				}
-				if ($datos_tabla[$tipo] != "")
+				$tipo = $tipo."s";
+			}
+			if ($datos_tabla[$tipo] != "")
 			{
-					$parametros[$key] = $inst_clase->dameSelect($datos_tabla[$tipo]);
-				}
+				$parametros[$key] = $inst_clase->dameSelect($datos_tabla[$tipo]);
+			}
 			else
 			{
-					$parametros[$key] = $inst_clase->dameSelect("");
-				}
+				$parametros[$key] = $inst_clase->dameSelect("");
+			}
 
-				break;
+			break;
 
 			case ($_POST['queSos'] == 'monitor' || $_POST['queSos'] == 'disco' || $_POST['queSos'] == 'impresora' || $_POST['queSos'] == 'router' || $_POST['queSos'] == 'switch'):
 
-				$clasePpal = new Vinculos();
+			$clasePpal = new Vinculos();
 
-				$metodo = "dameSelect";
-				$sos    = $_POST['queSos'];
+			$metodo = "dameSelect";
+			$sos    = $_POST['queSos'];
 
-				if ($value == "Areas")
+			if ($value == "Areas")
 			{
-					if (isset($_POST['action']) && $_POST['action'] == "modif_sector")
+				if (isset($_POST['action']) && $_POST['action'] == "modif_sector")
 				{
-						$parametros['libre'] = $clasePpal->estaLibre($datos_tabla['id_vinculo']);
-					}
-					$id = $clasePpal->getIdSector($datos_tabla['id_vinculo']);
+					$parametros['libre'] = $clasePpal->estaLibre($datos_tabla['id_vinculo']);
 				}
+				$id = $clasePpal->getIdSector($datos_tabla['id_vinculo']);
+			}
 			else if ($value == "Usuarios")
 			{
-					$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
-				}
+				$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
+			}
 			else if ($value == "Computadoras")
 			{
-					if (isset($_POST['action']) && $_POST['action'] == "modif_cpu")
+				if (isset($_POST['action']) && $_POST['action'] == "modif_cpu")
 				{
-						$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
-						$metodo .= "DeUsuario";
-						$sos .= "_".$_POST['action'];
-						if ($id == 1 || $id == "")
+					$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
+					$metodo .= "DeUsuario";
+					$sos .= "_".$_POST['action'];
+					if ($id == 1 || $id == "")
 					{
-							$id  = $datos_tabla['id_vinculo'];
-							$sos = "dialog_mod_cpu_sin_usr";
-						}
+						$id  = $datos_tabla['id_vinculo'];
+						$sos = "dialog_mod_cpu_sin_usr";
 					}
+				}
 				else if (isset($_POST['action']) && $_POST['action'] == "modif_usuario")
 				{
-						$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
-						$metodo .= "DeUsuario";
-					}
+					$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
+					$metodo .= "DeUsuario";
+				}
 				else
 				{
-						$id = $clasePpal->getIdCpu($datos_tabla['id_vinculo']);
-					}
+					$id = $clasePpal->getIdCpu($datos_tabla['id_vinculo']);
 				}
+			}
 
-				$parametros[$key] = $inst_clase->$metodo($id, $sos);
+			$parametros[$key] = $inst_clase->$metodo($id, $sos);
 
-				break;
+			break;
 
 			case 'computadora':
-				$clasePpal = new Vinculos();
+			$clasePpal = new Vinculos();
 
-				$metodo = "dameSelect";
+			$metodo = "dameSelect";
 
-				if ($value == "Areas")
+			if ($value == "Areas")
 			{
 
-					if (isset($_POST['action']) && $_POST['action'] == "modif_sector")
+				if (isset($_POST['action']) && $_POST['action'] == "modif_sector")
 				{
-						$parametros['libre'] = $clasePpal->estaLibre($datos_tabla['id_vinculo']);
-					}
-					$id = $clasePpal->getIdSector($datos_tabla['id_vinculo']);
+					$parametros['libre'] = $clasePpal->estaLibre($datos_tabla['id_vinculo']);
 				}
+				$id = $clasePpal->getIdSector($datos_tabla['id_vinculo']);
+			}
 			else if ($value == "Usuarios")
 			{
-					$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
-				}
+				$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
+			}
 			else if ($value == "Computadoras")
 			{
-					$metodo .= "_button_radio_clase";
-					$id = $datos_tabla['clase'];
-				}
-				$parametros[$key] = $inst_clase->$metodo($id, $_POST['queSos']);
-				break;
+				$metodo .= "_button_radio_clase";
+				$id = $datos_tabla['clase'];
+			}
+			$parametros[$key] = $inst_clase->$metodo($id, $_POST['queSos']);
+			break;
 
 			case 'memoria':
 
-				$clasePpal = new Vinculos();
+			$clasePpal = new Vinculos();
 
-				$metodo = "dameSelect";
-				$sos    = $_POST['queSos'];
+			$metodo = "dameSelect";
+			$sos    = $_POST['queSos'];
 
-				if ($value == "Areas")
+			if ($value == "Areas")
 			{
-					if (isset($_POST['action']) && $_POST['action'] == "modif_sector")
+				if (isset($_POST['action']) && $_POST['action'] == "modif_sector")
 				{
-						$parametros['libre'] = $clasePpal->estaLibre($datos_tabla['id_vinculo']);
-					}
-					$id = $clasePpal->getIdSector($datos_tabla['id_vinculo']);
+					$parametros['libre'] = $clasePpal->estaLibre($datos_tabla['id_vinculo']);
 				}
+				$id = $clasePpal->getIdSector($datos_tabla['id_vinculo']);
+			}
 			else if ($value == "Usuarios")
 			{
-					$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
-				}
+				$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
+			}
 			else if ($value == "Computadoras")
 			{
-					if (isset($_POST['action']) && $_POST['action'] == "modif_cpu")
+				if (isset($_POST['action']) && $_POST['action'] == "modif_cpu")
 				{
-						$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
-						$metodo .= "DeUsuario";
-						$sos .= "_".$_POST['action'];
-						if ($id == 1 || $id == "")
+					$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
+					$metodo .= "DeUsuario";
+					$sos .= "_".$_POST['action'];
+					if ($id == 1 || $id == "")
 					{
-							$id  = $datos_tabla['id_vinculo'];
-							$sos = "dialog_mod_cpu_sin_usr";
-						}
-					}
-				else if (isset($_POST['action']) && $_POST['action'] == "modif_usuario")
-				{
-						$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
-						$metodo .= "DeUsuario";
-					}
-				else
-				{
-						$id = $clasePpal->getIdCpu($datos_tabla['id_vinculo']);
+						$id  = $datos_tabla['id_vinculo'];
+						$sos = "dialog_mod_cpu_sin_usr";
 					}
 				}
+				else if (isset($_POST['action']) && $_POST['action'] == "modif_usuario")
+				{
+					$id = $clasePpal->getIdUsuario($datos_tabla['id_vinculo']);
+					$metodo .= "DeUsuario";
+				}
+				else
+				{
+					$id = $clasePpal->getIdCpu($datos_tabla['id_vinculo']);
+				}
+			}
 
-				$parametros[$key] = $inst_clase->$metodo($id, $sos);
+			$parametros[$key] = $inst_clase->$metodo($id, $sos);
 
-				break;
+			break;
 			default:
 				# code...
-								break;
+			break;
 		}
 
 	}
 	else
 	{
-		 $parametros[$key] = $value;}
-}
+		$parametros[$key] = $value;}
+	}
 
-if (isset($_POST['action']))
-{
-	$_POST['queSos'] .= "_".$_POST['action'];
-}
+	if (isset($_POST['action']))
+	{
+		$_POST['queSos'] .= "_".$_POST['action'];
+	}
 
-$parametros = array_merge($datos_tabla, $parametros);
+	$parametros = array_merge($datos_tabla, $parametros);
 
-$url = array("vista/".$vista_folder."/view_dialog_".$_POST['queSos'].".php");
+	$url = array("vista/".$vista_folder."/view_dialog_".$_POST['queSos'].".php");
 
-unset($_POST['queSos']);
+	unset($_POST['queSos']);
 
-echo Disenio::HTML($url, $parametros);
-?>
+	echo Disenio::HTML($url, $parametros);
+	?>

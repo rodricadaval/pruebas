@@ -196,7 +196,7 @@ class Memorias {
 
 	public function dameDatos($id)
 	{
-		$fila = BDD::getInstance()->query("select * from system.".self::claseMinus()." where $id_memoria = '$id' ")->_fetchRow();
+		$fila = BDD::getInstance()->query("select * from system.".self::claseMinus()." where id_memoria = '$id' ")->_fetchRow();
 		foreach ($fila as $campo => $valor)
 		{
 			if ($campo == "marca")
@@ -236,8 +236,8 @@ class Memorias {
 
 	public function getByID($id)
 	{
-		$datos = BDD::getInstance()->query("select *,'<a id=\"agregar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"green large plus outline icon\" title=\"Agregar memoria (Aperecen las memorias disponibles en stock) \"></i></a><a id=\"desasignar_todo_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"green large minus outline icon\" title=\"Liberar memoria (Quita el usuario y el cpu asignados) \"></i></a>
-			<a id=\"eliminar_memoria\" class=\"pointer_mon\"id_memoria=\"' || id_memoria || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>' as action from system.".self::claseMinus()." where id_memoria = '$id' ")->_fetchRow();
+		$datos = BDD::getInstance()->query("SELECT *,'<a id=\"agregar_memoria\" class=\"pointer_mon\"id_memoria=\"' || M.id_memoria || '\"id_cpu=\"' || V.id_cpu || '\"><i class=\"green large plus outline icon\" title=\"Agregar memoria (Aperecen las memorias disponibles en stock) \"></i></a><a id=\"desasignar_todo_memoria\" class=\"pointer_mon\"id_memoria=\"' || M.id_memoria || '\"><i class=\"green large minus outline icon\" title=\"Liberar memoria (Quita el usuario y el cpu asignados) \"></i></a>
+			<a id=\"eliminar_memoria\" class=\"pointer_mon\"id_memoria=\"' || M.id_memoria || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>' AS action FROM system.".self::claseMinus()." M INNER JOIN system.vinculos V ON V.id_vinculo = M.id_vinculo WHERE M.id_memoria = '$id' ")->_fetchRow();
 		foreach ($datos as $key => $value)
 		{
 			if ($key == "id_vinculo")
@@ -245,7 +245,6 @@ class Memorias {
 				$id_usuario  = Vinculos::getIdUsuario($value);
 				$datos_extra = Usuarios::getByID($id_usuario);
 				$id_cpu      = Vinculos::getIdCpu($value);
-				$datos_extra['id_cpu'] = $id_cpu;
 				$datos_extra['num_serie_cpu'] = Computadoras::getSerie($id_cpu);
 				$datos_extra['nombre_area'] = Areas::getNombre($datos_extra['area']);
 			}
@@ -317,8 +316,7 @@ class Memorias {
 				$html_view .= "<td>".$datos_desc['tipo']."</td>";
 				$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
 				$html_view .= "<td>".$datos_desc['velocidad']."</td>";
-				//Tengo que ver la forma de agregarle un id para poder sacar de aca el numero del cpu para saber a cual agregar en la view
-				$html_view .= "<td id ='id_cpu'>".$contenido['num_serie_cpu']."</td>";
+				$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
 				$html_view .= "<td>".$contenido['action']."</td>";
 
 				$html_view .= "</tr>";
@@ -478,28 +476,31 @@ class Memorias {
 
 		public function listarDisponiblesPara($computadora)			
 	{		
-		
 		$cantQuePuedoAgregar = Computadoras::cantidadMemoriaLibre($computadora);
 		$cantQuePuedoAgregar /= 1024;
-		if(Computadoras::tieneSlotsLibres($computadora['id_cpu']) && $cantQuePuedoAgregar > 0){
+		$html_view = "";
+		$html_view .= "<fieldset>";
+		$html_view .= "<h4>Memorias disponibles</h4>";
+		$html_view .= "<table class='table table-condensed' id='tabla_discos_disponibles'>";
+		$tieneSlots = Computadoras::tieneSlotsLibres($computadora['id_cpu']);
 
+		//die("<pre>". json_encode($tieneSlots,JSON_PRETTY_PRINT) . "</pre>");			
+		if($tieneSlots == "true" && $cantQuePuedoAgregar > 0){
 			$capacidad = Capacidades::getMegasEnCapacidad($cantQuePuedoAgregar);
 
-
-			//Consigo las memorias que hay en stock que tengan menos o igual memoria de la que puedo agregar
-			$datos = BDD::getInstance()->query("SELECT MA.nombre as \"marca\",DE.tipo,CONCAT(C.capacidad,U.unidad) as \"capacidad\",DE.velocidad,A.nombre as \"sector\",'<a id=\"asignar_memoria\" class=\"pointer_mon\"id_memoria=\"' || M.id_memoria || '\"><i class=\"green large edit outline icon\" title=\"Asignar memoria\"></i></a>' as action FROM system.memorias M
+			//Consigo las memorias que hay en stock que tengan menos o igual memoria de la que puedo agregar, lo podria poner en una view
+			$datos = BDD::getInstance()->query("SELECT MA.nombre as \"marca\",DE.tipo,C.capacidad as \"capacidad\",U.unidad as \"unidad\",DE.velocidad,A.nombre as \"sector\",'<a id=\"asignar_memoria\" class=\"pointer_mon\"id_memoria=\"' || M.id_memoria || '\" disabled><i class=\"green large edit outline icon\" title=\"Asignar memoria\"></i></a>' as action FROM system.memorias M
 				INNER JOIN system.capacidades C ON M.id_capacidad = C.id_capacidad AND M.estado = '1'
 				INNER JOIN system.unidades U ON U.id_unidad = M.id_unidad
 				INNER JOIN system.memoria_desc DE ON DE.id_memoria_desc = M.id_memoria_desc AND DE.estado = '1'
 				INNER JOIN system.marcas MA ON MA.id_marca = DE.id_marca AND MA.estado = '1'
-				INNER JOIN system.vinculos V ON V.id_vinculo = M.id_vinculo AND V.estado = '1'
+				INNER JOIN system.vinculos V ON V.id_vinculo = M.id_vinculo AND V.estado = '1' AND V.id_cpu = 1 AND V.id_usuario = 1
 				INNER JOIN system.areas A ON A.id_area = V.id_Sector AND A.estado = '1' WHERE
- 			EXISTS (SELECT id_pk_producto FROM system.vinculos WHERE id_tipo_producto = 2) AND M.id_capacidad <= '$capacidad'")->_fetchAll();
+ 			EXISTS (SELECT id_pk_producto FROM system.vinculos WHERE id_tipo_producto = 2) AND M.id_capacidad <= '$capacidad' ORDER BY C.capacidad DESC")->_fetchAll();
 			
-			$html_view = "";
-			$html_view .= "<fieldset>";
-			$html_view .= "<h4>Memorias disponibles</h4>";
-			$html_view .= "<table class='table table-condensed' id='tabla_discos_disponibles'>";
+
+
+			
 			$html_view .= "<tr>";
 			$html_view .= "<th>Marca</th>
 						   <th>Tipo</th>
@@ -524,19 +525,24 @@ class Memorias {
 	
 					$html_view .= "<td>".$contenido['marca']."</td>";
 					$html_view .= "<td>".$contenido['tipo']."</td>";
-					$html_view .= "<td>".$contenido['capacidad']."</td>";
+					$html_view .= "<td>".$contenido['capacidad'].$contenido['unidad']."</td>";
 					$html_view .= "<td>".$contenido['velocidad']."</td>";
 					$html_view .= "<td>".$contenido['sector']."</td>";
 					$html_view .= "<td>".$contenido['action']."</td>";
 	
 					$html_view .= "</tr>";
 				}
-			}
-	
-			$html_view .= "</table>";
-			$html_view .= "</fieldset>";
-			return $html_view;
-		}		
+			}	
+			
+		}
+		else{
+			$html_view .= "<tr>";
+			$html_view .= "<td colspan='3'>No tiene mas capacidad para agregar memoria</td>";
+			$html_view .= "</tr>";
+		}	
+		$html_view .= "</table>";
+		$html_view .= "</fieldset>";
+		return $html_view;	
 	}
 	
 	

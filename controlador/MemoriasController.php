@@ -40,6 +40,23 @@ if (isset($_POST['action']))
 				echo $inst_vinc->modificarDatos($_POST);
 			}
 			break;
+		case 'asignar':
+			unset($_POST['action']);
+			$datosComputadora = Computadoras::getConSectorById($_POST['id_computadora']);	
+			$aux = Memorias::dameDatos($_POST['id_memoria']);
+			$id_vinculo = $aux['id_vinculo'];
+			//die("<pre>". json_encode($id_vinculo,JSON_PRETTY_PRINT) . "</pre>");			
+			$datos = array(
+				"id_vinculo" => $id_vinculo,//El de la memoria
+				"id_usuario" => $datosComputadora['id_usuario'],
+				"id_sector" => $datosComputadora['id_sector']);
+			$inst_vinc->cambiarUsuarioYSector($datos);
+			$otrosDatos = array(
+				'id_vinculo' => $id_vinculo,
+				'id_cpu' => $_POST['id_computadora']);
+			$inst_vinc->cambiarCpu($otrosDatos);
+			//echo "Inserto el id_cpu:"+$_POST['id_computadora']+"en el id vinculo:"+$id_vinculo;
+			break;
 
 		case 'eliminar':
 			unset($_POST['action']);

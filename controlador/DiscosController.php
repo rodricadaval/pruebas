@@ -41,6 +41,34 @@ if (isset($_POST['action']))
 			}
 			break;
 
+		case 'asignar':
+			unset($_POST['action']);
+			$id_cpu = $_POST['id_computadora'];
+			$id_disco = $_POST['id_disco'];
+
+			$datosComputadora = Computadoras::getConSectorById($id_cpu);
+			$datosDisco = Discos::dameDatos($id_disco);			
+			$id_vinculo_disco = $datosDisco['id_vinculo'];
+
+			$inst_vinc->cambiarUsuarioYSector(
+				array(
+					"id_vinculo" => $id_vinculo_disco,
+					"id_usuario" => $datosComputadora['id_usuario'],
+					"id_sector" => $datosComputadora['id_sector']
+					)
+				);
+
+			$inst_vinc->cambiarCpu(
+				array(
+					"id_vinculo" => $id_vinculo_disco,
+					"id_cpu" => $id_cpu
+					)
+				);			
+			unset($_POST['id_computadora']);
+			unset($_POST['id_disco']);
+			echo "Logre asignalo";
+			break;
+
 		case 'eliminar':
 			unset($_POST['action']);
 			echo $inst_disco->eliminarLogico($_POST);
