@@ -1,10 +1,9 @@
 <?php
 require_once "../ini.php";
 require "../lib/fpdf/fpdf.php";
-
-$datos = Tablets::getCompletoById($_GET['id_tablet']);
-$area = HTML_ENTITIES_DECODE::text_to_pdf_decode($area);
-unset($_GET['id_computadora']);
+$datosTablet = Tablets::getDataMemorandumById($_GET['id_tablet']);
+$area = HTML_ENTITIES_DECODE::text_to_pdf_decode($datosTablet['sector']);
+unset($_GET['id_tablet']);
 $pdf = new PDF();
 //Títulos de las columnas
 $columnas = array('MEMORANDUM', '', 'SISTEMAS');
@@ -33,23 +32,17 @@ $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode('Por la presente dejo constanc
 $pdf->Cell(0, 0, $texto, 0, 1);
 $i = 0;
 $y += 15;
-/*foreach ($_GET as $key => $value)
-{
-	$datos[$i] = Vinculos::getByID($value);
-	$pdf->SetY($y);
-	$pdf->SetX(35);
-	$pdf->SetFont('Arial', '', 11);
-	$tipos = Tipos_Computadoras::get_rel_campos();
-	$clase = $datos[$i]['clase'];
-	$tipo_producto = array_search($clase, $tipos);
-	$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode($tipo_producto.": ".$datos[$i]['marca']." ".$datos[$i]['modelo']."   Serie N° ".$datos[$i]['num_serie']);
-	$pdf->Cell(0, 0, $texto, 0, 1);
-	$y += 5;
-}*/
+$pdf->SetY($y);
+$pdf->SetX(35);
+$pdf->SetFont('Arial', '', 11);
+$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("Tablet: ".$datosTablet['marca']." ".$datosTablet['modelo']."   Serie N° ".$datosTablet['num_serie']);
+$pdf->Cell(0, 0, $texto, 0, 1);
 $y += 5;
 $pdf->SetY($y);
 $pdf->SetX(35);
-$pdf->Cell(0, 0, "Total: ".count($_GET), 0, 1);
+$pdf->SetFont('Arial', '', 11);
+$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("Detalles: Procesador: ".$datosTablet['procesador']." Memoria ".$datosTablet['memoria']."   Disco ".$datosTablet['disco']);
+$pdf->Cell(0, 0, $texto, 0, 1);
 $y += 10;
 $pdf->SetY($y);
 $pdf->SetX(35);
@@ -58,17 +51,12 @@ $pdf->Cell(0, 0, $texto, 0, 1);
 $y += 5;
 $pdf->SetY($y);
 $pdf->SetX(35);
-$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("funcionamiento y me responsabilizo de su cuidado. Por cualquier tipo de cambio o");
+$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("funcionamiento y me responsabilizo de su cuidado. Y por cualquier tipo de cambio o");
 $pdf->Cell(0, 0, $texto, 0, 1);
 $y += 5;
 $pdf->SetY($y);
 $pdf->SetX(35);
-$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("defecto me contactaré con el Área de Sistemas Informáticos. El mencionado equipo");
-$pdf->Cell(0, 0, $texto, 0, 1);
-$y += 5;
-$pdf->SetY($y);
-$pdf->SetX(35);
-$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("quedará funcionando en el Area ".$area);
+$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("defecto me contactaré con el Área de Sistemas Informáticos.");
 $pdf->Cell(0, 0, $texto, 0, 1);
 $y += 10;
 $pdf->SetY($y);
@@ -83,7 +71,7 @@ $pdf->Cell(0, 0, $texto, 0, 1);
 $y += 27;
 $pdf->SetY($y);
 $pdf->SetX(25);
-$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("ACLARACION:  ");
+$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("ACLARACION:  ".$datosTablet['nombre_apellido']);
 $pdf->Cell(0, 0, $texto, 0, 1);
 $pdf->Output();
 ?>

@@ -139,7 +139,7 @@
 						id: 'contenedorPpal',
 						text: 'Texto por defecto!'
 					}).appendTo('.realBody');
-					$("#contenedorPpal").load("controlador/MemoriasController.php");
+					location.reload("true");
 				}
 			}
 		})
@@ -315,8 +315,6 @@
 					});
 				}
 				);
-
-
 	});
 
 
@@ -476,8 +474,5 @@
 					});
 				}
 				);
-
-
 	});
-
 </script>

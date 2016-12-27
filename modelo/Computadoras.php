@@ -780,6 +780,20 @@ return $tabla;
 			var_dump(BDD::getInstance());return 0;}
 	}
 
+	public function modificarNumSerie($datos)
+	{
+		$id = $datos['id_computadora'];
+		$num_serie = $datos['num_serie'];
+
+		if ( ! BDD::getInstance()->query("UPDATE system.computadoras SET num_serie = '$num_serie' where id_computadora = '$id'")->get_error())
+		{
+			return 1;
+		}
+		else
+		{
+			var_dump(BDD::getInstance());return 0;}
+	}
+
 	public function eliminarLogico($datos)
 	{
 		$id       = $datos['id_computadora'];

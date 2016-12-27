@@ -445,6 +445,7 @@
 					action : "agregar_desc",
 					viene : "normal"
 				}, function(data){
+					console.log(data);
 					jQuery('<div/>', {
 						id: 'dialogcontent_cpu',
 						text: 'Texto por defecto!'
@@ -494,7 +495,7 @@
 			TablaPpal : "Computadoras",
 			ID : id_computadora,
 					queSos : "computadora", //a quien le voy a generar la vista
-					action : "agregar_desc",
+					action : "modif_num_serie",
 					viene : "normal"
 				}, function(data){
 					jQuery('<div/>', {
@@ -526,7 +527,7 @@
 								$("#dialogcontent_cpu").remove();
 							},
 							"Guardar" : function(){
-								$("#form_detalle_agregar_desc").submit();
+								$("#form_modif_num_serie").submit();
 							}
 						}
 					});
