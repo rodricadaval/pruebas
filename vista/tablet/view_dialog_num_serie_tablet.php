@@ -8,7 +8,7 @@
             <td colspan="2">Num Serie:</td>   
         </tr>
         <tr>
-            <td><textarea rows="4" cols="50" name="num_serie">{num_serie}</textarea></td>
+            <td><textarea rows="4" cols="50" name="num_serie"></textarea></td>
         </tr>
   </table>
 </form>
