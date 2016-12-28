@@ -64,7 +64,6 @@ if (isset($_POST['action']))
 		break;
 
 		case 'cambiar_usuario':
-		var_dump($_POST['nombre_usuario']);
 		echo Tablets::setUsuario($_POST['id_tablet'],$_POST['nombre_usuario']);
 		break;
 
