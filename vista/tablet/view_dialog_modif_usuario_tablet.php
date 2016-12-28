@@ -11,6 +11,7 @@
                      <input name="nombre_usuario" id="nombre_usuario" class="typeahead" type="text" placeholder="Nombre de usuario" value="{nombre_apellido}">
                 </div>
             </td>
+            <td id="usuario" value=""></td>
         </tr>
         <tr>
           <td>Sector:</td>
@@ -109,6 +110,7 @@ console.log(datosUrl);
                 type: 'POST',
                 data: datosUrl,
                 success : function(response){
+                    console.log(response);
                     if(response){
                         console.log(response);
                         alert("Los datos han sido actualizados correctamente. Tenga en cuenta que al cambiar de usuario se reemplazará automáticamente la tablet asignada por la del usuario elegido.");
