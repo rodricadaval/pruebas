@@ -426,5 +426,10 @@ class Usuarios {
 
 	}
 
+	public function dame_nombre_area($id_area)
+	{
+		return BDD::getInstance()->query("SELECT nombre FROM system.areas WHERE id_area='$id_area'")->_fetchRow()['nombre'];
+	}
+
 }
 ?>

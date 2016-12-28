@@ -58,17 +58,24 @@ if (isset($_POST['action']))
 
 		case 'usuario':
 		$usuario = Tablets::getUsuario($id_tablet);
-		$url = array("vista/tablet/view_dialog_usuario_tablet.php");
-		$parametros = array('id_tablet' => $id_tablet,'nombre_apellido' => $nombre_apellido,'id_usuario' => $id_usuario);
+		$url = array("vista/tablet/view_dialog_modif_usuario_tablet.php");
+		$parametros = array('id_tablet' => $id_tablet,'nombre_apellido' => $usuario['nombre_apellido'],'id_usuario' => $usuario['id_usuario'],'sector' => $usuario['sector']);
 		echo Disenio::HTML($url,$parametros);
 		break;
 
 		case 'cambiar_usuario':
-		echo Tablets::setUsuario($_POST['id_tablet'],$_POST['id_usuario']);
+		var_dump($_POST['nombre_usuario']);
+		echo Tablets::setUsuario($_POST['id_tablet'],$_POST['nombre_usuario']);
+		break;
+
+		case 'desasignar':
+		$url = array("vista/tablet/view_dialog_desasignar_tablet.php");
+		$parametros = array('id_tablet' => $id_tablet);
+		echo Disenio::HTML($url,$parametros);
 		break;
 
 		case 'liberar':
-		echo Tablets::setLibre($id_tablet);
+		echo Tablets::setLibre($_POST['id_tablet']);
 		break;
 
 		default:

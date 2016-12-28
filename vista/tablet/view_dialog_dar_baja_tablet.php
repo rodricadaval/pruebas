@@ -30,6 +30,7 @@ $(document).ready(function(){
                         id: 'contenedorPpal',
                         text: 'Texto por defecto!'
                         }).appendTo('.realBody');
+                    $("#contenedorPpal").load("controlador/TabletsController.php");
                 }
             }
         })

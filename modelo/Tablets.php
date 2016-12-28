@@ -24,10 +24,7 @@ WHERE T.estado = 1 AND T.id_tablet = '$id'")->_fetchRow();
 
 		$inst_table = BDD::getInstance()->query("
 			SELECT num_serie,M.nombre as \"marca\",modelo,A.nombre as \"sector\",U.nombre_apellido,descripcion,
-			'<a id=\"modificar_sector_tablet\" class=\"pointer_tablet\"id_tablet=\"' || id_tablet || '\">
-			<i class=\"black large sitemap icon\" title=\"Cambiar Sector \"></i>
-			</a>
-			<a id=\"modificar_usuario_tablet\" class=\"pointer_tablet\"id_tablet=\"' || id_tablet || '\">
+			'<a id=\"modificar_usuario_tablet\" class=\"pointer_tablet\"id_tablet=\"' || id_tablet || '\">
 			<i class=\"purple large user icon\" title=\"Asignar un Usuario\"></i>
 			</a>
 			<a id=\"ver_detalle\" class=\"pointer_tablet\"id_tablet=\"' || id_tablet || '\">
@@ -95,12 +92,27 @@ WHERE T.estado = 1 AND T.id_tablet = '$id'")->_fetchRow();
 
 	public function getUsuario($id)
 	{
-		
+		return BDD::getInstance()->query("SELECT T.id_usuario,A.nombre as \"sector\",U.nombre_apellido FROM system.tablets T INNER JOIN system.usuarios U ON U.id_usuario = T.id_usuario INNER JOIN system.areas A ON A.id_area = U.area WHERE T.id_tablet = '$id'")->_fetchRow();
+	}
+
+	public function getUsuarioPorNombre($nombre_usuario)
+	{
+		return BDD::getInstance()->query("SELECT id_usuario FROM system.usuarios WHERE nombre_apellido = '$nombre_usuario'")->_fetchRow()['id_usuario'];
+	}
+
+	public function setUsuario($id_tablet,$nombre_usuario)
+	{
+		$id_usuario = $this->getUsuarioPorNombre($nombre_usuario);
+		$inst = new Usuarios();
+		$id_sector = $inst->dame_id_areas($id_usuario);
+
+		return !BDD::getInstance()->query("UPDATE system.tablets SET id_usuario = '$id_usuario',id_sector = '$id_sector' WHERE id_tablet = '$id'")->get_error();
 	}
 
 	public function setLibre($id)
 	{
 		return !BDD::getInstance()->query("UPDATE system.tablets SET id_sector = 1,id_usuario = 1 WHERE id_tablet = '$id'")->get_error();
 	}
+
 }
 ?>
