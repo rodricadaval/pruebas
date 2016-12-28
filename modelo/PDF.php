@@ -4,16 +4,16 @@ class PDF extends FPDF {
 	function Header()
 	{
 		// Logo
-		$this->Image('../images/header-sumar.png', 0, 0, 215);
+		$this->Image('../images/header-sumar.jpg', 0, 0, 215);
 		// Arial bold 15
 		$this->SetFont('Arial', 'BI', 9);
 		$this->SetTextColor(120, 120, 120);
 		// Movernos a la derecha
 		$this->Cell(90);
-		// Título
+		/*// Título
 		$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode('2015  – “Año del bicentenario del Congreso de los pueblos libres”.
 	');
-		$this->Cell(10, 37, $texto, 0, 1);
+		$this->Cell(10, 37, $texto, 0, 1);*/
 		// Salto de línea
 		$this->Ln(20);
 	}

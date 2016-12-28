@@ -163,6 +163,7 @@
 					},
 					"Guardar" : function(){
 						$("#form_detalle_agregar_desc").submit();
+						location.reload();
 					}
 				}
 			});
@@ -189,7 +190,7 @@
 		$.post( "controlador/TabletsController.php",
 		{
 			ID : id_tablet,
-			action : "dar_baja"
+			action : "desasignar"
 		}, function(data){
 			console.log(data);
 			jQuery('<div/>', {
@@ -220,7 +221,7 @@
 						$("#dialogcontent").remove();
 					},
 					"Aceptar" : function(){
-						$("#liberar").submit();
+						$("#form_desasignar").submit();
 					}
 				}
 			});
@@ -363,53 +364,6 @@
 					},
 					"Aceptar" : function(){
 						$("#form_dar_baja").submit();
-					}
-				}
-			});
-		}
-		);
-	});
-
-	$("#contenedorPpal").on('click','#modificar_sector_tablet',function(){
-		console.log("Entro a modificar sector");
-		console.log("id_tablet: "+$(this).attr("id_tablet"));
-		var id_tablet = $(this).attr("id_tablet");
-		$.post( "controlador/TabletsController.php",
-		{
-			ID : id_tablet,
-			action : "sector"
-		}, function(data){
-			console.log(data);
-			jQuery('<div/>', {
-				id: 'dialogcontent',
-				text: ''
-			}).appendTo('#contenedorPpal');
-			$("#dialogcontent").html(data);
-			$("#dialogcontent").dialog({
-				title: "Cambiar Sector",
-				show: {
-					effect: "explode",
-					duration: 200,
-					modal:true,
-				},
-				hide: {
-					effect: "explode",
-					duration: 200
-				},
-				width : 360,
-				height: 310,
-				close : function(){
-					$(this).dialog("destroy").empty();
-					$("#dialogcontent").remove();
-				},
-				buttons :
-				{
-					"Cancelar" : function () {
-						$(this).dialog("destroy").empty();
-						$("#dialogcontent").remove();
-					},
-					"Aceptar" : function(){
-						$("#form_sector_tablet").submit();
 					}
 				}
 			});

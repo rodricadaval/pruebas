@@ -1,28 +1,18 @@
-<form id="form_num_serie" autocomplete="off">
-    <table class="t_monitor">
-        <tr>
-            <tr type="hidden">
-               <td><input type="hidden" name="id_tablet" id="id_tablet" value="{id_tablet}"></td>
-            </tr>
-        <tr>
-            <td colspan="2">Num Serie:</td>   
-        </tr>
-        <tr>
-            <td><textarea rows="4" cols="50" name="num_serie">{num_serie}</textarea></td>
-        </tr>
-  </table>
+<form id="form_desasignar" autocomplete="off">
+    <p>¿Esta seguro que desea desasignar la tablet?</p>
+    <p>Volvera al stock.</p>
+    <input type="hidden" name="id_tablet" id="id_tablet" value="{id_tablet}">
 </form>
-
 <script>
 
 $(document).ready(function(){
 
-    $("#form_num_serie").on('submit',function(event){
+    $("#form_desasignar").on('submit',function(event){
         event.preventDefault();
 
-        var datosUrl = $("#form_num_serie").serialize();
+        var datosUrl = $("#form_desasignar").serialize();
         
-        datosUrl += "&action=agregar_num_serie";
+        datosUrl += "&action=liberar";
 
         console.log(datosUrl);
 
@@ -31,12 +21,13 @@ $(document).ready(function(){
             type: 'POST',
             data: datosUrl,
             success: function(response){
+                console.log(response);
                 if(response){
                     console.log("success");
-                    alert("El num_serie ha sido modificado correctamente.");
+                    alert("La tablet fue a stock.");
                     $("#dialogcontent").dialog("destroy").empty();
                     $("#dialogcontent").remove();
-                   $("#contenedorPpal").remove();
+                    $("#contenedorPpal").remove();
                         jQuery('<div/>', {
                         id: 'contenedorPpal',
                         text: 'Texto por defecto!'
