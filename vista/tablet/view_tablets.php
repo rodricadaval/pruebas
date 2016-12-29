@@ -114,7 +114,7 @@
 						$("#dialogcontent").remove();
 					},
 					"Guardar" : function(){
-						$("#form_num_serie").submit();
+						$("#form_num_serie_usuario").submit();
 					}
 				}
 			});
