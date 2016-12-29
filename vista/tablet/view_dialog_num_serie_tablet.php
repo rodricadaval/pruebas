@@ -1,16 +1,24 @@
 <form id="form_num_serie_usuario" autocomplete="off">
     <table class="t_monitor">
+       
         <tr>
             <ul class="nav nav-tabs">
                 <li class="active" id="serie"><a data-toggle="tab" href="">Num serie</a></li>
                 <li id="usuario"><a data-toggle="tab">Usuario</a></li>
+                <li id="descripcion"><a data-toggle="tab">Descripcion</a></li>
             </ul>
         </tr>
         <tr>
             <tr type="hidden">
-               <td><input type="hidden" name="id_tablet" id="id_tablet" value="{id_tablet}"></td>
-           </tr>
-           <tr class="serie">
+             <td><input type="hidden" name="id_tablet" id="id_tablet" value="{id_tablet}"></td>
+         </tr>
+          <tr class="desc">
+            <td colspan="2">Descripcion:</td>   
+        </tr>
+        <tr class="desc">
+            <td><textarea rows="4" cols="50" name="descripcion"></textarea></td>
+        </tr>
+         <tr class="serie">
             <td colspan="2">Num Serie:</td>   
         </tr>
         <tr class="serie">
@@ -20,17 +28,17 @@
         <tr class="usuario">
             <td>Usuario:</td>
             <td>
-             <div id="multiple-datasets">
-               <input name="nombre_usuario" id="nombre_usuario" class="typeahead" type="text" placeholder="Nombre de usuario">
-           </div>
-       </td>
-       <td id="usuario" value=""></td>
-   </tr>
-   <tr class="usuario">
+               <div id="multiple-datasets">
+                 <input name="nombre_usuario" id="nombre_usuario" class="typeahead" type="text" placeholder="Nombre de usuario">
+             </div>
+         </td>
+         <td id="usuario" value=""></td>
+     </tr>
+     <tr class="usuario">
       <td>Sector:</td>
       <td id="sector"><input type="hidden" name="sector"></td>
   </tr>
-  <tr><td colspan="2"><div class="error text-error"></div></td></tr>
+  <tr><td colspan="2"><div class="error text-error"></div></td></tr>  
 </table>
 </form>
 
@@ -39,18 +47,27 @@
     $(document).ready(function(){
 
         $(".usuario").hide();
+        $(".desc").hide();
 
         $("#usuario").on("click",function () {
             $(".serie").hide();
+            $(".desc").hide();
             $(".usuario").show();
         })
 
         $("#serie").on("click",function () {
             $(".usuario").hide();
+            $(".desc").hide();
             $(".serie").show();            
         })
 
-        $("#form_num_serie").on('submit',function(event){
+          $("#descripcion").on("click",function () {
+            $(".usuario").hide();
+            $(".serie").hide();            
+            $(".desc").show();            
+        })
+
+        /*$("#form_num_serie").on('submit',function(event){
             event.preventDefault();
 
             var datosUrl = $("#form_num_serie").serialize();
@@ -84,12 +101,12 @@
             .always(function() {
                 console.log("complete");
             });
-        }); 
+        }); */
 
 
         $("#nombre_usuario").on('focus', function(){
-           this.select();
-       })
+         this.select();
+     })
 
 
         $("#nombre_usuario").typeahead({
@@ -164,9 +181,11 @@
 
               var datosUrl = $("#form_num_serie_usuario").serialize();
 
-              var cambiarUsuario = datosUrl += "&action=cambiar_usuario";
+              var cambiarUsuario = datosUrl +  "&action=cambiar_usuario";
               
-              var agregarNumSerie = datosUrl += "&action=agregar_num_serie";
+              var agregarNumSerie = datosUrl + "&action=agregar_num_serie";
+
+              var cambiarDesc = datosUrl + "&action=agregar_desc";
               
               console.log(cambiarUsuario);
               console.log(agregarNumSerie);
@@ -178,7 +197,25 @@
                 success: function(response){
                     if(response){
                         console.log("success");
-                        alert("El num_serie ha sido modificado correctamente.");
+                    }
+                }
+            })
+              .fail(function() {
+                console.log("error");
+            })
+              .always(function() {
+                console.log("complete");
+            });
+
+              $.ajax({
+                url: 'controlador/TabletsController.php',
+                type: 'POST',
+                data: cambiarDesc,
+                success: function(response){
+                    console.log(response);
+
+                    if(response){
+                        console.log("success");
                     }
                 }
             })
@@ -197,7 +234,7 @@
                     console.log(response);
                     if(response){
                         console.log(response);
-                        alert("Los datos han sido actualizados correctamente. Tenga en cuenta que al cambiar de usuario se reemplazará automáticamente la tablet asignada por la del usuario elegido.");
+                        alert("Los datos han sido actualizados correctamente.");
                         $("#dialogcontent").dialog("destroy").empty();
                         $("#dialogcontent").remove();
                         $("#contenedorPpal").remove();
@@ -208,10 +245,10 @@
                         $("#contenedorPpal").load("controlador/TabletsController.php");
                     }
                     else{
-                     alert("Error en la query.");
-                 }
-             }
-         })
+                       alert("Error en la query.");
+                   }
+               }
+           })
               .fail(function() {
                 console.log("error");
                 alert("Algo no se registro correctamente");
