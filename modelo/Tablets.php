@@ -67,7 +67,11 @@ WHERE T.estado = 1 AND T.id_tablet = '$id'")->_fetchRow();
 
 	public function setDescripcion($id,$descripcion)
 	{
-		return !BDD::getInstance()->query("UPDATE system.tablets SET descripcion = '$descripcion' WHERE id_tablet = '$id'")->get_error();
+		if ($descripcion != "") {
+			return !BDD::getInstance()->query("UPDATE system.tablets SET descripcion = '$descripcion' WHERE id_tablet = '$id'")->get_error();
+		}else {
+			return 0;
+		}
 	}
 
 	public function getNumSerie($id)
@@ -77,7 +81,13 @@ WHERE T.estado = 1 AND T.id_tablet = '$id'")->_fetchRow();
 
 	public function setNumSerie($id,$num_serie)	
 	{
-		return !BDD::getInstance()->query("UPDATE system.tablets SET num_serie = '$num_serie' WHERE id_tablet = '$id'")->get_error();
+
+		if ($num_serie != "")	 {
+			return !BDD::getInstance()->query("UPDATE system.tablets SET num_serie = '$num_serie' WHERE id_tablet = '$id'")->get_error();
+		}
+		else {
+			return 0;
+		}
 	}
 
 	public function getComponentes($id)
