@@ -13,7 +13,8 @@ if (isset($_POST['viene']))
 }
 
 if (isset($_POST['queSos'])) {
-	if($_POST['queSos'] == "nombre"){
+
+	if($_POST['queSos'] == "nombre" || $_POST['queSos'] == "nuevo"){
 
 		$_POST['queSos'] = strtolower(substr($_POST['TablaPpal'], 0, -1));
 
