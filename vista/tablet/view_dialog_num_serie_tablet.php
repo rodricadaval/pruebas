@@ -189,6 +189,7 @@
               
               console.log(cambiarUsuario);
               console.log(agregarNumSerie);
+              console.log(cambiarDesc);
 
               $.ajax({
                 url: 'controlador/TabletsController.php',

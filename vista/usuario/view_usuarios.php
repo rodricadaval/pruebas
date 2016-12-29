@@ -196,6 +196,7 @@
 				select_Permisos : "Permisos", //Clase de la cual quiero sacar el select
 				queSos : "nuevo" //a quien le voy a generar la vista
 			}, function(data){
+				console.log(data);
 				jQuery('<div/>', {
 				    id: 'dialogcontent',
 				    text: 'Texto por defecto!'
