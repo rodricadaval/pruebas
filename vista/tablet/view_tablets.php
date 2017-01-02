@@ -30,7 +30,7 @@
 							"destroy" : true,
 							"aaData" : data,
 							"bAutoWidth": false,
-							"iDisplayLength": 100,
+							"iDisplayLength": 300,
 							"aoColumns" :[
 							{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
 							{ "sTitle" : "Marca" , "mData" : "marca"},
