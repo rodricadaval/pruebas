@@ -3,6 +3,7 @@ require_once "../ini.php";
 require "../lib/fpdf/fpdf.php";
 
 $datosUsuario = Usuarios::getById($_GET['id_usuario']);
+$descripcion_area = Usuarios::dame_descripcion_area($_GET['id_usuario']);
 $area = Areas::getNombre($datosUsuario['area']);
 $area = HTML_ENTITIES_DECODE::text_to_pdf_decode($area);
 unset($_GET['id_usuario']);
@@ -22,6 +23,14 @@ $pdf->SetY($y);
 $pdf->SetX(25);
 $pdf->Cell(0, 0, "AREA ".$area, 0, 1);
 $y += 10;
+
+if($area == "SESION"){
+	$pdf->SetY($y);
+	$pdf->SetX(25);
+	$pdf->SetFont('Arial', 'I', 11);
+	$pdf->Cell(0, 0, "Destino: ".$descripcion_area, 0, 1);		
+}
+
 $pdf->SetY($y);
 $pdf->SetX(138);
 $pdf->SetFont('Arial', 'I', 11);
@@ -43,28 +52,28 @@ foreach ($_GET as $key => $value)
 	switch ($datos[$i]['producto'])
 	{
 		case 'Computadora':
-			$tipos = Tipos_Computadoras::get_rel_campos();
-			$clase = $datos[$i]['clase'];
-			$tipo_producto = array_search($clase, $tipos);
-			$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode($tipo_producto.": ".$datos[$i]['marca']." ".$datos[$i]['modelo']."   Serie N° ".$datos[$i]['num_serie']);
-			$pdf->Cell(0, 0, $texto, 0, 1);
-			break;
+		$tipos = Tipos_Computadoras::get_rel_campos();
+		$clase = $datos[$i]['clase'];
+		$tipo_producto = array_search($clase, $tipos);
+		$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode($tipo_producto.": ".$datos[$i]['marca']." ".$datos[$i]['modelo']."   Serie N° ".$datos[$i]['num_serie']);
+		$pdf->Cell(0, 0, $texto, 0, 1);
+		break;
 		case 'Monitor':
-			$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode($datos[$i]['producto'].": ".$datos[$i]['marca']." ".$datos[$i]['modelo']."   Serie N° ".$datos[$i]['num_serie']);
-			$pdf->Cell(0, 0, $texto, 0, 1);
-			break;
+		$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode($datos[$i]['producto'].": ".$datos[$i]['marca']." ".$datos[$i]['modelo']."   Serie N° ".$datos[$i]['num_serie']);
+		$pdf->Cell(0, 0, $texto, 0, 1);
+		break;
 		case 'Disco':
-			$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode($datos[$i]['producto'].": ".$datos[$i]['marca']."  ".$datos[$i]['capacidad'].$datos[$i]['unidad']);
-			$pdf->Cell(0, 0, $texto, 0, 1);
-			break;
+		$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode($datos[$i]['producto'].": ".$datos[$i]['marca']."  ".$datos[$i]['capacidad'].$datos[$i]['unidad']);
+		$pdf->Cell(0, 0, $texto, 0, 1);
+		break;
 		case 'Memoria':
-			$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode($datos[$i]['producto'].": ".$datos[$i]['marca']."  ".$datos[$i]['tipo']."  ".$datos[$i]['capacidad'].$datos[$i]['unidad']);
-			$pdf->Cell(0, 0, $texto, 0, 1);
-			break;
+		$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode($datos[$i]['producto'].": ".$datos[$i]['marca']."  ".$datos[$i]['tipo']."  ".$datos[$i]['capacidad'].$datos[$i]['unidad']);
+		$pdf->Cell(0, 0, $texto, 0, 1);
+		break;
 
 		default:
 			# code...
-			break;
+		break;
 	}
 	$y += 5;
 }

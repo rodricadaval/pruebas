@@ -35,6 +35,11 @@
           <td class="f_conf_password"><input type="password" name="conf_password" id="conf_password" value="" disabled></td>
         </tr>
 
+        <tr>
+          <td>Descripcion</td>
+          <td><input type="text" name="descripcion_area" id="descripcion_area" value="{descripcion_area}"></td>
+        </tr>
+
             <td colspan="4" id="vista_pass">
               <input style="float:right; margin-bottom:20px;" type="button" id="cambiar_pass" name="boton" value="Cambiar Contraseña">
             </td>
@@ -77,6 +82,13 @@ $(document).ready(function(){
         $("#nueva_password, #conf_password").removeAttr("disabled");
         $("#vista_pass").hide();
         $(".ID").hide();
+    }
+
+    if($("#select_areas option:selected").val() == 23){
+      $(".fixed_user tr:nth-child(7)").show();
+    }
+    else{
+      $(".fixed_user tr:nth-child(7)").hide();
     }
 
 
@@ -290,6 +302,13 @@ $(document).ready(function(){
         $('input[name="con_productos"][value="SI"]').prop('checked', true);
         $('input[name="con_productos"][value="NO"]').removeAttr("checked");
       }
+
+      if($("#select_areas option:selected").val() == 23){
+      $(".fixed_user tr:nth-child(7)").show();
+    }
+    else{
+      $(".fixed_user tr:nth-child(7)").hide();
+    }
     })
 
 });

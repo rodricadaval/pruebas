@@ -322,6 +322,11 @@ class Usuarios {
 		return BDD::getInstance()->query("select area FROM system.".self::claseMinus()." WHERE id_usuario = '$id' ")->_fetchRow()['area'];
 	}
 
+	public function dame_descripcion_area($id)
+	{
+		return BDD::getInstance()->query("select descripcion_area FROM system.".self::claseMinus()." WHERE id_usuario = '$id' ")->_fetchRow()['descripcion_area'];
+	}
+
 	public function dameSelect($id = "", $sos = "")
 	{
 		$table     = BDD::getInstance()->query("select usuario, id_usuario, nombre_apellido from system.".self::claseMinus()." where id_usuario <> 1 and estado=1 order by nombre_apellido,usuario asc");
