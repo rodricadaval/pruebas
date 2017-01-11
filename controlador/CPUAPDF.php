@@ -3,6 +3,8 @@ require_once "../ini.php";
 require "../lib/fpdf/fpdf.php";
 
 $datosCpu = Computadoras::getConSectorById($_GET['id_computadora']);
+$nombreYApellido = Usuarios::getNombreDePila($datosCpu['id_usuario']);
+$descripcion_area = Usuarios::dame_descripcion_area($_GET['id_usuario']);
 $area = Areas::getNombre($datosCpu['id_sector']);
 $area = HTML_ENTITIES_DECODE::text_to_pdf_decode($area);
 unset($_GET['id_computadora']);
@@ -22,6 +24,14 @@ $pdf->SetY($y);
 $pdf->SetX(25);
 $pdf->Cell(0, 0, "AREA ".$area, 0, 1);
 $y += 10;
+
+if($area == "SESION"){
+	$pdf->SetY($y);
+	$pdf->SetX(25);
+	$pdf->SetFont('Arial', 'I', 11);
+	$pdf->Cell(0, 0, "Destino: ".$descripcion_area, 0, 1);		
+}
+
 $pdf->SetY($y);
 $pdf->SetX(138);
 $pdf->SetFont('Arial', 'I', 11);
@@ -105,7 +115,7 @@ $pdf->Cell(0, 0, $texto, 0, 1);
 $y += 27;
 $pdf->SetY($y);
 $pdf->SetX(25);
-$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("ACLARACION:  ");
+$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("ACLARACION:  ".$nombreYApellido);
 $pdf->Cell(0, 0, $texto, 0, 1);
 $pdf->Output();
 ?>

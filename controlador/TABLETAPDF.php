@@ -2,6 +2,7 @@
 require_once "../ini.php";
 require "../lib/fpdf/fpdf.php";
 $datosTablet = Tablets::getDataMemorandumById($_GET['id_tablet']);
+$descripcion_area = Usuarios::dame_descripcion_area($datosTablet['id_usuario']);
 $area = HTML_ENTITIES_DECODE::text_to_pdf_decode($datosTablet['sector']);
 unset($_GET['id_tablet']);
 $pdf = new PDF();
@@ -20,6 +21,14 @@ $pdf->SetY($y);
 $pdf->SetX(25);
 $pdf->Cell(0, 0, "AREA ".$area, 0, 1);
 $y += 10;
+
+if($area == "SESION"){
+	$pdf->SetY($y);
+	$pdf->SetX(25);
+	$pdf->SetFont('Arial', 'I', 11);
+	$pdf->Cell(0, 0, "Destino: ".$descripcion_area, 0, 1);		
+}
+
 $pdf->SetY($y);
 $pdf->SetX(138);
 $pdf->SetFont('Arial', 'I', 11);
