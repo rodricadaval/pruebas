@@ -31,7 +31,8 @@ if (isset($_POST['action']))
 
 		case 'dar_baja':
 		$url = array("vista/tablet/view_dialog_dar_baja_tablet.php");
-		$parametros = array('id_tablet' => $id_tablet);
+		$descripcion = Tablets::getDescripcion($id_tablet);
+		$parametros = array('id_tablet' => $id_tablet,'descripcion' => $descripcion);
 		echo Disenio::HTML($url,$parametros);
 		break;
 
@@ -42,6 +43,7 @@ if (isset($_POST['action']))
 		break;
 
 		case 'baja':
+		Tablets::setDescripcion($_POST['id_tablet'],$_POST['descripcion']);
 		echo Tablets::darDeBaja($_POST['id_tablet']);
 		break;
 
