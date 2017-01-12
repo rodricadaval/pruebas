@@ -77,6 +77,8 @@ if($descripcionBaja != ""){
 $y += 10;
 $pdf->SetY($y);
 $pdf->SetX(35);
+$pdf->SetFont('Arial', '', 11);
+
 $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("Sin otro motivo saludo atentamente.");
 $pdf->Cell(0, 0, $texto, 0, 1);
 $y += 25;

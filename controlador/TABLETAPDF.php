@@ -57,7 +57,16 @@ $pdf->SetY($y);
 $pdf->SetX(35);
 $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("También  se  deja  constancia  de  haber  recibido  las  partes en perfecto estado de");
 $pdf->Cell(0, 0, $texto, 0, 1);
-$y += 5;
+
+if($area == "SESION"){
+	$y += 5;
+$pdf->SetY($y);
+$pdf->SetX(35);
+$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("funcionamiento y me responsabilizo de su cuidado.");
+$pdf->Cell(0, 0, $texto, 0, 1);
+}
+else{
+	$y += 5;
 $pdf->SetY($y);
 $pdf->SetX(35);
 $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("funcionamiento y me responsabilizo de su cuidado. Y por cualquier tipo de cambio o");
@@ -66,7 +75,9 @@ $y += 5;
 $pdf->SetY($y);
 $pdf->SetX(35);
 $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("defecto me contactaré con el Área de Sistemas Informáticos.");
-$pdf->Cell(0, 0, $texto, 0, 1);
+$pdf->Cell(0, 0, $texto, 0, 1);	
+}
+
 $y += 10;
 $pdf->SetY($y);
 $pdf->SetX(35);
