@@ -83,6 +83,8 @@ WHERE T.id_tablet = '$id'")->_fetchRow();
 	{
 
 		if ($num_serie != "")	 {
+			$num_serie = trim($num_serie);
+
 			return !BDD::getInstance()->query("UPDATE system.tablets SET num_serie = '$num_serie' WHERE id_tablet = '$id'")->get_error();
 		}
 		else {

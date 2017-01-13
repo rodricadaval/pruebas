@@ -784,6 +784,7 @@ return $tabla;
 	{
 		$id = $datos['id_computadora'];
 		$num_serie = $datos['num_serie'];
+		$num_serie = trim($num_serie);
 
 		if ( ! BDD::getInstance()->query("UPDATE system.computadoras SET num_serie = '$num_serie' where id_computadora = '$id'")->get_error())
 		{
