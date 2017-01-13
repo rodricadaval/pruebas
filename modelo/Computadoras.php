@@ -280,12 +280,12 @@ return $tabla;
 		$table = BDD::getInstance()->query("select num_serie, id_computadora from system.".self::claseMinus()." where estado = 1");
 		if ($id != "")
 		{
-			$html_view = "<select id=".'select_computadoras'.'_'.$sos." name='id_computadora'>";
+			$html_view = "<select id="."select_computadoras"."_".$sos." name='id_computadora'>";
 
 		}
 		else if ($id == "")
 		{
-			$html_view = "<select id=".'select_computadoras'.'_'.$sos." name='id_computadora'>";
+			$html_view = "<select id="."select_computadoras"."_".$sos." name='id_computadora'>";
 			$html_view .= "<option selected='selected' value=''>Seleccione computadora</option>";
 		}
 
