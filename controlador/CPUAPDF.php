@@ -4,7 +4,7 @@ require "../lib/fpdf/fpdf.php";
 
 $datosCpu = Computadoras::getConSectorById($_GET['id_computadora']);
 $nombreYApellido = Usuarios::getNombreDePila($datosCpu['id_usuario']);
-$descripcion_area = Usuarios::dame_descripcion_area($_GET['id_usuario']);
+$descripcion_area = Usuarios::dame_descripcion_area($datosCpu['id_usuario']);
 $area = Areas::getNombre($datosCpu['id_sector']);
 $area = HTML_ENTITIES_DECODE::text_to_pdf_decode($area);
 unset($_GET['id_computadora']);
