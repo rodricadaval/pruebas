@@ -28,7 +28,8 @@ if($area == "SESION"){
 	$pdf->SetY($y);
 	$pdf->SetX(25);
 	$pdf->SetFont('Arial', 'I', 11);
-	$pdf->Cell(0, 0, "Destino: ".$descripcion_area, 0, 1);		
+	$pdf->Cell(0, 0, "Destino: ".$descripcion_area, 0, 1);
+	$y += 10;		
 }
 
 $pdf->SetY($y);
