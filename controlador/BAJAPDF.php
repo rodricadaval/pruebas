@@ -82,12 +82,12 @@ $pdf->SetFont('Arial', '', 11);
 
 $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("Sin otro motivo saludo atentamente.");
 $pdf->Cell(0, 0, $texto, 0, 1);
-$y += 25;
+$y += 10;
 $pdf->SetY($y);
 $pdf->SetX(25);
 $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("RECIBIO / FIRMA:");
 $pdf->Cell(0, 0, $texto, 0, 1);
-$y += 27;
+$y += 10;
 $pdf->SetY($y);
 $pdf->SetX(25);
 $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("ACLARACION:  ".$datosTablet['nombre_apellido']);
