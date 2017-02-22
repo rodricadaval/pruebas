@@ -1,8 +1,15 @@
 <div class="ui one column grid">
-	<div class="column">
+<div class="btn btn-danger" id="bajas">Dadas de baja</div>
+	<div class="column" id="tabla">
 		<div class="ui raised segment">
 			<a class="ui teal ribbon label">{TABLA}</a>
 			<table  cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
+		</div>
+	</div>
+	<div class="column" id="tabla_bajas" style="display: none;">
+		<div class="ui raised segment">
+			<a class="ui teal ribbon label">{TABLA}(dadas de baja)</a>
+			<table  cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable-bajas"></table>
 		</div>
 	</div>
 </div>
@@ -369,6 +376,73 @@
 			});
 		}
 		);
+	});
+
+	$('#contenedorPpal').on('click',"#bajas",function () {
+
+		$('#tabla').hide();
+		$('#tabla_bajas').show();
+		$('#bajas').hide();
+
+		$.ajax({
+			url : 'metodos_ajax.php',
+			method: 'post',
+			data:{ clase: '{TABLA}',
+			metodo: 'listarBajas',
+			tipo: 'json'},
+			dataType: 'json',
+			success : function(data){
+				$.get('logueo/check_priority.php', function(permisos) {
+
+					quitar_cargando ();
+
+					if( permisos == 1 || permisos == 3) {
+						$("#dataTable-bajas").dataTable({
+							"destroy" : true,
+							"aaData" : data,
+							"bAutoWidth": false,
+							"iDisplayLength": 100,
+							"aoColumns" :[
+							{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
+							{ "sTitle" : "Marca" , "mData" : "marca"},
+							{ "sTitle" : "Modelo" , "mData" : "modelo"},
+							{ "sTitle" : "Sector" , "mData" : "sector"},
+							{ "sTitle" : "Usuario" ,"sWidth": "21%", "mData": "nombre_apellido"},
+							{ "sTitle" : "Descripcion" , "mData" : "descripcion"},
+							{ "sTitle": "Action", "mData" : "m","sWidth": "26%","sDefaultContent":
+							'<a class="ventana_area " href="">Modificar</a>'}
+							]
+
+									/*,
+									"aoColumnDefs": [
+							            { "sWidth": "24%", "aTargets": [ -1 ] }
+							            ]*/
+							        })
+					}
+					else if (permisos == 2) {
+						$("#dataTable-bajas").dataTable({
+							"destroy" : true,
+							"aaData" : data,
+							"aoColumns" :[
+							{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
+							{ "sTitle" : "Marca" , "mData" : "marca"},
+							{ "sTitle" : "Modelo" , "mData" : "modelo"},
+							{ "sTitle" : "Sector" , "mData" : "sector"},
+							{ "sTitle" : "Usuario" ,"mDataProp": "nombre_apellido",
+							"mRender": function ( data, type, row ) {
+								return '<div id="ver_usuario" usuario="'+data+'"><a title="Ver productos de '+data+' "href="edit.php?usuario='+ data+'">'+data+'</a></div>';
+							}
+						}
+						],
+						"aoColumnDefs": [
+						{ "sWidth": "20%", "aTargets": [ -1 ] }
+						]
+					})
+					}
+					else { window.location.href = "logueo/login.php";}
+				});
+			}
+		});
 	});
 
 </script>
