@@ -59,6 +59,48 @@ WHERE T.id_tablet = '$id'")->_fetchRow();
 		}
 	}
 
+	public function listarBajas($datos_extra = "")
+	{
+
+		$data = null;
+
+		$inst_table = BDD::getInstance()->query("
+			SELECT num_serie,M.nombre as \"marca\",modelo,A.nombre as \"sector\",U.nombre_apellido,descripcion,
+			'<a id=\"modificar_usuario_tablet\" class=\"pointer_tablet\"id_tablet=\"' || id_tablet || '\">
+			<i class=\"purple large user icon\" title=\"Asignar un Usuario\"></i>
+			</a>
+			<a id=\"ver_detalle\" class=\"pointer_tablet\"id_tablet=\"' || id_tablet || '\">
+			<i class=\"orange large browser icon\" title=\"Ver sus componentes\"></i>
+			</a>
+			<a id=\"agregar_descripcion_tablet\" class=\"pointer_tablet\"id_tablet=\"' || id_tablet || '\">
+			<i class=\"blue large book icon\" title=\"Ver o editar descripcion\"></i>
+			</a>
+			<a id=\"desasignar_usuario_tablet\" class=\"pointer_tablet\"id_tablet=\"' || id_tablet || '\">
+			<i class=\"large minus outline icon\" title=\"Liberar Tablet\"></i>
+			</a>
+			<a id=\"generar_memorandum\" class=\"pointer_tablet\"id_tablet=\"' || id_tablet || '\">
+			<i title=\"Generar Memorandum\" class=\"orange file pdf outline large icon\"></i>
+			</a>
+			<a id=\"cambiar_num_serie\" class=\"pointer_tablet\"id_tablet=\"' || id_tablet || '\">
+			<i class=\"purple large edit icon\" title=\"Cambiar num de serie\"></i>
+			</a>
+			<a id=\"eliminar_tablet\" class=\"pointer_tablet\"id_tablet=\"' || id_tablet || '\">
+			<i class=\"red large trash icon\" title=\"Dar de baja\"></i>
+			</a>'
+			as m from system.tablets T INNER JOIN system.tablet_desc D ON D.id_tablet_desc = T.id_tablet_desc INNER JOIN system.marcas M ON M.id_marca = D.id_marca INNER JOIN system.areas A ON A.id_area = T.id_sector INNER JOIN system.usuarios U ON U.id_usuario = T.id_usuario WHERE T.estado = 0");
+
+		$todo  = $inst_table->_fetchAll();
+
+		if ($datos_extra[0] == "json")
+		{
+			echo json_encode($todo);
+		}
+		else
+		{
+			return $todo;
+		}
+	}
+
 	public function getDescripcion($id)
 	{
 		$ret = BDD::getInstance()->query("SELECT descripcion FROM system.tablets WHERE id_tablet = '$id'")->_fetchRow()['descripcion'];
