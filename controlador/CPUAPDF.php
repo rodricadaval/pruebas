@@ -93,7 +93,17 @@ if($area == "SESION"){
 	$y += 5;
 $pdf->SetY($y);
 $pdf->SetX(35);
-$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("funcionamiento y me responsabilizo de su cuidado.");
+$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("funcionamiento. No obstante, en caso de algún fallo de fabricación me contactaré con");
+$pdf->Cell(0, 0, $texto, 0, 1);
+	$y += 5;
+$pdf->SetY($y);
+$pdf->SetX(35);
+$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("la garantía correspondiente. En el caso de ser equipamiento fuera de garantía, me");
+$pdf->Cell(0, 0, $texto, 0, 1);
+$y += 5;
+$pdf->SetY($y);
+$pdf->SetX(35);
+$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("responsabilizo enteramente de su cuidado y manutención.");
 $pdf->Cell(0, 0, $texto, 0, 1);
 }
 else{
