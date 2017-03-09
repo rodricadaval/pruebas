@@ -43,7 +43,7 @@ $pdf->SetFont('Arial', '', 11);
 $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode('Por la presente dejo constancia de la remisión de los ítems que a continuación se detallan:');
 $pdf->Cell(0, 0, $texto, 0, 1);
 $i = 0;
-$y += 10;
+$y += 15;
 foreach ($_GET as $key => $value)
 {
 	$datos[$i] = Vinculos::getByID($value);
@@ -128,7 +128,7 @@ $pdf->SetY($y);
 $pdf->SetX(25);
 $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("RECIBIO / FIRMA:");
 $pdf->Cell(0, 0, $texto, 0, 1);
-$y += 15;
+$y += 10;
 $pdf->SetY($y);
 $pdf->SetX(25);
 $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("ACLARACION:  ".$datosUsuario['nombre_apellido']);
