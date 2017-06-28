@@ -8,7 +8,7 @@ class Tablets
 	
 	public function getDataMemorandumById($id)
 	{
-		$ret = BDD::getInstance()->query("SELECT num_serie,M.nombre as \"marca\",modelo,A.nombre as \"sector\",U.nombre_apellido,U.id_usuario,D.procesador,D.memoria,D.disco,T.descripcion from system.tablets T 
+		$ret = BDD::getInstance()->query("SELECT num_serie,M.nombre as marca,modelo,A.nombre as sector,U.nombre_apellido,U.id_usuario,D.procesador,D.memoria,D.disco,T.descripcion from system.tablets T 
 INNER JOIN system.tablet_desc D ON D.id_tablet_desc = T.id_tablet_desc 
 INNER JOIN system.marcas M ON M.id_marca = D.id_marca 
 INNER JOIN system.areas A ON A.id_area = T.id_sector 
@@ -23,7 +23,7 @@ WHERE T.id_tablet = '$id'")->_fetchRow();
 		$data = null;
 
 		$inst_table = BDD::getInstance()->query("
-			SELECT num_serie,M.nombre as \"marca\",modelo,A.nombre as \"sector\",U.nombre_apellido,descripcion,
+			SELECT num_serie,M.nombre as marca,modelo,A.nombre as sector,U.nombre_apellido,descripcion,
 			'<a id=\"modificar_usuario_tablet\" class=\"pointer_tablet\"id_tablet=\"' || id_tablet || '\">
 			<i class=\"purple large user icon\" title=\"Asignar un Usuario\"></i>
 			</a>
