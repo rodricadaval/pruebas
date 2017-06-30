@@ -277,6 +277,7 @@
 							                        }
 							                    }
 					});
+					$('.ui-dialog-buttonpane').append('<div class="pull-left"><p>Seleccionados: <span id="counter" text="0"></span></p></div>')
 				}
 			);
 	});

@@ -95,9 +95,9 @@
 			TablaPpal : "Computadoras",
 			ID : id_computadora,
 			select_clases : "Computadoras",
-					queSos : "computadora", //a quien le voy a generar la vista
-					action : "modif_tipo",
-					viene : "normal"
+			queSos : "computadora", //a quien le voy a generar la vista
+			action : "modif_tipo",
+			viene : "normal"
 				}, function(data){
 					jQuery('<div/>', {
 						id: 'dialogcontent_cpu',

@@ -7,6 +7,7 @@
   <li><a data-toggle="tab" data-target="#tabs6" href="controlador/ProductosController.php" vista="agregar_router">Router</a></li>
   <li><a data-toggle="tab" data-target="#tabs7" href="controlador/ProductosController.php" vista="agregar_switch">Switch</a></li>
   <li><a data-toggle="tab" data-target="#tabs8" href="controlador/ProductosController.php" vista="agregar_tablet">Tablet</a></li>
+  <li><a data-toggle="tab" data-target="#tabs9" href="controlador/ProductosController.php" vista="agregar_toner">Toner</a></li>
 
 </ul>
 
@@ -19,6 +20,7 @@
   <div class="tab-pane" id="tabs6"></div>
   <div class="tab-pane" id="tabs7"></div>
   <div class="tab-pane" id="tabs8"></div>
+  <div class="tab-pane" id="tabs9"></div>
 
 </div>
 

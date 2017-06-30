@@ -3,52 +3,56 @@ require_once "../ini.php";
 
 if (isset($_POST['action']))
 {
-	$action = $_POST['action'];
 	$id_toner = $_POST['ID'];
-	switch ($action)
+	switch ($_POST['action'])
 	{
-		case 'descripcion':
+		case 'dar_alta':
+		echo Toners::darDeAlta($_POST['id_impresora_desc'],$_POST['id_area'],$_POST['cantidad']);
+		break;
+
+		case 'mostrar_descripcion':
 		$descripcion = Toners::getDescripcion($id_toner);
 		$url   = array("vista/toner/view_dialog_descripcion_toner.php");		
 		$parametros = array("id_toner" => $id_toner,"descripcion" => $descripcion);
 		echo Disenio::HTML($url, $parametros);
 		break;
 
-		case 'agregar_descripcion':
-		echo Toners::setDescripcion($_POST['id_toner'],$_POST['descripcion']);
+		case 'cambiar_descripcion':
+		echo Toners::setDescripcion($id_toner,$_POST['descripcion']);
 		break;
 
-		case 'dar_baja':
+		case 'mostrar_baja':
 		$url = array("vista/toner/view_dialog_dar_baja_toner.php");
 		$descripcion = Toners::getDescripcion($id_toner);
 		$parametros = array('id_toner' => $id_toner,'descripcion' => $descripcion);
 		echo Disenio::HTML($url,$parametros);
 		break;
 
-		case 'detalle': 
-		$url = array("vista/toner/view_dialog_detalle_toner.php");
-		$parametros = Toners::getComponentes($id_toner);
-		echo Disenio::HTML($url,$parametros);
+		case 'dar_baja':
+		Toners::setDescripcion($id_toner,$_POST['descripcion']);
+		echo Toners::darDeBaja($id_toner);
 		break;
 
-		case 'baja':
-		Toners::setDescripcion($_POST['id_toner'],$_POST['descripcion']);
-		echo Toners::darDeBaja($_POST['id_toner']);
-		break;
-
-		case 'area':
-		$area = Toners::getArea($id_toner);
+		case 'mostrar_area':
+		$id_area = Toners::getArea($id_toner);
+		$select_areas = Areas::dameSelect($id_area,'');
 		$url = array("vista/toner/view_dialog_area_toner.php");
-		$parametros = array('id_toner' => $id_toner,'area' => $area);
+		$parametros = array('id_toner' => $id_toner,'select_areas' => $select_areas);
 		echo Disenio::HTML($url,$parametros);
 		break;
 
-		case 'cambiar_sector':
-		echo Toners::setSector($_POST['id_toner'],$_POST['id_sector']);
+		case 'cambiar_area':
+		echo Toners::setArea($id_toner,$_POST['area']);
+		break;
+
+		case 'mostrar_liberar':
+		$url = array("vista/toner/view_dialog_liberar_toner.php");
+		$parametros = array('id_toner' => $id_toner);
+		echo Disenio::HTML($url,$parametros);
 		break;
 
 		case 'liberar':
-		echo Toners::setLibre($_POST['id_toner']);
+		echo Toners::setLibre($id_toner);
 		break;
 
 		default:

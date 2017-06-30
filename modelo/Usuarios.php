@@ -351,12 +351,16 @@ class Usuarios {
 		return $html_view;
 	}
 
+	/*
+	 *	Este order by se agrega para que salga bien listado por tipo de producto
+	 *
+	 */
 	public function dameListadoMemoDeUsuario($id)
 	{
 
 		$lista_con_datos = null;
 
-		$lista = BDD::getInstance()->query("SELECT id_vinculo FROM system.vinculos WHERE id_usuario='$id' AND estado=1 ")->_fetchAll();
+		$lista = BDD::getInstance()->query("SELECT id_vinculo FROM system.vinculos WHERE id_usuario = '$id' AND estado = 1 order by id_tipo_producto")->_fetchAll();
 		$i = 0;
 		foreach ($lista as $campo)
 		{

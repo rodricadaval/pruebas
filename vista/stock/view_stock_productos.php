@@ -6,6 +6,8 @@
   <li><a data-toggle="tab" data-target="#tabs5_stock" href="controlador/StockController.php" vista="ver_impresoras">Impresoras</a></li>
   <li><a data-toggle="tab" data-target="#tabs6_stock" href="controlador/StockController.php" vista="ver_routers">Routers</a></li>
   <li><a data-toggle="tab" data-target="#tabs7_stock" href="controlador/StockController.php" vista="ver_switchs">Switchs</a></li>
+  <li><a data-toggle="tab" data-target="#tabs8_stock" href="controlador/StockController.php" vista="ver_tablets">Tablets</a></li>
+  <li><a data-toggle="tab" data-target="#tabs9_stock" href="controlador/StockController.php" vista="ver_toners">Toners</a></li>
   
 </ul>
 
@@ -17,6 +19,9 @@
   <div class="tab-pane" id="tabs5_stock"></div>
   <div class="tab-pane" id="tabs6_stock"></div>
   <div class="tab-pane" id="tabs7_stock"></div>
+  <div class="tab-pane" id="tabs8_stock"></div>
+  <div class="tab-pane" id="tabs9_stock"></div>
+
 
 </div>
 

@@ -75,6 +75,22 @@ else
 
 			break;
 
+		case 'ver_tablets':
+
+			$archivos   = array("vista/tablet/view_stock_tablets.php");
+			$parametros = array("TABLA" => "Tablets", "");
+			echo Disenio::HTML($archivos, $parametros);
+
+			break;
+
+		case 'ver_toners':
+
+			$archivos   = array("vista/toner/view_stock_toners.php");
+			$parametros = array("TABLA" => "Toners", "");
+			echo Disenio::HTML($archivos, $parametros);
+
+			break;
+
 		default:
 			# code...
 						break;

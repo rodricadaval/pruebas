@@ -4,6 +4,11 @@
 </form>
 <script>
 	$(document).ready(function(){
+		//Hago un contador para lo seleccionado
+		$('#form_listado_memorandum_usuario input').change(function(event) {
+			var count = $('#form_listado_memorandum_usuario input').filter(':checked').length;
+			$('.ui-dialog-buttonpane #counter').text(count);
+		});
 
 		$("#form_listado_memorandum_usuario").on("submit",function(e){
 			e.preventDefault();
@@ -17,8 +22,6 @@
 	        		checked=checked+"&"+"prod"+i+"="+$(this).val();
 	        		i++;
 	    	});
-
-	        console.log(checked);
 
 	         window.open("controlador/APDF.php?"+checked);
 		})

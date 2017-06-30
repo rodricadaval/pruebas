@@ -320,5 +320,23 @@ class Impresoras {
 		{
 			var_dump(BDD::getInstance());return 0;}
 	}
+
+	public function dameSelect()
+	{
+		$table = BDD::getInstance()->query("SELECT i.id_impresora_desc,concat(m.nombre,' ',i.modelo) AS impresora FROM system.impresora_desc i 
+		JOIN system.marcas m ON m.id_marca = i.id_marca
+		where i.estado = 1 and m.estado = 1");
+
+		$html_view = "<select id='select_impresoras' class='form-control' name='id_impresora_desc'>";
+		$html_view .= "<option selected='selected' value=''>Seleccionar</option>";
+		
+		while ($fila = $table->_fetchRow())
+		{
+			$html_view .= "<option value=".$fila['id_impresora_desc'].">".$fila['impresora']."</option>";
+		}
+
+		$html_view = $html_view."</select>";
+		return $html_view;
+	}
 }
 ?>

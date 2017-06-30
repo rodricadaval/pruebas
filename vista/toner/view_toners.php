@@ -69,14 +69,12 @@
 
 	$("#contenedorPpal").on('click' , '#ver_area' , function(){
 
-		console.log("Entro a cambiar numero de serie");
-		console.log("id_toner: "+$(this).attr("id_toner"));
 		var id_toner = $(this).attr("id_toner");
 
-		$.post( "controlador/TabletsController.php",
+		$.post( "controlador/TonersController.php",
 		{
 			ID : id_toner,
-			action : "asignar_area"
+			action : "mostrar_area"
 		}, function(data){
 			jQuery('<div/>', {
 				id: 'dialogcontent',
@@ -107,7 +105,7 @@
 						$("#dialogcontent").remove();
 					},
 					"Guardar" : function(){
-						$("#form_num_serie_usuario").submit();
+						$("#form_toner_modificar_area").submit();
 					}
 				}
 			});
@@ -117,14 +115,12 @@
 
 	$("#contenedorPpal").on('click' , '#ver_descripcion' , function(){
 
-		console.log("Entro a agregar descripcion");
-		console.log("id_toner: "+$(this).attr("id_toner"));
 		var id_toner = $(this).attr("id_toner");
 
 		$.post( "controlador/TonersController.php",
 		{
 			ID : id_toner,
-			action : "descripcion",
+			action : "mostrar_descripcion",
 		}, function(data){
 			jQuery('<div/>', {
 				id: 'dialogcontent',
@@ -156,7 +152,6 @@
 					},
 					"Guardar" : function(){
 						$("#form_detalle_agregar_desc").submit();
-						location.reload();
 					}
 				}
 			});
@@ -166,24 +161,18 @@
 
 	$("#contenedorPpal").on('click' , '#generar_memorandum' , function(event){
 		event.preventDefault();
-
-		console.log("Entro a seleccionar los productos para el memorandum de la toner");
-		console.log("id_toner: "+$(this).attr("id_toner"));
 		var id_toner = $(this).attr("id_toner");
-
-		window.open("controlador/TONERPDF.php?"+"id_toner="+id_toner);
+		window.open("controlador/TONERAPDF.php?"+"id_toner="+id_toner);
 	});
 
-	$("#contenedorPpal").on('click' , '#liberar' , function(){
+	$("#contenedorPpal").on('click' , '#ver_liberar' , function(){
 
-		console.log("Entro a desasignar toner");
-		console.log("id_toner: "+$(this).attr("id_toner"));
 		var id_toner = $(this).attr("id_toner");
 
-		$.post( "controlador/TabletsController.php",
+		$.post( "controlador/TonersController.php",
 		{
 			ID : id_toner,
-			action : "liberar"
+			action : "mostrar_liberar"
 		}, function(data){
 			console.log(data);
 			jQuery('<div/>', {
@@ -214,7 +203,7 @@
 						$("#dialogcontent").remove();
 					},
 					"Aceptar" : function(){
-						$("#form_desasignar").submit();
+						$("#form_liberar_toner").submit();
 					}
 				}
 			});
@@ -222,25 +211,22 @@
 		);
 	});
 
-	$("#contenedorPpal").on('click','#baja',function(event){
+	$("#contenedorPpal").on('click','#ver_baja',function(event){
 		event.preventDefault();
-		console.log("Entro a ver detalles de la toner");
-		console.log("id_toner: "+$(this).attr("id_toner"));
 		var id_toner = $(this).attr("id_toner");
 
-		$.post( "controlador/TabletsController.php",
+		$.post( "controlador/TonersController.php",
 		{
 			ID : id_toner,
-			action : "baja"
+			action : "mostrar_baja"
 		}, function(data){
-			console.log(data);
 			jQuery('<div/>', {
 				id: 'dialogcontent',
 				text: ''
 			}).appendTo('#contenedorPpal');
 			$("#dialogcontent").html(data);
 			$("#dialogcontent").dialog({
-				title: "Componentes de la toner: ",
+				title: "Dar de baja toners: ",
 				show: {
 					effect: "explode",
 					duration: 200,
@@ -259,8 +245,7 @@
 				buttons :
 				{
 					"Aceptar" : function () {
-						$(this).dialog("destroy");
-						$("#dialogcontent").remove();
+						$("#form_dar_baja").submit();
 					}
 				}
 			});

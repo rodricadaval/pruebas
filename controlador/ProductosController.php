@@ -224,13 +224,10 @@ else
 		break;
 
 		case 'asignar_memoria_a_computadora':
-			//Tengo en el post el id, se me dificultaba conseguirlo desde este php porque
-			//no tengo acceso al TAB de memorias y disco de la view
-
 		$id_cpu = array("id_cpu" => $_POST['id_cpu']);
 
 		$html_view = Memorias::listarDisponiblesPara($id_cpu);
-			//die("<pre>". json_encode($html_view,JSON_PRETTY_PRINT) . "</pre>");
+		
 		$url = array("vista/memoria/view_asignar_memoria_a_computadora.php");
 		$parametros = array("Memorias" => $html_view,"id_cpu" => $id_cpu);
 		echo Disenio::HTML($url, $parametros);
@@ -239,12 +236,21 @@ else
 		case 'asignar_monitor_a_computadora':
 		$id_cpu = array("id_cpu" => $_POST['id_cpu']);
 		$html_view = Monitores::disponibles();
-			//die("<pre>". json_encode($html_view,JSON_PRETTY_PRINT) . "</pre>");
 		$url = array("vista/monitor/view_asignar_monitor_a_computadora.php");
 		$parametros = array("Monitores" => $html_view,"id_cpu" => $id_cpu);
 		echo Disenio::HTML($url, $parametros);
 		break;
+
+		case 'agregar_toner':
+		$select_areas = Areas::dameSelect('','');
+		$select_impresoras = Impresoras::dameSelect();
+		$url   = array("vista/toner/view_alta_toner.php");		
+		$parametros = array("select_areas" => $select_areas,"select_impresoras" => $select_impresoras);
+		echo Disenio::HTML($url, $parametros);
+		break;
 		
+		case 'agregar_tablet':
+		break;
 		
 		default:
 			# code...
