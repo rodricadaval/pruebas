@@ -90,32 +90,32 @@ $pdf->Cell(0, 0, $texto, 0, 1);
 
 if($area == "SESION"){
 	$y += 5;
-$pdf->SetY($y);
-$pdf->SetX(35);
-$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("funcionamiento. No obstante, en caso de algún fallo de fabricación me contactaré con");
-$pdf->Cell(0, 0, $texto, 0, 1);
+	$pdf->SetY($y);
+	$pdf->SetX(35);
+	$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("funcionamiento. No obstante, en caso de algún fallo de fabricación me contactaré con");
+	$pdf->Cell(0, 0, $texto, 0, 1);
 	$y += 5;
-$pdf->SetY($y);
-$pdf->SetX(35);
-$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("la garantía correspondiente. En el caso de ser equipamiento fuera de garantía, me");
-$pdf->Cell(0, 0, $texto, 0, 1);
-$y += 5;
-$pdf->SetY($y);
-$pdf->SetX(35);
-$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("responsabilizo enteramente de su cuidado y manutención.");
-$pdf->Cell(0, 0, $texto, 0, 1);
+	$pdf->SetY($y);
+	$pdf->SetX(35);
+	$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("la garantía correspondiente. En el caso de ser equipamiento fuera de garantía, me");
+	$pdf->Cell(0, 0, $texto, 0, 1);
+	$y += 5;
+	$pdf->SetY($y);
+	$pdf->SetX(35);
+	$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("responsabilizo enteramente de su cuidado y manutención.");
+	$pdf->Cell(0, 0, $texto, 0, 1);
 }
 else{
 	$y += 5;
-$pdf->SetY($y);
-$pdf->SetX(35);
-$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("funcionamiento y me responsabilizo de su cuidado. Y por cualquier tipo de cambio o");
-$pdf->Cell(0, 0, $texto, 0, 1);
-$y += 5;
-$pdf->SetY($y);
-$pdf->SetX(35);
-$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("defecto me contactaré con el Área de Sistemas Informáticos.");
-$pdf->Cell(0, 0, $texto, 0, 1);	
+	$pdf->SetY($y);
+	$pdf->SetX(35);
+	$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("funcionamiento y me responsabilizo de su cuidado. Y por cualquier tipo de cambio o");
+	$pdf->Cell(0, 0, $texto, 0, 1);
+	$y += 5;
+	$pdf->SetY($y);
+	$pdf->SetX(35);
+	$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("defecto me contactaré con el Área de Sistemas Informáticos.");
+	$pdf->Cell(0, 0, $texto, 0, 1);	
 }
 
 $y += 10;
@@ -133,5 +133,12 @@ $pdf->SetY($y);
 $pdf->SetX(25);
 $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("ACLARACION:  ".$datosUsuario['nombre_apellido']);
 $pdf->Cell(0, 0, $texto, 0, 1);
+if($area == "SESION"){
+	$y += 5;
+	$pdf->SetY($y);
+	$pdf->SetX(35);
+	$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("DNI: ");
+	$pdf->Cell(0, 0, $texto, 0, 1);
+}
 $pdf->Output();
 ?>

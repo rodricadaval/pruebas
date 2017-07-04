@@ -92,5 +92,12 @@ $pdf->SetY($y);
 $pdf->SetX(25);
 $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("ACLARACION:  ".$datosTablet['nombre_apellido']);
 $pdf->Cell(0, 0, $texto, 0, 1);
+if($area == "SESION"){
+	$y += 5;
+	$pdf->SetY($y);
+	$pdf->SetX(35);
+	$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("DNI: ");
+	$pdf->Cell(0, 0, $texto, 0, 1);
+}
 $pdf->Output();
 ?>
