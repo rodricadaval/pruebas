@@ -82,7 +82,7 @@ $y += 15;foreach ($_GET as $key => $value)
 $y += 10;
 $pdf->SetY($y);
 $pdf->SetX(35);
-$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("Se deja constancia de que los items presentan rupturas/fallas/desperfectos en su");
+$texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("Se deja constancia de que los items presentan fallas/desperfectos en su");
 $pdf->Cell(0, 0, $texto, 0, 1);
 $y += 5;
 $pdf->SetY($y);
