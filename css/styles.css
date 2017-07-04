@@ -633,3 +633,23 @@ div.control-group {
     text-transform: uppercase;
 }
 /*-----------------------------------Termino agregar router y switch----------------------------------*/
+/*-----------------------------------Agregar toner--------------------------------------*/
+
+#form_agregar_toner {
+    margin-left: 130px;
+    text-align: left;
+}
+#boton_crear_toner {
+    float: right;
+    margin-right: 0;
+    font-size: 15px;
+}
+#form_agregar_toner div.controls select {
+    width: 202px;
+}
+#form_agregar_toner fieldset {
+    overflow: auto;
+    height: auto;
+    width: 410px;
+}
+/*-----------------------------------Termino agregar toner------------------------------------*/

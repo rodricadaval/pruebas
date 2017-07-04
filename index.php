@@ -14,7 +14,8 @@ include 'logueo/chequeo_login.php';
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
     <script src="lib/jquery.hashchange.js" type="text/javascript"></script>
     <script src="lib/jquery.validate.js" type="text/javascript"></script>
-    <script src="semantic-ui/dist/semantic.js" type="text/javascript"></script>
+    <!-- <script src="semantic-ui/dist/semantic.js" type="text/javascript"></script> -->
+    <script src="semantic/dist/semantic.min.js" type="text/javascript"></script>
     <script src="lib/sstock.js" type="text/javascript"></script>
     <script src="lib/bootstrap.js" type="text/javascript"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.66.0-2013.10.09/jquery.blockUI.min.js"></script>
@@ -24,6 +25,7 @@ include 'logueo/chequeo_login.php';
     "stylesheet" type="text/css">
     <!-- <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.js"></script>-->
     <link href="css/semantic.css" rel="stylesheet" type="text/css">
+    <!-- <link href="semantic/dist/semantic.min.css" rel="stylesheet" type="text/css"> -->
     <link href="css/styles.css" rel="stylesheet" type="text/css">
     <link href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css"
     rel="stylesheet">
@@ -55,7 +57,7 @@ include 'logueo/chequeo_login.php';
                                     </h2>
                                 </div>
                                 <div class="span8">
-                                    <div class="ui raised segment" style="width:90%; margin-top:5%;">
+                                    <div class="ui raised segment" style="width:90%;">
                                       <h3 class="hometext">Bienvenido a la p&aacute;gina principal del sistema de stock del programa SUMAR! Clickee en los distintos men&uacute;s de su izquierda para acceder a los datos.</h3>
                                   </div>
                               </div>
