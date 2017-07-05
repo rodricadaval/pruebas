@@ -9,15 +9,20 @@ include 'logueo/chequeo_login.php';
     <meta charset="UTF-8" content="text/html" http-equiv="Content-Type">
     <meta name="Author" content="Rodrigo Cadaval" />
     <link rel="shortcut icon" href="http://programasumar.com.ar/favicon.ico">
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <!-- <script src="//code.jquery.com/jquery-1.11.0.min.js"></script> -->
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
-    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <!-- <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script> -->
     <script src="lib/jquery.hashchange.js" type="text/javascript"></script>
     <script src="lib/jquery.validate.js" type="text/javascript"></script>
     <!-- <script src="semantic-ui/dist/semantic.js" type="text/javascript"></script> -->
     <script src="semantic/dist/semantic.min.js" type="text/javascript"></script>
     <script src="lib/sstock.js" type="text/javascript"></script>
     <script src="lib/bootstrap.js" type="text/javascript"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.66.0-2013.10.09/jquery.blockUI.min.js"></script>
     <!-- <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"> -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -25,10 +30,12 @@ include 'logueo/chequeo_login.php';
     "stylesheet" type="text/css">
     <!-- <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.js"></script>-->
     <link href="css/semantic.css" rel="stylesheet" type="text/css">
+    <!-- Si quiero cambiar el css voy a tener que hacer cambios en los tamanios para que concuerden con la anterior version las clases -->
     <!-- <link href="semantic/dist/semantic.min.css" rel="stylesheet" type="text/css"> -->
     <link href="css/styles.css" rel="stylesheet" type="text/css">
-    <link href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css"
-    rel="stylesheet">
+    <!-- <link href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css"
+    rel="stylesheet"> -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 
     <title>Sistema Stock SUMAR</title>
 </head>
@@ -90,6 +97,7 @@ include 'logueo/chequeo_login.php';
 </div>
 
 <script type="text/javascript">
+
 
     $.validator.addMethod("notEqual", function(value, element, param) {
      return this.optional(element) || value != param;

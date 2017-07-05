@@ -13,7 +13,6 @@
 
 		cargando ();
 
-
 		$.ajax({
 			url : 'metodos_ajax.php',
 			method: 'post',

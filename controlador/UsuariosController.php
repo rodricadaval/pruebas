@@ -50,7 +50,13 @@ if (isset($_POST['action']))
 			echo $inst_usuarios->dame_id_area($id_usuario);
 		}
 		break;
-		default:
+
+		case 'descripcion_area':
+		if (isset($_POST['id_usuario']))
+		{
+			$inst_usuarios = new Usuarios();
+			echo $inst_usuarios->dame_descripcion_area($_POST['id_usuario']);
+		}
 		break;
 
 		case 'nombre_sector':
@@ -63,6 +69,8 @@ if (isset($_POST['action']))
 		}
 		break;
 
+		default:
+		break;
 	}
 }
 else
