@@ -12,7 +12,7 @@ if (isset($_POST['action']))
 			unset($_POST['action']);
 			$_POST['id_usuario'] = Usuarios::getIdByNombre($_POST['nombre_usuario']);
 			if (isset($_POST['asing_sector']) && $_POST['asing_sector'] == "yes")
-		{
+			{
 				unset($_POST['asing_sector']);
 				$_POST['id_sector'] = $_POST['area'];
 				unset($_POST['area']);

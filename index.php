@@ -19,7 +19,7 @@ include 'logueo/chequeo_login.php';
     <script src="lib/jquery.hashchange.js" type="text/javascript"></script>
     <script src="lib/jquery.validate.js" type="text/javascript"></script>
     <!-- <script src="semantic-ui/dist/semantic.js" type="text/javascript"></script> -->
-    <script src="semantic/dist/semantic.min.js" type="text/javascript"></script>
+    <script src="node_modules/semantic-ui/dist/semantic.min.js" type="text/javascript"></script>
     <script src="lib/sstock.js" type="text/javascript"></script>
     <script src="lib/bootstrap.js" type="text/javascript"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
