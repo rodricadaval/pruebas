@@ -2,15 +2,15 @@
     <fieldset>
         <legend>Complete los Datos <small>(hay validaciones al crear)</small></legend>
         <div class="control-group">
-            <label class="control-label" for="select_marcas_tablets">Marca</label>
+            <label class="control-label" for="select_marcas">Marca</label>
             <div class="controls">
-                {select_marcas_tablets}
+                {select_marcas}
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label" for="select_modelos_tablets">Modelo</label>
+            <label class="control-label" for="select_modelos">Modelo</label>
             <div class="controls">
-                {select_modelos_tablets}
+                {select_modelos}
             </div>
         </div>
         <div class="control-group">
@@ -55,18 +55,7 @@
             modelo: {
             	required : true
             },
-            nro_serie: {
-            	required : true,
-            	remote      : {
-                    url     : 'busquedas/busca_nro_serie_tablet.php' ,
-                    type     : 'post' ,
-                    data     : {
-                        serie : function() {
-                            return $("#nro_serie").val();
-                        }
-                    }
-                }
-            }
+            
         } ,
         messages : {
             marca : {

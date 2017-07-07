@@ -16,7 +16,7 @@
         <div class="control-group">
             <label class="control-label" for="cantidad">Cantidad</label>
             <div class="controls">
-                <input id="cantidad" type="number" name="cantidad">
+                <input id="cantidad" type="number" name="cantidad" placeholder="Ingrese cantidad">
             </div>
         </div>
         <div class="form-actions">

@@ -3,51 +3,50 @@ require_once "../ini.php";
 
 $parametros = array();
 
-if (isset($_POST['action']))
-{
+if (isset($_POST['action'])) {
 
-	$inst_areas = new Areas();
-	$action     = $_POST['action'];
-	unset($_POST['action']);
+    $inst_areas = new Areas();
+    $action     = $_POST['action'];
+    unset($_POST['action']);
 
-	switch ($action)
-	{
-		case 'crear':
+    switch ($action)
+    {
+    case 'crear':
 
-			foreach ($_POST as $clave => $valor)
-		{
-				$parametros[$clave] = $valor;
-			}
-			echo $inst_areas->crearArea($parametros);
+        foreach ($_POST as $clave => $valor)
+        {
+            $parametros[$clave] = $valor;
+        }
+        echo $inst_areas->crearArea($parametros);
 
-			break;
+        break;
 
-		case 'modificar':
+    case 'modificar':
 
-			foreach ($_POST as $clave => $valor)
-		{
-				$parametros[$clave] = $valor;
-			}
+        foreach ($_POST as $clave => $valor)
+        {
+            $parametros[$clave] = $valor;
+        }
 
-			echo $inst_areas->modificarDatos($parametros);
+        echo $inst_areas->modificarDatos($parametros);
 
-			break;
+        break;
 
-		case 'eliminar':
+    case 'eliminar':
 
-			echo $inst_areas->eliminar($_POST['id_area']);
-			break;
+        echo $inst_areas->eliminar($_POST['id_area']);
+        break;
 
-		default:
-			# code...
-						break;
-	}
+    default:
+        // code...
+        break;
+    }
 }
 else
 {
 
-	$archivos   = array("vista/area/view_areas.php");
-	$parametros = array("TABLA" => "Areas", "");
-	echo Disenio::HTML($archivos, $parametros);
+    $archivos   = array("vista/area/view_areas.php");
+    $parametros = array("TABLA" => "Areas", "");
+    echo Disenio::HTML($archivos, $parametros);
 }
 ?>

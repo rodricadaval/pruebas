@@ -1,457 +1,455 @@
 <?php
 
-class Discos {
+class Discos
+{
 
-	public static function claseMinus()
-	{
-		return strtolower(get_class());
-	}
+    public static function claseMinus()
+    {
+        return strtolower(get_class());
+    }
 
-	public function listarTodos()
-	{
+    public function listarTodos()
+    {
 
-		$inst_table = BDD::getInstance()->query("select * , '<a id=\"modificar_usuario_disco\" class=\"pointer\"id_disco=\"' || id_disco || '\"><i class=\"blue large user icon\" title=\"Asignar/Cambiar usuario\"></i></a><a id=\"modificar_cpu_disco\" class=\"pointer\"$id_disco=\"' || $id_disco || '\"><i class=\"black large laptop icon\" title=\"Asignar/Cambiar Computadora\"></i></a><a id=\"modificar_disco\" class=\"pointer\"$id_disco=\"' || $id_disco || '\"><i class=\"green large sitemap icon\" title=\"Editar sólo Sector\"></i></a> <a id=\"eliminar_disco\" class=\"pointer\"id_disco=\"' || id_disco || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>' as m from system.". self::claseMinus()." where estado = 1");
-		$i = 0;
-		while ($fila = $inst_table->_fetchRow())
-		{
-			foreach ($fila as $campo => $valor)
-			{
-				$data[$i][$campo] = $valor;
-			}
-			$i++;
-		}
-		echo json_encode($data);
-	}
+        $inst_table = BDD::getInstance()->query("select * , '<a id=\"modificar_usuario_disco\" class=\"pointer\"id_disco=\"' || id_disco || '\"><i class=\"blue large user icon\" title=\"Asignar/Cambiar usuario\"></i></a><a id=\"modificar_cpu_disco\" class=\"pointer\"$id_disco=\"' || $id_disco || '\"><i class=\"black large laptop icon\" title=\"Asignar/Cambiar Computadora\"></i></a><a id=\"modificar_disco\" class=\"pointer\"$id_disco=\"' || $id_disco || '\"><i class=\"green large sitemap icon\" title=\"Editar sólo Sector\"></i></a> <a id=\"eliminar_disco\" class=\"pointer\"id_disco=\"' || id_disco || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>' as m from system.". self::claseMinus()." where estado = 1");
+        $i = 0;
+        while ($fila = $inst_table->_fetchRow())
+        {
+            foreach ($fila as $campo => $valor)
+            {
+                $data[$i][$campo] = $valor;
+            }
+            $i++;
+        }
+        echo json_encode($data);
+    }
 
-	public function listarCorrecto($datos_extra = "")
-	{
+    public function listarCorrecto($datos_extra = "")
+    {
 
-		$data = null;
+        $data = null;
 
-		$inst_table = BDD::getInstance()->query("select * ,
+        $inst_table = BDD::getInstance()->query(
+            "select * ,
 			'<a id=\"modificar_sector_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"black large sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"modificar_cpu_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"blue large laptop icon\" title=\"Asignar una Computadora\"></i></a>
 			<a id=\"modificar_usuario_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"purple large user icon\" title=\"Asignar un Usuario\"></i></a>
 			<a id=\"desasignar_todo_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"green large minus outline icon\" title=\"Liberar disco (Quita el usuario y el cpu asignados) \"></i></a>
 			<a id=\"eliminar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>'
-			as m from system.". self::claseMinus()." where estado = 1");
+			as m from system.". self::claseMinus()." where estado = 1"
+        );
 
-		$todo  = $inst_table->_fetchAll();
-		$total = $inst_table->get_count();
+        $todo  = $inst_table->_fetchAll();
+        $total = $inst_table->get_count();
 
-		for ($i = 0; $i < $total; $i++)
-		{
+        for ($i = 0; $i < $total; $i++)
+        {
 
-			$data[$i] = $todo[$i];
+            $data[$i] = $todo[$i];
 
-			foreach ($data[$i] as $campo => $valor)
-			{
+            foreach ($data[$i] as $campo => $valor)
+            {
 
-				switch ($campo)
-				{
-					case 'id_disco_desc':
-						$data[$i]['marca'] = Disco_desc::dameMarca($valor);
-						break;
+                switch ($campo)
+                {
+                case 'id_disco_desc':
+                    $data[$i]['marca'] = Disco_desc::dameMarca($valor);
+                    break;
 
-					case 'id_vinculo':
-						$arrayAsoc_vinculo = Vinculos::dameDatos($valor);
+                case 'id_vinculo':
+                    $arrayAsoc_vinculo = Vinculos::dameDatos($valor);
 
-						foreach ($arrayAsoc_vinculo as $camp => $value)
-					{
-							if ($camp == "nombre_apellido" && $value == "Sin usuario")
-						{
-								$value = "-";
-							}
-							$data[$i][$camp] = $value;
-						}
-						break;
+                    foreach ($arrayAsoc_vinculo as $camp => $value)
+                    {
+                        if ($camp == "nombre_apellido" && $value == "Sin usuario") {
+                            $value = "-";
+                        }
+                        $data[$i][$camp] = $value;
+                    }
+                    break;
 
-					case 'id_capacidad':
-						$arrayAsoc_vinculo = Capacidades::dameDatos($valor);
+                case 'id_capacidad':
+                    $arrayAsoc_vinculo = Capacidades::dameDatos($valor);
 
-						foreach ($arrayAsoc_vinculo as $camp => $value)
-					{
-							$data[$i][$camp] = $value;
-						}
-						break;
+                    foreach ($arrayAsoc_vinculo as $camp => $value)
+                    {
+                        $data[$i][$camp] = $value;
+                    }
+                    break;
 
-					case 'id_unidad':
-						$arrayAsoc_vinculo = Unidades::dameDatos($valor);
+                case 'id_unidad':
+                    $arrayAsoc_vinculo = Unidades::dameDatos($valor);
 
-						foreach ($arrayAsoc_vinculo as $camp => $value)
-					{
-							$data[$i][$camp] = $value;
-						}
-						break;
+                    foreach ($arrayAsoc_vinculo as $camp => $value)
+                    {
+                        $data[$i][$camp] = $value;
+                    }
+                    break;
 
-					default:
-						# code...
-												break;
-				}
-			}
-			$data[$i]['capacidad'] .= " ".$data[$i]['unidad'];
-		}
-		//var_dump($data);
+                default:
+                    // code...
+                    break;
+                }
+            }
+            $data[$i]['capacidad'] .= " ".$data[$i]['unidad'];
+        }
+        //var_dump($data);
 
-		if ($datos_extra[0] == "json")
-		{
-			echo json_encode($data);
-		}
-		else
-		{
-			return $data;
-		}
-	}
+        if ($datos_extra[0] == "json") {
+            echo json_encode($data);
+        }
+        else
+        {
+            return $data;
+        }
+    }
 
-	public function listarEnStock($datos_extra = "")
-	{
+    public function listarEnStock($datos_extra = "")
+    {
 
-		$data = null;
+        $data = null;
 
-		$tipos = Tipo_productos::get_rel_campos();
-		$id_tipo_producto = array_search("Disco", $tipos);
+        $tipos = Tipo_productos::get_rel_campos();
+        $id_tipo_producto = array_search("Disco", $tipos);
 
-		$inst_table = BDD::getInstance()->query("select * ,
+        $inst_table = BDD::getInstance()->query(
+            "select * ,
 			'<a id=\"modificar_sector_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"black large sitemap icon\" title=\"Cambiar Sector \"></i></a>
 			<a id=\"modificar_cpu_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"blue large laptop icon\" title=\"Asignar una Computadora\"></i></a>
 			<a id=\"modificar_usuario_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"purple large user icon\" title=\"Asignar un Usuario\"></i></a>
 			<a id=\"eliminar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>'
-			as m from system.". self::claseMinus()." where estado = 1 AND id_vinculo IN (select id_vinculo from system.vinculos where id_usuario=1 AND id_cpu=1 AND id_tipo_producto='$id_tipo_producto')");
+			as m from system.". self::claseMinus()." where estado = 1 AND id_vinculo IN (select id_vinculo from system.vinculos where id_usuario=1 AND id_cpu=1 AND id_tipo_producto='$id_tipo_producto')"
+        );
 
-		$todo  = $inst_table->_fetchAll();
-		$total = $inst_table->get_count();
+        $todo  = $inst_table->_fetchAll();
+        $total = $inst_table->get_count();
 
-		for ($i = 0; $i < $total; $i++)
-		{
+        for ($i = 0; $i < $total; $i++)
+        {
 
-			$data[$i] = $todo[$i];
+            $data[$i] = $todo[$i];
 
-			foreach ($data[$i] as $campo => $valor)
-			{
+            foreach ($data[$i] as $campo => $valor)
+            {
 
-				switch ($campo)
-				{
-					case 'id_disco_desc':
-						$data[$i]['marca'] = Disco_desc::dameMarca($valor);
-						break;
+                switch ($campo)
+                {
+                case 'id_disco_desc':
+                    $data[$i]['marca'] = Disco_desc::dameMarca($valor);
+                    break;
 
-					case 'id_vinculo':
-						$arrayAsoc_vinculo = Vinculos::dameDatos($valor);
+                case 'id_vinculo':
+                    $arrayAsoc_vinculo = Vinculos::dameDatos($valor);
 
-						foreach ($arrayAsoc_vinculo as $camp => $value)
-					{
-							if ($camp == "nombre_apellido" && $value == "Sin usuario")
-						{
-								$value = "-";
-							}
-							$data[$i][$camp] = $value;
-						}
-						break;
+                    foreach ($arrayAsoc_vinculo as $camp => $value)
+                    {
+                        if ($camp == "nombre_apellido" && $value == "Sin usuario") {
+                            $value = "-";
+                        }
+                        $data[$i][$camp] = $value;
+                    }
+                    break;
 
-					case 'id_capacidad':
-						$arrayAsoc_vinculo = Capacidades::dameDatos($valor);
+                case 'id_capacidad':
+                    $arrayAsoc_vinculo = Capacidades::dameDatos($valor);
 
-						foreach ($arrayAsoc_vinculo as $camp => $value)
-					{
-							$data[$i][$camp] = $value;
-						}
-						break;
+                    foreach ($arrayAsoc_vinculo as $camp => $value)
+                    {
+                        $data[$i][$camp] = $value;
+                    }
+                    break;
 
-					case 'id_unidad':
-						$arrayAsoc_vinculo = Unidades::dameDatos($valor);
+                case 'id_unidad':
+                    $arrayAsoc_vinculo = Unidades::dameDatos($valor);
 
-						foreach ($arrayAsoc_vinculo as $camp => $value)
-					{
-							$data[$i][$camp] = $value;
-						}
-						break;
+                    foreach ($arrayAsoc_vinculo as $camp => $value)
+                    {
+                        $data[$i][$camp] = $value;
+                    }
+                    break;
 
-					default:
-						# code...
-												break;
-				}
-			}
-			$data[$i]['capacidad'] .= " ".$data[$i]['unidad'];
-		}
-		//var_dump($data);
+                default:
+                    // code...
+                    break;
+                }
+            }
+            $data[$i]['capacidad'] .= " ".$data[$i]['unidad'];
+        }
+        //var_dump($data);
 
-		if ($datos_extra[0] == "json")
-		{
-			echo json_encode($data);
-		}
-		else
-		{
-			return $data;
-		}
-	}
+        if ($datos_extra[0] == "json") {
+            echo json_encode($data);
+        }
+        else
+        {
+            return $data;
+        }
+    }
 
-	public function dameDatos($id)
-	{
-		$fila = BDD::getInstance()->query("select D.*,M.nombre as \"marca\" from system.". self::claseMinus()." D INNER JOIN system.disco_desc DE ON D.id_disco_desc = DE.id_disco_desc INNER JOIN system.marcas M ON M.id_marca = DE.id_marca where id_disco = '$id' ")->_fetchRow();
-		
-		/*foreach ($fila as $campo => $valor)
-		{
-			if ($campo == "id_disco_desc")
-			{
-				$fila['marca'] = Disco_desc::dameMarcas($valor);
-			}
-			else
-			{
-				$fila[$campo] = $valor;
-			}
-		}*/
-		return $fila;
-	}
+    public function dameDatos($id)
+    {
+        $fila = BDD::getInstance()->query("select D.*,M.nombre as marca from system.". self::claseMinus()." D INNER JOIN system.disco_desc DE ON D.id_disco_desc = DE.id_disco_desc INNER JOIN system.marcas M ON M.id_marca = DE.id_marca where id_disco = '$id' ")->_fetchRow();
+        
+        /*foreach ($fila as $campo => $valor)
+        {
+         if ($campo == "id_disco_desc")
+         {
+          $fila['marca'] = Disco_desc::dameMarcas($valor);
+         }
+         else
+         {
+          $fila[$campo] = $valor;
+         }
+        }*/
+        return $fila;
+    }
 
-	public function agregar($datos)
-	{
+    public function agregar($datos)
+    {
 
-		$id_disco_desc = Disco_desc::buscar_id_por_marca($datos['marca']);
+        $id_disco_desc = Disco_desc::buscar_id_por_marca($datos['marca']);
 
-		$values = $datos['id_vinculo'].",".$datos['capacidad'].",".$datos['unidad'].",".$id_disco_desc;
+        $values = $datos['id_vinculo'].",".$datos['capacidad'].",".$datos['unidad'].",".$id_disco_desc;
 
-		if ( ! BDD::getInstance()->query("INSERT INTO system.discos (id_vinculo,id_capacidad,id_unidad,id_disco_desc) VALUES ($values)")->get_error())
-		{
-			$valor_seq_actual_discos = BDD::getInstance()->query("select nextval('system.discos_id_disco_seq'::regclass)")->_fetchRow()['nextval'];
-			$valor_seq_actual_discos--;
-			BDD::getInstance()->query("select setval('system.discos_id_disco_seq'::regclass,'$valor_seq_actual_discos')");
-			return $valor_seq_actual_discos;
+        if (! BDD::getInstance()->query("INSERT INTO system.discos (id_vinculo,id_capacidad,id_unidad,id_disco_desc) VALUES ($values)")->get_error()) {
+            $valor_seq_actual_discos = BDD::getInstance()->query("select nextval('system.discos_id_disco_seq'::regclass)")->_fetchRow()['nextval'];
+            $valor_seq_actual_discos--;
+            BDD::getInstance()->query("select setval('system.discos_id_disco_seq'::regclass,'$valor_seq_actual_discos')");
+            return $valor_seq_actual_discos;
 
-		}
-		else
-		{
-			var_dump(BDD::getInstance());
-			return 0;}
-	}
+        }
+        else
+        {
+            var_dump(BDD::getInstance());
+            return 0;
+        }
+    }
 
-	public function getByID($id)
-	{
-		$datos = BDD::getInstance()->query("SELECT * from system.". self::claseMinus()." where id_disco = '$id' ")->_fetchRow();
+    public function getByID($id)
+    {
+        $datos = BDD::getInstance()->query("SELECT * from system.". self::claseMinus()." where id_disco = '$id' ")->_fetchRow();
 
-		$datos['capacidad'] = Capacidades::getNombre($datos['id_capacidad']);
-		$datos['unidad'] = Unidades::getNombre($datos['id_unidad']);
-		$datos['marca'] = Disco_desc::dameMarca($datos['id_disco_desc']);
-		$id_usuario  = Vinculos::getIdUsuario($datos['id_vinculo']);
-		$datos_extra = Usuarios::getByID($id_usuario);
-		$id_cpu      = Vinculos::getIdCpu($datos['id_vinculo']);
-		$datos['num_serie_cpu'] = Computadoras::getSerie($id_cpu);
-		$datos['nombre_area'] = Areas::getNombre($datos_extra['area']);
+        $datos['capacidad'] = Capacidades::getNombre($datos['id_capacidad']);
+        $datos['unidad'] = Unidades::getNombre($datos['id_unidad']);
+        $datos['marca'] = Disco_desc::dameMarca($datos['id_disco_desc']);
+        $id_usuario  = Vinculos::getIdUsuario($datos['id_vinculo']);
+        $datos_extra = Usuarios::getByID($id_usuario);
+        $id_cpu      = Vinculos::getIdCpu($datos['id_vinculo']);
+        $datos['num_serie_cpu'] = Computadoras::getSerie($id_cpu);
+        $datos['nombre_area'] = Areas::getNombre($datos_extra['area']);
 
-		//iconos
-		$datos_extra['action'] = "<a id=\"agregar_disco\" class=\"pointer_mon\"id_disco=\"".$datos['id_disco']."\"id_cpu=\"".$id_cpu."\"><i class=\"green large plus outline icon\" title=\"Agregar disco\"></i></a><a id=\"desasignar_todo_disco\" class=\"pointer_mon\"id_disco=\"".$datos['id_disco']."\"><i class=\"green large minus outline icon\" title=\"Liberar Monitor (Quita el usuario y el cpu asignados) \"></i></a>
+        //iconos
+        $datos_extra['action'] = "<a id=\"agregar_disco\" class=\"pointer_mon\"id_disco=\"".$datos['id_disco']."\"id_cpu=\"".$id_cpu."\"><i class=\"green large plus outline icon\" title=\"Agregar disco\"></i></a><a id=\"desasignar_todo_disco\" class=\"pointer_mon\"id_disco=\"".$datos['id_disco']."\"><i class=\"green large minus outline icon\" title=\"Liberar Monitor (Quita el usuario y el cpu asignados) \"></i></a>
 			<a id=\"eliminar_disco\" class=\"pointer_mon\"id_disco=\"".$datos['id_disco']."\"><i class=\"red large trash icon\" title=\"Eliminar\"></i></a>";
-		return array_merge($datos, $datos_extra);
-	}
+        return array_merge($datos, $datos_extra);
+    }
 
-	/*
-		Es equivalente a obtener Stock pero usando una view que cree en discos
-	*/
-	public function disponibles()
-	{
-		$datos = BDD::getInstance()->query("SELECT *,'<a id=\"asignar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"green large edit outline icon\" title=\"Asignar disco\"></i></a>' as action FROM discos_completos ORDER BY \"unidad\" DESC")->_fetchAll();
+    /*
+    Es equivalente a obtener Stock pero usando una view que cree en discos
+    */
+    public function disponibles()
+    {
+        $datos = BDD::getInstance()->query("SELECT *,'<a id=\"asignar_disco\" class=\"pointer_mon\"id_disco=\"' || id_disco || '\"><i class=\"green large edit outline icon\" title=\"Asignar disco\"></i></a>' as action FROM discos_completos ORDER BY \"unidad\" DESC")->_fetchAll();
 
-		$html_view = "";
-		$html_view .= "<fieldset>";
-		$html_view .= "<h4>Discos disponibles</h4>";
-		$html_view .= "<table class='table table-condensed' id='tabla_discos_disponibles'>";
-		$html_view .= "<tr>";
-		$html_view .= "<th>Marca</th>
+        $html_view = "";
+        $html_view .= "<fieldset>";
+        $html_view .= "<h4>Discos disponibles</h4>";
+        $html_view .= "<table class='table table-condensed' id='tabla_discos_disponibles'>";
+        $html_view .= "<tr>";
+        $html_view .= "<th>Marca</th>
 					   <th>Capacidad</th>
 					   <th>Sector</th>
 					   <th>Action</th>";
-		$html_view .= "</tr>";
+        $html_view .= "</tr>";
 
-		if ($datos == null)
-		{
-			$html_view .= "<tr>";
-			$html_view .= "<td colspan='3'>No hay discos disponibles</td>";
-			$html_view .= "</tr>";
-		}
-		else
-		{
+        if ($datos == null) {
+            $html_view .= "<tr>";
+            $html_view .= "<td colspan='3'>No hay discos disponibles</td>";
+            $html_view .= "</tr>";
+        }
+        else
+        {
 
-			foreach ($datos as $fila => $contenido)
-			{
-				$html_view .= "<tr>";
+            foreach ($datos as $fila => $contenido)
+            {
+                $html_view .= "<tr>";
 
-				$html_view .= "<td>".$contenido['marca']."</td>";
-				$html_view .= "<td>".$contenido['capacidad'].$contenido['unidad']."</td>";
-				$html_view .= "<td>".$contenido['sector']."</td>";
-				$html_view .= "<td>".$contenido['action']."</td>";
+                $html_view .= "<td>".$contenido['marca']."</td>";
+                $html_view .= "<td>".$contenido['capacidad'].$contenido['unidad']."</td>";
+                $html_view .= "<td>".$contenido['sector']."</td>";
+                $html_view .= "<td>".$contenido['action']."</td>";
 
-				$html_view .= "</tr>";
-			}
-		}
+                $html_view .= "</tr>";
+            }
+        }
 
-		$html_view .= "</table>";
-		$html_view .= "</fieldset>";
-		return $html_view;
-	}
+        $html_view .= "</table>";
+        $html_view .= "</fieldset>";
+        return $html_view;
+    }
 
-	public function dameListaDeUsuario($id_usuario)
-	{
+    public function dameListaDeUsuario($id_usuario)
+    {
 
-		$lista_con_datos = null;
+        $lista_con_datos = null;
 
-		$tipos = Tipo_productos::get_rel_campos();
-		$id_tipo_producto = array_search("Disco", $tipos);
+        $tipos = Tipo_productos::get_rel_campos();
+        $id_tipo_producto = array_search("Disco", $tipos);
 
-		$lista = BDD::getInstance()->query("SELECT id_pk_producto FROM system.vinculos where id_tipo_producto='$id_tipo_producto' and id_usuario='$id_usuario' AND estado=1 ")->_fetchAll();
-		$i = 0;
-		foreach ($lista as $campo)
-		{
-			$lista_con_datos[$i] = self::getByID($campo['id_pk_producto']);
-			$i++;
-		}
-		return self::generarListadoDeUsuario($lista_con_datos);
-	}
+        $lista = BDD::getInstance()->query("SELECT id_pk_producto FROM system.vinculos where id_tipo_producto='$id_tipo_producto' and id_usuario='$id_usuario' AND estado=1 ")->_fetchAll();
+        $i = 0;
+        foreach ($lista as $campo)
+        {
+            $lista_con_datos[$i] = self::getByID($campo['id_pk_producto']);
+            $i++;
+        }
+        return self::generarListadoDeUsuario($lista_con_datos);
+    }
 
-	public function generarListadoDeUsuario($listado)
-	{
+    public function generarListadoDeUsuario($listado)
+    {
 
-		$html_view = "";
-		$html_view .= "<fieldset>";
-		$html_view .= "<h4>Discos</h4>";
-		$html_view .= "<table class='table table-condensed' id='tabla_productos_user'>";
-		$html_view .= "<tr>";
-		$html_view .= "<th>Marca</th>
+        $html_view = "";
+        $html_view .= "<fieldset>";
+        $html_view .= "<h4>Discos</h4>";
+        $html_view .= "<table class='table table-condensed' id='tabla_productos_user'>";
+        $html_view .= "<tr>";
+        $html_view .= "<th>Marca</th>
 					   <th>Capacidad</th>
 					   <th>Serie Cpu</th>
 					   <th>Action</th>";
-		$html_view .= "</tr>";
+        $html_view .= "</tr>";
 
-		if ($listado == null)
-		{
-			$html_view .= "<tr>";
-			$html_view .= "<td colspan='3'>No tiene discos</td>";
-			$html_view .= "</tr>";
-		}
-		else
-		{
+        if ($listado == null) {
+            $html_view .= "<tr>";
+            $html_view .= "<td colspan='3'>No tiene discos</td>";
+            $html_view .= "</tr>";
+        }
+        else
+        {
 
-			foreach ($listado as $fila => $contenido)
-			{
-				$html_view .= "<tr>";
+            foreach ($listado as $fila => $contenido)
+            {
+                $html_view .= "<tr>";
 
-				$html_view .= "<td>".$contenido['marca']."</td>";
-				$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
-				$html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
-				$html_view .= "<td>".$contenido['action']."</td>";
+                $html_view .= "<td>".$contenido['marca']."</td>";
+                $html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
+                $html_view .= "<td>".$contenido['num_serie_cpu']."</td>";
+                $html_view .= "<td>".$contenido['action']."</td>";
 
-				$html_view .= "</tr>";
-			}
-		}
+                $html_view .= "</tr>";
+            }
+        }
 
-		$html_view .= "</table>";
-		$html_view .= "</fieldset>";
-		return $html_view;
-	}
+        $html_view .= "</table>";
+        $html_view .= "</fieldset>";
+        return $html_view;
+    }
 
-	public function dameListaDeCpu($id_cpu)
-	{
+    public function dameListaDeCpu($id_cpu)
+    {
 
-		$lista_con_datos = null;
+        $lista_con_datos = null;
 
-		$tipos = Tipo_productos::get_rel_campos();
-		$id_tipo_producto = array_search("Disco", $tipos);
+        $tipos = Tipo_productos::get_rel_campos();
+        $id_tipo_producto = array_search("Disco", $tipos);
 
-		$lista = BDD::getInstance()->query("SELECT id_pk_producto FROM system.vinculos where id_tipo_producto='$id_tipo_producto' AND id_cpu='$id_cpu' AND estado=1 ")->_fetchAll();
-		$i = 0;
-		foreach ($lista as $campo)
-		{
-			$lista_con_datos[$i] = self::getByID($campo['id_pk_producto']);
-			$i++;
-		}
+        $lista = BDD::getInstance()->query("SELECT id_pk_producto FROM system.vinculos where id_tipo_producto='$id_tipo_producto' AND id_cpu='$id_cpu' AND estado=1 ")->_fetchAll();
+        $i = 0;
+        foreach ($lista as $campo)
+        {
+            $lista_con_datos[$i] = self::getByID($campo['id_pk_producto']);
+            $i++;
+        }
 
-		return self::generarListadoDeCpu($lista_con_datos);
-	}
+        return self::generarListadoDeCpu($lista_con_datos);
+    }
 
-	public function generarListadoDeCpu($listado)
-	{
+    public function generarListadoDeCpu($listado)
+    {
 
-		$html_view = "";
-		$html_view .= "<fieldset>";
-		$html_view .= "<h4>Discos</h4>";
-		$html_view .= "<table class='table table-condensed' id='tabla_productos_cpu'>";
-		$html_view .= "<tr>";
-		$html_view .= "<th>Marca</th>
+        $html_view = "";
+        $html_view .= "<fieldset>";
+        $html_view .= "<h4>Discos</h4>";
+        $html_view .= "<table class='table table-condensed' id='tabla_productos_cpu'>";
+        $html_view .= "<tr>";
+        $html_view .= "<th>Marca</th>
 					   <th>Capacidad</th>";
-		$html_view .= "</tr>";
+        $html_view .= "</tr>";
 
-		if ($listado == null)
-		{
-			$html_view .= "<tr>";
-			$html_view .= "<td colspan='2'>No tiene discos</td>";
-			$html_view .= "</tr>";
-		}
-		else
-		{
+        if ($listado == null) {
+            $html_view .= "<tr>";
+            $html_view .= "<td colspan='2'>No tiene discos</td>";
+            $html_view .= "</tr>";
+        }
+        else
+        {
 
-			foreach ($listado as $fila => $contenido)
-			{
-				$html_view .= "<tr>";
+            foreach ($listado as $fila => $contenido)
+            {
+                $html_view .= "<tr>";
 
-				$html_view .= "<td>".$contenido['marca']."</td>";
-				$html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
+                $html_view .= "<td>".$contenido['marca']."</td>";
+                $html_view .= "<td>".$contenido['capacidad']." ".$contenido['unidad']."</td>";
 
-				$html_view .= "</tr>";
-			}
-		}
+                $html_view .= "</tr>";
+            }
+        }
 
-		$html_view .= "</table>";
-		$html_view .= "</fieldset>";
-		return $html_view;
-	}
+        $html_view .= "</table>";
+        $html_view .= "</fieldset>";
+        return $html_view;
+    }
 
-	public function getCapacidad($id)
-	{
-		$id_capacidad = BDD::getInstance()->query("select id_capacidad from system.discos where id_disco='$id' ")->_fetchRow()['id_capacidad'];
-		return Capacidades::getNombre($id_capacidad);
-	}
+    public function getCapacidad($id)
+    {
+        $id_capacidad = BDD::getInstance()->query("select id_capacidad from system.discos where id_disco='$id' ")->_fetchRow()['id_capacidad'];
+        return Capacidades::getNombre($id_capacidad);
+    }
 
-	public function getCapacidadEnMegas($id)
-	{
-		$fila = BDD::getInstance()->query("select id_capacidad,id_unidad from system.discos where id_disco='$id' ")->_fetchRow();
-		$id_capacidad = $fila['id_capacidad'];
-		$capacidad = Capacidades::getNombre($id_capacidad);
-		$id_unidad = $fila['id_unidad'];
-		$exponente = BDD::getInstance()->query("select potencia from system.unidades where id_unidad='$id_unidad' ")->_fetchRow()['potencia'];
-		$capacidad = $capacidad * pow(1024, $exponente);
-		return $capacidad;
-	}
+    public function getCapacidadEnMegas($id)
+    {
+        $fila = BDD::getInstance()->query("select id_capacidad,id_unidad from system.discos where id_disco='$id' ")->_fetchRow();
+        $id_capacidad = $fila['id_capacidad'];
+        $capacidad = Capacidades::getNombre($id_capacidad);
+        $id_unidad = $fila['id_unidad'];
+        $exponente = BDD::getInstance()->query("select potencia from system.unidades where id_unidad='$id_unidad' ")->_fetchRow()['potencia'];
+        $capacidad = $capacidad * pow(1024, $exponente);
+        return $capacidad;
+    }
 
-	public function liberar($id)
-	{
-		$id_vinculo = BDD::getInstance()->query("select id_vinculo from system.discos where id_disco='$id' ")->_fetchRow()['id_vinculo'];
-		$inst_vinc  = new Vinculos();
-		echo $inst_vinc->liberar($id_vinculo);
-	}
+    public function liberar($id)
+    {
+        $id_vinculo = BDD::getInstance()->query("select id_vinculo from system.discos where id_disco='$id' ")->_fetchRow()['id_vinculo'];
+        $inst_vinc  = new Vinculos();
+        echo $inst_vinc->liberar($id_vinculo);
+    }
 
-	public function eliminarLogico($datos)
-	{
-		$id       = $datos['id_disco'];
-		$detalle  = $datos['detalle_baja'];
-		$tipos    = Tipo_productos::get_rel_campos();
-		$id_tipo_producto = array_search("Disco", $tipos);
-		$tabla    = "system.discos";
-		$campo_pk = "id_disco";
+    public function eliminarLogico($datos)
+    {
+        $id       = $datos['id_disco'];
+        $detalle  = $datos['detalle_baja'];
+        $tipos    = Tipo_productos::get_rel_campos();
+        $id_tipo_producto = array_search("Disco", $tipos);
+        $tabla    = "system.discos";
+        $campo_pk = "id_disco";
 
-		if ( ! BDD::getInstance()->query("UPDATE system.discos SET descripcion = '$detalle' where id_disco = '$id'")->get_error())
-		{
-			if ( ! BDD::getInstance()->query("SELECT system.baja_logica_producto('$id','$id_tipo_producto','$tabla','$campo_pk')")->get_error())
-			{
-				return 1;
-			}
-			else
-			{
-				var_dump(BDD::getInstance());return 0;}
-		}
-		else
-		{
-			var_dump(BDD::getInstance());return 0;}
-	}
-	function __construct()
-	{
-	}
+        if (! BDD::getInstance()->query("UPDATE system.discos SET descripcion = '$detalle' where id_disco = '$id'")->get_error()) {
+            if (! BDD::getInstance()->query("SELECT system.baja_logica_producto('$id','$id_tipo_producto','$tabla','$campo_pk')")->get_error()) {
+                return 1;
+            }
+            else
+            {
+                var_dump(BDD::getInstance());return 0;
+            }
+        }
+        else
+        {
+            var_dump(BDD::getInstance());return 0;
+        }
+    }
+    function __construct()
+    {
+    }
 }
 ?>

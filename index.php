@@ -207,6 +207,35 @@ include 'logueo/chequeo_login.php';
 }
 
 });
+
+$(document).ready(function () {
+
+    $.extend( $.fn.dataTable.defaults, {
+      processing: true,
+      rowReorder: {
+        selector: 'td:nth-child(2)'
+      },
+      responsive: true,
+      language: {
+        emptyTable: "No se encontraron registros",
+        info: "Mostrando registros del _START_ al _END_ de _TOTAL_ registros",
+        infoEmpty: "No hay registros disponibles",
+        infoFiltered: "(filtrados de un total de _MAX_ registros)",
+        lengthMenu: "Mostrar _MENU_ registros",
+        loadingRecords: "Cargando...",
+        paginate: {
+          next: "Siguiente",
+          previous: "Anterior",
+          last: "Ultima"
+        },
+        processing: "Procesando...",
+        search: "Buscar:",
+        thousands: ".",
+        zeroRecords: "No se encontraron registros",
+      }
+    });
+
+});
 </script>
 </body>
 </html>
