@@ -378,6 +378,54 @@
 		);
 	});
 
+	$("#contenedorPpal").on('click' , '#reactivar' , function(){
+
+		console.log("Entro a dar de baja tablet");
+		console.log("id_tablet: "+$(this).attr("id_tablet"));
+		var id_tablet = $(this).attr("id_tablet");
+
+		$.post( "controlador/TabletsController.php",
+		{
+			ID : id_tablet,
+			action : "reactivar_dialog"
+		}, function(data){
+			console.log(data);
+			jQuery('<div/>', {
+				id: 'dialogcontent',
+				text: 'Texto por defecto!'
+			}).appendTo('#contenedorPpal');
+			$("#dialogcontent").html(data);
+			$("#dialogcontent").dialog({
+				show: {
+					effect: "explode",
+					duration: 200,
+					modal:true,
+				},
+				hide: {
+					effect: "explode",
+					duration: 200
+				},
+				width : 360,
+				height: 290,
+				close : function(){
+					$(this).dialog("destroy").empty();
+					$("#dialogcontent").remove();
+				},
+				buttons :
+				{
+					"Cancelar" : function () {
+						$(this).dialog("destroy").empty();
+						$("#dialogcontent").remove();
+					},
+					"Aceptar" : function(){
+						$("#form_reactivar").submit();
+					}
+				}
+			});
+		}
+		);
+	});
+
 	$('#contenedorPpal').on('click',"#bajas",function () {
 
 		$('#tabla').hide();
