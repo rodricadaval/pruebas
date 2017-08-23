@@ -18,6 +18,7 @@
     <a class="item" href="controlador/TabletsController.php" id="link_tablets"><i class="tablet icon"></i> ABM Tablets</a>
     <!-- <a class="item" href="controlador/TonersController.php" id="link_toners"><i class="theme icon"></i> ABM Toners</a> -->
     <a class="item" href="controlador/TonersController.php" id="link_toners"><i class="certificate icon"></i> ABM Toners</a>
+    <!--<a class="item" href="#" id="link_pdf"><i class="certificate icon"></i> PDF</a>-->
 </div>
 
 <!-- <div class="ui raised segment">
@@ -42,5 +43,10 @@ $.get('logueo/check_priority.php', function(permisos) {
     if (permisos == 2) {
         $("#link_agregar_producto,#link_permisos").hide();
     }
+});
+
+$("#link_pdf").click(function (e) { 
+    e.preventDefault();
+    window.open("controlador/SesionHardCodedPDF.php?"+"id_tablet=202")
 });
 </script>
