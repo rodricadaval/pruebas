@@ -288,7 +288,7 @@
 		$(area).tooltip();
 		
 
-		if($(this).find(':nth-child(4)').text() === 'SESION'){
+		if($(this).find(':nth-child(4)').text() === 'CESION'){
 var id_usuario = $(area).closest('tr').find('#modificar_usuario').attr('id_usuario');
 
 			$.post({

@@ -102,6 +102,97 @@ class Computadoras
         }
     }
 
+    public function listarBajas($datos_extra = "")
+    {
+
+        $data = null;
+
+        $inst_table = BDD::getInstance()->query(
+            "
+            select * ,
+            '<a id=\"modificar_sector_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
+            <i class=\"black large sitemap icon\" title=\"Cambiar Sector \"></i>
+            </a>
+            <a id=\"modificar_tipo_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
+            <i class=\"green large edit icon\" title=\"Cambiar Tipo\"></i>
+            </a>
+            <a id=\"modificar_usuario_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
+            <i class=\"purple large user icon\" title=\"Asignar un Usuario\"></i>
+            </a>
+            <a id=\"agregar_descripcion_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
+            <i class=\"blue large book icon\" title=\"Ver o editar descripcion\"></i>
+            </a>
+            <a id=\"desasignar_usuario_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
+            <i class=\"large minus outline icon\" title=\"Liberar Computadora\"></i>
+            </a>
+            <a id=\"cambiar_num_serie\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
+            <i class=\"purple large edit icon\" title=\"Cambiar num de serie\"></i>
+            </a>
+            <a id=\"eliminar_computadora\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
+            <i class=\"red large trash icon\" title=\"Reimprimir baja\"></i>
+            </a>
+            <a id=\"reactivar\" class=\"pointer_cpu\"id_computadora=\"' || id_computadora || '\">
+            <i class=\"green large checkmark icon\" title=\"Devolver a activas\"></i>
+            </a>'
+            as m from system.".self::claseMinus()."
+            where estado = 0 and id_computadora <> 1"
+        );
+
+        $todo  = $inst_table->_fetchAll();
+        $total = $inst_table->get_count();
+
+        for ($i = 0; $i < $total; $i++)
+        {
+
+            $data[$i] = $todo[$i];foreach ($data[$i] as $campo => $valor)
+            {
+                switch ($campo)
+                {
+                case 'id_computadora_desc':
+                    $arrayAsoc_desc = Computadora_desc::dameDatos($valor);
+
+                    foreach ($arrayAsoc_desc as $camp => $value)
+                    {
+                        if ($camp == "slots") {
+                            $slotsTotales = $value;
+                        }
+                        $data[$i][$camp] = $value;
+                    }
+                    break;
+
+                case 'id_vinculo':
+                    $arrayAsoc_vinculo = Vinculos::dameDatos($valor);
+
+                    foreach ($arrayAsoc_vinculo as $camp => $value)
+                    {
+                        $data[$i][$camp] = $value;
+                    }
+                    break;
+
+                case 'id_computadora':
+                    $id_cpu = $valor;
+                    break;
+
+                default:
+                    // code...
+                    break;
+                }
+            }
+            $data[$i]["slots_libres"] = self::getSlotsLibres($slotsTotales, $id_cpu);
+            if ($data[$i]["nombre_apellido"] == "Sin usuario") {
+                $data[$i]["nombre_apellido"] = "-";
+            }
+        }
+
+        if ($datos_extra[0] == "json") {
+            echo json_encode($data);
+        }
+        else
+        {
+            return $data;
+        }
+    }
+
     public function listarEnStock($datos_extra = "")
     {
 
@@ -847,6 +938,27 @@ class Computadoras
         $datos_compu['id_usuario'] = Vinculos::getIdUsuario($datos_compu['id_vinculo']);
 
         return $datos_compu;
+    }
+
+    public function dameListadoPC($id)
+    {
+
+        $lista_con_datos = null;
+
+        $tipos = Tipo_productos::get_rel_campos();
+        $id_tipo_producto = array_search("Computadora", $tipos);
+
+        $i = 0;
+
+        $lista = BDD::getInstance()->query("SELECT id_vinculo FROM system.vinculos WHERE id_pk_producto='$id'")->_fetchAll();
+
+        foreach ($lista as $campo)
+        {
+            $lista_con_datos[$i] = Vinculos::getByID($campo['id_vinculo']);
+            $i++;
+        }
+
+        return $lista;
     }
 
 }

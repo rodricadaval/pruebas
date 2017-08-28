@@ -284,8 +284,6 @@
 
 	$("#contenedorPpal").on('click' , '#modificar_usuario_tablet' , function(){
 
-		console.log("Entro a modificar usuario");
-		console.log("id_tablet: "+$(this).attr("id_tablet"));
 		var id_tablet = $(this).attr("id_tablet");
 		$.post( "controlador/TabletsController.php",
 		{
@@ -332,8 +330,6 @@
 
 	$("#contenedorPpal").on('click' , '#eliminar_tablet' , function(){
 
-		console.log("Entro a dar de baja tablet");
-		console.log("id_tablet: "+$(this).attr("id_tablet"));
 		var id_tablet = $(this).attr("id_tablet");
 
 		$.post( "controlador/TabletsController.php",

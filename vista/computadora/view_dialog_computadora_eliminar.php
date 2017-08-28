@@ -24,6 +24,9 @@ $(document).ready(function(){
         
         datosUrl += "&action=eliminar";
 
+        var id_computadora = $("#form_detalle_eliminar_computadora #id_computadora").attr("value");
+        window.open("controlador/BAJAPCPDF.php?"+"id_computadora="+id_computadora);
+
         $.ajax({
             url: 'controlador/ComputadorasController.php',
             type: 'POST',

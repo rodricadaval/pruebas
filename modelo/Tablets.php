@@ -123,7 +123,7 @@ WHERE T.id_tablet = '$id'"
 			<i class=\"red large trash icon\" title=\"Imprimir de baja\"></i>
 			</a>
             <a id=\"reactivar\" class=\"pointer_tablet\"id_tablet=\"' || id_tablet || '\">
-            <i class=\"green large checkmark icon\" title=\"Enviar a stock\"></i>
+            <i class=\"green large checkmark icon\" title=\"Devolver a activas\"></i>
             </a>'
 			as m from system.tablets T INNER JOIN system.tablet_desc D ON D.id_tablet_desc = T.id_tablet_desc INNER JOIN system.marcas M ON M.id_marca = D.id_marca INNER JOIN system.areas A ON A.id_area = T.id_sector INNER JOIN system.usuarios U ON U.id_usuario = T.id_usuario WHERE T.estado = 0"
         );

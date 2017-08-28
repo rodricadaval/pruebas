@@ -1,8 +1,15 @@
 <div class="ui one column grid">
-	<div class="column">
+	<div class="btn btn-danger" id="bajas">Dadas de baja</div>
+	<div class="column" id="tabla">
 		<div class="ui raised segment">
 			<a class="ui teal ribbon label">{TABLA}</a>
 			<table  cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable"></table>
+		</div>
+	</div>
+	<div class="column" id="tabla_bajas" style="display: none;">
+		<div class="ui raised segment">
+			<a class="ui teal ribbon label">{TABLA}(dadas de baja)</a>
+			<table  cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable-bajas"></table>
 		</div>
 	</div>
 </div>
@@ -98,42 +105,42 @@
 			queSos : "computadora", //a quien le voy a generar la vista
 			action : "modif_tipo",
 			viene : "normal"
-				}, function(data){
-					jQuery('<div/>', {
-						id: 'dialogcontent_cpu',
-						text: ''
-					}).appendTo('#contenedorPpal');
-					$("#dialogcontent_cpu").html(data);
-					$("#dialogcontent_cpu").dialog({
-						title: "Cambiar Tipo",
-						show: {
-							effect: "explode",
-							duration: 200,
-							modal:true
-						},
-						hide: {
-							effect: "explode",
-							duration: 200
-						},
-						width : 300,
-						height: 240,
-						close : function(){
-							$(this).dialog("destroy").empty();
-							$("#dialogcontent_cpu").remove();
-						},
-						buttons :
-						{
-							"Cancelar" : function () {
-								$(this).dialog("destroy").empty();
-								$("#dialogcontent_cpu").remove();
-							},
-							"Enviar" : function(){
-								$("#form_cambiar_tipo_computadora").submit();
-							}
-						}
-					});
+		}, function(data){
+			jQuery('<div/>', {
+				id: 'dialogcontent_cpu',
+				text: ''
+			}).appendTo('#contenedorPpal');
+			$("#dialogcontent_cpu").html(data);
+			$("#dialogcontent_cpu").dialog({
+				title: "Cambiar Tipo",
+				show: {
+					effect: "explode",
+					duration: 200,
+					modal:true
+				},
+				hide: {
+					effect: "explode",
+					duration: 200
+				},
+				width : 300,
+				height: 240,
+				close : function(){
+					$(this).dialog("destroy").empty();
+					$("#dialogcontent_cpu").remove();
+				},
+				buttons :
+				{
+					"Cancelar" : function () {
+						$(this).dialog("destroy").empty();
+						$("#dialogcontent_cpu").remove();
+					},
+					"Enviar" : function(){
+						$("#form_cambiar_tipo_computadora").submit();
+					}
 				}
-				);
+			});
+		}
+		);
 	});
 
 	$("#contenedorPpal").on('click' , '#modificar_usuario_computadora' , function(){
@@ -339,6 +346,7 @@
 
 	});
 
+
 	$("#contenedorPpal").on('click','#ver_usuario',function(event){
 		event.preventDefault();
 		console.log("Entro a ver los productos del usuario");
@@ -534,6 +542,152 @@
 				}
 				);
 
+	});
+
+	$("#contenedorPpal").on( 'mouseenter', '#dataTable_usuario tbody tr', function () {
+		var area = $(this).find(':nth-child(4)');		
+		$(area).tooltip();
+		
+
+		if($(this).find(':nth-child(4)').text() === 'CESION'){
+			var id_usuario = $(area).closest('tr').find('#modificar_usuario').attr('id_usuario');
+
+			$.post({
+				url: 'controlador/UsuariosController.php',
+				data: {
+					id_usuario : id_usuario,
+					action : "descripcion_area"
+				},
+				success: function (data) {
+					$(area).attr('title',data);
+				}
+			});
+		}		
+	} );
+
+	$("#contenedorPpal").on('click' , '#reactivar' , function(){
+
+		var id_computadora = $(this).attr("id_computadora");
+
+		$.post( "controlador/TabletsController.php",
+		{
+			ID : id_computadora,
+			action : "reactivar_dialog"
+		}, function(data){
+			console.log(data);
+			jQuery('<div/>', {
+				id: 'dialogcontent',
+				text: 'Texto por defecto!'
+			}).appendTo('#contenedorPpal');
+			$("#dialogcontent").html(data);
+			$("#dialogcontent").dialog({
+				show: {
+					effect: "explode",
+					duration: 200,
+					modal:true,
+				},
+				hide: {
+					effect: "explode",
+					duration: 200
+				},
+				width : 360,
+				height: 290,
+				close : function(){
+					$(this).dialog("destroy").empty();
+					$("#dialogcontent").remove();
+				},
+				buttons :
+				{
+					"Cancelar" : function () {
+						$(this).dialog("destroy").empty();
+						$("#dialogcontent").remove();
+					},
+					"Aceptar" : function(){
+						$("#form_reactivar").submit();
+					}
+				}
+			});
+		}
+		);
+	});
+
+	$('#contenedorPpal').on('click',"#bajas",function () {
+
+		$('#tabla').hide();
+		$('#tabla_bajas').show();
+		$('#bajas').hide();
+
+		$.ajax({
+			url : 'metodos_ajax.php',
+			method: 'post',
+			data:{ clase: '{TABLA}',
+			metodo: 'listarBajas',
+			tipo: 'json'},
+			dataType: 'json',
+			success : function(data){
+				$.get('logueo/check_priority.php', function(permisos) {
+
+					quitar_cargando ();
+
+					if( permisos == 1 || permisos == 3) {
+						$("#dataTable-bajas").dataTable({
+							"destroy" : true,
+							"aaData" : data,
+							"bAutoWidth": false,
+							"iDisplayLength": 25,
+							"aoColumns" :[
+									//{ "sTitle" : "ID" , "mData" : "id_computadora"},
+									{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
+									{ "sTitle" : "Marca" , "mData" : "marca"},
+									{ "sTitle" : "Modelo" , "mData" : "modelo"},
+									{ "sTitle" : "Tipo","mData" : "clase"},
+									{ "sTitle" : "Slots Lib.", "mData" : "slots_libres"},
+									{ "sTitle" : "M(GB)" , "mData" : "mem_max"},
+									{ "sTitle" : "Sector" , "mData" : "sector"},
+									{ "sTitle" : "Usuario" ,"sWidth": "21%", "mDataProp": "nombre_apellido",
+									"mRender": function ( data, type, row ) {
+										return '<div id="ver_usuario" usuario="'+data+'"><a title="Ver productos de '+data+' "href="edit.php?usuario='+ data+'">'+data+'</a></div>';
+									}
+								},
+								{ "sTitle" : "Descripcion" , "mData" : "descripcion"},
+								{ "sTitle": "Action", "mData" : "m","sWidth": "26%","sDefaultContent":
+								'<a class="ventana_area " href="">Modificar</a>'}
+								]
+
+									/*,
+									"aoColumnDefs": [
+							            { "sWidth": "24%", "aTargets": [ -1 ] }
+							            ]*/
+							        })
+					}
+					else if (permisos == 2) {
+						$("#dataTable-bajas").dataTable({
+							"destroy" : true,
+							"aaData" : data,
+							"aoColumns" :[
+									//{ "sTitle" : "ID" , "mData" : "id_computadora"},
+									{ "sTitle" : "Nro de Serie" , "mData" : "num_serie"},
+									{ "sTitle" : "Marca" , "mData" : "marca"},
+									{ "sTitle" : "Modelo" , "mData" : "modelo"},
+									{ "sTitle" : "Tipo" , "mData" : "clase"},
+									{ "sTitle" : "Slots Libres" , "mData" : "slots_libres"},
+									{ "sTitle" : "Max(GB)" , "mData" : "mem_max"},
+									{ "sTitle" : "Sector" , "mData" : "sector"},
+									{ "sTitle" : "Usuario" ,"mDataProp": "nombre_apellido",
+									"mRender": function ( data, type, row ) {
+										return '<div id="ver_usuario" usuario="'+data+'"><a title="Ver productos de '+data+' "href="edit.php?usuario='+ data+'">'+data+'</a></div>';
+									}
+								}
+								],
+								"aoColumnDefs": [
+								{ "sWidth": "20%", "aTargets": [ -1 ] }
+								]
+							})
+					}
+					else { window.location.href = "logueo/login.php";}
+				});
+			}
+		});
 	});
 
 	$("#contenedorPpal").on('click' , '#desasignar_usuario_computadora' , function(){
