@@ -569,7 +569,7 @@
 
 		var id_computadora = $(this).attr("id_computadora");
 
-		$.post( "controlador/TabletsController.php",
+		$.post( "controlador/ComputadorasController.php",
 		{
 			ID : id_computadora,
 			action : "reactivar_dialog"
@@ -688,6 +688,53 @@
 				});
 			}
 		});
+	});
+
+	$("#contenedorPpal").on('click' , '#reactivar' , function(){
+
+		var id_computadora = $(this).attr("id_computadora");
+		console.log(id_computadora);
+
+		$.post( "controlador/ComputadorasController.php",
+		{
+			ID : id_computadora,
+			action : "reactivar_dialog"
+		}, function(data){
+			console.log(data);
+			jQuery('<div/>', {
+				id: 'dialogcontent',
+				text: 'Texto por defecto!'
+			}).appendTo('#contenedorPpal');
+			$("#dialogcontent").html(data);
+			$("#dialogcontent").dialog({
+				show: {
+					effect: "explode",
+					duration: 200,
+					modal:true,
+				},
+				hide: {
+					effect: "explode",
+					duration: 200
+				},
+				width : 360,
+				height: 290,
+				close : function(){
+					$(this).dialog("destroy").empty();
+					$("#dialogcontent").remove();
+				},
+				buttons :
+				{
+					"Cancelar" : function () {
+						$(this).dialog("destroy").empty();
+						$("#dialogcontent").remove();
+					},
+					"Aceptar" : function(){
+						$("#form_reactivar").submit();
+					}
+				}
+			});
+		}
+		);
 	});
 
 	$("#contenedorPpal").on('click' , '#desasignar_usuario_computadora' , function(){

@@ -118,7 +118,7 @@ $pdf->SetY($y);
 $pdf->SetX(25);
 $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("ACLARACION:  ".$nombreYApellido);
 $pdf->Cell(0, 0, $texto, 0, 1);
-if($area == "SESION") {
+if($area == "CESION") {
     $y += 5;
     $pdf->SetY($y);
     $pdf->SetX(25);

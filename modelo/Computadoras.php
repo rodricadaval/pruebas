@@ -846,6 +846,11 @@ class Computadoras
         }
     }
 
+    public function getDescripcion($id)
+    {
+        return BDD::getInstance()->query("SELECT descripcion from system.computadoras where id_computadora = '$id'")->_fetchRow()['descripcion'];
+    }
+
     public function modificarNumSerie($datos)
     {
         $id = $datos['id_computadora'];
@@ -859,6 +864,11 @@ class Computadoras
         {
             var_dump(BDD::getInstance());return 0;
         }
+    }
+
+    public function reactivar($id)
+    {
+        return !BDD::getInstance()->query("UPDATE system.computadoras SET estado = 1 WHERE id_computadora = '{$id}'")->get_error();
     }
 
     public function eliminarLogico($datos)

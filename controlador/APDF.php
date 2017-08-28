@@ -24,7 +24,7 @@ $pdf->SetX(25);
 $pdf->Cell(0, 0, "AREA ".$area, 0, 1);
 $y += 10;
 
-if($area == "SESION") {
+if($area == "CESION") {
     $pdf->SetY($y);
     $pdf->SetX(25);
     $pdf->SetFont('Arial', 'I', 11);
@@ -92,7 +92,7 @@ $pdf->SetX(35);
 $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("También  se  deja  constancia  de  haber  recibido  las  partes en perfecto estado de");
 $pdf->Cell(0, 0, $texto, 0, 1);
 
-if($area == "SESION") {
+if($area == "CESION") {
     $y += 5;
     $pdf->SetY($y);
     $pdf->SetX(35);
@@ -137,7 +137,7 @@ $pdf->SetY($y);
 $pdf->SetX(25);
 $texto = HTML_ENTITIES_DECODE::text_to_pdf_decode("ACLARACION:  ".$datosUsuario['nombre_apellido']);
 $pdf->Cell(0, 0, $texto, 0, 1);
-if($area == "SESION") {
+if($area == "CESION") {
     $y += 5;
     $pdf->SetY($y);
     $pdf->SetX(25);
