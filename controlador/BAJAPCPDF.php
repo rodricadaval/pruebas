@@ -3,7 +3,6 @@ require_once "../ini.php";
 require "../lib/fpdf/fpdf.php";
 
 $datosCpu = Computadoras::getConSectorById($_GET['id_computadora']);
-$id_vinculo = Computadoras::getIdVinculoByIdCpu($_GET['id_computadora']);
 $vinculos = Computadoras::dameListadoPC($_GET['id_computadora']);
 $nombreYApellido = Usuarios::getNombreDePila($datosCpu['id_usuario']);
 $descripcion_area = Usuarios::dame_descripcion_area($datosCpu['id_usuario']);
@@ -49,7 +48,7 @@ $pdf->Cell(0, 0, $texto, 0, 1);
 $i = 0;
 $y += 15;
 foreach ($vinculos as $key => $value){
-    $datos[$i] = Vinculos::getByID($value['id_vinculo']);
+    $datos[$i] = Vinculos::getByID($value);
     $pdf->SetY($y);
     $pdf->SetX(35);
     $pdf->SetFont('Arial', '', 11);

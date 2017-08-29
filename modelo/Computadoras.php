@@ -952,23 +952,12 @@ class Computadoras
 
     public function dameListadoPC($id)
     {
-
-        $lista_con_datos = null;
-
-        $tipos = Tipo_productos::get_rel_campos();
-        $id_tipo_producto = array_search("Computadora", $tipos);
-
-        $i = 0;
-
-        $lista = BDD::getInstance()->query("SELECT id_vinculo FROM system.vinculos WHERE id_pk_producto='$id'")->_fetchAll();
-
-        foreach ($lista as $campo)
-        {
-            $lista_con_datos[$i] = Vinculos::getByID($campo['id_vinculo']);
-            $i++;
-        }
-
-        return $lista;
+        $vinculos = [];
+        $id_vinculo = BDD::getInstance()->query("select id_vinculo from system.computadoras where id_computadora = '$id' ")->_fetchRow()['id_vinculo'];
+        $lista = BDD::getInstance()->query("SELECT id_vinculo FROM system.vinculos WHERE id_cpu='$id'")->_fetchAll();
+        array_merge($vinculos, $lista);
+        array_push($vinculos, $id_vinculo);
+        return $vinculos;
     }
 
 }
